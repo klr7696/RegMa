@@ -58,18 +58,18 @@ class CompteNature
     private $nomenclature;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="compteNature")
-     */
-    private $sousCompteNature;
-
-    /**
-     * @ORM\OneToMany(targetEntity=CompteNature::class, mappedBy="sousCompteNature")
+     * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="sousCompteNature")
      */
     private $compteNature;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CompteNature::class, mappedBy="compteNature")
+     */
+    private $sousCompteNature;
+
     public function __construct()
     {
-        $this->compteNature = new ArrayCollection();
+        $this->sousCompteNature = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,14 +161,14 @@ class CompteNature
         return $this;
     }
 
-    public function getSousCompteNature(): ?self
+    public function getCompteNature(): ?self
     {
-        return $this->sousCompteNature;
+        return $this->compteNature;
     }
 
-    public function setSousCompteNature(?self $sousCompteNature): self
+    public function setCompteNature(?self $compteNature): self
     {
-        $this->sousCompteNature = $sousCompteNature;
+        $this->compteNature = $compteNature;
 
         return $this;
     }
@@ -176,30 +176,32 @@ class CompteNature
     /**
      * @return Collection|self[]
      */
-    public function getCompteNature(): Collection
+    public function getSousCompteNature(): Collection
     {
-        return $this->compteNature;
+        return $this->sousCompteNature;
     }
 
-    public function addCompteNature(self $compteNature): self
+    public function addSousCompteNature(self $sousCompteNature): self
     {
-        if (!$this->compteNature->contains($compteNature)) {
-            $this->compteNature[] = $compteNature;
-            $compteNature->setSousCompteNature($this);
+        if (!$this->sousCompteNature->contains($sousCompteNature)) {
+            $this->sousCompteNature[] = $sousCompteNature;
+            $sousCompteNature->setCompteNature($this);
         }
 
         return $this;
     }
 
-    public function removeCompteNature(self $compteNature): self
+    public function removeSousCompteNature(self $sousCompteNature): self
     {
-        if ($this->compteNature->removeElement($compteNature)) {
+        if ($this->sousCompteNature->removeElement($sousCompteNature)) {
             // set the owning side to null (unless already changed)
-            if ($compteNature->getSousCompteNature() === $this) {
-                $compteNature->setSousCompteNature(null);
+            if ($sousCompteNature->getCompteNature() === $this) {
+                $sousCompteNature->setCompteNature(null);
             }
         }
 
         return $this;
     }
+
+
 }

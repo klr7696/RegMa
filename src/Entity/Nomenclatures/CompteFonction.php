@@ -34,7 +34,7 @@ class CompteFonction
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $hiearachieCompteFonction;
+    private $hierachieCompteFonction;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -53,18 +53,18 @@ class CompteFonction
     private $nomenclature;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CompteFonction::class, inversedBy="compteFonction")
-     */
-    private $sousCompteFonction;
-
-    /**
-     * @ORM\OneToMany(targetEntity=CompteFonction::class, mappedBy="sousCompteFonction")
+     * @ORM\ManyToOne(targetEntity=CompteFonction::class, inversedBy="sousCompteFonction")
      */
     private $compteFonction;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CompteFonction::class, mappedBy="compteFonction")
+     */
+    private $sousCompteFonction;
+
     public function __construct()
     {
-        $this->compteFonction = new ArrayCollection();
+        $this->sousCompteFonction = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,14 +96,14 @@ class CompteFonction
         return $this;
     }
 
-    public function getHiearachieCompteFonction(): ?string
+    public function getHierachieCompteFonction(): ?string
     {
-        return $this->hiearachieCompteFonction;
+        return $this->hierachieCompteFonction;
     }
 
-    public function setHiearachieCompteFonction(string $hiearachieCompteFonction): self
+    public function setHierachieCompteFonction(string $hierachieCompteFonction): self
     {
-        $this->hiearachieCompteFonction = $hiearachieCompteFonction;
+        $this->hierachieCompteFonction = $hierachieCompteFonction;
 
         return $this;
     }
@@ -144,14 +144,14 @@ class CompteFonction
         return $this;
     }
 
-    public function getSousCompteFonction(): ?self
+    public function getCompteFonction(): ?self
     {
-        return $this->sousCompteFonction;
+        return $this->compteFonction;
     }
 
-    public function setSousCompteFonction(?self $sousCompteFonction): self
+    public function setCompteFonction(?self $compteFonction): self
     {
-        $this->sousCompteFonction = $sousCompteFonction;
+        $this->compteFonction = $compteFonction;
 
         return $this;
     }
@@ -159,27 +159,27 @@ class CompteFonction
     /**
      * @return Collection|self[]
      */
-    public function getCompteFonction(): Collection
+    public function getSousCompteFonction(): Collection
     {
-        return $this->compteFonction;
+        return $this->sousCompteFonction;
     }
 
-    public function addCompteFonction(self $compteFonction): self
+    public function addSousCompteFonction(self $sousCompteFonction): self
     {
-        if (!$this->compteFonction->contains($compteFonction)) {
-            $this->compteFonction[] = $compteFonction;
-            $compteFonction->setSousCompteFonction($this);
+        if (!$this->sousCompteFonction->contains($sousCompteFonction)) {
+            $this->sousCompteFonction[] = $sousCompteFonction;
+            $sousCompteFonction->setCompteFonction($this);
         }
 
         return $this;
     }
 
-    public function removeCompteFonction(self $compteFonction): self
+    public function removeSousCompteFonction(self $sousCompteFonction): self
     {
-        if ($this->compteFonction->removeElement($compteFonction)) {
+        if ($this->sousCompteFonction->removeElement($sousCompteFonction)) {
             // set the owning side to null (unless already changed)
-            if ($compteFonction->getSousCompteFonction() === $this) {
-                $compteFonction->setSousCompteFonction(null);
+            if ($sousCompteFonction->getCompteFonction() === $this) {
+                $sousCompteFonction->setCompteFonction(null);
             }
         }
 
