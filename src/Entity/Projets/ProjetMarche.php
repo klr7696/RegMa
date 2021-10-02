@@ -20,7 +20,7 @@ class ProjetMarche
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=500, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $objetMarche;
 
@@ -40,9 +40,9 @@ class ProjetMarche
     private $prioriteProjet;
 
     /**
-     * @ORM\Column(type="string", length=500, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $specificitéProjet;
+    private $specificiteProjet;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -134,14 +134,14 @@ class ProjetMarche
         return $this;
     }
 
-    public function getSpecificitéProjet(): ?string
+    public function getSpecificiteProjet(): ?string
     {
-        return $this->specificitéProjet;
+        return $this->specificiteProjet;
     }
 
-    public function setSpecificitéProjet(?string $specificitéProjet): self
+    public function setSpecificiteProjet(?string $specificiteProjet): self
     {
-        $this->specificitéProjet = $specificitéProjet;
+        $this->specificiteProjet = $specificiteProjet;
 
         return $this;
     }
