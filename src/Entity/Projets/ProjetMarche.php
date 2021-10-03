@@ -2,6 +2,9 @@
 
 namespace App\Entity\Projets;
 
+use App\Entity\Commissions\Commission;
+use App\Entity\Plans\LotMarche;
+use App\Entity\Soumissions\SoumissionMarche;
 use App\Repository\Projets\ProjetMarcheRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -75,10 +78,33 @@ class ProjetMarche
      */
     private $associationDecision;
 
+    /**
+     * @ORM\OneToMany(targetEntity=SoumissionMarche::class, mappedBy="projetMarche", orphanRemoval=true)
+     */
+    private $associationSoumission;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commission::class, mappedBy="projetMarche")
+     */
+    private $associationCommission;
+
+    /**
+     * @ORM\OneToMany(targetEntity=LotMarche::class, mappedBy="projetMarche")
+     */
+    private $associationLot;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $montantProjet;
+
     public function __construct()
     {
         $this->associationPhase = new ArrayCollection();
         $this->associationDecision = new ArrayCollection();
+        $this->associationSoumission = new ArrayCollection();
+        $this->associationCommission = new ArrayCollection();
+        $this->associationLot = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -250,6 +276,108 @@ class ProjetMarche
                 $associationDecision->setProjetMarche(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SoumissionMarche[]
+     */
+    public function getAssociationSoumission(): Collection
+    {
+        return $this->associationSoumission;
+    }
+
+    public function addAssociationSoumission(SoumissionMarche $associationSoumission): self
+    {
+        if (!$this->associationSoumission->contains($associationSoumission)) {
+            $this->associationSoumission[] = $associationSoumission;
+            $associationSoumission->setProjetMarche($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationSoumission(SoumissionMarche $associationSoumission): self
+    {
+        if ($this->associationSoumission->removeElement($associationSoumission)) {
+            // set the owning side to null (unless already changed)
+            if ($associationSoumission->getProjetMarche() === $this) {
+                $associationSoumission->setProjetMarche(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commission[]
+     */
+    public function getAssociationCommission(): Collection
+    {
+        return $this->associationCommission;
+    }
+
+    public function addAssociationCommission(Commission $associationCommission): self
+    {
+        if (!$this->associationCommission->contains($associationCommission)) {
+            $this->associationCommission[] = $associationCommission;
+            $associationCommission->setProjetMarche($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationCommission(Commission $associationCommission): self
+    {
+        if ($this->associationCommission->removeElement($associationCommission)) {
+            // set the owning side to null (unless already changed)
+            if ($associationCommission->getProjetMarche() === $this) {
+                $associationCommission->setProjetMarche(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|LotMarche[]
+     */
+    public function getAssociationLot(): Collection
+    {
+        return $this->associationLot;
+    }
+
+    public function addAssociationLot(LotMarche $associationLot): self
+    {
+        if (!$this->associationLot->contains($associationLot)) {
+            $this->associationLot[] = $associationLot;
+            $associationLot->setProjetMarche($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationLot(LotMarche $associationLot): self
+    {
+        if ($this->associationLot->removeElement($associationLot)) {
+            // set the owning side to null (unless already changed)
+            if ($associationLot->getProjetMarche() === $this) {
+                $associationLot->setProjetMarche(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getMontantProjet(): ?float
+    {
+        return $this->montantProjet;
+    }
+
+    public function setMontantProjet(?float $montantProjet): self
+    {
+        $this->montantProjet = $montantProjet;
 
         return $this;
     }

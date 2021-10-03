@@ -3,6 +3,7 @@
 namespace App\Entity\Nomenclatures;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Prevision\ExerciceRegistre;
 use App\Repository\Nomenclatures\NomenclatureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -81,10 +82,16 @@ class Nomenclature
      */
     private $associationCompteFonction;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ExerciceRegistre::class, mappedBy="nomenclature", orphanRemoval=true)
+     */
+    private $associationExercice;
+
     public function __construct()
     {
         $this->assiociationCompteNature = new ArrayCollection();
         $this->associationCompteFonction = new ArrayCollection();
+        $this->associationExercice = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -266,6 +273,36 @@ class Nomenclature
             // set the owning side to null (unless already changed)
             if ($associationCompteFonction->getNomenclature() === $this) {
                 $associationCompteFonction->setNomenclature(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ExerciceRegistre[]
+     */
+    public function getAssociationExercice(): Collection
+    {
+        return $this->associationExercice;
+    }
+
+    public function addAssociationExercice(ExerciceRegistre $associationExercice): self
+    {
+        if (!$this->associationExercice->contains($associationExercice)) {
+            $this->associationExercice[] = $associationExercice;
+            $associationExercice->setNomenclature($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationExercice(ExerciceRegistre $associationExercice): self
+    {
+        if ($this->associationExercice->removeElement($associationExercice)) {
+            // set the owning side to null (unless already changed)
+            if ($associationExercice->getNomenclature() === $this) {
+                $associationExercice->setNomenclature(null);
             }
         }
 

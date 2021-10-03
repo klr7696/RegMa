@@ -2,6 +2,9 @@
 
 namespace App\Entity\Operations;
 
+use App\Entity\Contrats\BonCommande;
+use App\Entity\Nomenclatures\CompteFonction;
+use App\Entity\Nomenclatures\CompteNature;
 use App\Repository\Operations\MandatementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -74,6 +77,23 @@ class Mandatement
      * @ORM\OneToMany(targetEntity=Imputation::class, mappedBy="mandatement")
      */
     private $associationImputation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=BonCommande::class, inversedBy="associationMandat")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $bonCommande;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="associationMandat")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $compteNature;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CompteFonction::class, inversedBy="associationMandat")
+     */
+    private $compteFonction;
 
     public function __construct()
     {
@@ -250,6 +270,42 @@ class Mandatement
                 $associationImputation->setMandatement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBonCommande(): ?BonCommande
+    {
+        return $this->bonCommande;
+    }
+
+    public function setBonCommande(?BonCommande $bonCommande): self
+    {
+        $this->bonCommande = $bonCommande;
+
+        return $this;
+    }
+
+    public function getCompteNature(): ?CompteNature
+    {
+        return $this->compteNature;
+    }
+
+    public function setCompteNature(?CompteNature $compteNature): self
+    {
+        $this->compteNature = $compteNature;
+
+        return $this;
+    }
+
+    public function getCompteFonction(): ?CompteFonction
+    {
+        return $this->compteFonction;
+    }
+
+    public function setCompteFonction(?CompteFonction $compteFonction): self
+    {
+        $this->compteFonction = $compteFonction;
 
         return $this;
     }

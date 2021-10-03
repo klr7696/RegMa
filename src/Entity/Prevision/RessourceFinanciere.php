@@ -3,6 +3,7 @@
 namespace App\Entity\Prevision;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Operations\Imputation;
 use App\Repository\Prevision\RessourceFinanciereRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -68,9 +69,26 @@ class RessourceFinanciere
      */
     private $lienRegistre;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Imputation::class, mappedBy="ressourceFinanciere", orphanRemoval=true)
+     */
+    private $associationImputation;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $estValide;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=StatutRegistre::class, inversedBy="associationRessource")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $statutRegistre;
+
     public function __construct()
     {
         $this->associationCredit = new ArrayCollection();
+        $this->associationImputation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -210,6 +228,60 @@ class RessourceFinanciere
         }
 
         $this->lienRegistre = $lienRegistre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Imputation[]
+     */
+    public function getAssociationImputation(): Collection
+    {
+        return $this->associationImputation;
+    }
+
+    public function addAssociationImputation(Imputation $associationImputation): self
+    {
+        if (!$this->associationImputation->contains($associationImputation)) {
+            $this->associationImputation[] = $associationImputation;
+            $associationImputation->setRessourceFinanciere($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationImputation(Imputation $associationImputation): self
+    {
+        if ($this->associationImputation->removeElement($associationImputation)) {
+            // set the owning side to null (unless already changed)
+            if ($associationImputation->getRessourceFinanciere() === $this) {
+                $associationImputation->setRessourceFinanciere(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEstValide(): ?bool
+    {
+        return $this->estValide;
+    }
+
+    public function setEstValide(bool $estValide): self
+    {
+        $this->estValide = $estValide;
+
+        return $this;
+    }
+
+    public function getStatutRegistre(): ?StatutRegistre
+    {
+        return $this->statutRegistre;
+    }
+
+    public function setStatutRegistre(?StatutRegistre $statutRegistre): self
+    {
+        $this->statutRegistre = $statutRegistre;
 
         return $this;
     }

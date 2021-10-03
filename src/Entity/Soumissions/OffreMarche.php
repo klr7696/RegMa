@@ -2,6 +2,8 @@
 
 namespace App\Entity\Soumissions;
 
+use App\Entity\Contrats\Contrat;
+use App\Entity\Plans\LotMarche;
 use App\Repository\Soumissions\OffreMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -128,6 +130,17 @@ class OffreMarche
      * @ORM\JoinColumn(nullable=false)
      */
     private $soumissionMarche;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Contrat::class, inversedBy="offreMarche", cascade={"persist", "remove"})
+     */
+    private $associationContrat;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=LotMarche::class, inversedBy="associationOffre")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $lotMarche;
 
     public function getId(): ?int
     {
@@ -394,6 +407,30 @@ class OffreMarche
     public function setSoumissionMarche(?SoumissionMarche $soumissionMarche): self
     {
         $this->soumissionMarche = $soumissionMarche;
+
+        return $this;
+    }
+
+    public function getAssociationContrat(): ?Contrat
+    {
+        return $this->associationContrat;
+    }
+
+    public function setAssociationContrat(?Contrat $associationContrat): self
+    {
+        $this->associationContrat = $associationContrat;
+
+        return $this;
+    }
+
+    public function getLotMarche(): ?LotMarche
+    {
+        return $this->lotMarche;
+    }
+
+    public function setLotMarche(?LotMarche $lotMarche): self
+    {
+        $this->lotMarche = $lotMarche;
 
         return $this;
     }

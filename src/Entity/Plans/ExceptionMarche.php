@@ -2,6 +2,7 @@
 
 namespace App\Entity\Plans;
 
+use App\Entity\Contrats\Contrat;
 use App\Repository\Plans\ExceptionMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -53,6 +54,21 @@ class ExceptionMarche
      * @ORM\JoinColumn(nullable=false)
      */
     private $autorisationMarche;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Contrat::class, inversedBy="associationException")
+     */
+    private $contrat;
+
+    /**
+     * @ORM\OneToOne(targetEntity=LienPlan::class, inversedBy="exceptionMarche", cascade={"persist", "remove"})
+     */
+    private $associationExceptionActuel;
+
+    /**
+     * @ORM\OneToOne(targetEntity=LienPlan::class, mappedBy="associationExceptionModifier", cascade={"persist", "remove"})
+     */
+    private $lienPlan;
 
     public function getId(): ?int
     {
@@ -139,6 +155,52 @@ class ExceptionMarche
     public function setAutorisationMarche(?AutorisationMarche $autorisationMarche): self
     {
         $this->autorisationMarche = $autorisationMarche;
+
+        return $this;
+    }
+
+    public function getContrat(): ?Contrat
+    {
+        return $this->contrat;
+    }
+
+    public function setContrat(?Contrat $contrat): self
+    {
+        $this->contrat = $contrat;
+
+        return $this;
+    }
+
+    public function getAssociationExceptionActuel(): ?LienPlan
+    {
+        return $this->associationExceptionActuel;
+    }
+
+    public function setAssociationExceptionActuel(?LienPlan $associationExceptionActuel): self
+    {
+        $this->associationExceptionActuel = $associationExceptionActuel;
+
+        return $this;
+    }
+
+    public function getLienPlan(): ?LienPlan
+    {
+        return $this->lienPlan;
+    }
+
+    public function setLienPlan(?LienPlan $lienPlan): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($lienPlan === null && $this->lienPlan !== null) {
+            $this->lienPlan->setAssociationExceptionModifier(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($lienPlan !== null && $lienPlan->getAssociationExceptionModifier() !== $this) {
+            $lienPlan->setAssociationExceptionModifier($this);
+        }
+
+        $this->lienPlan = $lienPlan;
 
         return $this;
     }

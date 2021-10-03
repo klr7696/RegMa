@@ -2,6 +2,8 @@
 
 namespace App\Entity\Plans;
 
+use App\Entity\Administration\MairieCommunale;
+use App\Entity\Prevision\ExerciceRegistre;
 use App\Repository\Plans\PlanPassationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -49,10 +51,28 @@ class PlanPassation
      */
     private $associationException;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=MairieCommunale::class, inversedBy="associationPlan")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $mairieCommunale;
+
+    /**
+     * @ORM\OneToMany(targetEntity=StatutPlan::class, mappedBy="planPassation", orphanRemoval=true)
+     */
+    private $associationStatut;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationPlan")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $exerciceRegistre;
+
     public function __construct()
     {
         $this->associationLot = new ArrayCollection();
         $this->associationException = new ArrayCollection();
+        $this->associationStatut = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -164,6 +184,60 @@ class PlanPassation
                 $associationException->setPlanPassation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMairieCommunale(): ?MairieCommunale
+    {
+        return $this->mairieCommunale;
+    }
+
+    public function setMairieCommunale(?MairieCommunale $mairieCommunale): self
+    {
+        $this->mairieCommunale = $mairieCommunale;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StatutPlan[]
+     */
+    public function getAssociationStatut(): Collection
+    {
+        return $this->associationStatut;
+    }
+
+    public function addAssociationStatut(StatutPlan $associationStatut): self
+    {
+        if (!$this->associationStatut->contains($associationStatut)) {
+            $this->associationStatut[] = $associationStatut;
+            $associationStatut->setPlanPassation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationStatut(StatutPlan $associationStatut): self
+    {
+        if ($this->associationStatut->removeElement($associationStatut)) {
+            // set the owning side to null (unless already changed)
+            if ($associationStatut->getPlanPassation() === $this) {
+                $associationStatut->setPlanPassation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getExerciceRegistre(): ?ExerciceRegistre
+    {
+        return $this->exerciceRegistre;
+    }
+
+    public function setExerciceRegistre(?ExerciceRegistre $exerciceRegistre): self
+    {
+        $this->exerciceRegistre = $exerciceRegistre;
 
         return $this;
     }

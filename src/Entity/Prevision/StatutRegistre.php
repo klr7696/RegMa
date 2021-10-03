@@ -51,13 +51,19 @@ class StatutRegistre
     private $exerciceRegistre;
 
     /**
-     * @ORM\OneToMany(targetEntity=LienRegistre::class, mappedBy="statutRegistre", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=LienRegistre::class, mappedBy="statutRegistre")
      */
     private $associationActualisation;
+
+    /**
+     * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="statutRegistre", orphanRemoval=true)
+     */
+    private $associationRessource;
 
     public function __construct()
     {
         $this->associationActualisation = new ArrayCollection();
+        $this->associationRessource = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,4 +172,23 @@ class StatutRegistre
 
         return $this;
     }
+
+    /**
+     * @return Collection|RessourceFinanciere[]
+     */
+    public function getAssociationRessource(): Collection
+    {
+        return $this->associationRessource;
+    }
+
+    public function addAssociationRessource(RessourceFinanciere $associationRessource): self
+    {
+        if (!$this->associationRessource->contains($associationRessource)) {
+            $this->associationRessource[] = $associationRessource;
+            $associationRessource->setStatutRegistre($this);
+        }
+
+        return $this;
+    }
+
 }

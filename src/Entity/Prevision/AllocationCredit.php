@@ -2,6 +2,9 @@
 
 namespace App\Entity\Prevision;
 
+use App\Entity\Administration\MairieCommunale;
+use App\Entity\Nomenclatures\CompteNature;
+use App\Entity\Plans\AutorisationMarche;
 use App\Repository\Prevision\AllocationCreditRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -42,6 +45,28 @@ class AllocationCredit
      * @ORM\OneToOne(targetEntity=LienRegistre::class, mappedBy="associationAllocationModifier", cascade={"persist", "remove"})
      */
     private $lienRegistre;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=MairieCommunale::class, inversedBy="associationAllocation")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $mairieCommunale;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $estValide;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=AutorisationMarche::class, inversedBy="associationAllocation")
+     */
+    private $autorisationMarche;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="associationAllocation")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $compteNature;
 
     public function getId(): ?int
     {
@@ -114,6 +139,54 @@ class AllocationCredit
         }
 
         $this->lienRegistre = $lienRegistre;
+
+        return $this;
+    }
+
+    public function getMairieCommunale(): ?MairieCommunale
+    {
+        return $this->mairieCommunale;
+    }
+
+    public function setMairieCommunale(?MairieCommunale $mairieCommunale): self
+    {
+        $this->mairieCommunale = $mairieCommunale;
+
+        return $this;
+    }
+
+    public function getEstValide(): ?bool
+    {
+        return $this->estValide;
+    }
+
+    public function setEstValide(bool $estValide): self
+    {
+        $this->estValide = $estValide;
+
+        return $this;
+    }
+
+    public function getAutorisationMarche(): ?AutorisationMarche
+    {
+        return $this->autorisationMarche;
+    }
+
+    public function setAutorisationMarche(?AutorisationMarche $autorisationMarche): self
+    {
+        $this->autorisationMarche = $autorisationMarche;
+
+        return $this;
+    }
+
+    public function getCompteNature(): ?CompteNature
+    {
+        return $this->compteNature;
+    }
+
+    public function setCompteNature(?CompteNature $compteNature): self
+    {
+        $this->compteNature = $compteNature;
 
         return $this;
     }

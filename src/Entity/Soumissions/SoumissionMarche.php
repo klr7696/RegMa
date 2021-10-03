@@ -2,6 +2,7 @@
 
 namespace App\Entity\Soumissions;
 
+use App\Entity\Projets\ProjetMarche;
 use App\Repository\Soumissions\SoumissionMarcheRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -99,6 +100,12 @@ class SoumissionMarche
      * @ORM\OneToMany(targetEntity=OffreMarche::class, mappedBy="soumissionMarche", orphanRemoval=true)
      */
     private $associationOffre;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ProjetMarche::class, inversedBy="associationSoumission")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $projetMarche;
 
     public function __construct()
     {
@@ -316,6 +323,18 @@ class SoumissionMarche
                 $associationOffre->setSoumissionMarche(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProjetMarche(): ?ProjetMarche
+    {
+        return $this->projetMarche;
+    }
+
+    public function setProjetMarche(?ProjetMarche $projetMarche): self
+    {
+        $this->projetMarche = $projetMarche;
 
         return $this;
     }

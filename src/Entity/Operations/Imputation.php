@@ -2,6 +2,8 @@
 
 namespace App\Entity\Operations;
 
+use App\Entity\Nomenclatures\CompteNature;
+use App\Entity\Prevision\RessourceFinanciere;
 use App\Repository\Operations\ImputationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -41,6 +43,18 @@ class Imputation
      * @ORM\ManyToOne(targetEntity=Mandatement::class, inversedBy="associationImputation")
      */
     private $mandatement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=RessourceFinanciere::class, inversedBy="associationImputation")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ressourceFinanciere;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="associationImputation")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $compteNature;
 
     public function getId(): ?int
     {
@@ -103,6 +117,30 @@ class Imputation
     public function setMandatement(?Mandatement $mandatement): self
     {
         $this->mandatement = $mandatement;
+
+        return $this;
+    }
+
+    public function getRessourceFinanciere(): ?RessourceFinanciere
+    {
+        return $this->ressourceFinanciere;
+    }
+
+    public function setRessourceFinanciere(?RessourceFinanciere $ressourceFinanciere): self
+    {
+        $this->ressourceFinanciere = $ressourceFinanciere;
+
+        return $this;
+    }
+
+    public function getCompteNature(): ?CompteNature
+    {
+        return $this->compteNature;
+    }
+
+    public function setCompteNature(?CompteNature $compteNature): self
+    {
+        $this->compteNature = $compteNature;
 
         return $this;
     }

@@ -2,6 +2,8 @@
 
 namespace App\Entity\Prevision;
 
+use App\Entity\Nomenclatures\Nomenclature;
+use App\Entity\Plans\PlanPassation;
 use App\Repository\Prevision\ExerciceRegistreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -50,10 +52,22 @@ class ExerciceRegistre
      */
     private $associationStatut;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Nomenclature::class, inversedBy="associationExercice")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $nomenclature;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PlanPassation::class, mappedBy="exerciceRegistre", orphanRemoval=true)
+     */
+    private $associationPlan;
+
     public function __construct()
     {
         $this->associationRessource = new ArrayCollection();
         $this->associationStatut = new ArrayCollection();
+        $this->associationPlan = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -163,6 +177,48 @@ class ExerciceRegistre
             // set the owning side to null (unless already changed)
             if ($associationStatut->getExerciceRegistre() === $this) {
                 $associationStatut->setExerciceRegistre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNomenclature(): ?Nomenclature
+    {
+        return $this->nomenclature;
+    }
+
+    public function setNomenclature(?Nomenclature $nomenclature): self
+    {
+        $this->nomenclature = $nomenclature;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PlanPassation[]
+     */
+    public function getAssociationPlan(): Collection
+    {
+        return $this->associationPlan;
+    }
+
+    public function addAssociationPlan(PlanPassation $associationPlan): self
+    {
+        if (!$this->associationPlan->contains($associationPlan)) {
+            $this->associationPlan[] = $associationPlan;
+            $associationPlan->setExerciceRegistre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationPlan(PlanPassation $associationPlan): self
+    {
+        if ($this->associationPlan->removeElement($associationPlan)) {
+            // set the owning side to null (unless already changed)
+            if ($associationPlan->getExerciceRegistre() === $this) {
+                $associationPlan->setExerciceRegistre(null);
             }
         }
 

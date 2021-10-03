@@ -2,7 +2,12 @@
 
 namespace App\Entity\Administration;
 
+use App\Entity\Plans\AutorisationMarche;
+use App\Entity\Plans\PlanPassation;
+use App\Entity\Prevision\AllocationCredit;
 use App\Repository\Administration\MairieCommunaleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +41,28 @@ class MairieCommunale
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $descriptionMairie;
+
+    /**
+     * @ORM\OneToMany(targetEntity=AllocationCredit::class, mappedBy="mairieCommunale", orphanRemoval=true)
+     */
+    private $associationAllocation;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PlanPassation::class, mappedBy="mairieCommunale", orphanRemoval=true)
+     */
+    private $associationPlan;
+
+    /**
+     * @ORM\OneToMany(targetEntity=AutorisationMarche::class, mappedBy="mairieCommunale", orphanRemoval=true)
+     */
+    private $associationAutorisation;
+
+    public function __construct()
+    {
+        $this->associationAllocation = new ArrayCollection();
+        $this->associationPlan = new ArrayCollection();
+        $this->associationAutorisation = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +113,96 @@ class MairieCommunale
     public function setDescriptionMairie(?string $descriptionMairie): self
     {
         $this->descriptionMairie = $descriptionMairie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AllocationCredit[]
+     */
+    public function getAssociationAllocation(): Collection
+    {
+        return $this->associationAllocation;
+    }
+
+    public function addAssociationAllocation(AllocationCredit $associationAllocation): self
+    {
+        if (!$this->associationAllocation->contains($associationAllocation)) {
+            $this->associationAllocation[] = $associationAllocation;
+            $associationAllocation->setMairieCommunale($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationAllocation(AllocationCredit $associationAllocation): self
+    {
+        if ($this->associationAllocation->removeElement($associationAllocation)) {
+            // set the owning side to null (unless already changed)
+            if ($associationAllocation->getMairieCommunale() === $this) {
+                $associationAllocation->setMairieCommunale(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PlanPassation[]
+     */
+    public function getAssociationPlan(): Collection
+    {
+        return $this->associationPlan;
+    }
+
+    public function addAssociationPlan(PlanPassation $associationPlan): self
+    {
+        if (!$this->associationPlan->contains($associationPlan)) {
+            $this->associationPlan[] = $associationPlan;
+            $associationPlan->setMairieCommunale($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationPlan(PlanPassation $associationPlan): self
+    {
+        if ($this->associationPlan->removeElement($associationPlan)) {
+            // set the owning side to null (unless already changed)
+            if ($associationPlan->getMairieCommunale() === $this) {
+                $associationPlan->setMairieCommunale(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AutorisationMarche[]
+     */
+    public function getAssociationAutorisation(): Collection
+    {
+        return $this->associationAutorisation;
+    }
+
+    public function addAssociationAutorisation(AutorisationMarche $associationAutorisation): self
+    {
+        if (!$this->associationAutorisation->contains($associationAutorisation)) {
+            $this->associationAutorisation[] = $associationAutorisation;
+            $associationAutorisation->setMairieCommunale($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationAutorisation(AutorisationMarche $associationAutorisation): self
+    {
+        if ($this->associationAutorisation->removeElement($associationAutorisation)) {
+            // set the owning side to null (unless already changed)
+            if ($associationAutorisation->getMairieCommunale() === $this) {
+                $associationAutorisation->setMairieCommunale(null);
+            }
+        }
 
         return $this;
     }

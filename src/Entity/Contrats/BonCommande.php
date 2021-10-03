@@ -2,6 +2,8 @@
 
 namespace App\Entity\Contrats;
 
+use App\Entity\Commissions\Commission;
+use App\Entity\Operations\Mandatement;
 use App\Repository\Contrats\BonCommandeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -90,9 +92,21 @@ class BonCommande
      */
     private $contrat;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Mandatement::class, mappedBy="bonCommande", orphanRemoval=true)
+     */
+    private $associationMandat;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commission::class, mappedBy="bonCommande")
+     */
+    private $associationCommission;
+
     public function __construct()
     {
         $this->assoiciationItem = new ArrayCollection();
+        $this->associationMandat = new ArrayCollection();
+        $this->associationCommission = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -282,6 +296,66 @@ class BonCommande
     public function setContrat(?Contrat $contrat): self
     {
         $this->contrat = $contrat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Mandatement[]
+     */
+    public function getAssociationMandat(): Collection
+    {
+        return $this->associationMandat;
+    }
+
+    public function addAssociationMandat(Mandatement $associationMandat): self
+    {
+        if (!$this->associationMandat->contains($associationMandat)) {
+            $this->associationMandat[] = $associationMandat;
+            $associationMandat->setBonCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationMandat(Mandatement $associationMandat): self
+    {
+        if ($this->associationMandat->removeElement($associationMandat)) {
+            // set the owning side to null (unless already changed)
+            if ($associationMandat->getBonCommande() === $this) {
+                $associationMandat->setBonCommande(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commission[]
+     */
+    public function getAssociationCommission(): Collection
+    {
+        return $this->associationCommission;
+    }
+
+    public function addAssociationCommission(Commission $associationCommission): self
+    {
+        if (!$this->associationCommission->contains($associationCommission)) {
+            $this->associationCommission[] = $associationCommission;
+            $associationCommission->setBonCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationCommission(Commission $associationCommission): self
+    {
+        if ($this->associationCommission->removeElement($associationCommission)) {
+            // set the owning side to null (unless already changed)
+            if ($associationCommission->getBonCommande() === $this) {
+                $associationCommission->setBonCommande(null);
+            }
+        }
 
         return $this;
     }

@@ -2,7 +2,11 @@
 
 namespace App\Entity\Plans;
 
+use App\Entity\Projets\ProjetMarche;
+use App\Entity\Soumissions\OffreMarche;
 use App\Repository\Plans\LotMarcheRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,6 +57,36 @@ class LotMarche
      * @ORM\JoinColumn(nullable=false)
      */
     private $autorisationMarche;
+
+    /**
+     * @ORM\OneToOne(targetEntity=LienPlan::class, inversedBy="lotMarche", cascade={"persist", "remove"})
+     */
+    private $associationLotActuel;
+
+    /**
+     * @ORM\OneToOne(targetEntity=LienPlan::class, mappedBy="associationLotModifier", cascade={"persist", "remove"})
+     */
+    private $lienPlan;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $estAnnuler;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ProjetMarche::class, inversedBy="associationLot")
+     */
+    private $projetMarche;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OffreMarche::class, mappedBy="lotMarche", orphanRemoval=true)
+     */
+    private $associationOffre;
+
+    public function __construct()
+    {
+        $this->associationOffre = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -139,6 +173,94 @@ class LotMarche
     public function setAutorisationMarche(?AutorisationMarche $autorisationMarche): self
     {
         $this->autorisationMarche = $autorisationMarche;
+
+        return $this;
+    }
+
+    public function getAssociationLotActuel(): ?LienPlan
+    {
+        return $this->associationLotActuel;
+    }
+
+    public function setAssociationLotActuel(?LienPlan $associationLotActuel): self
+    {
+        $this->associationLotActuel = $associationLotActuel;
+
+        return $this;
+    }
+
+    public function getLienPlan(): ?LienPlan
+    {
+        return $this->lienPlan;
+    }
+
+    public function setLienPlan(?LienPlan $lienPlan): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($lienPlan === null && $this->lienPlan !== null) {
+            $this->lienPlan->setAssociationLotModifier(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($lienPlan !== null && $lienPlan->getAssociationLotModifier() !== $this) {
+            $lienPlan->setAssociationLotModifier($this);
+        }
+
+        $this->lienPlan = $lienPlan;
+
+        return $this;
+    }
+
+    public function getEstAnnuler(): ?bool
+    {
+        return $this->estAnnuler;
+    }
+
+    public function setEstAnnuler(bool $estAnnuler): self
+    {
+        $this->estAnnuler = $estAnnuler;
+
+        return $this;
+    }
+
+    public function getProjetMarche(): ?ProjetMarche
+    {
+        return $this->projetMarche;
+    }
+
+    public function setProjetMarche(?ProjetMarche $projetMarche): self
+    {
+        $this->projetMarche = $projetMarche;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OffreMarche[]
+     */
+    public function getAssociationOffre(): Collection
+    {
+        return $this->associationOffre;
+    }
+
+    public function addAssociationOffre(OffreMarche $associationOffre): self
+    {
+        if (!$this->associationOffre->contains($associationOffre)) {
+            $this->associationOffre[] = $associationOffre;
+            $associationOffre->setLotMarche($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationOffre(OffreMarche $associationOffre): self
+    {
+        if ($this->associationOffre->removeElement($associationOffre)) {
+            // set the owning side to null (unless already changed)
+            if ($associationOffre->getLotMarche() === $this) {
+                $associationOffre->setLotMarche(null);
+            }
+        }
 
         return $this;
     }

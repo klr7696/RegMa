@@ -3,6 +3,8 @@
 namespace App\Entity\Nomenclatures;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Operations\Engagement;
+use App\Entity\Operations\Mandatement;
 use App\Repository\Nomenclatures\CompteFonctionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -62,9 +64,21 @@ class CompteFonction
      */
     private $sousCompteFonction;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Engagement::class, mappedBy="compteFonction")
+     */
+    private $associationEngagement;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Mandatement::class, mappedBy="compteFonction")
+     */
+    private $associationMandat;
+
     public function __construct()
     {
         $this->sousCompteFonction = new ArrayCollection();
+        $this->associationEngagement = new ArrayCollection();
+        $this->associationMandat = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,6 +194,66 @@ class CompteFonction
             // set the owning side to null (unless already changed)
             if ($sousCompteFonction->getCompteFonction() === $this) {
                 $sousCompteFonction->setCompteFonction(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Engagement[]
+     */
+    public function getAssociationEngagement(): Collection
+    {
+        return $this->associationEngagement;
+    }
+
+    public function addAssociationEngagement(Engagement $associationEngagement): self
+    {
+        if (!$this->associationEngagement->contains($associationEngagement)) {
+            $this->associationEngagement[] = $associationEngagement;
+            $associationEngagement->setCompteFonction($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationEngagement(Engagement $associationEngagement): self
+    {
+        if ($this->associationEngagement->removeElement($associationEngagement)) {
+            // set the owning side to null (unless already changed)
+            if ($associationEngagement->getCompteFonction() === $this) {
+                $associationEngagement->setCompteFonction(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Mandatement[]
+     */
+    public function getAssociationMandat(): Collection
+    {
+        return $this->associationMandat;
+    }
+
+    public function addAssociationMandat(Mandatement $associationMandat): self
+    {
+        if (!$this->associationMandat->contains($associationMandat)) {
+            $this->associationMandat[] = $associationMandat;
+            $associationMandat->setCompteFonction($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationMandat(Mandatement $associationMandat): self
+    {
+        if ($this->associationMandat->removeElement($associationMandat)) {
+            // set the owning side to null (unless already changed)
+            if ($associationMandat->getCompteFonction() === $this) {
+                $associationMandat->setCompteFonction(null);
             }
         }
 

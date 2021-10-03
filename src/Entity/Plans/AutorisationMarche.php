@@ -2,6 +2,10 @@
 
 namespace App\Entity\Plans;
 
+use App\Entity\Administration\MairieCommunale;
+use App\Entity\Nomenclatures\CompteNature;
+use App\Entity\Prevision\AllocationCredit;
+use App\Entity\Prevision\LienRegistre;
 use App\Repository\Plans\AutorisationMarcheRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,7 +24,7 @@ class AutorisationMarche
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=1000)
+     * @ORM\Column(type="text")
      */
     private $objetAutorisation;
 
@@ -44,10 +48,38 @@ class AutorisationMarche
      */
     private $associationException;
 
+    /**
+     * @ORM\OneToMany(targetEntity=AllocationCredit::class, mappedBy="autorisationMarche")
+     */
+    private $associationAllocation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=MairieCommunale::class, inversedBy="associationAutorisation")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $mairieCommunale;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="associationAutorisation")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $compteNature;
+
+    /**
+     * @ORM\OneToOne(targetEntity=LienRegistre::class, mappedBy="relation", cascade={"persist", "remove"})
+     */
+    private $lienRegistre;
+
+    /**
+     * @ORM\OneToOne(targetEntity=LienRegistre::class, inversedBy="autorisationMarche", cascade={"persist", "remove"})
+     */
+    private $relationModifier;
+
     public function __construct()
     {
         $this->associationLot = new ArrayCollection();
         $this->associationException = new ArrayCollection();
+        $this->associationAllocation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -147,6 +179,94 @@ class AutorisationMarche
                 $associationException->setAutorisationMarche(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AllocationCredit[]
+     */
+    public function getAssociationAllocation(): Collection
+    {
+        return $this->associationAllocation;
+    }
+
+    public function addAssociationAllocation(AllocationCredit $associationAllocation): self
+    {
+        if (!$this->associationAllocation->contains($associationAllocation)) {
+            $this->associationAllocation[] = $associationAllocation;
+            $associationAllocation->setAutorisationMarche($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationAllocation(AllocationCredit $associationAllocation): self
+    {
+        if ($this->associationAllocation->removeElement($associationAllocation)) {
+            // set the owning side to null (unless already changed)
+            if ($associationAllocation->getAutorisationMarche() === $this) {
+                $associationAllocation->setAutorisationMarche(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getMairieCommunale(): ?MairieCommunale
+    {
+        return $this->mairieCommunale;
+    }
+
+    public function setMairieCommunale(?MairieCommunale $mairieCommunale): self
+    {
+        $this->mairieCommunale = $mairieCommunale;
+
+        return $this;
+    }
+
+    public function getCompteNature(): ?CompteNature
+    {
+        return $this->compteNature;
+    }
+
+    public function setCompteNature(?CompteNature $compteNature): self
+    {
+        $this->compteNature = $compteNature;
+
+        return $this;
+    }
+
+    public function getLienRegistre(): ?LienRegistre
+    {
+        return $this->lienRegistre;
+    }
+
+    public function setLienRegistre(?LienRegistre $lienRegistre): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($lienRegistre === null && $this->lienRegistre !== null) {
+            $this->lienRegistre->setRelation(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($lienRegistre !== null && $lienRegistre->getRelation() !== $this) {
+            $lienRegistre->setRelation($this);
+        }
+
+        $this->lienRegistre = $lienRegistre;
+
+        return $this;
+    }
+
+    public function getRelationModifier(): ?LienRegistre
+    {
+        return $this->relationModifier;
+    }
+
+    public function setRelationModifier(?LienRegistre $relationModifier): self
+    {
+        $this->relationModifier = $relationModifier;
 
         return $this;
     }

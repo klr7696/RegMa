@@ -2,6 +2,7 @@
 
 namespace App\Entity\Projets;
 
+use App\Entity\Contrats\Contrat;
 use App\Repository\Projets\DecisionMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -61,6 +62,11 @@ class DecisionMarche
      * @ORM\ManyToOne(targetEntity=ProjetMarche::class, inversedBy="associationDecision")
      */
     private $projetMarche;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Contrat::class, inversedBy="associationDecision")
+     */
+    private $contrat;
 
     public function getId(): ?int
     {
@@ -171,6 +177,18 @@ class DecisionMarche
     public function setProjetMarche(?ProjetMarche $projetMarche): self
     {
         $this->projetMarche = $projetMarche;
+
+        return $this;
+    }
+
+    public function getContrat(): ?Contrat
+    {
+        return $this->contrat;
+    }
+
+    public function setContrat(?Contrat $contrat): self
+    {
+        $this->contrat = $contrat;
 
         return $this;
     }

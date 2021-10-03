@@ -2,6 +2,8 @@
 
 namespace App\Entity\Commissions;
 
+use App\Entity\Contrats\BonCommande;
+use App\Entity\Projets\ProjetMarche;
 use App\Repository\Commissions\CommissionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -93,6 +95,16 @@ class Commission
      * @ORM\OneToMany(targetEntity=ParticipantCommission::class, mappedBy="commission", orphanRemoval=true)
      */
     private $associationParticipant;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=BonCommande::class, inversedBy="associationCommission")
+     */
+    private $bonCommande;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ProjetMarche::class, inversedBy="associationCommission")
+     */
+    private $projetMarche;
 
     public function __construct()
     {
@@ -298,6 +310,30 @@ class Commission
                 $associationParticipant->setCommission(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBonCommande(): ?BonCommande
+    {
+        return $this->bonCommande;
+    }
+
+    public function setBonCommande(?BonCommande $bonCommande): self
+    {
+        $this->bonCommande = $bonCommande;
+
+        return $this;
+    }
+
+    public function getProjetMarche(): ?ProjetMarche
+    {
+        return $this->projetMarche;
+    }
+
+    public function setProjetMarche(?ProjetMarche $projetMarche): self
+    {
+        $this->projetMarche = $projetMarche;
 
         return $this;
     }

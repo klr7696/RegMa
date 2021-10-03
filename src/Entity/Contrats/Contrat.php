@@ -2,6 +2,11 @@
 
 namespace App\Entity\Contrats;
 
+use App\Entity\Operations\Engagement;
+use App\Entity\Plans\ExceptionMarche;
+use App\Entity\Projets\DecisionMarche;
+use App\Entity\Soumissions\OffreMarche;
+use App\Entity\Soumissions\Soumissionnaire;
 use App\Repository\Contrats\ContratRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -89,10 +94,38 @@ class Contrat
      */
     private $associationBon;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Engagement::class, inversedBy="contrat", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $associationEngagement;
+
+    /**
+     * @ORM\OneToOne(targetEntity=OffreMarche::class, mappedBy="associationContrat", cascade={"persist", "remove"})
+     */
+    private $offreMarche;
+
+    /**
+     * @ORM\OneToMany(targetEntity=DecisionMarche::class, mappedBy="contrat")
+     */
+    private $associationDecision;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ExceptionMarche::class, mappedBy="contrat")
+     */
+    private $associationException;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Soumissionnaire::class, inversedBy="associationContrat")
+     */
+    private $soumissionnaire;
+
     public function __construct()
     {
         $this->associationAvenant = new ArrayCollection();
         $this->associationBon = new ArrayCollection();
+        $this->associationDecision = new ArrayCollection();
+        $this->associationException = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -300,6 +333,112 @@ class Contrat
                 $associationBon->setContrat(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAssociationEngagement(): ?Engagement
+    {
+        return $this->associationEngagement;
+    }
+
+    public function setAssociationEngagement(Engagement $associationEngagement): self
+    {
+        $this->associationEngagement = $associationEngagement;
+
+        return $this;
+    }
+
+    public function getOffreMarche(): ?OffreMarche
+    {
+        return $this->offreMarche;
+    }
+
+    public function setOffreMarche(?OffreMarche $offreMarche): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($offreMarche === null && $this->offreMarche !== null) {
+            $this->offreMarche->setAssociationContrat(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($offreMarche !== null && $offreMarche->getAssociationContrat() !== $this) {
+            $offreMarche->setAssociationContrat($this);
+        }
+
+        $this->offreMarche = $offreMarche;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|DecisionMarche[]
+     */
+    public function getAssociationDecision(): Collection
+    {
+        return $this->associationDecision;
+    }
+
+    public function addAssociationDecision(DecisionMarche $associationDecision): self
+    {
+        if (!$this->associationDecision->contains($associationDecision)) {
+            $this->associationDecision[] = $associationDecision;
+            $associationDecision->setContrat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationDecision(DecisionMarche $associationDecision): self
+    {
+        if ($this->associationDecision->removeElement($associationDecision)) {
+            // set the owning side to null (unless already changed)
+            if ($associationDecision->getContrat() === $this) {
+                $associationDecision->setContrat(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ExceptionMarche[]
+     */
+    public function getAssociationException(): Collection
+    {
+        return $this->associationException;
+    }
+
+    public function addAssociationException(ExceptionMarche $associationException): self
+    {
+        if (!$this->associationException->contains($associationException)) {
+            $this->associationException[] = $associationException;
+            $associationException->setContrat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationException(ExceptionMarche $associationException): self
+    {
+        if ($this->associationException->removeElement($associationException)) {
+            // set the owning side to null (unless already changed)
+            if ($associationException->getContrat() === $this) {
+                $associationException->setContrat(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSoumissionnaire(): ?Soumissionnaire
+    {
+        return $this->soumissionnaire;
+    }
+
+    public function setSoumissionnaire(?Soumissionnaire $soumissionnaire): self
+    {
+        $this->soumissionnaire = $soumissionnaire;
 
         return $this;
     }

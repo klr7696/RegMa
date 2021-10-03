@@ -2,6 +2,7 @@
 
 namespace App\Entity\Soumissions;
 
+use App\Entity\Contrats\Contrat;
 use App\Repository\Soumissions\SoumissionnaireRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -54,10 +55,16 @@ class Soumissionnaire
      */
     private $associationOffre;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Contrat::class, mappedBy="soumissionnaire")
+     */
+    private $associationContrat;
+
     public function __construct()
     {
         $this->associationSoumission = new ArrayCollection();
         $this->associationOffre = new ArrayCollection();
+        $this->associationContrat = new ArrayCollection();
     }
 
 
@@ -182,6 +189,36 @@ class Soumissionnaire
     public function setDescriptionEntreprise(?string $descriptionEntreprise): self
     {
         $this->descriptionEntreprise = $descriptionEntreprise;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Contrat[]
+     */
+    public function getAssociationContrat(): Collection
+    {
+        return $this->associationContrat;
+    }
+
+    public function addAssociationContrat(Contrat $associationContrat): self
+    {
+        if (!$this->associationContrat->contains($associationContrat)) {
+            $this->associationContrat[] = $associationContrat;
+            $associationContrat->setSoumissionnaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationContrat(Contrat $associationContrat): self
+    {
+        if ($this->associationContrat->removeElement($associationContrat)) {
+            // set the owning side to null (unless already changed)
+            if ($associationContrat->getSoumissionnaire() === $this) {
+                $associationContrat->setSoumissionnaire(null);
+            }
+        }
 
         return $this;
     }

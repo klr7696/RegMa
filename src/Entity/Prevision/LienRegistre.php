@@ -3,6 +3,7 @@
 namespace App\Entity\Prevision;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Plans\AutorisationMarche;
 use App\Repository\Prevision\LienRegistreRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -56,9 +57,19 @@ class LienRegistre
 
     /**
      * @ORM\ManyToOne(targetEntity=StatutRegistre::class, inversedBy="associationActualisation")
-     * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $statutRegistre;
+
+    /**
+     * @ORM\OneToOne(targetEntity=AutorisationMarche::class, inversedBy="lienRegistre", cascade={"persist", "remove"})
+     */
+    private $relation;
+
+    /**
+     * @ORM\OneToOne(targetEntity=AutorisationMarche::class, mappedBy="relationModifier", cascade={"persist", "remove"})
+     */
+    private $autorisationMarche;
 
     public function getId(): ?int
     {
@@ -187,6 +198,40 @@ class LienRegistre
     public function setStatutRegistre(?StatutRegistre $statutRegistre): self
     {
         $this->statutRegistre = $statutRegistre;
+
+        return $this;
+    }
+
+    public function getRelation(): ?AutorisationMarche
+    {
+        return $this->relation;
+    }
+
+    public function setRelation(?AutorisationMarche $relation): self
+    {
+        $this->relation = $relation;
+
+        return $this;
+    }
+
+    public function getAutorisationMarche(): ?AutorisationMarche
+    {
+        return $this->autorisationMarche;
+    }
+
+    public function setAutorisationMarche(?AutorisationMarche $autorisationMarche): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($autorisationMarche === null && $this->autorisationMarche !== null) {
+            $this->autorisationMarche->setRelationModifier(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($autorisationMarche !== null && $autorisationMarche->getRelationModifier() !== $this) {
+            $autorisationMarche->setRelationModifier($this);
+        }
+
+        $this->autorisationMarche = $autorisationMarche;
 
         return $this;
     }

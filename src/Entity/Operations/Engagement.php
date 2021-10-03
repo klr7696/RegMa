@@ -2,6 +2,9 @@
 
 namespace App\Entity\Operations;
 
+use App\Entity\Contrats\Contrat;
+use App\Entity\Nomenclatures\CompteFonction;
+use App\Entity\Nomenclatures\CompteNature;
 use App\Repository\Operations\EngagementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -63,6 +66,22 @@ class Engagement
      * @ORM\OneToMany(targetEntity=Imputation::class, mappedBy="engagement")
      */
     private $associationImputation;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Contrat::class, mappedBy="associationEngagement", cascade={"persist", "remove"})
+     */
+    private $contrat;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="associationEngagement")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $compteNature;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CompteFonction::class, inversedBy="associationEngagement")
+     */
+    private $compteFonction;
 
     public function __construct()
     {
@@ -234,6 +253,47 @@ class Engagement
                 $associationImputation->setEngagement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getContrat(): ?Contrat
+    {
+        return $this->contrat;
+    }
+
+    public function setContrat(Contrat $contrat): self
+    {
+        // set the owning side of the relation if necessary
+        if ($contrat->getAssociationEngagement() !== $this) {
+            $contrat->setAssociationEngagement($this);
+        }
+
+        $this->contrat = $contrat;
+
+        return $this;
+    }
+
+    public function getCompteNature(): ?CompteNature
+    {
+        return $this->compteNature;
+    }
+
+    public function setCompteNature(?CompteNature $compteNature): self
+    {
+        $this->compteNature = $compteNature;
+
+        return $this;
+    }
+
+    public function getCompteFonction(): ?CompteFonction
+    {
+        return $this->compteFonction;
+    }
+
+    public function setCompteFonction(?CompteFonction $compteFonction): self
+    {
+        $this->compteFonction = $compteFonction;
 
         return $this;
     }

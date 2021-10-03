@@ -2,6 +2,7 @@
 
 namespace App\Entity\Prevision;
 
+use App\Entity\Nomenclatures\CompteNature;
 use App\Repository\Prevision\CreditOuvertRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -49,6 +50,17 @@ class CreditOuvert
      * @ORM\OneToOne(targetEntity=LienRegistre::class, mappedBy="associationCreditModifier", cascade={"persist", "remove"})
      */
     private $lienRegistre;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $estValide;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="associationCreditOuvert")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $compteNature;
 
     public function __construct()
     {
@@ -156,6 +168,30 @@ class CreditOuvert
         }
 
         $this->lienRegistre = $lienRegistre;
+
+        return $this;
+    }
+
+    public function getEstValide(): ?bool
+    {
+        return $this->estValide;
+    }
+
+    public function setEstValide(bool $estValide): self
+    {
+        $this->estValide = $estValide;
+
+        return $this;
+    }
+
+    public function getCompteNature(): ?CompteNature
+    {
+        return $this->compteNature;
+    }
+
+    public function setCompteNature(?CompteNature $compteNature): self
+    {
+        $this->compteNature = $compteNature;
 
         return $this;
     }
