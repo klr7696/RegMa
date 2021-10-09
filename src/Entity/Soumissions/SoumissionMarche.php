@@ -2,6 +2,7 @@
 
 namespace App\Entity\Soumissions;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Projets\ProjetMarche;
 use App\Repository\Soumissions\SoumissionMarcheRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=SoumissionMarcheRepository::class)
  */
 class SoumissionMarche

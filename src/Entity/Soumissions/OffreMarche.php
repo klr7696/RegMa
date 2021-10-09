@@ -2,12 +2,14 @@
 
 namespace App\Entity\Soumissions;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Contrats\Contrat;
 use App\Entity\Plans\LotMarche;
 use App\Repository\Soumissions\OffreMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=OffreMarcheRepository::class)
  */
 class OffreMarche

@@ -2,6 +2,7 @@
 
 namespace App\Entity\Prevision;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Nomenclatures\CompteNature;
 use App\Repository\Prevision\CreditOuvertRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=CreditOuvertRepository::class)
  */
 class CreditOuvert

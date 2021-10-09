@@ -2,12 +2,14 @@
 
 namespace App\Entity\Projets;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Projets\ModePassationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=ModePassationRepository::class)
  */
 class ModePassation

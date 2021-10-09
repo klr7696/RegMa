@@ -2,6 +2,7 @@
 
 namespace App\Entity\Prevision;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Administration\MairieCommunale;
 use App\Entity\Nomenclatures\CompteNature;
 use App\Entity\Plans\AutorisationMarche;
@@ -9,6 +10,7 @@ use App\Repository\Prevision\AllocationCreditRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=AllocationCreditRepository::class)
  */
 class AllocationCredit

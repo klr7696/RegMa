@@ -2,6 +2,7 @@
 
 namespace App\Entity\Plans;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Administration\MairieCommunale;
 use App\Entity\Prevision\ExerciceRegistre;
 use App\Repository\Plans\PlanPassationRepository;
@@ -10,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=PlanPassationRepository::class)
  */
 class PlanPassation

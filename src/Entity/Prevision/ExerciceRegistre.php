@@ -2,6 +2,7 @@
 
 namespace App\Entity\Prevision;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Nomenclatures\Nomenclature;
 use App\Entity\Plans\PlanPassation;
 use App\Repository\Prevision\ExerciceRegistreRepository;
@@ -10,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=ExerciceRegistreRepository::class)
  */
 class ExerciceRegistre

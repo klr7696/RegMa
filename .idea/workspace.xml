@@ -7,37 +7,41 @@
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:prevision" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="test reussit">
-      <change afterPath="$PROJECT_DIR$/src/Entity/Plans/LienPlan.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/Plans/StatutPlan.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/Plans/LienPlanRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/Plans/StatutPlanRepository.php" afterDir="false" />
+    <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="les classes du modèle versionner en premiere fois">
+      <change afterPath="$PROJECT_DIR$/migrations/Version20211003205443.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20210921075205.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/PrevisionFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/PrevisionFixtures.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Administration/MairieCommunale.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Administration/MairieCommunale.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Commissions/Commission.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commissions/Commission.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Commissions/MembreCommission.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commissions/MembreCommission.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Commissions/ParticipantCommission.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commissions/ParticipantCommission.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Contrats/BonCommande.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Contrats/BonCommande.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Contrats/Contrat.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Contrats/Contrat.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteFonction.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteFonction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Contrats/ItemCommande.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Contrats/ItemCommande.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Operations/Engagement.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Operations/Engagement.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Operations/Imputation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Operations/Imputation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Operations/Mandatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Operations/Mandatement.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Plans/AutorisationMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/AutorisationMarche.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Plans/ExceptionMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/ExceptionMarche.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Plans/LienPlan.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/LienPlan.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Plans/LotMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/LotMarche.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Plans/PlanPassation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/PlanPassation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/AllocationCredit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/AllocationCredit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/LienRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/LienRegistre.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/RessourceFinanciere.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/RessourceFinanciere.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Projets/DecisionMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Projets/DecisionMarche.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Projets/ModePassation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Projets/ModePassation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Projets/PhaseMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Projets/PhaseMarche.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Projets/ProjetMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Projets/ProjetMarche.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Soumissions/OffreMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Soumissions/OffreMarche.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Soumissions/SoumissionMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Soumissions/SoumissionMarche.php" afterDir="false" />
@@ -55,7 +59,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="prevision" />
+        <entry key="$PROJECT_DIR$" value="relation" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -226,7 +230,7 @@
   </component>
   <component name="RunManager">
     <configuration name="phpunit.xml.dist" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner scope="XML" />
+      <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml.dist" scope="XML" />
       <method v="2" />
     </configuration>
   </component>
@@ -256,6 +260,9 @@
       <workItem from="1633184562309" duration="985000" />
       <workItem from="1633203347836" duration="335000" />
       <workItem from="1633270092328" duration="13920000" />
+      <workItem from="1633519757858" duration="1996000" />
+      <workItem from="1633527697852" duration="276000" />
+      <workItem from="1633767700699" duration="436000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -297,13 +304,18 @@
         <entry key="1">
           <value>
             <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
               <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
               <option name="FILTERS">
                 <map>
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="HEAD" />
+                        <option value="prevision" />
                       </list>
                     </value>
                   </entry>
@@ -321,7 +333,19 @@
         </entry>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="prevision" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -339,17 +363,18 @@
     <MESSAGE value="definition des entités du modules Nomenclatures avec leur fixtures" />
     <MESSAGE value="sale" />
     <MESSAGE value="creation des classes du projet de registre marche" />
-    <option name="LAST_COMMIT_MESSAGE" value="creation des classes du projet de registre marche" />
+    <MESSAGE value="les classes du modèle versionner en premiere fois" />
+    <option name="LAST_COMMIT_MESSAGE" value="les classes du modèle versionner en premiere fois" />
   </component>
   <component name="WindowStateProjectService">
     <state x="578" y="309" key="#Composer" timestamp="1631991990404">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="578" y="309" key="#Composer/0.0.1536.834@0.0.1536.834" timestamp="1631991990404" />
-    <state x="361" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1632442236106">
+    <state x="361" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1633296401762">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1632442236106" />
+    <state x="361" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1633296401762" />
     <state x="574" y="99" key="#com.intellij.ide.util.MemberChooser" timestamp="1632234168692">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -362,6 +387,22 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.834@0.0.1536.834" timestamp="1632349905933" />
+    <state width="1493" height="214" key="GridCell.Tab.0.bottom" timestamp="1633296705599">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="214" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1633296705599" />
+    <state width="1493" height="214" key="GridCell.Tab.0.center" timestamp="1633296705598">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="214" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1633296705598" />
+    <state width="1493" height="214" key="GridCell.Tab.0.left" timestamp="1633296705598">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="214" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1633296705598" />
+    <state width="1493" height="214" key="GridCell.Tab.0.right" timestamp="1633296705598">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="214" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1633296705598" />
     <state x="147" y="66" key="MergeDialog" timestamp="1632234775773">
       <screen x="0" y="0" width="1536" height="834" />
     </state>

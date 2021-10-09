@@ -2,6 +2,7 @@
 
 namespace App\Entity\Contrats;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Commissions\Commission;
 use App\Entity\Operations\Mandatement;
 use App\Repository\Contrats\BonCommandeRepository;
@@ -10,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=BonCommandeRepository::class)
  */
 class BonCommande

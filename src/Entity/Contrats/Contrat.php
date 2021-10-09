@@ -2,6 +2,7 @@
 
 namespace App\Entity\Contrats;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Operations\Engagement;
 use App\Entity\Plans\ExceptionMarche;
 use App\Entity\Projets\DecisionMarche;
@@ -13,6 +14,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=ContratRepository::class)
  */
 class Contrat

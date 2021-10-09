@@ -2,10 +2,12 @@
 
 namespace App\Entity\Projets;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Projets\PhaseMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=PhaseMarcheRepository::class)
  */
 class PhaseMarche

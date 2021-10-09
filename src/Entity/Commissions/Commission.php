@@ -2,6 +2,7 @@
 
 namespace App\Entity\Commissions;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Contrats\BonCommande;
 use App\Entity\Projets\ProjetMarche;
 use App\Repository\Commissions\CommissionRepository;
@@ -10,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=CommissionRepository::class)
  */
 class Commission

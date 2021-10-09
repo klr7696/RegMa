@@ -58,10 +58,6 @@ class LotMarche
      */
     private $autorisationMarche;
 
-    /**
-     * @ORM\OneToOne(targetEntity=LienPlan::class, inversedBy="lotMarche", cascade={"persist", "remove"})
-     */
-    private $associationLotActuel;
 
     /**
      * @ORM\OneToOne(targetEntity=LienPlan::class, mappedBy="associationLotModifier", cascade={"persist", "remove"})
@@ -177,17 +173,7 @@ class LotMarche
         return $this;
     }
 
-    public function getAssociationLotActuel(): ?LienPlan
-    {
-        return $this->associationLotActuel;
-    }
 
-    public function setAssociationLotActuel(?LienPlan $associationLotActuel): self
-    {
-        $this->associationLotActuel = $associationLotActuel;
-
-        return $this;
-    }
 
     public function getLienPlan(): ?LienPlan
     {

@@ -2,6 +2,7 @@
 
 namespace App\Entity\Administration;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Plans\AutorisationMarche;
 use App\Entity\Plans\PlanPassation;
 use App\Entity\Prevision\AllocationCredit;
@@ -11,11 +12,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=MairieCommunaleRepository::class)
  */
 class MairieCommunale
 {
     /**
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")

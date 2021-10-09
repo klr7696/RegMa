@@ -2,12 +2,14 @@
 
 namespace App\Entity\Operations;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Nomenclatures\CompteNature;
 use App\Entity\Prevision\RessourceFinanciere;
 use App\Repository\Operations\ImputationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=ImputationRepository::class)
  */
 class Imputation

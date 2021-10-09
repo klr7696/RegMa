@@ -2,6 +2,7 @@
 
 namespace App\Entity\Projets;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Commissions\Commission;
 use App\Entity\Plans\LotMarche;
 use App\Entity\Soumissions\SoumissionMarche;
@@ -11,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=ProjetMarcheRepository::class)
  */
 class ProjetMarche

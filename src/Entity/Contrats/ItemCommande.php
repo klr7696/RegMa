@@ -2,10 +2,12 @@
 
 namespace App\Entity\Contrats;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Contrats\ItemCommandeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=ItemCommandeRepository::class)
  */
 class ItemCommande

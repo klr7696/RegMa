@@ -2,6 +2,7 @@
 
 namespace App\Entity\Operations;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Contrats\Contrat;
 use App\Entity\Nomenclatures\CompteFonction;
 use App\Entity\Nomenclatures\CompteNature;
@@ -11,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=EngagementRepository::class)
  */
 class Engagement

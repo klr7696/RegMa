@@ -2,6 +2,7 @@
 
 namespace App\Entity\Soumissions;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Contrats\Contrat;
 use App\Repository\Soumissions\SoumissionnaireRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=SoumissionnaireRepository::class)
  */
 class Soumissionnaire

@@ -22,10 +22,7 @@ class LienPlan
      */
     private $motifModification;
 
-    /**
-     * @ORM\OneToOne(targetEntity=LotMarche::class, mappedBy="associationLotModifier", cascade={"persist", "remove"})
-     */
-    private $lotMarche;
+
 
     /**
      * @ORM\OneToOne(targetEntity=ExceptionMarche::class, mappedBy="associationExceptionActuel", cascade={"persist", "remove"})
@@ -65,27 +62,7 @@ class LienPlan
         return $this;
     }
 
-    public function getLotMarche(): ?LotMarche
-    {
-        return $this->lotMarche;
-    }
 
-    public function setLotMarche(?LotMarche $lotMarche): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($lotMarche === null && $this->lotMarche !== null) {
-            $this->lotMarche->setAssociationLotModifier(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($lotMarche !== null && $lotMarche->getAssociationLotActuel() !== $this) {
-            $lotMarche->setAssociationLotActuel($this);
-        }
-
-        $this->lotMarche = $lotMarche;
-
-        return $this;
-    }
 
     public function getExceptionMarche(): ?ExceptionMarche
     {

@@ -2,11 +2,13 @@
 
 namespace App\Entity\Projets;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Contrats\Contrat;
 use App\Repository\Projets\DecisionMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=DecisionMarcheRepository::class)
  */
 class DecisionMarche

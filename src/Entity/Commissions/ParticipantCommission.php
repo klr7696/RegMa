@@ -2,10 +2,12 @@
 
 namespace App\Entity\Commissions;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Commissions\ParticipantCommissionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=ParticipantCommissionRepository::class)
  */
 class ParticipantCommission

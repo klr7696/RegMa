@@ -2,11 +2,13 @@
 
 namespace App\Entity\Plans;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Contrats\Contrat;
 use App\Repository\Plans\ExceptionMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=ExceptionMarcheRepository::class)
  */
 class ExceptionMarche
