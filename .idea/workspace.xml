@@ -1,51 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
-    <select>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="BRANCH:prevision" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </select>
+    <expand />
+    <select />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="les classes du modèle versionner en premiere fois">
-      <change afterPath="$PROJECT_DIR$/migrations/Version20211003205443.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/bootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/controllers.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/controllers/hello_controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/packages/assets.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/packages/prod/webpack_encore.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/packages/test/webpack_encore.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/packages/webpack_encore.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/RegistreMarche.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RegistreMarche.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/PrevisionFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/PrevisionFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Administration/MairieCommunale.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Administration/MairieCommunale.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Commissions/Commission.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commissions/Commission.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Commissions/MembreCommission.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commissions/MembreCommission.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Commissions/ParticipantCommission.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commissions/ParticipantCommission.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Contrats/BonCommande.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Contrats/BonCommande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Contrats/Contrat.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Contrats/Contrat.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Contrats/ItemCommande.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Contrats/ItemCommande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Operations/Engagement.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Operations/Engagement.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Operations/Imputation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Operations/Imputation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Operations/Mandatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Operations/Mandatement.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Plans/AutorisationMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/AutorisationMarche.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Plans/ExceptionMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/ExceptionMarche.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Plans/LienPlan.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/LienPlan.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Plans/LotMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/LotMarche.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Plans/PlanPassation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/PlanPassation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/AllocationCredit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/AllocationCredit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Projets/DecisionMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Projets/DecisionMarche.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Projets/ModePassation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Projets/ModePassation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Projets/PhaseMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Projets/PhaseMarche.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Projets/ProjetMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Projets/ProjetMarche.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Soumissions/OffreMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Soumissions/OffreMarche.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Soumissions/SoumissionMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Soumissions/SoumissionMarche.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Soumissions/Soumissionnaire.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Soumissions/Soumissionnaire.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,6 +183,7 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-fixtures-bundle" />
       <path value="$PROJECT_DIR$/vendor/doctrine/data-fixtures" />
       <path value="$PROJECT_DIR$/vendor/fzaninotto/faker" />
+      <path value="$PROJECT_DIR$/vendor/symfony/webpack-encore-bundle" />
     </include_path>
   </component>
   <component name="ProjectId" id="1yKEe5DdJ24qRlXwxBuldkxRMD2" />
@@ -219,6 +200,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../xampp/php/php.exe" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
@@ -262,7 +244,13 @@
       <workItem from="1633270092328" duration="13920000" />
       <workItem from="1633519757858" duration="1996000" />
       <workItem from="1633527697852" duration="276000" />
-      <workItem from="1633767700699" duration="436000" />
+      <workItem from="1633767700699" duration="1137000" />
+      <workItem from="1633769705853" duration="846000" />
+      <workItem from="1633771240616" duration="383000" />
+      <workItem from="1633772051373" duration="931000" />
+      <workItem from="1634014570558" duration="193000" />
+      <workItem from="1634114808171" duration="1137000" />
+      <workItem from="1634116872986" duration="1165000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -292,7 +280,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632429635200</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="restructuration des classes versions1s">
+      <created>1633768471174</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1633768471174</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -315,14 +310,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="prevision" />
-                      </list>
-                    </value>
-                  </entry>
-                  <entry key="structure">
-                    <value>
-                      <list>
-                        <option value="dir:C:/RatmalgreProjet/RegistreMarche/src/Entity/Projets" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
@@ -339,7 +327,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="prevision" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
@@ -364,7 +352,8 @@
     <MESSAGE value="sale" />
     <MESSAGE value="creation des classes du projet de registre marche" />
     <MESSAGE value="les classes du modèle versionner en premiere fois" />
-    <option name="LAST_COMMIT_MESSAGE" value="les classes du modèle versionner en premiere fois" />
+    <MESSAGE value="restructuration des classes versions1s" />
+    <option name="LAST_COMMIT_MESSAGE" value="restructuration des classes versions1s" />
   </component>
   <component name="WindowStateProjectService">
     <state x="578" y="309" key="#Composer" timestamp="1631991990404">
@@ -387,22 +376,22 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.834@0.0.1536.834" timestamp="1632349905933" />
-    <state width="1493" height="214" key="GridCell.Tab.0.bottom" timestamp="1633296705599">
+    <state width="1493" height="213" key="GridCell.Tab.0.bottom" timestamp="1634117244446">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="214" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1633296705599" />
-    <state width="1493" height="214" key="GridCell.Tab.0.center" timestamp="1633296705598">
+    <state width="1493" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1634117244446" />
+    <state width="1493" height="213" key="GridCell.Tab.0.center" timestamp="1634117244445">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="214" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1633296705598" />
-    <state width="1493" height="214" key="GridCell.Tab.0.left" timestamp="1633296705598">
+    <state width="1493" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1634117244445" />
+    <state width="1493" height="213" key="GridCell.Tab.0.left" timestamp="1634117244445">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="214" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1633296705598" />
-    <state width="1493" height="214" key="GridCell.Tab.0.right" timestamp="1633296705598">
+    <state width="1493" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1634117244445" />
+    <state width="1493" height="213" key="GridCell.Tab.0.right" timestamp="1634117244446">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="214" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1633296705598" />
+    <state width="1493" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1634117244446" />
     <state x="147" y="66" key="MergeDialog" timestamp="1632234775773">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -415,10 +404,14 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1632234139833" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1632234409582">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1633772127568">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1632234409582" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1633772127568" />
+    <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1633772096820">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1633772096820" />
     <state x="356" y="185" key="run.anything.popup" timestamp="1632434681878">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
