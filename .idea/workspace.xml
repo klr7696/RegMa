@@ -5,27 +5,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="les classes du modèle versionner en premiere fois">
-      <change afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/bootstrap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/controllers.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/controllers/hello_controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/packages/assets.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/packages/prod/webpack_encore.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/packages/test/webpack_encore.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/packages/webpack_encore.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/RegistreMarche.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RegistreMarche.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="installation dependance react">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Administration/MairieCommunale.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Administration/MairieCommunale.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteFonction.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteFonction.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="relation" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -250,7 +235,10 @@
       <workItem from="1633772051373" duration="931000" />
       <workItem from="1634014570558" duration="193000" />
       <workItem from="1634114808171" duration="1137000" />
-      <workItem from="1634116872986" duration="1165000" />
+      <workItem from="1634116872986" duration="3762000" />
+      <workItem from="1634203960423" duration="13915000" />
+      <workItem from="1634261180787" duration="20826000" />
+      <workItem from="1634290099896" duration="8881000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -287,7 +275,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633768471174</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="installation dependance react">
+      <created>1634118119963</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1634118119963</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -353,7 +348,8 @@
     <MESSAGE value="creation des classes du projet de registre marche" />
     <MESSAGE value="les classes du modèle versionner en premiere fois" />
     <MESSAGE value="restructuration des classes versions1s" />
-    <option name="LAST_COMMIT_MESSAGE" value="restructuration des classes versions1s" />
+    <MESSAGE value="installation dependance react" />
+    <option name="LAST_COMMIT_MESSAGE" value="installation dependance react" />
   </component>
   <component name="WindowStateProjectService">
     <state x="578" y="309" key="#Composer" timestamp="1631991990404">
@@ -376,22 +372,22 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.834@0.0.1536.834" timestamp="1632349905933" />
-    <state width="1493" height="213" key="GridCell.Tab.0.bottom" timestamp="1634117244446">
+    <state width="1493" height="213" key="GridCell.Tab.0.bottom" timestamp="1634127203097">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1634117244446" />
-    <state width="1493" height="213" key="GridCell.Tab.0.center" timestamp="1634117244445">
+    <state width="1493" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1634127203097" />
+    <state width="1493" height="213" key="GridCell.Tab.0.center" timestamp="1634127203096">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1634117244445" />
-    <state width="1493" height="213" key="GridCell.Tab.0.left" timestamp="1634117244445">
+    <state width="1493" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1634127203096" />
+    <state width="1493" height="213" key="GridCell.Tab.0.left" timestamp="1634127203096">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1634117244445" />
-    <state width="1493" height="213" key="GridCell.Tab.0.right" timestamp="1634117244446">
+    <state width="1493" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1634127203096" />
+    <state width="1493" height="213" key="GridCell.Tab.0.right" timestamp="1634127203096">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1634117244446" />
+    <state width="1493" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1634127203096" />
     <state x="147" y="66" key="MergeDialog" timestamp="1632234775773">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -404,10 +400,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1632234139833" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1633772127568">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1634118137441">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1633772127568" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1634118137441" />
     <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1633772096820">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
