@@ -10,9 +10,22 @@ use App\Repository\Administration\MairieCommunaleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={
+ *     "get"={"openapi_context"={"summary"="Affiche les informations d'une mairie"}}
+ * ,"patch"={"openapi_context"={"summary"="Actualise les informations d'une mairie"}}
+ *   },
+ *     collectionOperations={
+ *     "get" ={"openapi_context"={"summary"="Affiche les informations des mairies"}}
+ *     ,"post"={"openapi_context"={"summary"="Crée une mairie"}}
+ * },
+ *     shortName= "mairie",
+ *      normalizationContext={"groups"={"mairie_detail:read","nomen_compte:read"}, "openapi_definition_name"= "Read"},
+ *      denormalizationContext={"groups"={"mairie_detail:write"}, "openapi_definition_name"= "Write"},
+ * )
  * @ORM\Entity(repositoryClass=MairieCommunaleRepository::class)
  */
 class MairieCommunale
@@ -27,21 +40,25 @@ class MairieCommunale
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"mairie_detail:read","mairie_detail:write"})
      */
     private $designationMairie;
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups({"mairie_detail:read","mairie_detail:write"})
      */
     private $abbreviationMairie;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"mairie_detail:read","mairie_detail:write"})
      */
     private $adresseMairie;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"mairie_detail:read","mairie_detail:write"})
      */
     private $descriptionMairie;
 

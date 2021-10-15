@@ -3,15 +3,41 @@
 namespace App\Entity\Nomenclatures;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Prevision\ExerciceRegistre;
 use App\Repository\Nomenclatures\NomenclatureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
  * @ORM\Entity(repositoryClass=NomenclatureRepository::class)
+ * @ApiResource(
+ *     shortName= "nomenclatures",
+ *     itemOperations={
+ *     "get"={"openapi_context"={"summary"="Affiche les informations d'une nomenclature"}}
+ *     , "patch"={"openapi_context"={"summary"="Actualise les informations d'une nomenclature existante"}}
+ * },
+ *     collectionOperations={
+ *     "get"={"openapi_context"={"summary"="Affiche les informations des nomenclatures"}}
+ * ,"post"={"openapi_context"={"summary"="Crée une nomenclature"}}
+ * },
+ *
+ *      normalizationContext={"groups"={"nomen_detail:read","nomen_compte:read"}, "openapi_definition_name"= "Read"},
+ *      denormalizationContext={"groups"={"nomen_detail:write"}, "openapi_definition_name"= "Write"},
+ *      subresourceOperations={
+ *              "assiociation_compte_natures_get_subresource"= {"path" ="/nomenclatures/{id}/natures",
+ *              "openapi_context"={"summary"="liste les comptes nature de la nomenclature"}
+ *     },
+ *     "association_compte_fonctions_get_subresource"={"path" ="/nomenclatures/{id}/fonctions",
+ *              "openapi_context"={"summary"="liste les comptes fonctions de la nomenclature"}
+ *             }
+ *     },
+ *
+ *
+ * )
+ *
  */
 class Nomenclature
 {
@@ -24,61 +50,54 @@ class Nomenclature
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"nomen_detail:read","nomen_detail:write"})
      */
     private $anneeApplication;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
+     * @Groups({"nomen_detail:read","nomen_detail:write"})
      */
     private $decretAdoption;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"nomen_detail:read","nomen_detail:write"})
      */
     private $dateAdoption;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
+     * @Groups({"nomen_detail:read","nomen_detail:write"})
      */
     private $decretApplication;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"nomen_detail:read","nomen_detail:write"})
      */
     private $dateApplication;
 
-    /**
-     * @ORM\Column(type="string", length=30, nullable=true)
-     */
-    private $referenceVisa;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $dateVisa;
-
-    /**
-     * @ORM\Column(type="string", length=30, nullable=true)
-     */
-    private $structureVisa;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"nomen_detail:read","nomen_detail:write"})
      */
     private $descriptionNomenclature;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $creationAt;
+
 
     /**
      * @ORM\OneToMany(targetEntity=CompteNature::class, mappedBy="nomenclature", orphanRemoval=true)
+     * @Groups({"nomen_detail:read"})
+     * @ApiSubresource(maxDepth=1)
      */
     private $assiociationCompteNature;
 
     /**
      * @ORM\OneToMany(targetEntity=CompteFonction::class, mappedBy="nomenclature", orphanRemoval=true)
+     * @Groups({"nomen_detail:read"})
+     * @ApiSubresource(maxDepth=1)
      */
     private $associationCompteFonction;
 
@@ -159,42 +178,6 @@ class Nomenclature
         return $this;
     }
 
-    public function getReferenceVisa(): ?string
-    {
-        return $this->referenceVisa;
-    }
-
-    public function setReferenceVisa(?string $referenceVisa): self
-    {
-        $this->referenceVisa = $referenceVisa;
-
-        return $this;
-    }
-
-    public function getDateVisa(): ?\DateTimeInterface
-    {
-        return $this->dateVisa;
-    }
-
-    public function setDateVisa(?\DateTimeInterface $dateVisa): self
-    {
-        $this->dateVisa = $dateVisa;
-
-        return $this;
-    }
-
-    public function getStructureVisa(): ?string
-    {
-        return $this->structureVisa;
-    }
-
-    public function setStructureVisa(?string $structureVisa): self
-    {
-        $this->structureVisa = $structureVisa;
-
-        return $this;
-    }
-
     public function getDescriptionNomenclature(): ?string
     {
         return $this->descriptionNomenclature;
@@ -203,18 +186,6 @@ class Nomenclature
     public function setDescriptionNomenclature(?string $descriptionNomenclature): self
     {
         $this->descriptionNomenclature = $descriptionNomenclature;
-
-        return $this;
-    }
-
-    public function getCreationAt(): ?\DateTimeImmutable
-    {
-        return $this->creationAt;
-    }
-
-    public function setCreationAt(\DateTimeImmutable $creationAt): self
-    {
-        $this->creationAt = $creationAt;
 
         return $this;
     }

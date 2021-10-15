@@ -2,6 +2,9 @@
 
 namespace App\Entity\Nomenclatures;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Operations\Engagement;
 use App\Entity\Operations\Mandatement;
@@ -9,10 +12,48 @@ use App\Repository\Nomenclatures\CompteFonctionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
  * @ORM\Entity(repositoryClass=CompteFonctionRepository::class)
+ * @ApiResource(
+ *     itemOperations={
+ *     "get"={"openapi_context"={"summary"="Affiche les informations d'un compte fonction"}}
+ * ,"patch"={"openapi_context"={"summary"="Actualise les informations d'un compte fonction"}}
+ *   },
+ *     collectionOperations={
+ *     "get" ={"openapi_context"={"summary"="Affiche les informations des comptes fonctions"}}
+ *     ,"post"={"openapi_context"={"summary"="Crée un compte fonction"}}
+ * },
+ *     shortName= "fonctions",
+ *     normalizationContext={"groups"={"fonction_detail:read","nomen_detail:read"}, "swager_definition_name"= "Read"},
+ *     denormalizationContext={"groups"={"fonction_detail:write"}, "swager_definition_name"= "Write"},
+ *     subresourceOperations={
+ *             "api_nomenclatures_assiociation_compte_fonctions_get_subresource"= {
+ *              "normalization_context"={"groups"={"nomen_fonction:read"}},
+ *
+ *
+ *
+ *      }
+ *
+ *     },
+ *subresourceOperations={
+ *           "sous_compte_fonctions_get_subresource"={
+
+ *                          "path"="/fonctions/{id}/sousfonctions",
+ *                          "openapi_context"={"summary"="liste les sous comptes d'un compte fonction "}
+ *     },
+ *     "api_fonctions_sous_compte_fonctions_get_subresource"={
+ *     "normalization_context"={"groups"={"sousfonction:read"}}
+ * },
+ *     }
+ *
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"numeroCompteFonction":"exact","hierachieCompteFonction":"exact"} )
+ * @UniqueEntity("numeroCompteFonction")
+ * @UniqueEntity("libelleCompteFonction")
  */
 class CompteFonction
 {
@@ -25,16 +66,20 @@ class CompteFonction
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"fonction_detail:read","fonction_detail:write","nomen_fonction:read","sousfonction:read"})
      */
     private $numeroCompteFonction;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"fonction_detail:read","fonction_detail:write","nomen_fonction:read","sousfonction:read"})
      */
     private $libelleCompteFonction;
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @Groups({"fonction_detail:read","fonction_detail:write","nomen_fonction:read","sousfonction:read"})
+     * @Assert\Choice(choices= {"DIVISION", "GROUPE", "ClASSE"})
      */
     private $hierachieCompteFonction;
 
@@ -43,10 +88,6 @@ class CompteFonction
      */
     private $descriptionCompteFonction;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $creationAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=Nomenclature::class, inversedBy="associationCompteFonction")
@@ -56,11 +97,14 @@ class CompteFonction
 
     /**
      * @ORM\ManyToOne(targetEntity=CompteFonction::class, inversedBy="sousCompteFonction")
+     * @Groups({"fonction_detail:read","fonction_detail:write","nomen_fonction:read","sousfonction:read"})
      */
     private $compteFonction;
 
     /**
      * @ORM\OneToMany(targetEntity=CompteFonction::class, mappedBy="compteFonction")
+     *@Groups({"fonction_detail:read","fonction_detail:write","nomen_fonction:read","sousfonction:read"})
+     * @ApiSubresource()
      */
     private $sousCompteFonction;
 
@@ -130,18 +174,6 @@ class CompteFonction
     public function setDescriptionCompteFonction(?string $descriptionCompteFonction): self
     {
         $this->descriptionCompteFonction = $descriptionCompteFonction;
-
-        return $this;
-    }
-
-    public function getCreationAt(): ?\DateTimeImmutable
-    {
-        return $this->creationAt;
-    }
-
-    public function setCreationAt(\DateTimeImmutable $creationAt): self
-    {
-        $this->creationAt = $creationAt;
 
         return $this;
     }

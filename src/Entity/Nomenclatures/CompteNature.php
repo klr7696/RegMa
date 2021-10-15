@@ -2,7 +2,10 @@
 
 namespace App\Entity\Nomenclatures;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Operations\Engagement;
 use App\Entity\Operations\Imputation;
 use App\Entity\Operations\Mandatement;
@@ -13,10 +16,48 @@ use App\Repository\Nomenclatures\CompteNatureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
  * @ORM\Entity(repositoryClass=CompteNatureRepository::class)
+ * @ApiResource(
+ *     itemOperations={
+ *     "get"={"openapi_context"={"summary"="Affiche les informations d'un compte nature"}}
+ * ,"patch"={"openapi_context"={"summary"="Actualise les informations d'un compte nature"}}
+ *   },
+ *     collectionOperations={
+ *     "get" ={"openapi_context"={"summary"="Affiche les informations des comptes natures"}}
+ *     ,"post"={"openapi_context"={"summary"="Crée un compte nature"}}
+ * },
+ *     shortName= "natures",
+ *     normalizationContext={"groups"={"nature_detail:read","nomen_detail:read"}, "swager_definition_name"= "Read"},
+ *     denormalizationContext={"groups"={"nature_detail:write"}, "swager_definition_name"= "Write"},
+ *     subresourceOperations={
+ *             "api_nomenclatures_assiociation_compte_natures_get_subresource"= {
+ *              "normalization_context"={"groups"={"nomen_nature:read"}},
+ *
+ *
+ *      }
+ *
+ *     },
+ *     subresourceOperations={
+ *     "sous_compte_natures_get_subresource"={
+
+ *                          "path"="/natures/{id}/sousnatures",
+ *                          "openapi_context"={"summary"="liste les sous comptes d'un compte nature"}
+ *     },
+ *     "api_natures_sous_compte_natures_get_subresource"={
+ *     "normalization_context"={"groups"={"sousnature:read"}}
+ * },
+
+ *     }
+ *
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"numeroCompteNature":"exact","sectionCompteNature":"exact","hierachieCompteNature":"exact"} )
+ * @UniqueEntity("numeroCompteNature")
+ * @UniqueEntity("libelleCompteNature")
  */
 class CompteNature
 {
@@ -29,47 +70,54 @@ class CompteNature
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"nature_detail:read","nature_detail:write","nomen_nature:read","sousnature:read"})
      */
     private $numeroCompteNature;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"nature_detail:read","nature_detail:write","nomen_nature:read","sousnature:read"})
      */
     private $libelleCompteNature;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, nullable=true)
+     * @Assert\Choice(choices= {"FONCTIONNEMENT", "INVESTISSEMENT"})
+     * @Groups({"nature_detail:read","nature_detail:write","nomen_nature:read"})
      */
     private $sectionCompteNature;
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @Groups({"nature_detail:read","nature_detail:write","nomen_nature:read","sousnature:read"})
+     * @Assert\Choice(choices={"CHAPITRE","ARTICLE","PARAGRAPHE"})
      */
     private $hierachieCompteNature;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"nature_detail:read","nature_detail:write"})
      */
     private $descriptionCompteNature;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $creationAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=Nomenclature::class, inversedBy="assiociationCompteNature")
      * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $nomenclature;
 
     /**
      * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="sousCompteNature")
+     * @Groups({"nature_detail:read","nature_detail:write"})
      */
     private $compteNature;
 
     /**
      * @ORM\OneToMany(targetEntity=CompteNature::class, mappedBy="compteNature")
+     * @Groups({"nature_detail:read","nature_detail:write","nomen_nature:read"})
+     * @ApiSubresource()
      */
     private $sousCompteNature;
 
@@ -175,18 +223,6 @@ class CompteNature
     public function setDescriptionCompteNature(?string $descriptionCompteNature): self
     {
         $this->descriptionCompteNature = $descriptionCompteNature;
-
-        return $this;
-    }
-
-    public function getCreationAt(): ?\DateTimeImmutable
-    {
-        return $this->creationAt;
-    }
-
-    public function setCreationAt(\DateTimeImmutable $creationAt): self
-    {
-        $this->creationAt = $creationAt;
 
         return $this;
     }
