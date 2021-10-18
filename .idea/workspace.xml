@@ -26,21 +26,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="installation dependance react">
-      <change afterPath="$PROJECT_DIR$/migrations/Version20211017201700.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/migrations/Version20211017202029.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Events/NomenclatureSubscriber.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/symfony2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrations/Version20211018124047.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Events/NomenclatureDate.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20210924002144.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20211003205443.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20211015134731.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20211016070433.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20211015135849.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20211015140654.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteFonction.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteFonction.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Nomenclatures/NomenclatureRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Nomenclatures/NomenclatureRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Events/NomenclatureSubscriber.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Events/NomenclatureActif.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -382,7 +375,8 @@
     <MESSAGE value="les classes du modèle versionner en premiere fois" />
     <MESSAGE value="restructuration des classes versions1s" />
     <MESSAGE value="installation dependance react" />
-    <option name="LAST_COMMIT_MESSAGE" value="installation dependance react" />
+    <MESSAGE value="ressources nomenclatures terminer" />
+    <option name="LAST_COMMIT_MESSAGE" value="ressources nomenclatures terminer" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">
@@ -401,18 +395,18 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="361" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1633296401762" />
-    <state x="574" y="99" key="#com.intellij.ide.util.MemberChooser" timestamp="1634333369298">
+    <state x="574" y="99" key="#com.intellij.ide.util.MemberChooser" timestamp="1634566476061">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="574" y="99" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1634333369298" />
-    <state x="346" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1634365017994">
+    <state x="574" y="99" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1634566476061" />
+    <state x="346" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1634566273371">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="346" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.834@0.0.1536.834" timestamp="1634365017994" />
-    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1634375979306">
+    <state x="346" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.834@0.0.1536.834" timestamp="1634566273371" />
+    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1634566864748">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.834@0.0.1536.834" timestamp="1634375979306" />
+    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.834@0.0.1536.834" timestamp="1634566864748" />
     <state width="1493" height="213" key="GridCell.Tab.0.bottom" timestamp="1634127203097">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -437,10 +431,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="657" y="285" key="MultipleFileMergeDialog/0.0.1536.834@0.0.1536.834" timestamp="1632234775783" />
-    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1634374717531">
+    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1634566453163">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1634374717531" />
+    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1634566453163" />
     <state x="277" y="62" key="SettingsEditor" timestamp="1634384395570">
       <screen x="0" y="0" width="1536" height="834" />
     </state>

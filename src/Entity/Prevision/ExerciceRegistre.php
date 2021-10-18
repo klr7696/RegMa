@@ -43,6 +43,20 @@ class ExerciceRegistre
      * @ORM\Column(type="boolean")
      */
     private $estEnCours;
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateVote;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateAdoption;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateCloture;
 
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="exerciceRegistre", orphanRemoval=true)
@@ -64,6 +78,8 @@ class ExerciceRegistre
      * @ORM\OneToMany(targetEntity=PlanPassation::class, mappedBy="exerciceRegistre", orphanRemoval=true)
      */
     private $associationPlan;
+
+
 
     public function __construct()
     {
@@ -223,6 +239,42 @@ class ExerciceRegistre
                 $associationPlan->setExerciceRegistre(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateVote(): ?\DateTimeInterface
+    {
+        return $this->dateVote;
+    }
+
+    public function setDateVote(?\DateTimeInterface $dateVote): self
+    {
+        $this->dateVote = $dateVote;
+
+        return $this;
+    }
+
+    public function getDateAdoption(): ?\DateTimeInterface
+    {
+        return $this->dateAdoption;
+    }
+
+    public function setDateAdoption(?\DateTimeInterface $dateAdoption): self
+    {
+        $this->dateAdoption = $dateAdoption;
+
+        return $this;
+    }
+
+    public function getDateCloture(): ?\DateTimeInterface
+    {
+        return $this->dateCloture;
+    }
+
+    public function setDateCloture(?\DateTimeInterface $dateCloture): self
+    {
+        $this->dateCloture = $dateCloture;
 
         return $this;
     }

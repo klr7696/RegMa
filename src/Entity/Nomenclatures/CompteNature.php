@@ -69,7 +69,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  }
  *
  * )
- * @ApiFilter(SearchFilter::class, properties={"numeroCompteNature":"exact","sectionCompteNature":"exact","hierachieCompteNature":"exact"} )
+ * @ApiFilter(SearchFilter::class, properties={"numeroCompteNature"="exact","sectionCompteNature"="exact","hierachieCompteNature"="exact"} )
  * @UniqueEntity("numeroCompteNature")
  * @UniqueEntity("libelleCompteNature")
  */
@@ -100,10 +100,10 @@ class CompteNature
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
-     * @Assert\Choice(choices= {"Fonctionnement", "Investissement"})
+     * @Assert\Choice(choices= {"","Fonctionnement", "Investissement"})
      * @Groups({"nature_detail:read","nature_detail:write"
      * ,"nomen_nature:read","chapitre:write",
-     *     "sousnatures:read","sousnatures:write"})
+     *    })
      */
     private $sectionCompteNature;
 

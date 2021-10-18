@@ -13,29 +13,30 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 
-class NomenclatureSubscriber implements EventSubscriberInterface
+class NomenclatureActif implements EventSubscriberInterface
 {
-private $precedent;
+/*private $precedent;
 public function __construct(NomenclatureRepository  $precedent)
 {
     $this->precedent = $precedent;
-}
+}*/
 
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW =>['actifNomenclature', EventPriorities::PRE_SERIALIZE ]
+            KernelEvents::VIEW =>['actifNomenclature', EventPriorities::PRE_WRITE ]
+
         ];
     }
     public function actifNomenclature(ViewEvent $event) {
         $result= $event->getControllerResult();
         $method= $event->getRequest()->getMethod();
 
-        if($result instanceof Nomenclature && $method ==="GET")
+        if($result instanceof Nomenclature && $method ==="PATCH")
         {
-            dd($this->precedent->findActif());
-            //$actif = $this->precedent->findActif();
-            //$result->setEstActif();
+
+
+            $result->setEstActif(false);
         }
 
     }

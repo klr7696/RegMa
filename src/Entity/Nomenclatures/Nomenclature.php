@@ -3,6 +3,7 @@
 namespace App\Entity\Nomenclatures;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Prevision\ExerciceRegistre;
@@ -10,12 +11,17 @@ use App\Repository\Nomenclatures\NomenclatureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=NomenclatureRepository::class)
  * @ApiFilter(BooleanFilter::class, properties={"estActif"})
+ * @ApiFilter(SearchFilter::class, properties={"anneeApplication"="exact"})
+ * @UniqueEntity("anneeApplication", message="l'an est incorrect")
+ *
  * @ApiResource(
  *     shortName= "nomenclatures",
  *itemOperations={
@@ -33,13 +39,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
  *                               ,"post"={"openapi_context"={"summary"="Crée une nomenclature"}}
  * },
  *
- *normalizationContext={
+ * normalizationContext={
  *                       "groups"={"nomen_detail:read","nomen_compte:read"}, "openapi_definition_name"= "Read"
  * },
- *denormalizationContext={
+ * denormalizationContext={
  *                        "groups"={"nomen_detail:write","actualise:write"}, "openapi_definition_name"= "Write"
  * },
- *subresourceOperations={
+ * subresourceOperations={
  *                        "assiociation_compte_natures_get_subresource"= {
  *                                                                          "path" ="/nomenclatures/{id}/natures",
  *                                                                              "openapi_context"={"summary"="liste les comptes nature de la nomenclature"}
@@ -65,8 +71,11 @@ class Nomenclature
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=4)
      * @Groups({"nomen_detail:read","nomen_detail:write"})
+     * @Assert\NotBlank(message="l'année est incorrect")
+     * @Assert\Length(min= 4,max=4, exactMessage="l'année est incorrect")
+     *
      */
     private $anneeApplication;
 
@@ -103,9 +112,9 @@ class Nomenclature
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"nomen_detail:read","nomen_detail:write","actualise:write"})
+     * @Groups({"nomen_detail:read","actualise:write"})
      */
-    private $estActif ;
+    private $estActif =true ;
 
     /**
      * @ORM\OneToMany(targetEntity=CompteNature::class, mappedBy="nomenclature")
@@ -140,12 +149,12 @@ class Nomenclature
         return $this->id;
     }
 
-    public function getAnneeApplication(): ?int
+    public function getAnneeApplication(): ?string
     {
         return $this->anneeApplication;
     }
 
-    public function setAnneeApplication(int $anneeApplication): self
+    public function setAnneeApplication(?string $anneeApplication): self
     {
         $this->anneeApplication = $anneeApplication;
 
@@ -166,7 +175,9 @@ class Nomenclature
 
     public function getDateAdoption(): ?\DateTimeInterface
     {
+
         return $this->dateAdoption;
+
     }
 
     public function setDateAdoption(?\DateTimeInterface $dateAdoption): self
