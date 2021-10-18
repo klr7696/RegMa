@@ -21,15 +21,26 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     itemOperations={
  *     "get"={"openapi_context"={"summary"="Affiche les informations d'un compte fonction"}}
- * ,"patch"={"openapi_context"={"summary"="Actualise les informations d'un compte fonction"}}
+ * ,"patch"={"openapi_context"={"summary"="Actualise les informations d'un compte fonction"}},
+ *     "delete"={"openapi_context"={"summary"="Supprime les informations d'un compte fonction"}},
+ *     "put"={"openapi_context"={"summary"="Modifie les informations d'un compte fonction"}}
  *   },
+ *
  *     collectionOperations={
- *     "get" ={"openapi_context"={"summary"="Affiche les informations des comptes fonctions"}}
- *     ,"post"={"openapi_context"={"summary"="Crée un compte fonction"}}
+ *     "get" ={"openapi_context"={"summary"="Affiche les informations des comptes fonctions"}},
+
+ *     "divisions"={ "method"="post",    "path"="/fonctions/divisions",
+ *                  "denormalization_context"={"groups"={"divisions:write"}},
+ *                  "openapi_context"={"summary"="Crée une Division de type compte fonction"}
+ *            },
+ *     "sousfonctions"={ "method"="post",    "path"="/fonctions/sousfonctions",
+ *                  "denormalization_context"={"groups"={"sousfonctions:write"}},
+ *                  "openapi_context"={"summary"="Crée un Groupe ou une Classse de type compte fonction"}
+ *             },
  * },
  *     shortName= "fonctions",
- *     normalizationContext={"groups"={"fonction_detail:read","nomen_detail:read"}, "swager_definition_name"= "Read"},
- *     denormalizationContext={"groups"={"fonction_detail:write"}, "swager_definition_name"= "Write"},
+ *     normalizationContext={"groups"={"fonction_detail:read","nomen_detail:read"}, "openapi_definition_name"= "Read"},
+ *     denormalizationContext={"groups"={"fonction_detail:write"}, "openapi_definition_name"= "Write"},
  *     subresourceOperations={
  *             "api_nomenclatures_assiociation_compte_fonctions_get_subresource"= {
  *              "normalization_context"={"groups"={"nomen_fonction:read"}},
@@ -46,7 +57,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                          "openapi_context"={"summary"="liste les sous comptes d'un compte fonction "}
  *     },
  *     "api_fonctions_sous_compte_fonctions_get_subresource"={
- *     "normalization_context"={"groups"={"sousfonction:read"}}
+ *     "normalization_context"={"groups"={"sousfonctions:read"}}
  * },
  *     }
  *
@@ -66,44 +77,56 @@ class CompteFonction
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"fonction_detail:read","fonction_detail:write","nomen_fonction:read","sousfonction:read"})
+     * @Groups({"fonction_detail:read","fonction_detail:write",
+     *     "nomen_fonction:read","sousfonctions:read",
+     *     "divisions:write","sousfonctions:write"})
      */
     private $numeroCompteFonction;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"fonction_detail:read","fonction_detail:write","nomen_fonction:read","sousfonction:read"})
+     * @Groups({"fonction_detail:read","fonction_detail:write",
+     *     "nomen_fonction:read","sousfonctions:read",
+     *     "divisions:write","sousfonctions:write"})
      */
     private $libelleCompteFonction;
 
     /**
      * @ORM\Column(type="string", length=30)
-     * @Groups({"fonction_detail:read","fonction_detail:write","nomen_fonction:read","sousfonction:read"})
-     * @Assert\Choice(choices= {"DIVISION", "GROUPE", "ClASSE"})
+     * @Assert\Choice(choices= {"Division", "Groupe", "Classe"})
+     * @Groups({"fonction_detail:read","fonction_detail:write",
+     *     "nomen_fonction:read","sousfonctions:read",
+     *    "divisions:write","sousfonctions:write" })
+     *
      */
     private $hierachieCompteFonction;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"fonction_detail:read","fonction_detail:write",
+     *     "nomen_fonction:read","sousfonctions:read",
+     *     "divisions:write","sousfonctions:write"})
      */
     private $descriptionCompteFonction;
 
 
     /**
      * @ORM\ManyToOne(targetEntity=Nomenclature::class, inversedBy="associationCompteFonction")
-     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"fonction_detail:write",
+     *     "nomen_fonction:read","divisions:write"})
      */
     private $nomenclature;
 
     /**
      * @ORM\ManyToOne(targetEntity=CompteFonction::class, inversedBy="sousCompteFonction")
-     * @Groups({"fonction_detail:read","fonction_detail:write","nomen_fonction:read","sousfonction:read"})
+     * @Groups({"fonction_detail:read","fonction_detail:write",
+     *     "nomen_fonction:read","sousfonctions:write"})
      */
     private $compteFonction;
 
     /**
      * @ORM\OneToMany(targetEntity=CompteFonction::class, mappedBy="compteFonction")
-     *@Groups({"fonction_detail:read","fonction_detail:write","nomen_fonction:read","sousfonction:read"})
+     *@Groups({"fonction_detail:read","nomen_fonction:read","fonction_detail:write"})
      * @ApiSubresource()
      */
     private $sousCompteFonction;

@@ -2,6 +2,7 @@
 
 namespace App\Entity\Nomenclatures;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Prevision\ExerciceRegistre;
@@ -10,30 +11,44 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 
 /**
  * @ORM\Entity(repositoryClass=NomenclatureRepository::class)
+ * @ApiFilter(BooleanFilter::class, properties={"estActif"})
  * @ApiResource(
  *     shortName= "nomenclatures",
- *     itemOperations={
- *     "get"={"openapi_context"={"summary"="Affiche les informations d'une nomenclature"}}
- *     , "patch"={"openapi_context"={"summary"="Actualise les informations d'une nomenclature existante"}}
+ *itemOperations={
+ *                  "get"={"openapi_context"={"summary"="Affiche les informations d'une nomenclature filtrer par ?estActif=true"}}
+ *                   , "patch"={"denormalization_context"={"groups"={"actualise:write"}},
+ *                    "openapi_context"={"summary"="Actualise les informations d'une nomenclature existante"},
+ *                      },
+ *     "delete"={"openapi_context"={"summary"="Supprime les informations d'une nomenclature"}},
+ *     "put"={"openapi_context"={"summary"="Modifie les informations d'une nomenclature"}}
+ *
  * },
- *     collectionOperations={
- *     "get"={"openapi_context"={"summary"="Affiche les informations des nomenclatures"}}
- * ,"post"={"openapi_context"={"summary"="Crée une nomenclature"}}
+ *collectionOperations={
+ *                      "get"={
+ *                              "openapi_context"={"summary"="Affiche les informations des nomenclatures"}}
+ *                               ,"post"={"openapi_context"={"summary"="Crée une nomenclature"}}
  * },
  *
- *      normalizationContext={"groups"={"nomen_detail:read","nomen_compte:read"}, "openapi_definition_name"= "Read"},
- *      denormalizationContext={"groups"={"nomen_detail:write"}, "openapi_definition_name"= "Write"},
- *      subresourceOperations={
- *              "assiociation_compte_natures_get_subresource"= {"path" ="/nomenclatures/{id}/natures",
- *              "openapi_context"={"summary"="liste les comptes nature de la nomenclature"}
- *     },
- *     "association_compte_fonctions_get_subresource"={"path" ="/nomenclatures/{id}/fonctions",
- *              "openapi_context"={"summary"="liste les comptes fonctions de la nomenclature"}
- *             }
- *     },
+ *normalizationContext={
+ *                       "groups"={"nomen_detail:read","nomen_compte:read"}, "openapi_definition_name"= "Read"
+ * },
+ *denormalizationContext={
+ *                        "groups"={"nomen_detail:write","actualise:write"}, "openapi_definition_name"= "Write"
+ * },
+ *subresourceOperations={
+ *                        "assiociation_compte_natures_get_subresource"= {
+ *                                                                          "path" ="/nomenclatures/{id}/natures",
+ *                                                                              "openapi_context"={"summary"="liste les comptes nature de la nomenclature"}
+ *                                                                         },
+ *     "association_compte_fonctions_get_subresource"={
+ *                                                      "path" ="/nomenclatures/{id}/fonctions",
+ *                                                      "openapi_context"={"summary"="liste les comptes fonctions de la nomenclature"}
+ *                                                     }
+ * },
  *
  *
  * )
@@ -45,6 +60,7 @@ class Nomenclature
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
      */
     private $id;
 
@@ -62,7 +78,7 @@ class Nomenclature
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"nomen_detail:read","nomen_detail:write"})
+     * @Groups({"nomen_detail:read","nomen_detail:write","actualise:read"})
      */
     private $dateAdoption;
 
@@ -85,17 +101,21 @@ class Nomenclature
      */
     private $descriptionNomenclature;
 
-
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"nomen_detail:read","nomen_detail:write","actualise:write"})
+     */
+    private $estActif ;
 
     /**
-     * @ORM\OneToMany(targetEntity=CompteNature::class, mappedBy="nomenclature", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=CompteNature::class, mappedBy="nomenclature")
      * @Groups({"nomen_detail:read"})
      * @ApiSubresource(maxDepth=1)
      */
     private $assiociationCompteNature;
 
     /**
-     * @ORM\OneToMany(targetEntity=CompteFonction::class, mappedBy="nomenclature", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=CompteFonction::class, mappedBy="nomenclature")
      * @Groups({"nomen_detail:read"})
      * @ApiSubresource(maxDepth=1)
      */
@@ -105,6 +125,8 @@ class Nomenclature
      * @ORM\OneToMany(targetEntity=ExerciceRegistre::class, mappedBy="nomenclature", orphanRemoval=true)
      */
     private $associationExercice;
+
+
 
     public function __construct()
     {
@@ -208,17 +230,6 @@ class Nomenclature
         return $this;
     }
 
-    public function removeAssiociationCompteNature(CompteNature $assiociationCompteNature): self
-    {
-        if ($this->assiociationCompteNature->removeElement($assiociationCompteNature)) {
-            // set the owning side to null (unless already changed)
-            if ($assiociationCompteNature->getNomenclature() === $this) {
-                $assiociationCompteNature->setNomenclature(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|CompteFonction[]
@@ -238,17 +249,6 @@ class Nomenclature
         return $this;
     }
 
-    public function removeAssociationCompteFonction(CompteFonction $associationCompteFonction): self
-    {
-        if ($this->associationCompteFonction->removeElement($associationCompteFonction)) {
-            // set the owning side to null (unless already changed)
-            if ($associationCompteFonction->getNomenclature() === $this) {
-                $associationCompteFonction->setNomenclature(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|ExerciceRegistre[]
@@ -276,6 +276,18 @@ class Nomenclature
                 $associationExercice->setNomenclature(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEstActif(): ?bool
+    {
+        return $this->estActif;
+    }
+
+    public function setEstActif(bool $estActif): self
+    {
+        $this->estActif = $estActif;
 
         return $this;
     }

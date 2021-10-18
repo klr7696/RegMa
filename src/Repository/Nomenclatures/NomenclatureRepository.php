@@ -47,4 +47,12 @@ class NomenclatureRepository extends ServiceEntityRepository
         ;
     }
     */
+   public function findActif()
+    {
+        return $this->createQueryBuilder("n")
+                    ->andWhere("n.estActif= :val" )
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getScalarResult();
+    }
 }
