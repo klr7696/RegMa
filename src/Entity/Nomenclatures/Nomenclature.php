@@ -2,6 +2,8 @@
 
 namespace App\Entity\Nomenclatures;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Prevision\ExerciceRegistre;
@@ -9,31 +11,50 @@ use App\Repository\Nomenclatures\NomenclatureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=NomenclatureRepository::class)
+ * @ApiFilter(BooleanFilter::class, properties={"estActif"})
+ * @ApiFilter(SearchFilter::class, properties={"anneeApplication"="exact"})
+ * @UniqueEntity("anneeApplication", message="l'an est incorrect")
+ *
  * @ApiResource(
  *     shortName= "nomenclatures",
- *     itemOperations={
- *     "get"={"openapi_context"={"summary"="Affiche les informations d'une nomenclature"}}
- *     , "patch"={"openapi_context"={"summary"="Actualise les informations d'une nomenclature existante"}}
+ *itemOperations={
+ *                  "get"={"openapi_context"={"summary"="Affiche les informations d'une nomenclature filtrer par ?estActif=true"}}
+ *                   , "patch"={"denormalization_context"={"groups"={"actualise:write"}},
+ *                    "openapi_context"={"summary"="Actualise les informations d'une nomenclature existante"},
+ *                      },
+ *     "delete"={"openapi_context"={"summary"="Supprime les informations d'une nomenclature"}},
+ *     "put"={"openapi_context"={"summary"="Modifie les informations d'une nomenclature"}}
+ *
  * },
- *     collectionOperations={
- *     "get"={"openapi_context"={"summary"="Affiche les informations des nomenclatures"}}
- * ,"post"={"openapi_context"={"summary"="Crée une nomenclature"}}
+ *collectionOperations={
+ *                      "get"={
+ *                              "openapi_context"={"summary"="Affiche les informations des nomenclatures"}}
+ *                               ,"post"={"openapi_context"={"summary"="Crée une nomenclature"}}
  * },
  *
- *      normalizationContext={"groups"={"nomen_detail:read","nomen_compte:read"}, "openapi_definition_name"= "Read"},
- *      denormalizationContext={"groups"={"nomen_detail:write"}, "openapi_definition_name"= "Write"},
- *      subresourceOperations={
- *              "assiociation_compte_natures_get_subresource"= {"path" ="/nomenclatures/{id}/natures",
- *              "openapi_context"={"summary"="liste les comptes nature de la nomenclature"}
- *     },
- *     "association_compte_fonctions_get_subresource"={"path" ="/nomenclatures/{id}/fonctions",
- *              "openapi_context"={"summary"="liste les comptes fonctions de la nomenclature"}
- *             }
- *     },
+ * normalizationContext={
+ *                       "groups"={"nomen_detail:read","nomen_compte:read"}, "openapi_definition_name"= "Read"
+ * },
+ * denormalizationContext={
+ *                        "groups"={"nomen_detail:write","actualise:write"}, "openapi_definition_name"= "Write"
+ * },
+ * subresourceOperations={
+ *                        "assiociation_compte_natures_get_subresource"= {
+ *                                                                          "path" ="/nomenclatures/{id}/natures",
+ *                                                                              "openapi_context"={"summary"="liste les comptes nature de la nomenclature"}
+ *                                                                         },
+ *     "association_compte_fonctions_get_subresource"={
+ *                                                      "path" ="/nomenclatures/{id}/fonctions",
+ *                                                      "openapi_context"={"summary"="liste les comptes fonctions de la nomenclature"}
+ *                                                     }
+ * },
  *
  *
  * )
@@ -45,12 +66,16 @@ class Nomenclature
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
      */
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=4)
      * @Groups({"nomen_detail:read","nomen_detail:write"})
+     * @Assert\NotBlank(message="l'année est incorrect")
+     * @Assert\Length(min= 4,max=4, exactMessage="l'année est incorrect")
+     *
      */
     private $anneeApplication;
 
@@ -62,7 +87,7 @@ class Nomenclature
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"nomen_detail:read","nomen_detail:write"})
+     * @Groups({"nomen_detail:read","nomen_detail:write","actualise:read"})
      */
     private $dateAdoption;
 
@@ -85,17 +110,21 @@ class Nomenclature
      */
     private $descriptionNomenclature;
 
-
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"nomen_detail:read","actualise:write"})
+     */
+    private $estActif =true ;
 
     /**
-     * @ORM\OneToMany(targetEntity=CompteNature::class, mappedBy="nomenclature", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=CompteNature::class, mappedBy="nomenclature")
      * @Groups({"nomen_detail:read"})
      * @ApiSubresource(maxDepth=1)
      */
     private $assiociationCompteNature;
 
     /**
-     * @ORM\OneToMany(targetEntity=CompteFonction::class, mappedBy="nomenclature", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=CompteFonction::class, mappedBy="nomenclature")
      * @Groups({"nomen_detail:read"})
      * @ApiSubresource(maxDepth=1)
      */
@@ -105,6 +134,8 @@ class Nomenclature
      * @ORM\OneToMany(targetEntity=ExerciceRegistre::class, mappedBy="nomenclature", orphanRemoval=true)
      */
     private $associationExercice;
+
+
 
     public function __construct()
     {
@@ -118,12 +149,12 @@ class Nomenclature
         return $this->id;
     }
 
-    public function getAnneeApplication(): ?int
+    public function getAnneeApplication(): ?string
     {
         return $this->anneeApplication;
     }
 
-    public function setAnneeApplication(int $anneeApplication): self
+    public function setAnneeApplication(?string $anneeApplication): self
     {
         $this->anneeApplication = $anneeApplication;
 
@@ -144,7 +175,9 @@ class Nomenclature
 
     public function getDateAdoption(): ?\DateTimeInterface
     {
+
         return $this->dateAdoption;
+
     }
 
     public function setDateAdoption(?\DateTimeInterface $dateAdoption): self
@@ -208,17 +241,6 @@ class Nomenclature
         return $this;
     }
 
-    public function removeAssiociationCompteNature(CompteNature $assiociationCompteNature): self
-    {
-        if ($this->assiociationCompteNature->removeElement($assiociationCompteNature)) {
-            // set the owning side to null (unless already changed)
-            if ($assiociationCompteNature->getNomenclature() === $this) {
-                $assiociationCompteNature->setNomenclature(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|CompteFonction[]
@@ -238,17 +260,6 @@ class Nomenclature
         return $this;
     }
 
-    public function removeAssociationCompteFonction(CompteFonction $associationCompteFonction): self
-    {
-        if ($this->associationCompteFonction->removeElement($associationCompteFonction)) {
-            // set the owning side to null (unless already changed)
-            if ($associationCompteFonction->getNomenclature() === $this) {
-                $associationCompteFonction->setNomenclature(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|ExerciceRegistre[]
@@ -276,6 +287,18 @@ class Nomenclature
                 $associationExercice->setNomenclature(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEstActif(): ?bool
+    {
+        return $this->estActif;
+    }
+
+    public function setEstActif(bool $estActif): self
+    {
+        $this->estActif = $estActif;
 
         return $this;
     }

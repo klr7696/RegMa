@@ -23,23 +23,37 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=CompteNatureRepository::class)
  * @ApiResource(
- *     itemOperations={
- *     "get"={"openapi_context"={"summary"="Affiche les informations d'un compte nature"}}
- * ,"patch"={"openapi_context"={"summary"="Actualise les informations d'un compte nature"}}
- *   },
- *     collectionOperations={
- *     "get" ={"openapi_context"={"summary"="Affiche les informations des comptes natures"}}
- *     ,"post"={"openapi_context"={"summary"="Crée un compte nature"}}
+ *
+ * itemOperations={
+ *                    "get"={"openapi_context"={"summary"="Affiche les informations d'un compte nature"}}
+ * ,"patch"={"openapi_context"={"summary"="Actualise les informations d'un compte nature"}},
+ *     "delete"={"openapi_context"={"summary"="Supprime les informations d'un compte nature"}},
+ *     "put"={"openapi_context"={"summary"="Modifie les informations d'un compte nature"}}
  * },
- *     shortName= "natures",
- *     normalizationContext={"groups"={"nature_detail:read","nomen_detail:read"}, "swager_definition_name"= "Read"},
- *     denormalizationContext={"groups"={"nature_detail:write"}, "swager_definition_name"= "Write"},
- *     subresourceOperations={
- *             "api_nomenclatures_assiociation_compte_natures_get_subresource"= {
- *              "normalization_context"={"groups"={"nomen_nature:read"}},
  *
+ * collectionOperations={
+ *     "get" ={"openapi_context"={"summary"="Affiche les informations des comptes natures"}},
  *
- *      }
+ *     "chapitres"={ "method"="post",    "path"="/natures/chapitres",
+ *                  "denormalization_context"={"groups"={"chapitre:write"}},
+ *                  "openapi_context"={"summary"="Crée un Chapitre de type compte nature"}
+ *            },
+ *     "sousnatures"={ "method"="post",    "path"="/natures/sousnatures",
+ *                  "denormalization_context"={"groups"={"sousnatures:write"}},
+ *                  "openapi_context"={"summary"="Crée un Article ou un paragraphe de type compte nature"}
+ *             },
+ * },
+ * shortName= "natures",
+ *
+ * normalizationContext={"groups"={"nature_detail:read","nomen_detail:read"}, "openapi_definition_name"= "Read"},
+ *
+ * denormalizationContext={"groups"={"nature_detail:write"}, "openapi_definition_name"= "Write"},
+ *
+ * subresourceOperations={
+ *             "api_nomenclatures_assiociation_compte_natures_get_subresource"=
+ *               {
+ *                    "normalization_context"={"groups"={"nomen_nature:read"}},
+ *                }
  *
  *     },
  *     subresourceOperations={
@@ -49,13 +63,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                          "openapi_context"={"summary"="liste les sous comptes d'un compte nature"}
  *     },
  *     "api_natures_sous_compte_natures_get_subresource"={
- *     "normalization_context"={"groups"={"sousnature:read"}}
+ *     "normalization_context"={"groups"={"sousnatures:read"}}
  * },
 
- *     }
+ *  }
  *
  * )
- * @ApiFilter(SearchFilter::class, properties={"numeroCompteNature":"exact","sectionCompteNature":"exact","hierachieCompteNature":"exact"} )
+ * @ApiFilter(SearchFilter::class, properties={"numeroCompteNature"="exact","sectionCompteNature"="exact","hierachieCompteNature"="exact"} )
  * @UniqueEntity("numeroCompteNature")
  * @UniqueEntity("libelleCompteNature")
  */
@@ -70,47 +84,59 @@ class CompteNature
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"nature_detail:read","nature_detail:write","nomen_nature:read","sousnature:read"})
+     * @Groups({"nature_detail:read","nature_detail:write"
+     * ,"nomen_nature:read","sousnature:read",
+     * "chapitre:write","sousnatures:write"})
      */
     private $numeroCompteNature;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"nature_detail:read","nature_detail:write","nomen_nature:read","sousnature:read"})
+     * @Groups({"nature_detail:read","nature_detail:write",
+     *     "nomen_nature:read","sousnatures:read",
+     * "chapitre:write","sousnatures:write"})
      */
     private $libelleCompteNature;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
-     * @Assert\Choice(choices= {"FONCTIONNEMENT", "INVESTISSEMENT"})
-     * @Groups({"nature_detail:read","nature_detail:write","nomen_nature:read"})
+     * @Assert\Choice(choices= {"","Fonctionnement", "Investissement"})
+     * @Groups({"nature_detail:read","nature_detail:write"
+     * ,"nomen_nature:read","chapitre:write",
+     *    })
      */
     private $sectionCompteNature;
 
     /**
      * @ORM\Column(type="string", length=30)
-     * @Groups({"nature_detail:read","nature_detail:write","nomen_nature:read","sousnature:read"})
-     * @Assert\Choice(choices={"CHAPITRE","ARTICLE","PARAGRAPHE"})
+     * @Assert\Choice(choices={"Chapitre","Article","Paragraphe"})
+     * @Groups({"nature_detail:read","nature_detail:write"
+     * ,"nomen_nature:read","sousnatures:read",
+     * "chapitre:write","sousnatures:write",
+     *     "sousnatures:read"})
+     *
      */
     private $hierachieCompteNature;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"nature_detail:read","nature_detail:write"})
+     * @Groups({"nature_detail:read","nature_detail:write",
+     * "chapitre:write","sousnatures:read","sousnatures:write"})
      */
     private $descriptionCompteNature;
 
 
     /**
      * @ORM\ManyToOne(targetEntity=Nomenclature::class, inversedBy="assiociationCompteNature")
-     * @ORM\JoinColumn(nullable=false)
      *
+     * @Groups({"nature_detail:write","chapitre:write"})
      */
     private $nomenclature;
 
     /**
      * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="sousCompteNature")
-     * @Groups({"nature_detail:read","nature_detail:write"})
+     * @Groups({"nature_detail:read","nature_detail:write",
+     * "sousnatures:write"})
      */
     private $compteNature;
 

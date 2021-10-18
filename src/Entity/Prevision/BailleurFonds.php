@@ -7,9 +7,22 @@ use App\Repository\Prevision\BailleurFondsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={
+ *     "get"={"openapi_context"={"summary"="Affiche les informations d'un bailleur de fonds"}}
+ * ,"patch"={"openapi_context"={"summary"="Actualise les informations d'un bailleur de fonds"}}
+ *   },
+ *     collectionOperations={
+ *     "get" ={"openapi_context"={"summary"="Affiche les informations des bailleurs de fonds"}}
+ *     ,"post"={"openapi_context"={"summary"="Crée un bailleur de fonds"}}
+ * },
+ *     shortName= "bailleurs",
+ *      normalizationContext={"groups"={"bailleurs_detail:read"}, "openapi_definition_name"= "Read"},
+ *      denormalizationContext={"groups"={"bailleurs_detail:write"}, "openapi_definition_name"= "Write"},
+ * )
  * @ORM\Entity(repositoryClass=BailleurFondsRepository::class)
  */
 class BailleurFonds
@@ -23,36 +36,43 @@ class BailleurFonds
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"bailleurs_detail:read","bailleurs_detail:write"})
      */
     private $designationBailleur;
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups({"bailleurs_detail:read","bailleurs_detail:write"})
      */
     private $sigleBailleur;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"bailleurs_detail:read","bailleurs_detail:write"})
      */
     private $categorieBailleur;
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups({"bailleurs_detail:read","bailleurs_detail:write"})
      */
     private $codeBailleur;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"bailleurs_detail:read","bailleurs_detail:write"})
      */
     private $sourceFinancement;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"bailleurs_detail:read","bailleurs_detail:write"})
      */
     private $descriptionBailleur;
 
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="bailleurFonds", orphanRemoval=true)
+     * @Groups({"bailleurs_detail:read"})
      */
     private $associationRessource;
 
