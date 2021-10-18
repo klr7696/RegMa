@@ -9,9 +9,8 @@ import AppSco from "./Sco/AppSco";
 import AppScp from "./Scp/AppScp";
 
 const App = () => {
-
-  return (
-    <div>
+      return (
+      <>
     <Load/>
   <HashRouter>
        <Switch>
@@ -22,9 +21,9 @@ const App = () => {
           <Route component={AppAuth}/>
         </Switch>
   </HashRouter>
-  </div>
+  </>
   );
-};
+  };
 
 const routeElement = document.querySelector("#app");
 ReactDOM.render(<App />, routeElement);
