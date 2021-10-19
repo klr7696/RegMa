@@ -20,13 +20,19 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=NomenclatureRepository::class)
  * @ApiFilter(BooleanFilter::class, properties={"estActif"})
  * @ApiFilter(SearchFilter::class, properties={"anneeApplication"="exact"})
- * @UniqueEntity("anneeApplication", message="l'an est incorrect")
+ * @UniqueEntity("anneeApplication", message="l'an est incorrect bizarre")
  *
  * @ApiResource(
  *     shortName= "nomenclatures",
  *itemOperations={
- *                  "get"={"openapi_context"={"summary"="Affiche les informations d'une nomenclature filtrer par ?estActif=true"}}
- *                   , "patch"={"denormalization_context"={"groups"={"actualise:write"}},
+ *                  "get"={"openapi_context"={"summary"="Affiche les informations d'une nomenclature "}}
+ *
+ *                   , "patch"={"input_formats"={"json"={"application/merge-patch+json","application/json","application/ld+json"}
+
+ *     },
+ *     "denormalization_context"={"groups"={"actualise:write"}
+ *     },
+ *
  *                    "openapi_context"={"summary"="Actualise les informations d'une nomenclature existante"},
  *                      },
  *     "delete"={"openapi_context"={"summary"="Supprime les informations d'une nomenclature"}},
@@ -35,7 +41,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * },
  *collectionOperations={
  *                      "get"={
- *                              "openapi_context"={"summary"="Affiche les informations des nomenclatures"}}
+ *                              "openapi_context"={"summary"="Affiche les informations des nomenclatures filtrer par ?estActif=true"}}
  *                               ,"post"={"openapi_context"={"summary"="Crée une nomenclature"}}
  * },
  *
@@ -73,8 +79,8 @@ class Nomenclature
     /**
      * @ORM\Column(type="string", length=4)
      * @Groups({"nomen_detail:read","nomen_detail:write"})
-     * @Assert\NotBlank(message="l'année est incorrect")
-     * @Assert\Length(min= 4,max=4, exactMessage="l'année est incorrect")
+     * @Assert\NotBlank(message="l'année est incorrect car vide")
+     * @Assert\Length(min= 4,max=4, exactMessage="l'année est incorrect0000000")
      *
      */
     private $anneeApplication;
