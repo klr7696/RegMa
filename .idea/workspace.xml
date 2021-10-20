@@ -25,9 +25,14 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="ressources nomenclatures corriger1">
+    <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="ressources nomenclatures corriger version 2">
+      <change afterPath="$PROJECT_DIR$/migrations/Version20211020095112.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/api_platform.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/api_platform.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteFonction.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteFonction.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Events/NomenclatureDate.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Events/NomenclatureDate.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +46,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="fixer_prevision" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -259,7 +264,9 @@
       <workItem from="1634383891645" duration="2397000" />
       <workItem from="1634386823506" duration="2233000" />
       <workItem from="1634415233966" duration="22346000" />
-      <workItem from="1634624448692" duration="1529000" />
+      <workItem from="1634624448692" duration="5234000" />
+      <workItem from="1634637795371" duration="12347000" />
+      <workItem from="1634716948634" duration="5957000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -303,7 +310,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634118119963</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="resoudre problème du patch">
+      <created>1634626019768</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1634626019768</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -371,7 +385,9 @@
     <MESSAGE value="restructuration des classes versions1s" />
     <MESSAGE value="installation dependance react" />
     <MESSAGE value="ressources nomenclatures terminer" />
-    <option name="LAST_COMMIT_MESSAGE" value="ressources nomenclatures terminer" />
+    <MESSAGE value="resoudre problème du patch" />
+    <MESSAGE value="ressources nomenclatures corriger version 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="ressources nomenclatures corriger version 2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">

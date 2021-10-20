@@ -72,14 +72,16 @@ class CompteFonction
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("fonction_detail:read")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=7)
      * @Groups({"fonction_detail:read","fonction_detail:write",
      *     "nomen_fonction:read","sousfonctions:read",
      *     "divisions:write","sousfonctions:write"})
+     * @Assert\NotBlank(message="veuillez entrer le numero du compte")
      */
     private $numeroCompteFonction;
 
@@ -88,6 +90,7 @@ class CompteFonction
      * @Groups({"fonction_detail:read","fonction_detail:write",
      *     "nomen_fonction:read","sousfonctions:read",
      *     "divisions:write","sousfonctions:write"})
+     * @Assert\NotBlank(message="veuillez entrer le libelle du compte")
      */
     private $libelleCompteFonction;
 
@@ -153,12 +156,12 @@ class CompteFonction
         return $this->id;
     }
 
-    public function getNumeroCompteFonction(): ?int
+    public function getNumeroCompteFonction(): ?string
     {
         return $this->numeroCompteFonction;
     }
 
-    public function setNumeroCompteFonction(int $numeroCompteFonction): self
+    public function setNumeroCompteFonction(string $numeroCompteFonction): self
     {
         $this->numeroCompteFonction = $numeroCompteFonction;
 
