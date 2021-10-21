@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, {useState, useEffect } from "react";
-import BailleurAPI from "../../zservices/bailleurAPI";
-
+import BailleurAPI from "../../../zservices/bailleurAPI"
 
 const InscriBailleur = (props) => {
   const { id = "new" } = props.match.params;
@@ -13,6 +12,7 @@ const InscriBailleur = (props) => {
     codeBailleur: "",
     sourceFinancement: "",
     descriptionBailleur: ""
+    
   });
 
   const [error, setErrors] = useState("");
@@ -21,7 +21,7 @@ const InscriBailleur = (props) => {
 
   const fetchBailleur = async id => {
     try{
-  const data = await axios.get("http://localhost:8000/api/bailleur_fonds" + id)
+  const data = await axios.get("http://localhost:8000/api/bailleurs/" + id)
   .then(response => response.data);
   
   const { designationBailleur, sigleBailleur, categorieBailleur, codeBailleur,
@@ -61,10 +61,54 @@ const InscriBailleur = (props) => {
     }
   };
   return (
-    <div className="page-body">
+    <section id="exp">
+    <div className="product-detail-page">
+      <h3 className="card-header">
+        <div className="row">
+        <div className="text-left col-sm-6">
+        BAILLEUR DE FONDS 
+        </div>
+        <div className="text-right col-sm-6">
+            <button className="btn-sm btn-secondary">
+              Gestion 2021
+            </button>
+          </div>
+        </div>
+      </h3>
+      <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
+        <li className="nav-item">
+          <a
+            className="nav-link active f-18 p-b-0"
+            href="#/sbu/bailleurs/new"
+          >
+            Enregistrement
+          </a>
+          <div className="slide" />
+        </li>
+
+        <li className="nav-item m-b-0">
+          <a
+            className="nav-link f-18 p-b-0"
+            href="#/sbu/bailleurs"
+          >
+            Consultation
+          </a>
+          <div className="slide" />
+        </li>
+
+      </ul>
+      <div className="card">
+        <div className="card-block">
+          <div className="tab-content bg-white">
+            <div className="tab-pane active" id="enregistrement" role="tabpanel">
+            </div>
+            <div className="tab-pane" id="consultation" role="tabpanel">
+            </div>
+          </div>
+          <div className="page-body">
       <div className="row">
         <div className="col-sm-12">
-          {!editing && <h1>Creation</h1> || <h1>Modifier</h1>}
+          {!editing && <h3>Creation</h3> || <h3>Modifier</h3>}
           <div className="card-block">
           <form onSubmit={handleSubmit}>
             <div className="row form-group">
@@ -165,7 +209,11 @@ const InscriBailleur = (props) => {
         </div>
       </div>
     </div>
+        </div>
+      </div>
+    </div>
+  </section>
+   
   );
 };
-
 export default InscriBailleur;

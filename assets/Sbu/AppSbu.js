@@ -3,14 +3,15 @@ import { Route, Switch, withRouter } from "react-router";
 import HeaderSbu from "./components/HeaderSbu";
 import SidebarSbu from "./components/SidebarSbu";
 import Allocation from "./pages/Allocation";
-import Bailleur from "./pages/Bailleur";
 import CompteFonction from "./pages/CompteFonction";
 import CompteNature from "./pages/CompteNature";
 import CreditOuvert from "./pages/CreditOuvert";
 import Exercice from "./pages/Exercice";
-import InscriBailleur from "./pages/InscriBailleur";
+import InscriBailleur from "./pages/bailleurs/InscriBailleur";
+import InscriNomen from "./pages/InscriNomen";
 import Nomenclature from "./pages/Nomenclature";
 import RessourceFi from "./pages/RessourceFi";
+import ConsultBaill from "./pages/bailleurs/ConsultBailleur";
 
 const AppSbu = (props) =>{
     return (
@@ -48,11 +49,15 @@ const AppSbu = (props) =>{
                         />
                         <Route
                           path={`${props.match.url}/bailleurs`}
-                          component={Bailleur}
+                          component={ConsultBaill}
                         />
                         <Route
-                          path={`${props.match.url}/nomenclature`}
+                          path={`${props.match.url}/nomenclature/:id`}
                           component={Nomenclature}
+                        />
+                         <Route
+                          path={`${props.match.url}/nomenclature`}
+                          component={InscriNomen}
                         />
                         <Route
                           path={`${props.match.url}/compte-nature`}

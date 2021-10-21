@@ -45,7 +45,7 @@ const SidebarSbu = () => {
         </ul>
         </li>
         <li className="pcoded">
-              <a type="button" href="#/sbu/bailleur">
+              <a type="button" href="#/sbu/bailleurs/new">
                 <span className="pcoded-micon"><i className="feather icon-users"></i></span>
                 <span className="pcoded-mtext"> BAILLEURS FONDS</span>
               </a>

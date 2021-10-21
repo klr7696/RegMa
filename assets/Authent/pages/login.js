@@ -4,7 +4,7 @@ const Login = () => {
         <section className="login">
         <div className="container">
         <div  className="main-body">
-            <form className="j-forms">
+            <form>
                   <div className="row">
                     <div className="col-md-6">
                       <div className=" col-md-9">
@@ -17,7 +17,7 @@ const Login = () => {
 
                     <div className="col-md-6">
                       <div className=" card-block">
-                      <form className="j-forms">
+                      <form className="form-group">
                         <div className="card card-block">
                           <div className="row m-b-20">
                             <div className="col-md-12">
@@ -25,40 +25,29 @@ const Login = () => {
                             </div>
                           </div>
 
-                          <div className="row">
-                            <div className="col-lg-6 unit">
-                              <label
-                                className="input select"
-                                id="show-elements-select"
-                              >
-                                <select>
-                                  <option value="none">Mairie...</option>
-                                  <option value="centr-1">Centrale</option>
-                                  <option value="ard-1">Ard № 1</option>
-                                  <option value="ard-2">Ard № 2</option>
-                                </select>
-                                <i></i>
-                              </label>
-                            </div>
-                            <div className="col-lg-6 unit">
-                              <label
-                                className="input select"
-                                id="show-elements-select"
-                              >
-                                <select>
-                                  <option value="none">Rôle...</option>
-                                  <option value="field-1">
-                                    Administrateur
-                                  </option>
-                                  <option value="field-2">Agent SBU</option>
-                                  <option value="field-3">Agent SCP</option>
-                                </select>
-                                <i></i>
-                              </label>
-                            </div>
+                          <div className="row form-group">
+                          
+                <div className="col-sm-6">
+                  <select className="form-control ">
+                    <option selected="">Mairie...</option>
+                    <option value="1">Centrale</option>
+                    <option value="2">Ard № 1</option>
+                    <option value="2">Ard № 2</option>
+                  </select>
+                  </div>
+                 
+                <div className="col-sm-6">
+                  <select className="form-control ">
+                    <option selected="">Rôle...</option>
+                    <option value="1">Administrateur</option>
+                    <option value="2">Agent SBU</option>
+                    <option value="2">Agent SDE</option>
+                  </select>
+                  </div>
+                           
                           </div>
 
-                          <div className="form-group form-primary">
+                          <div className="form-group">
                             <input
                               type="text"
                               name="identifiant"

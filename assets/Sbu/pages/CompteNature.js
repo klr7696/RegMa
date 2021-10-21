@@ -5,16 +5,31 @@ const CreatChap = () => {
 
 
   const [chaps, setChaps] = useState({
-    numeroCompteNature: 600,
-    libelleCompteNature : "libelle",
-    sectionCompteNature: "section",
-    hierachieCompteNature: "Fonction",
+    numeroCompteNature: 61,
+    libelleCompteNature : "libelle3",
+    sectionCompteNature: "",
+    hierachieCompteNature: "Chapitre",
     descriptionCompteNature: "cfehfcjfjk",
-    compteNature:""
+    nomenclature:""
   });
 
   const [error, setErrors] = useState("");
+  const [nomens, setNomens] = useState([]);
 
+  const fetchNomen = async () => {
+    try{
+  const data = await axios
+  .get("http://localhost:8000/api/nomenclatures")
+  .then(response => response.data["hydra:member"]);
+    setNomens(data);
+    } catch (error) {
+    console.log(error.response);
+    }
+  };
+
+  useEffect(() =>{
+      fetchNomen();
+  }, []);
 
   const handleChange = ({ currentTarget }) => {
     const { name, value } = currentTarget;
@@ -26,8 +41,8 @@ const CreatChap = () => {
 
     try {
       const response = await axios
-      .post("http://localhost:8000/api/natures", {...chaps,
-    compteNature:`/api/natures/${chaps.compteNature}`});
+      .post("http://localhost:8000/api/natures/chapitres", {...chaps,
+    nomenclature:`/api/nomenclatures/${chaps.nomenclature}`});
       console.log(response.data);
     } catch(error) {
       console.log(error.response);
@@ -35,6 +50,7 @@ const CreatChap = () => {
     }
    
   };
+
  
   return (
     <div className="page-body">
@@ -61,16 +77,39 @@ const CreatChap = () => {
                   onChange={handleChange}
                   />
                 </div>
-               {/* <div className="col-sm-2">
+               <div className="col-sm-2">
                   <label className="col-form-label">Section *</label>
                 </div>
                   <div className="col-sm-3">
-                  <select className="form-control ">
-                    <option selected="">...</option>
+                  <select 
+                  onChange={handleChange} 
+                  name="sectionCompteNature"
+                  id="sectionCompteNature"
+                  value={chaps.sectionCompteNature}
+                  className={"form-control" + (error && " is-invalid")}
+                 >
                     <option value="1">Fonctionnement</option>
                     <option value="2">Investissement</option>
                   </select>
-  </div>*/}
+                  </div>
+              </div>
+              <div className="row form-group">
+              <div className="col-sm-2">
+                  <label className="col-form-label">Nomenclature *</label>
+                </div>
+                  <div className="col-sm-3">
+                  <select 
+                  onChange={handleChange} 
+                  name="nomenclature"
+                  id="nomenclature"
+                  value={chaps.nomenclature}
+                  className={"form-control" + (error && " is-invalid")}
+                 >
+                   {nomens.map(nomen => <option key={nomen.id} value={nomen.id}>
+                     {nomen.anneeApplication}
+                   </option>)}
+                    </select>
+                  </div>
               </div>
               <div className="row form-group">
                 <div className="col-sm-2">
@@ -82,20 +121,6 @@ const CreatChap = () => {
                   type="text"
                    className={"form-control " + (error && " is-invalid")}
                   value={chaps.libelleCompteNature}
-                  onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div className="row form-group">
-                <div className="col-sm-2">
-                  <label className="col-form-label">Compte Nature *</label>
-                </div>
-                <div className="col-sm-10">
-                  <input 
-                  name="compteNature"
-                  type="text"
-                   className={"form-control " + (error && " is-invalid")}
-                  value={chaps.compteNature}
                   onChange={handleChange}
                   />
                 </div>
@@ -126,12 +151,59 @@ const CreatChap = () => {
 };
 
 const CreatArt = () => {
+
+  const [arts, setArts] = useState({
+    numeroCompteNature: 601,
+    libelleCompteNature : "libelle3",
+    hierachieCompteNature: "Article",
+    descriptionCompteNature: "cfehfcjfjk",
+    compteNature:""
+  });
+
+  const [error, setErrors] = useState("");
+  const [compteNatures, setCompteNatures] = useState([]);
+
+  const fetchCompteNatures = async () => {
+    try{
+  const data = await axios
+  .get("http://localhost:8000/api/natures?hierachieCompteNature=Chapitre")
+  .then(response => response.data["hydra:member"]);
+    setCompteNatures(data);
+    } catch (error) {
+    console.log(error.response);
+    }
+  };
+
+  useEffect(() =>{
+      fetchCompteNatures();
+  }, []);
+
+  const handleChange = ({ currentTarget }) => {
+    const { name, value } = currentTarget;
+    setArts({...compteNatures, [name]: value });
+  };
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+
+    try {
+      const response = await axios
+      .post("http://localhost:8000/api/natures/sousnatures", {...arts,
+    compteNature:`/api/natures/${arts.compteNature}`});
+      console.log(response.data);
+    } catch(error) {
+      console.log(error.response);
+      setErrors("Erreur de Saisie")
+    }
+   
+  };
+ 
   return (
     <div className="page-body">
       <div className="row">
         <div className="col-sm-12">
           <div className="card-block">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="row form-group">
                 <div className="col-sm-2">
                   <label className="col-form-label">
@@ -145,6 +217,9 @@ const CreatArt = () => {
                     placeholder="***"
                     data-v-max={999}
                     data-v-min={0}
+                    className={"form-control required" + (error && " is-invalid")}
+                    value={arts.numeroCompteNature}
+                    onChange={handleChange}
                   />
                 </div>
              
@@ -154,11 +229,17 @@ const CreatArt = () => {
                   </label>
                 </div>
                 <div className="col-sm-3">
-                  <select className="form-control ">
-                    <option selected="">...</option>
-                    <option value="1">60</option>
-                    <option value="2">61</option>
-                  </select>
+                  <select 
+                  onChange={handleChange} 
+                  name="compteNature"
+                  id="compteNature"
+                  value={arts.compteNature}
+                  className={"form-control" + (error && " is-invalid")}
+                 >
+                   {compteNatures.map(compteNature => <option key={compteNature.id} value={compteNature.id}>
+                     {compteNature.numeroCompteNature}
+                   </option>)}
+                    </select>
                   </div>
               </div>
               <div className="row form-group">
@@ -166,7 +247,11 @@ const CreatArt = () => {
                   <label className="col-form-label">Libellé *</label>
                 </div>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input type="text" className="form-control" 
+                   className={"form-control required" + (error && " is-invalid")}
+                   value={arts.libelleCompteNature}
+                   onChange={handleChange}
+                  />
                 </div>
               </div>
               <div className="row form-group">
@@ -174,7 +259,11 @@ const CreatArt = () => {
                   <label className="col-form-label">Description</label>
                 </div>
                 <div className="col-sm-10">
-                  <textarea type="text" className="form-control" />
+                  <textarea type="text" className="form-control" 
+                   className={"form-control required" + (error && " is-invalid")}
+                    value={arts.descriptionCompteNature}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
               <div className="text-right col-sm-12">
@@ -189,12 +278,59 @@ const CreatArt = () => {
 };
 
 const CreatParag = () => {
+  
+  const [paras, setParas] = useState({
+    numeroCompteNature: 601,
+    libelleCompteNature : "libelle3",
+    hierachieCompteNature: "Article",
+    descriptionCompteNature: "cfehfcjfjk",
+    compteNature:""
+  });
+
+  const [error, setErrors] = useState("");
+  const [compteNatures, setCompteNatures] = useState([]);
+
+  const fetchCompteNatures = async () => {
+    try{
+  const data = await axios
+  .get("http://localhost:8000/api/natures?hierachieCompteNature=Article")
+  .then(response => response.data["hydra:member"]);
+    setCompteNatures(data);
+    } catch (error) {
+    console.log(error.response);
+    }
+  };
+
+  useEffect(() =>{
+      fetchCompteNatures();
+  }, []);
+
+  const handleChange = ({ currentTarget }) => {
+    const { name, value } = currentTarget;
+    setParas({...compteNatures, [name]: value });
+  };
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+
+    try {
+      const response = await axios
+      .post("http://localhost:8000/api/natures/sousnatures", {...paras,
+    compteNature:`/api/natures/${paras.compteNature}`});
+      console.log(response.data);
+    } catch(error) {
+      console.log(error.response);
+      setErrors("Erreur de Saisie")
+    }
+   
+  };
+ 
   return (
     <div className="page-body">
       <div className="row">
         <div className="col-sm-12">
           <div className="card-block">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="row form-group">
                 <div className="col-sm-2">
                   <label className="col-form-label">
@@ -252,10 +388,20 @@ const CreatParag = () => {
 };
 
 const Consult = () => {
+
+  const [chaps, setChaps] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/natures")
+      .then(response => response.data["hydra:member"])
+      .then(data => setChaps(data));
+  }, []);
+
   return (
     <div className="page-body">
           <div className="card-block">
-          <h5 className="card-header-text">Liste de Nomenclatures</h5>
+          <h5 className="card-header-text">Liste de Comptes</h5>
       <div className="table-responsive dt-responsive">
         <table
           id="lang-file"
@@ -265,17 +411,21 @@ const Consult = () => {
                   <tr>
                     <th>Num</th>
                     <th>Libéllé</th>
-                    <th>Action</th>
+                    <th>Section</th>
+                    <th>Hierar</th>
+                    <th>Nomen</th>
                   </tr>
                   </thead>
                   <tbody>
-                    <tr >
-                      <td>60</td>
-                      <td>Frais de transport</td>
-                      <td>
-                          <a href="#!" className="m-r-15 text-muted" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i className="icofont icofont-ui-edit" /></a>
-                      </td>
-                    </tr>
+                  {chaps.map(chap =>
+                        <tr key={chap.id}>
+                          <td>{chap.numeroCompteNature}</td>
+                        <td>{chap.libelleCompteNature}</td>
+                        <td>{chap.sectionCompteNature}</td>
+                        <td>{chap.hierachieCompteNature}</td>
+                        <td>{chap.nomenclature}</td>
+                       
+              </tr>)}
                    
                   </tbody>
               </table>

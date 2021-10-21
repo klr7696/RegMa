@@ -47,7 +47,7 @@ const InscriFinanc = () => {
                   <label className="col-form-label">Montant * (FCFA)</label>
                 </div>
                 <div className="col-sm-6">
-                  <input type="number" className="form-control" />
+                  <input type="text" className="form-control autonumber" data-a-sign="F "/>
                 </div>
               </div>
               <div className="row form-group">

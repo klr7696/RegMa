@@ -1,146 +1,60 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 
-const InscriNomen = (props) =>{
+const ConsultNomen = (props) => {
 
-  console.log(props);
+  const [nomens, setNomens] = useState([]);
 
-  const [nomens, setNomens] = useState({
-    anneeApplication: "",
-    decretAdoption: "",
-    dateAdoption: "",
-    decretApplication: "",
-    dateApplication: "",
-    descriptionNomenclature: ""
-  });
-
-  const [error, setErrors] = useState("");
-
-  const handleChange = ({ currentTarget }) => {
-    const { name, value } = currentTarget;
-    setNomens({...nomens, [name]: value });
-  };
-
-  const handleSubmit = async event => {
-    event.preventDefault();
-
-    try {
-      const response = await axios.post("http://localhost:8000/api/nomenclatures", nomens)
-      console.log(response.data);
-    } catch(error) {
-      console.log(error.response);
-      setErrors("Erreur de Saisie")
-    }
-   
-  };
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/nomenclatures")
+      .then(response => response.data["hydra:member"])
+      .then(data => setNomens(data));
+  }, []);
 
   return (
     <div className="page-body">
-      <div className="row">
-        <div className="col-sm-12">
-          <div className="card-block">
-            <form onSubmit={handleSubmit}>
-              <div className="row form-group">
-                <div className="col-sm-2">
-                  <label className="col-form-label">
-                    Année de mise en application *
-                  </label>
-                </div>
-                <div className="col-sm-3">
-                  <input
-                    name="anneeApplication"
-                    type="number"
-                    className={"form-control" + (error && " is-invalid")}
-                    placeholder="2021"
-                    value={nomens.anneeApplication}
-                    onChange={handleChange}
-                    required
-                  />
-                   {error && <p className="invalid-feedback">{error}</p> }
-                </div>
-              </div>
-              <div className="row form-group">
-                <div className="col-sm-2">
-                  <label className="col-form-label">Décret d'adoption *</label>
-                </div>
-                <div className="row col-sm-10">
-                  <div className="col-sm-9">
-                    <input
-                      name="decretAdoption"
-                      type="text"
-                      className="form-control"
-                      value={nomens.decretAdoption}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="col-sm-3">
-                    <input 
-                    name="dateAdoption"
-                    type="date" 
-                    className="form-control" 
-                    value={nomens.dateAdoption}
-                    onChange={handleChange}
-                    required
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="row form-group">
-                <div className="col-sm-2">
-                  <label className="col-form-label">
-                    Décret d'application *
-                  </label>
-                </div>
-                <div className="row col-sm-10">
-                  <div className="col-sm-9">
-                    <input 
-                    name="decretApplication"
-                    type="text" 
-                    className="form-control" 
-                    value={nomens.decretApplication}
-                    onChange={handleChange}
-                    required
-                    />
-                  </div>
-                  <div className="col-sm-3">
-                    <input 
-                    name="dateApplication"
-                    type="date"
-                    className="form-control"
-                    value={nomens.dateApplication}
-                    onChange={handleChange}
-                    required
-                     />
-                  </div>
-                </div>
-              </div>
-              <div className="row form-group">
-                <div className="col-sm-2">
-                  <label className="col-form-label">Description</label>
-                </div>
-                <div className="col-sm-10">
-                  <textarea
-                  name="descriptionNomenclature" 
-                  type="text" 
-                  className="form-control" 
-                  value={nomens.descriptionNomenclature}
-                  onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div className="text-right col-sm-12">
-                <button type="submit" className="btn btn-primary">
-                  Créer
-                </button>
-              </div>
-            </form>
-          </div>
+      <div className="card-block">
+        <div className="row form-group">
+        <div className="text-left col-sm-9">
+        <h5 className="card-header-text">Liste de nomenclatures</h5>
+        </div>
+        <div className="text-right col-sm-3">
+              <input className="form-control" placeholder="Rechercher..."/>
+        </div>
+        </div>
+        <div className="table-responsive">
+          <table
+           className="table table-bordered"
+          >
+            <thead>
+              <tr>
+               <th>id</th>
+                <th>Année application</th>
+                <th>Décret d'adoption</th>
+                <th>Date d'adoption</th>
+                <th>Décret d'application</th>
+                <th>Date d'application</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+            {nomens.map(nomen =>
+                        <tr key={nomen.id}>
+                        <td>{nomen.id}</td>
+                        <td>{nomen.anneeApplication}</td>
+                        <td>{nomen.decretAdoption} </td>
+                        <td>{nomen.dateAdoption}</td>
+                        <td>{nomen.decretApplication}</td>
+                        <td>{nomen.dateApplication}</td>
+                        <td>{nomen.assiociationCompteNature}</td>
+              </tr>)}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   );
 };
-
-export default InscriNomen;
+export default ConsultNomen;
