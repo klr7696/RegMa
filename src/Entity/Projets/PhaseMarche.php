@@ -7,7 +7,9 @@ use App\Repository\Projets\PhaseMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "phases"
+ * )
  * @ORM\Entity(repositoryClass=PhaseMarcheRepository::class)
  */
 class PhaseMarche

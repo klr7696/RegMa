@@ -13,7 +13,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "autorisations"
+ * )
  * @ORM\Entity(repositoryClass=AutorisationMarcheRepository::class)
  */
 class AutorisationMarche

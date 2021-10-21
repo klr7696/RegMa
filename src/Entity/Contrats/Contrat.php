@@ -14,7 +14,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "contrats"
+ * )
  * @ORM\Entity(repositoryClass=ContratRepository::class)
  */
 class Contrat

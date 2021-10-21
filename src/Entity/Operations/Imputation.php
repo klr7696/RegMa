@@ -9,7 +9,9 @@ use App\Repository\Operations\ImputationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "imputations"
+ * )
  * @ORM\Entity(repositoryClass=ImputationRepository::class)
  */
 class Imputation

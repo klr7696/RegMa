@@ -7,7 +7,9 @@ use App\Repository\Contrats\ItemCommandeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "items"
+ * )
  * @ORM\Entity(repositoryClass=ItemCommandeRepository::class)
  */
 class ItemCommande

@@ -9,7 +9,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "modes"
+ * )
  * @ORM\Entity(repositoryClass=ModePassationRepository::class)
  */
 class ModePassation

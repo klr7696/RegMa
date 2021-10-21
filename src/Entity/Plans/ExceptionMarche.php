@@ -8,7 +8,9 @@ use App\Repository\Plans\ExceptionMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "exceptions"
+ * )
  * @ORM\Entity(repositoryClass=ExceptionMarcheRepository::class)
  */
 class ExceptionMarche

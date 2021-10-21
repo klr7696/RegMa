@@ -10,7 +10,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "soumissions"
+ * )
  * @ORM\Entity(repositoryClass=SoumissionMarcheRepository::class)
  */
 class SoumissionMarche

@@ -96,7 +96,7 @@ class CompteNature
     /**
      * @ORM\Column(type="string", length=7)
      * @Groups({"nature_detail:read","nature_detail:write"
-     * ,"nomen_nature:read","sousnature:read",
+     * ,"nomen_nature:read","sousnatures:read",
      * "chapitre:write","sousnatures:write"})
      * @Assert\NotBlank(message=" veuillez entrer le numero du compte ")
      */

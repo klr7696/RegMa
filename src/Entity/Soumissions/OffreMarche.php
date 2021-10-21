@@ -9,7 +9,9 @@ use App\Repository\Soumissions\OffreMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "offre"
+ * )
  * @ORM\Entity(repositoryClass=OffreMarcheRepository::class)
  */
 class OffreMarche
