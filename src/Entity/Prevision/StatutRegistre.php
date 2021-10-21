@@ -2,13 +2,46 @@
 
 namespace App\Entity\Prevision;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Prevision\StatutRegistreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=StatutRegistreRepository::class)
+ * @ApiResource(
+ *     shortName= "registat",
+ *     itemOperations={
+ *     "get"={"openapi_context"={"summary"="Affiche les statuts"}},
+ *     "put"={"openapi_context"={"summary"="Modifie les informations d'un registre"}},
+ *
+ *     "patch"={
+ *     "input_formats"={"json"={"application/vnd.api+json",
+ *     "application/merge-patch+json","application/json","application/ld+json"}
+
+ *     },
+ *     "denormalization_context"={"groups"={"actualise:write"}
+ *     },
+ *       "validation_groups"={"statut"},
+ *
+ *                    "openapi_context"={"summary"="Abroge une nomenclature existante"},
+ *                      },
+ *      },
+ *
+ *
+ *     collectionOperations={
+ *     "get"={"openapi_context"={"summary"="affiche un statut registre"}},
+ *     "post"={"openapi_context"={"summary"="Crée un statut registre"}}
+ *     },
+ *     normalizationContext={
+ *                       "groups"={"registat_detail:read"}, "openapi_definition_name"= "Read"
+ * },
+ * denormalizationContext={
+ *                        "groups"={"registat_detail:write"}, "openapi_definition_name"= "Write"
+ * },
+ * )
  */
 class StatutRegistre
 {
@@ -16,37 +49,33 @@ class StatutRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"registat_detail:read","registre_detail:read"})
+     *
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"registat_detail:read","registat_detail:write","registre_detail:read"})
      */
     private $statut;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $dateDebut;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $dateCloture;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-    /**
      * @ORM\Column(type="boolean")
+     *
      */
     private $estCloturer;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"registat_detail:read","registat_detail:write","registre_detail:read"})
+     */
+    private $descriptionStatut;
+
+    /**
      * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationStatut")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"registat_detail:read","registat_detail:write"})
      */
     private $exerciceRegistre;
 
@@ -83,38 +112,15 @@ class StatutRegistre
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
+
+    public function getDescriptionStatut(): ?string
     {
-        return $this->dateDebut;
+        return $this->descriptionStatut;
     }
 
-    public function setDateDebut(?\DateTimeInterface $dateDebut): self
+    public function setDescriptionStatut(?string $descriptionStatut): self
     {
-        $this->dateDebut = $dateDebut;
-
-        return $this;
-    }
-
-    public function getDateCloture(): ?\DateTimeInterface
-    {
-        return $this->dateCloture;
-    }
-
-    public function setDateCloture(?\DateTimeInterface $dateCloture): self
-    {
-        $this->dateCloture = $dateCloture;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
+        $this->descriptionStatut = $descriptionStatut;
 
         return $this;
     }

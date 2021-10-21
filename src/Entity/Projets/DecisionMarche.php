@@ -8,7 +8,9 @@ use App\Repository\Projets\DecisionMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "decisions"
+ * )
  * @ORM\Entity(repositoryClass=DecisionMarcheRepository::class)
  */
 class DecisionMarche

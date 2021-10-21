@@ -2,6 +2,7 @@
 
 namespace App\Entity\Plans;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Projets\ProjetMarche;
 use App\Entity\Soumissions\OffreMarche;
 use App\Repository\Plans\LotMarcheRepository;
@@ -10,6 +11,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource(
+ *     shortName= "lots"
+ * )
  * @ORM\Entity(repositoryClass=LotMarcheRepository::class)
  */
 class LotMarche

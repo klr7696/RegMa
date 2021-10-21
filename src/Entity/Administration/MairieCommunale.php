@@ -16,7 +16,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     itemOperations={
  *     "get"={"openapi_context"={"summary"="Affiche les informations d'une mairie"}}
- * ,"patch"={"openapi_context"={"summary"="Actualise les informations d'une mairie"}}
+ * ,"put"={"openapi_context"={"summary"="Modifie une mairie"}},
+ *     "delete"={"openapi_context"={"summary"="Supprime une mairie"}}
+ *
  *   },
  *     collectionOperations={
  *     "get" ={"openapi_context"={"summary"="Affiche les informations des mairies"}}

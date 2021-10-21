@@ -11,7 +11,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "bons"
+ * )
  * @ORM\Entity(repositoryClass=BonCommandeRepository::class)
  */
 class BonCommande

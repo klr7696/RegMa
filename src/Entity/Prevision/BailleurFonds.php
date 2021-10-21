@@ -13,7 +13,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     itemOperations={
  *     "get"={"openapi_context"={"summary"="Affiche les informations d'un bailleur de fonds"}}
- * ,"patch"={"openapi_context"={"summary"="Actualise les informations d'un bailleur de fonds"}}
+ * ,"put"={"openapi_context"={"summary"="Modifie un bailleur de fonds"}},
+ *     "delete"={"openapi_context"={"summary"="Supprime un bailleur de fonds"}}
  *   },
  *     collectionOperations={
  *     "get" ={"openapi_context"={"summary"="Affiche les informations des bailleurs de fonds"}}

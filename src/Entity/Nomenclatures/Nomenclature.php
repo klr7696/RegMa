@@ -20,22 +20,31 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=NomenclatureRepository::class)
  * @ApiFilter(BooleanFilter::class, properties={"estActif"})
  * @ApiFilter(SearchFilter::class, properties={"anneeApplication"="exact"})
- * @UniqueEntity("anneeApplication", message="l'an est incorrect")
  *
  * @ApiResource(
  *     shortName= "nomenclatures",
- *itemOperations={
- *                  "get"={"openapi_context"={"summary"="Affiche les informations d'une nomenclature filtrer par ?estActif=true"}}
- *                   , "patch"={"denormalization_context"={"groups"={"actualise:write"}},
- *                    "openapi_context"={"summary"="Actualise les informations d'une nomenclature existante"},
+ * itemOperations={
+ *                  "get"={"openapi_context"={"summary"="Affiche les informations d'une nomenclature "}}
+ *
+ *                   , "patch"={
+ *     "input_formats"={"json"={"application/vnd.api+json",
+ *     "application/merge-patch+json","application/json","application/ld+json"}
+
+ *     },
+ *     "denormalization_context"={"groups"={"actualise:write"}
+ *     },
+ *       "validation_groups"={"statut"},
+ *
+ *                    "openapi_context"={"summary"="Abroge une nomenclature existante"},
  *                      },
+ *
  *     "delete"={"openapi_context"={"summary"="Supprime les informations d'une nomenclature"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations d'une nomenclature"}}
  *
  * },
- *collectionOperations={
+ * collectionOperations={
  *                      "get"={
- *                              "openapi_context"={"summary"="Affiche les informations des nomenclatures"}}
+ *                              "openapi_context"={"summary"="Affiche les informations des nomenclatures filtrer par ?estActif=true"}}
  *                               ,"post"={"openapi_context"={"summary"="Crée une nomenclature"}}
  * },
  *
@@ -43,7 +52,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                       "groups"={"nomen_detail:read","nomen_compte:read"}, "openapi_definition_name"= "Read"
  * },
  * denormalizationContext={
- *                        "groups"={"nomen_detail:write","actualise:write"}, "openapi_definition_name"= "Write"
+ *                        "groups"={"nomen_detail:write"}, "openapi_definition_name"= "Write"
  * },
  * subresourceOperations={
  *                        "assiociation_compte_natures_get_subresource"= {
@@ -58,7 +67,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  *
  * )
- *
+ *@UniqueEntity("anneeApplication", message="l'an est incorrect bizarre", )
  */
 class Nomenclature
 {
@@ -66,15 +75,16 @@ class Nomenclature
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     *
+     * @Groups("nomen_detail:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=4)
      * @Groups({"nomen_detail:read","nomen_detail:write"})
-     * @Assert\NotBlank(message="l'année est incorrect")
-     * @Assert\Length(min= 4,max=4, exactMessage="l'année est incorrect")
+     * @Assert\NotBlank(message="l'année est incorrect car vide")
+     * @Assert\Length(min= 4,max=4, exactMessage="l'année est incorrect0000000",allowEmptyString="true"
+     *    )
      *
      */
     private $anneeApplication;
@@ -87,7 +97,7 @@ class Nomenclature
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"nomen_detail:read","nomen_detail:write","actualise:read"})
+     * @Groups({"nomen_detail:read","nomen_detail:write"})
      */
     private $dateAdoption;
 
@@ -112,7 +122,9 @@ class Nomenclature
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"nomen_detail:read","actualise:write"})
+     * @Groups({"actualise:write"})
+     *
+     * @Assert\NotNull(message="gggg",groups={"statut"})
      */
     private $estActif =true ;
 
@@ -173,10 +185,10 @@ class Nomenclature
         return $this;
     }
 
-    public function getDateAdoption(): ?\DateTimeInterface
+    public function getDateAdoption(): ?string
     {
 
-        return $this->dateAdoption;
+        return $this->dateAdoption->format('d/m/Y');
 
     }
 
@@ -199,9 +211,9 @@ class Nomenclature
         return $this;
     }
 
-    public function getDateApplication(): ?\DateTimeInterface
+    public function getDateApplication(): ?string
     {
-        return $this->dateApplication;
+        return $this->dateApplication->format('d/m/Y');
     }
 
     public function setDateApplication(?\DateTimeInterface $dateApplication): self

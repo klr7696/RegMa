@@ -26,9 +26,19 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * itemOperations={
  *                    "get"={"openapi_context"={"summary"="Affiche les informations d'un compte nature"}}
- * ,"patch"={"openapi_context"={"summary"="Actualise les informations d'un compte nature"}},
+ * ,
  *     "delete"={"openapi_context"={"summary"="Supprime les informations d'un compte nature"}},
- *     "put"={"openapi_context"={"summary"="Modifie les informations d'un compte nature"}}
+ *     "put"={ "openapi_context"={"summary"="Modifie les informations d'un compte nature"}}
+ *
+ *     , "patch"={
+ *     "input_formats"={"json"={"application/vnd.api+json",
+ *     "application/merge-patch+json","application/json","application/ld+json"}
+
+ *     },
+ *    "openapi_context"={"summary"="Abroge une nomenclature existante"},
+ *                      }
+ *
+ *
  * },
  *
  * collectionOperations={
@@ -79,14 +89,16 @@ class CompteNature
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("nature_detail:read")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=7)
      * @Groups({"nature_detail:read","nature_detail:write"
-     * ,"nomen_nature:read","sousnature:read",
+     * ,"nomen_nature:read","sousnatures:read",
      * "chapitre:write","sousnatures:write"})
+     * @Assert\NotBlank(message=" veuillez entrer le numero du compte ")
      */
     private $numeroCompteNature;
 
@@ -95,6 +107,7 @@ class CompteNature
      * @Groups({"nature_detail:read","nature_detail:write",
      *     "nomen_nature:read","sousnatures:read",
      * "chapitre:write","sousnatures:write"})
+     * @Assert\NotBlank(message=" veuillez entrer le libelle")
      */
     private $libelleCompteNature;
 
@@ -193,12 +206,12 @@ class CompteNature
         return $this->id;
     }
 
-    public function getNumeroCompteNature(): ?int
+    public function getNumeroCompteNature(): ?string
     {
         return $this->numeroCompteNature;
     }
 
-    public function setNumeroCompteNature(int $numeroCompteNature): self
+    public function setNumeroCompteNature(string $numeroCompteNature): self
     {
         $this->numeroCompteNature = $numeroCompteNature;
 

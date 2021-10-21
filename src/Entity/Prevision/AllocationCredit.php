@@ -10,7 +10,9 @@ use App\Repository\Prevision\AllocationCreditRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "allocations"
+ * )
  * @ORM\Entity(repositoryClass=AllocationCreditRepository::class)
  */
 class AllocationCredit

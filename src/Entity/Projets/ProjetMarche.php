@@ -12,7 +12,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "projets"
+ * )
  * @ORM\Entity(repositoryClass=ProjetMarcheRepository::class)
  */
 class ProjetMarche

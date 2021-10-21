@@ -7,7 +7,9 @@ use App\Repository\Commissions\ParticipantCommissionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     shortName= "participants"
+ * )
  * @ORM\Entity(repositoryClass=ParticipantCommissionRepository::class)
  */
 class ParticipantCommission
