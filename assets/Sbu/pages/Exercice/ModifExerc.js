@@ -3,51 +3,6 @@ import React, {useState, useEffect} from "react";
 
 const ModifExerc = () =>{
 
-  const [exercs, setExercs] = useState({
-    AnneeExercice: "2019",
-    ordonateurExercice: "Borahima",
-    dateVote: "",
-    dateAdoption: "2019-10-10",
-    description: "",
-    nomenclature: "/api/nomenclatures/16"
-  });
-  const [nomenclatures, setNomens] = useState([]);
-    
-  const fetchNomen = async () => {
-    try{
-  const data = await axios
-  .get("http://localhost:8000/api/nomenclatures?estActif=true")
-  .then(response => response.data["hydra:member"]);
-    setNomens(data);
-    if (!chaps.nomenclature) setChaps({...chaps, nomenclature:data[0].id} )
-    } catch (error) {
-    console.log(error.response);
-    }
-  };
-
-  useEffect(() =>{
-      fetchNomen();
-  }, []);
-  const [error, setError] = useState("");
-
-  const handleChange = ({ currentTarget }) => {
-    const { name, value } = currentTarget;
-    setExercs({...exercs, [name]: value });
-  };
-
-  const handleSubmit = async event => {
-    event.preventDefault();
-
-    try {
-     await axios
-      .post("http://localhost:8000/api/registres", exercs)
-      console.log(response.data);
-    } catch(error) {
-      console.log(error.response);
-     setError("Informations incorrectes")
-    }
-   
-  };
 
   <div className="page-body">
       <div className="row">
