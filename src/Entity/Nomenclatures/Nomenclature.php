@@ -188,7 +188,7 @@ class Nomenclature
     public function getDateAdoption(): ?string
     {
 
-        return $this->dateAdoption->format('d/m/Y');
+        return $this->dateAdoption->format('d-m-Y');
 
     }
 
@@ -213,7 +213,7 @@ class Nomenclature
 
     public function getDateApplication(): ?string
     {
-        return $this->dateApplication->format('d/m/Y');
+        return $this->dateApplication->format('d-m-Y');
     }
 
     public function setDateApplication(?\DateTimeInterface $dateApplication): self

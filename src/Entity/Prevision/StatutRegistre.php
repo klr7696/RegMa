@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=StatutRegistreRepository::class)
@@ -17,16 +18,25 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "get"={"openapi_context"={"summary"="Affiche les statuts"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations d'un registre"}},
  *
- *     "patch"={
+ *     "desactive"={"method"="patch", "path"="/registat/desactive/{id}",
  *     "input_formats"={"json"={"application/vnd.api+json",
- *     "application/merge-patch+json","application/json","application/ld+json"}
-
+ *     "application/merge-patch+json","application/json","application/ld+json"}},
+ *     "denormalization_context"={"groups"={"desactive:write"}
  *     },
- *     "denormalization_context"={"groups"={"actualise:write"}
- *     },
- *       "validation_groups"={"statut"},
+ *       "validation_groups"={"desactive"},
  *
- *                    "openapi_context"={"summary"="Abroge une nomenclature existante"},
+ *                    "openapi_context"={"summary"="empêche d'ajouter une ressource financière à un exercice "},
+ *                      },
+ *
+ *
+ *     "ferme"={"method"="patch", "path"="/registat/ferme/{id}",
+ *     "input_formats"={"json"={"application/vnd.api+json",
+ *     "application/merge-patch+json","application/json","application/ld+json"}},
+ *     "denormalization_context"={"groups"={"ferme:write"}
+ *     },
+ *       "validation_groups"={"ferme"},
+ *
+ *                    "openapi_context"={"summary"="clôturer un statut d'un registre "},
  *                      },
  *      },
  *
@@ -57,14 +67,22 @@ class StatutRegistre
     /**
      * @ORM\Column(type="string", length=50)
      * @Groups({"registat_detail:read","registat_detail:write","registre_detail:read"})
+     * @Assert\Choice(choices={"Primitif","Modificatif","Supplementaire"}, message= "saisir des informations correctes")
      */
     private $statut;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"desactive:write"})
+     * @Assert\NotNull(groups={"desactive"})
+     */
+    private $estOuvert=true;
 
     /**
      * @ORM\Column(type="boolean")
-     *
+     * @Groups({"ferme:write"})
+     * @Assert\NotNull(groups={"ferme"})
      */
-    private $estCloturer;
+    private $estCloturer=false;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -80,18 +98,12 @@ class StatutRegistre
     private $exerciceRegistre;
 
     /**
-     * @ORM\OneToMany(targetEntity=LienRegistre::class, mappedBy="statutRegistre")
-     */
-    private $associationActualisation;
-
-    /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="statutRegistre", orphanRemoval=true)
      */
     private $associationRessource;
 
     public function __construct()
     {
-        $this->associationActualisation = new ArrayCollection();
         $this->associationRessource = new ArrayCollection();
     }
 
@@ -149,35 +161,6 @@ class StatutRegistre
         return $this;
     }
 
-    /**
-     * @return Collection|LienRegistre[]
-     */
-    public function getAssociationActualisation(): Collection
-    {
-        return $this->associationActualisation;
-    }
-
-    public function addAssociationActualisation(LienRegistre $associationActualisation): self
-    {
-        if (!$this->associationActualisation->contains($associationActualisation)) {
-            $this->associationActualisation[] = $associationActualisation;
-            $associationActualisation->setStatutRegistre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAssociationActualisation(LienRegistre $associationActualisation): self
-    {
-        if ($this->associationActualisation->removeElement($associationActualisation)) {
-            // set the owning side to null (unless already changed)
-            if ($associationActualisation->getStatutRegistre() === $this) {
-                $associationActualisation->setStatutRegistre(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|RessourceFinanciere[]
@@ -197,4 +180,15 @@ class StatutRegistre
         return $this;
     }
 
+    public function getEstOuvert(): ?bool
+    {
+        return $this->estOuvert;
+    }
+
+    public function setEstOuvert(bool $estOuvert): self
+    {
+        $this->estOuvert = $estOuvert;
+
+        return $this;
+    }
 }

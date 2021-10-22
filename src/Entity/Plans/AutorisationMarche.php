@@ -69,15 +69,7 @@ class AutorisationMarche
      */
     private $compteNature;
 
-    /**
-     * @ORM\OneToOne(targetEntity=LienRegistre::class, mappedBy="relation", cascade={"persist", "remove"})
-     */
-    private $lienRegistre;
 
-    /**
-     * @ORM\OneToOne(targetEntity=LienRegistre::class, inversedBy="autorisationMarche", cascade={"persist", "remove"})
-     */
-    private $relationModifier;
 
     public function __construct()
     {
@@ -241,37 +233,5 @@ class AutorisationMarche
         return $this;
     }
 
-    public function getLienRegistre(): ?LienRegistre
-    {
-        return $this->lienRegistre;
-    }
 
-    public function setLienRegistre(?LienRegistre $lienRegistre): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($lienRegistre === null && $this->lienRegistre !== null) {
-            $this->lienRegistre->setRelation(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($lienRegistre !== null && $lienRegistre->getRelation() !== $this) {
-            $lienRegistre->setRelation($this);
-        }
-
-        $this->lienRegistre = $lienRegistre;
-
-        return $this;
-    }
-
-    public function getRelationModifier(): ?LienRegistre
-    {
-        return $this->relationModifier;
-    }
-
-    public function setRelationModifier(?LienRegistre $relationModifier): self
-    {
-        $this->relationModifier = $relationModifier;
-
-        return $this;
-    }
 }

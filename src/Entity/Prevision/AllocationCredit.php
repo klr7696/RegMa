@@ -40,15 +40,7 @@ class AllocationCredit
      */
     private $creditOuvert;
 
-    /**
-     * @ORM\OneToOne(targetEntity=LienRegistre::class, inversedBy="allocationCredit", cascade={"persist", "remove"})
-     */
-    private $associationAllocationActuel;
 
-    /**
-     * @ORM\OneToOne(targetEntity=LienRegistre::class, mappedBy="associationAllocationModifier", cascade={"persist", "remove"})
-     */
-    private $lienRegistre;
 
     /**
      * @ORM\ManyToOne(targetEntity=MairieCommunale::class, inversedBy="associationAllocation")
@@ -109,40 +101,6 @@ class AllocationCredit
     public function setCreditOuvert(?CreditOuvert $creditOuvert): self
     {
         $this->creditOuvert = $creditOuvert;
-
-        return $this;
-    }
-
-    public function getAssociationAllocationActuel(): ?LienRegistre
-    {
-        return $this->associationAllocationActuel;
-    }
-
-    public function setAssociationAllocationActuel(?LienRegistre $associationAllocationActuel): self
-    {
-        $this->associationAllocationActuel = $associationAllocationActuel;
-
-        return $this;
-    }
-
-    public function getLienRegistre(): ?LienRegistre
-    {
-        return $this->lienRegistre;
-    }
-
-    public function setLienRegistre(?LienRegistre $lienRegistre): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($lienRegistre === null && $this->lienRegistre !== null) {
-            $this->lienRegistre->setAssociationAllocationModifier(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($lienRegistre !== null && $lienRegistre->getAssociationAllocationModifier() !== $this) {
-            $lienRegistre->setAssociationAllocationModifier($this);
-        }
-
-        $this->lienRegistre = $lienRegistre;
 
         return $this;
     }

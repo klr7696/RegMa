@@ -2,6 +2,9 @@
 
 namespace App\Entity\Prevision;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Nomenclatures\Nomenclature;
@@ -12,26 +15,35 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
  *      shortName= "registres",
  * itemOperations={
- *                  "get"={
+ *                  "get"={"openapi_context"={"summary"="Affiche les informations d'un registre "}}
  *
- *     "openapi_context"={"summary"="Affiche les informations d'un registre "}}
- *
- *                   , "patch"={
+ *      ,"demarrer"={"method"="patch", "path"="/registres/demarre/{id}", "controller"="App\Controller\OuvrirRegistreController",
  *     "input_formats"={"json"={"application/vnd.api+json",
- *     "application/merge-patch+json","application/json","application/ld+json"}
-
- *     },
- *     "denormalization_context"={"groups"={"actualise:write"}
- *     },
- *       "validation_groups"={"statut"},
+ *           "application/merge-patch+json","application/json","application/ld+json"}},
  *
- *                    "openapi_context"={"summary"="Abroge une nomenclature existante"},
- *                      },
+ *     "denormalization_context"={"groups"={"demarre:write"}}
+ *     ,
+ *       "validation_groups"={"demarre"},
+ *
+ *                    "openapi_context"={"summary"="demarrre un registre d'un exercice"},
+ *                 },
+ *
+ *     "cloturer"={"method"="patch", "path"="/registres/cloture/{id}", "controller"="App\Controller\ClotureRegistreController",
+ *     "input_formats"={"json"={"application/vnd.api+json",
+ *           "application/merge-patch+json","application/json","application/ld+json"}},
+ *
+ *     "denormalization_context"={"groups"={"cloture:write"}}
+ *     ,
+ *       "validation_groups"={"cloture"},
+ *
+ *                    "openapi_context"={"summary"="clôture un registre d'un exercice"},
+ *                 },
  *
  *     "delete"={"openapi_context"={"summary"="Supprime un registre"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations d'un registre"}}
@@ -52,7 +64,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     subresourceOperations={}
  *  )
  * @ORM\Entity(repositoryClass=ExerciceRegistreRepository::class)
- * @UniqueEntity()
+ * @UniqueEntity("anneeExercice", message= "l'année de gestion existe déjà")
+ * @ApiFilter(SearchFilter::class, properties={"associationStatut.statut"="exact"})
+ * @ApiFilter(BooleanFilter::class, properties={"estEnCours","associationStatut.estCloturer","associationStatut.estAjoutable"})
  */
 class ExerciceRegistre
 {
@@ -67,8 +81,10 @@ class ExerciceRegistre
     /**
      * @ORM\Column(type="string", length=4)
      * @Groups({"registre_detail:read","registre_detail:write"})
+     * @Assert\NotBlank(message="ne peut pas être vide")
+     * @Assert\Length(min=4, max=4, exactMessage="l'annee n'est pas valide")
      */
-    private $AnneeExercice;
+    private $anneeExercice;
 
 
     /**
@@ -93,6 +109,7 @@ class ExerciceRegistre
      * @Groups({"registre_detail:read","registre_detail:write"})
      */
     private $description;
+
     /**
      * @ORM\ManyToOne(targetEntity=Nomenclature::class, inversedBy="associationExercice")
      * @ORM\JoinColumn(nullable=false)
@@ -108,12 +125,17 @@ class ExerciceRegistre
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\NotNull(groups={"demarre","cloture"})
+     * @Groups({"demarre:write","cloture:write"})
      */
-    private $estEnCours =true;
+    private $estEnCours = false;
+
+
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"registre_detail:read"})
+     * @Groups({"registre_detail:read","cloture:write"})
+     * @Assert\NotBlank(groups={"cloture"}, message="veuillez saisir la date de cloture de l'exercice en cours")
      */
     private $dateCloture;
 
@@ -127,10 +149,7 @@ class ExerciceRegistre
      */
     private $associationPlan;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $estAjoutable=true;
+
 
 
 
@@ -148,12 +167,12 @@ class ExerciceRegistre
 
     public function getAnneeExercice(): ?string
     {
-        return $this->AnneeExercice;
+        return $this->anneeExercice;
     }
 
-    public function setAnneeExercice(string $AnneeExercice): self
+    public function setAnneeExercice(string $anneeExercice): self
     {
-        $this->AnneeExercice = $AnneeExercice;
+        $this->anneeExercice = $anneeExercice;
 
         return $this;
     }
@@ -337,15 +356,5 @@ class ExerciceRegistre
         return $this;
     }
 
-    public function getEstAjoutable(): ?bool
-    {
-        return $this->estAjoutable;
-    }
 
-    public function setEstAjoutable(bool $estAjoutable): self
-    {
-        $this->estAjoutable = $estAjoutable;
-
-        return $this;
-    }
 }

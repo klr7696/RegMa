@@ -46,16 +46,6 @@ class CreditOuvert
     private $associationAllocation;
 
     /**
-     * @ORM\OneToOne(targetEntity=LienRegistre::class, inversedBy="creditOuvert", cascade={"persist", "remove"})
-     */
-    private $associationCreditActuel;
-
-    /**
-     * @ORM\OneToOne(targetEntity=LienRegistre::class, mappedBy="associationCreditModifier", cascade={"persist", "remove"})
-     */
-    private $lienRegistre;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $estValide;
@@ -142,39 +132,7 @@ class CreditOuvert
         return $this;
     }
 
-    public function getAssociationCreditActuel(): ?LienRegistre
-    {
-        return $this->associationCreditActuel;
-    }
 
-    public function setAssociationCreditActuel(?LienRegistre $associationCreditActuel): self
-    {
-        $this->associationCreditActuel = $associationCreditActuel;
-
-        return $this;
-    }
-
-    public function getLienRegistre(): ?LienRegistre
-    {
-        return $this->lienRegistre;
-    }
-
-    public function setLienRegistre(?LienRegistre $lienRegistre): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($lienRegistre === null && $this->lienRegistre !== null) {
-            $this->lienRegistre->setAssociationCreditModifier(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($lienRegistre !== null && $lienRegistre->getAssociationCreditModifier() !== $this) {
-            $lienRegistre->setAssociationCreditModifier($this);
-        }
-
-        $this->lienRegistre = $lienRegistre;
-
-        return $this;
-    }
 
     public function getEstValide(): ?bool
     {
