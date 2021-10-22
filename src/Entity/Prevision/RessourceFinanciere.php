@@ -61,15 +61,9 @@ class RessourceFinanciere
      */
     private $associationCredit;
 
-    /**
-     * @ORM\OneToOne(targetEntity=LienRegistre::class, inversedBy="ressourceFinanciere", cascade={"persist", "remove"})
-     */
-    private $associationRessourceActuel;
 
-    /**
-     * @ORM\OneToOne(targetEntity=LienRegistre::class, mappedBy="associationRessourceModifier", cascade={"persist", "remove"})
-     */
-    private $lienRegistre;
+
+
 
     /**
      * @ORM\OneToMany(targetEntity=Imputation::class, mappedBy="ressourceFinanciere", orphanRemoval=true)
@@ -200,39 +194,6 @@ class RessourceFinanciere
         return $this;
     }
 
-    public function getAssociationRessourceActuel(): ?LienRegistre
-    {
-        return $this->associationRessourceActuel;
-    }
-
-    public function setAssociationRessourceActuel(?LienRegistre $associationRessourceActuel): self
-    {
-        $this->associationRessourceActuel = $associationRessourceActuel;
-
-        return $this;
-    }
-
-    public function getLienRegistre(): ?LienRegistre
-    {
-        return $this->lienRegistre;
-    }
-
-    public function setLienRegistre(?LienRegistre $lienRegistre): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($lienRegistre === null && $this->lienRegistre !== null) {
-            $this->lienRegistre->setAssociationRessourceModifier(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($lienRegistre !== null && $lienRegistre->getAssociationRessourceModifier() !== $this) {
-            $lienRegistre->setAssociationRessourceModifier($this);
-        }
-
-        $this->lienRegistre = $lienRegistre;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Imputation[]
