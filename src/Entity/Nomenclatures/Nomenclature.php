@@ -211,9 +211,9 @@ class Nomenclature
         return $this;
     }
 
-    public function getDateApplication(): ?string
+    public function getDateApplication(): ?\DateTimeInterface
     {
-        return $this->dateApplication->format('d-m-Y');
+        return $this->dateApplication;
     }
 
     public function setDateApplication(?\DateTimeInterface $dateApplication): self
