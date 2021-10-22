@@ -213,7 +213,7 @@ class Nomenclature
 
     public function getDateApplication(): ?\DateTimeInterface
     {
-        return $this->dateApplication->format;
+        return $this->dateApplication;
     }
 
     public function setDateApplication(?\DateTimeInterface $dateApplication): self
