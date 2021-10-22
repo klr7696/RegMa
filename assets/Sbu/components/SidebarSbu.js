@@ -13,7 +13,7 @@ const SidebarSbu = () => {
             ACCEUIL </i></div>
           <ul className="pcoded-item pcoded-left-item">
             <li className="pcoded">
-              <a type="button" href="#/sbu/exercice" >
+              <a type="button" href="#/sbu/exercice/new" >
                 <span className="pcoded-micon"><i className="feather icon-layers"/></span>
                 <span className="pcoded-mtext">EXERCICE</span>
               </a>
@@ -31,7 +31,7 @@ const SidebarSbu = () => {
                 </a>
               </li>
               <li >
-                <a href="#/sbu/credit-ouvert">
+                <a href="#/sbu/cred-ouvert/new">
                 <i className="feather icon-menu"></i> 
                   <span className="pcoded-mtext">Crédit ouvert</span>
                 </a>

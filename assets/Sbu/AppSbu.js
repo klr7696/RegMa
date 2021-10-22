@@ -4,14 +4,20 @@ import HeaderSbu from "./components/HeaderSbu";
 import SidebarSbu from "./components/SidebarSbu";
 import Allocation from "./pages/Allocation";
 import CompteFonction from "./pages/CompteFonction";
-import CompteNature from "./pages/CompteNature";
 import CreditOuvert from "./pages/CreditOuvert";
-import Exercice from "./pages/Exercice";
 import InscriBailleur from "./pages/bailleurs/InscriBailleur";
-import InscriNomen from "./pages/InscriNomen";
-import Nomenclature from "./pages/Nomenclature";
 import RessourceFi from "./pages/RessourceFi";
 import ConsultBaill from "./pages/bailleurs/ConsultBailleur";
+import InscriNomen from "./pages/nomenclature/InscriNomen";
+import ConsultNomen from "./pages/nomenclature/ConsultNomen";
+import InscriChap from "./pages/comptesNatures/InscriChap";
+import InscriArt from "./pages/comptesNatures/InscriArt";
+import InscriPara from "./pages/comptesNatures/InscriPara";
+import ConsultNature from "./pages/comptesNatures/ConsultNature";
+import CredOuvert from "./pages/previsionDepense/CredOuvert";
+import InscriExerc from "./pages/Exercice/InscriExerc";
+import ClosExerc from "./pages/Exercice/ClosExerc";
+import ModifExerc from "./pages/Exercice/ModifExerc";
 
 const AppSbu = (props) =>{
     return (
@@ -28,8 +34,8 @@ const AppSbu = (props) =>{
                     <div className="main-body">
                       <Switch>
                         <Route
-                          path={`${props.match.url}/exercice`}
-                          component={Exercice}
+                          path={`${props.match.url}/exercice/new`}
+                          component={InscriExerc}
                         />
                         <Route
                           path={`${props.match.url}/financement`}
@@ -53,15 +59,48 @@ const AppSbu = (props) =>{
                         />
                         <Route
                           path={`${props.match.url}/nomenclature/:id`}
-                          component={Nomenclature}
+                          component={InscriNomen}
                         />
                          <Route
                           path={`${props.match.url}/nomenclature`}
-                          component={InscriNomen}
+                          component={ConsultNomen}
+                        />
+                         <Route
+                          path={`${props.match.url}/chap/:id`}
+                          component={InscriChap}
+                        />
+                        <Route
+                          path={`${props.match.url}/arti/:id`}
+                          component={InscriArt}
+                        />
+                         <Route
+                          path={`${props.match.url}/para/:id`}
+                          component={InscriPara}
                         />
                         <Route
                           path={`${props.match.url}/compte-nature`}
-                          component={CompteNature}
+                          component={ConsultNature}
+                        />
+                         <Route
+                          path={`${props.match.url}/exercice/:id`}
+                          component={InscriExerc}
+                        />
+                         <Route
+                          path={`${props.match.url}/mofif-exercice`}
+                          component={ModifExerc}
+                        />
+                         <Route
+                          path={`${props.match.url}/clos-exercice`}
+                          component={ClosExerc}
+                        />
+                         
+                         <Route
+                          path={`${props.match.url}/cred-ouvert/:id`}
+                          component={CredOuvert}
+                        />
+                         <Route
+                          path={`${props.match.url}/exercice/:id`}
+                          component={CredOuvert}
                         />
                         <Route
                           path={`${props.match.url}/compte-fonction`}

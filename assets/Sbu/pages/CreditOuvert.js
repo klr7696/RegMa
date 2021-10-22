@@ -3,14 +3,14 @@ import React, { Component } from "react";
 const InscriCredit = () => {
   return (
     <div className="page-body">
-       <div className="card-block">
+        <div className=" card">
+       <div className=" card-block">
       <div className="row form-group">
               <div className="col-sm-2">
                 <label className="col-form-label">Bailleur *</label>
               </div>
-              <div className="col-sm-2">
+              <div className="col-sm-3">
                 <select className="form-control">
-                <option selected="">...</option>
                   <option value="1">Etat</option>
                   <option value="2">Commune</option>
                 </select>
@@ -20,20 +20,32 @@ const InscriCredit = () => {
               </div>
               <div className="col-sm-3">
                 <select className="form-control">
+                  <option value="1">Fonctionnement</option>
+                  <option value="2">Investissement</option>
+                </select>
+              </div>
+              <div className="col-sm-1">
+                <label className="col-form-label">Exercice</label>
+              </div>
+              <div className="col-sm-2">
+                <select className="form-control">
                   <option selected="">...</option>
                   <option value="1">Fonctionnement</option>
                   <option value="2">Investissement</option>
                 </select>
               </div>
-              </div>
-            <div className="row form-group">
+              <div className="form-group">
               <div className="col-sm-2">
                 <label className="col-form-label">Montant actuel (FCFA)</label>
               </div>
-              <div className="col-sm-6">
+              <div className="col-sm-7">
                 <input type="number" className="form-control" readonly=""/>
               </div>
-            </div>
+              </div>
+              </div>
+              </div>
+              </div>
+
                <div className="col-sm-2 form-group">
                 <select className="form-control">
                   <option value="none">Choix chapitre</option>
@@ -93,7 +105,6 @@ const InscriCredit = () => {
 
 </div>
 </div>
-        </div> 
   );
 };
 

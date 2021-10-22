@@ -14,10 +14,48 @@ const ConsultNomen = (props) => {
   }, []);
 
   return (
-    <div className="page-body">
+  <section id="exp">
+  <div className="product-detail-page">
+    <h3 className="card-header">
+      <div className="row">
+      <div className="text-left col-sm-6">
+      NOMENCLATURE
+      </div>
+      <div className="text-right col-sm-6">
+          <button className="btn-sm btn-secondary">
+            {nomens.nabro}
+          </button>
+        </div>
+      </div>
+    </h3>
+    <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
+      <li className="nav-item m-b-0">
+        <a
+          className="nav-link f-18 p-b-0"
+          href="#/sbu/nomenclature/new"
+        >
+          Enregistrement
+        </a>
+        <div className="slide" />
+      </li>
+      <li className="nav-item">
+        <a
+          className="nav-link active f-18 p-b-0"
+          href="#/sbu/nomenclature"
+        >
+          Consultation
+        </a>
+        <div className="slide" />
+      </li>
+    </ul>
+    <div className="card">
       <div className="card-block">
-        <div className="row form-group">
-        <div className="text-left col-sm-9">
+        <div className="tab-content bg-white">
+          <div className="tab-pane active" id="consultation" role="tabpanel">
+          <div className="page-body">
+    <div className="card-block table-border-style">
+      <div className="row form-group">
+      <div className="text-left col-sm-9">
         <h5 className="card-header-text">Liste de nomenclatures</h5>
         </div>
         <div className="text-right col-sm-3">
@@ -52,9 +90,17 @@ const ConsultNomen = (props) => {
               </tr>)}
             </tbody>
           </table>
-        </div>
+          </div>
       </div>
     </div>
+            </div>
+            <div className="tab-pane" id="enregistrement" role="tabpanel">
+            </div>
+          </div>
+        </div>
+    </div>
+      </div>
+  </section>
   );
 };
 export default ConsultNomen;
