@@ -182,7 +182,7 @@ const InscriNomen = (props) =>{
                       name="decretAdoption"
                       type="text"
                       className="form-control"
-                      value={nomens.decretAdoption}
+                      value= {nomens.decretAdoption}
                       onChange={handleChange}
                       required
                     />
@@ -221,7 +221,7 @@ const InscriNomen = (props) =>{
                     name="dateApplication"
                     type="date"
                     className="form-control"
-                    value={nomens.dateApplication}
+                    value={nomens.dateApplication.toLocaleString('fr-FR', { timeZone: 'UTC' })}
                     onChange={handleChange}
                     required
                      />

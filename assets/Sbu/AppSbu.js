@@ -6,7 +6,6 @@ import Allocation from "./pages/Allocation";
 import CompteFonction from "./pages/CompteFonction";
 import CreditOuvert from "./pages/CreditOuvert";
 import InscriBailleur from "./pages/bailleurs/InscriBailleur";
-import RessourceFi from "./pages/RessourceFi";
 import ConsultBaill from "./pages/bailleurs/ConsultBailleur";
 import InscriNomen from "./pages/nomenclature/InscriNomen";
 import ConsultNomen from "./pages/nomenclature/ConsultNomen";
@@ -14,10 +13,14 @@ import InscriChap from "./pages/comptesNatures/InscriChap";
 import InscriArt from "./pages/comptesNatures/InscriArt";
 import InscriPara from "./pages/comptesNatures/InscriPara";
 import ConsultNature from "./pages/comptesNatures/ConsultNature";
-import CredOuvert from "./pages/previsionDepense/CredOuvert";
 import InscriExerc from "./pages/Exercice/InscriExerc";
 import ClosExerc from "./pages/Exercice/ClosExerc";
 import ModifExerc from "./pages/Exercice/ModifExerc";
+import ConsultExerc from "./pages/Exercice/ConsutExerc";
+import InscriFinan from "./pages/previsionDepense/inscriFinan";
+import ConsultFinan from "./pages/previsionDepense/ConsultFinan";
+import InscriCredit from "./pages/previsionDepense/InscriCredit";
+import ConsultCredit from "./pages/previsionDepense/ConsultCredit";
 
 const AppSbu = (props) =>{
     return (
@@ -33,14 +36,6 @@ const AppSbu = (props) =>{
                   <div className="pcoded-inner-content">
                     <div className="main-body">
                       <Switch>
-                        <Route
-                          path={`${props.match.url}/exercice/new`}
-                          component={InscriExerc}
-                        />
-                        <Route
-                          path={`${props.match.url}/financement`}
-                          component={RessourceFi}
-                        />
                         <Route
                           path={`${props.match.url}/credit-ouvert`}
                           component={CreditOuvert}
@@ -86,25 +81,37 @@ const AppSbu = (props) =>{
                           component={InscriExerc}
                         />
                          <Route
-                          path={`${props.match.url}/mofif-exercice`}
+                          path={`${props.match.url}/exercice`}
+                          component={ConsultExerc}
+                        />
+                         <Route
+                          path={`${props.match.url}/modif-exercice/`}
                           component={ModifExerc}
                         />
                          <Route
                           path={`${props.match.url}/clos-exercice`}
                           component={ClosExerc}
                         />
-                         
+                        
                          <Route
                           path={`${props.match.url}/cred-ouvert/:id`}
-                          component={CredOuvert}
+                          component={InscriCredit}
                         />
-                         <Route
-                          path={`${props.match.url}/exercice/:id`}
-                          component={CredOuvert}
+                        <Route
+                          path={`${props.match.url}/cred-ouvert`}
+                          component={ConsultCredit}
                         />
                         <Route
                           path={`${props.match.url}/compte-fonction`}
                           component={CompteFonction}
+                        />
+                         <Route
+                          path={`${props.match.url}/financement/:id`}
+                          component={InscriFinan}
+                        />
+                         <Route
+                          path={`${props.match.url}/financement`}
+                          component={ConsultFinan}
                         />
                       </Switch>
                     </div>

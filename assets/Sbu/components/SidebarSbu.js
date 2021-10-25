@@ -31,7 +31,7 @@ const SidebarSbu = () => {
                 </a>
               </li>
               <li >
-                <a href="#/sbu/cred-ouvert/new">
+                <a href="#/sbu/cred-ouvert">
                 <i className="feather icon-menu"></i> 
                   <span className="pcoded-mtext">Crédit ouvert</span>
                 </a>
