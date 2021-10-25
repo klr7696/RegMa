@@ -23,6 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ApiResource(
  *     shortName= "nomenclatures",
+ *
  * itemOperations={
  *                  "get"={"openapi_context"={"summary"="Affiche les informations d'une nomenclature "}}
  *
@@ -43,7 +44,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * },
  * collectionOperations={
- *                      "get"={
+ *                      "get"={ "order"={"id"="DESC"},
  *                              "openapi_context"={"summary"="Affiche les informations des nomenclatures filtrer par ?estActif=true"}}
  *                               ,"post"={"openapi_context"={"summary"="Crée une nomenclature"}}
  * },
@@ -122,7 +123,7 @@ class Nomenclature
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"actualise:write"})
+     * @Groups({"nomen_detail","actualise:write"})
      *
      * @Assert\NotNull(message="gggg",groups={"statut"})
      */

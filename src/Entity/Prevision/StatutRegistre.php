@@ -42,7 +42,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  *
  *     collectionOperations={
- *     "get"={"openapi_context"={"summary"="affiche un statut registre"}},
+ *     "get"={ "order"={"id"="DESC"}, "openapi_context"={"summary"="affiche un statut registre"}},
  *     "post"={"openapi_context"={"summary"="Crée un statut registre"}}
  *     },
  *     normalizationContext={
@@ -67,7 +67,7 @@ class StatutRegistre
     /**
      * @ORM\Column(type="string", length=50)
      * @Groups({"registat_detail:read","registat_detail:write","registre_detail:read"})
-     * @Assert\Choice(choices={"Primitif","Modificatif","Supplementaire"}, message= "saisir des informations correctes")
+     * @Assert\Choice(choices={"Primitif","Primitif modificatif","Supplémentaire"}, message= "saisir des informations correctes")
      */
     private $statut;
     /**
@@ -79,10 +79,10 @@ class StatutRegistre
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"ferme:write"})
+     * @Groups({"ferme:write","registre_detail:read"})
      * @Assert\NotNull(groups={"ferme"})
      */
-    private $estCloturer=false;
+    private $estCloturer= false;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -102,9 +102,12 @@ class StatutRegistre
      */
     private $associationRessource;
 
+
+
     public function __construct()
     {
         $this->associationRessource = new ArrayCollection();
+        $this->test = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -191,4 +194,14 @@ class StatutRegistre
 
         return $this;
     }
+
+    /**
+     * @return Collection|ExerciceRegistre[]
+     */
+    public function getTest(): Collection
+    {
+        return $this->test;
+    }
+
+
 }

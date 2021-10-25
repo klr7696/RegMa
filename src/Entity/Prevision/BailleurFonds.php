@@ -2,8 +2,10 @@
 
 namespace App\Entity\Prevision;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Prevision\BailleurFondsRepository;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,7 +19,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "delete"={"openapi_context"={"summary"="Supprime un bailleur de fonds"}}
  *   },
  *     collectionOperations={
- *     "get" ={"openapi_context"={"summary"="Affiche les informations des bailleurs de fonds"}}
+ *     "get" ={
+ *     "openapi_context"={"summary"="Affiche les informations des bailleurs de fonds"}}
  *     ,"post"={"openapi_context"={"summary"="Crée un bailleur de fonds"}}
  * },
  *     shortName= "bailleurs",
@@ -25,6 +28,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      denormalizationContext={"groups"={"bailleurs_detail:write"}, "openapi_definition_name"= "Write"},
  * )
  * @ORM\Entity(repositoryClass=BailleurFondsRepository::class)
+ *@ApiFilter(SearchFilter::class, properties={"sigleBailleur"="exact","associationRessource.objetFinancement"="exact",
+ *     "associationRessource.associationCredit.montantInscription" ="exact"
+ *     })
  */
 class BailleurFonds
 {
@@ -44,6 +50,7 @@ class BailleurFonds
     /**
      * @ORM\Column(type="string", length=10)
      * @Groups({"bailleurs_detail:read","bailleurs_detail:write"})
+     *
      */
     private $sigleBailleur;
 
@@ -74,6 +81,7 @@ class BailleurFonds
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="bailleurFonds", orphanRemoval=true)
      * @Groups({"bailleurs_detail:read"})
+     *
      */
     private $associationRessource;
 

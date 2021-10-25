@@ -6,7 +6,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Administration\MairieCommunale;
 use App\Entity\Nomenclatures\CompteNature;
 use App\Entity\Prevision\AllocationCredit;
-use App\Entity\Prevision\LienRegistre;
 use App\Repository\Plans\AutorisationMarcheRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
