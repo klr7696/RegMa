@@ -8,10 +8,45 @@ use App\Entity\Nomenclatures\CompteNature;
 use App\Entity\Plans\AutorisationMarche;
 use App\Repository\Prevision\AllocationCreditRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     shortName= "allocations"
+ *     shortName= "allocations",
+ *     itemOperations={
+ *                  "get"={"openapi_context"={"summary"="Affiche les informations d'une allocation "}},
+ *     "delete"={"openapi_context"={"summary"="Supprime une allocation"}},
+ *     "put"={"openapi_context"={"summary"="Modifie les informations une allocation"}},
+ *
+ *     "desactiver"= {
+ *     "method"="patch", "path"="/allocations/desactive/{id}", "controller"="App\Controller\DesactiveAllocationController",
+ *     "input_formats"={"json"={"application/vnd.api+json","application/merge-patch+json","application/json","application/ld+json"}},
+ *  "denormalization_context"={"groups"={"aldesactive:write"}},
+ *       "validation_groups"={"aldesactive"},
+ *  "openapi_context"={"summary"="desactive une allocation actualisé"},
+ *                 },
+ *
+ *   },
+ * collectionOperations={
+ *                      "get"={ "order"={"id"="DESC"},
+ *                              "openapi_context"={"summary"="Affiche les informations des registres"}}
+ *                               ,"inscription"={ "method"="post", "path"="/allocations/inscription",
+ *     "openapi_context"={"summary"="Crée une allocation"},},
+ *
+ *     "actualisation"={"method"="post","path"="/allocations/actualise","openapi_context"={"summary"="Actualise une allocation"},
+ *     "denormalization_context"={"groups"={"alactualise:write"}},
+ *       "validation_groups"={"alactualise"}
+ *     }
+ *
+ * },
+ *
+ * normalizationContext={
+ *                       "groups"={"allocation_detail:read"}, "openapi_definition_name"= "Read"
+ * },
+ * denormalizationContext={
+ *                        "groups"={"allocation_detail:write"}, "openapi_definition_name"= "Write"
+ * },
+ *     subresourceOperations={}
  * )
  * @ORM\Entity(repositoryClass=AllocationCreditRepository::class)
  */
@@ -21,22 +56,27 @@ class AllocationCredit
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write"})
      */
     private $montantAllouer;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write"})
      */
     private $descriptionAllocation;
 
     /**
      * @ORM\ManyToOne(targetEntity=CreditOuvert::class, inversedBy="associationAllocation")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write","bailleurs_detail:read"})
+     *
      */
     private $creditOuvert;
 
@@ -45,11 +85,13 @@ class AllocationCredit
     /**
      * @ORM\ManyToOne(targetEntity=MairieCommunale::class, inversedBy="associationAllocation")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write"})
      */
     private $mairieCommunale;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write"})
      */
     private $estValide;
 

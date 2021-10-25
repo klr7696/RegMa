@@ -21,9 +21,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *      shortName= "registres",
  * itemOperations={
- *                  "get"={"openapi_context"={"summary"="Affiche les informations d'un registre "}}
+ *                  "get"={"openapi_context"={"summary"="Affiche les informations d'un registre "}},
  *
- *      ,"demarrer"={"method"="patch", "path"="/registres/demarre/{id}", "controller"="App\Controller\OuvrirRegistreController",
+ *     "demarrer"={"method"="patch", "path"="/registres/demarre/{id}", "controller"="App\Controller\DemarreRegistreController",
  *     "input_formats"={"json"={"application/vnd.api+json",
  *           "application/merge-patch+json","application/json","application/ld+json"}},
  *
@@ -31,10 +31,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     ,
  *       "validation_groups"={"demarre"},
  *
- *                    "openapi_context"={"summary"="demarrre un registre d'un exercice"},
+ *                    "openapi_context"={"summary"="demarre un registre d'un exercice"},
  *                 },
  *
- *     "cloturer"={"method"="patch", "path"="/registres/cloture/{id}", "controller"="App\Controller\ClotureRegistreController",
+ *    "cloturer"={"method"="patch", "path"="/registres/cloture/{id}", "controller"="App\Controller\ClotureRegistreController",
  *     "input_formats"={"json"={"application/vnd.api+json",
  *           "application/merge-patch+json","application/json","application/ld+json"}},
  *
@@ -50,7 +50,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * },
  * collectionOperations={
- *                      "get"={
+ *                      "get"={ "order"={"id"="DESC","associationStatut.id"="DESC"},
  *                              "openapi_context"={"summary"="Affiche les informations des registres"}}
  *                               ,"post"={"openapi_context"={"summary"="Crée un registre"}}
  * },
@@ -125,8 +125,8 @@ class ExerciceRegistre
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotNull(groups={"demarre","cloture"})
-     * @Groups({"demarre:write","cloture:write"})
+     * @Assert\NotNull(groups={"cloture","demarre"})
+     * @Groups({"cloture:write","demarre:write"})
      */
     private $estEnCours = false;
 
@@ -148,9 +148,6 @@ class ExerciceRegistre
      * @ORM\OneToMany(targetEntity=PlanPassation::class, mappedBy="exerciceRegistre", orphanRemoval=true)
      */
     private $associationPlan;
-
-
-
 
 
     public function __construct()
@@ -355,6 +352,16 @@ class ExerciceRegistre
 
         return $this;
     }
+
+    /**
+     * @return Collection|StatutRegistre[]
+     */
+    public function getStatutTest(): Collection
+    {
+        return $this->statutTest;
+    }
+
+
 
 
 }

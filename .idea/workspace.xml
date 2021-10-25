@@ -25,9 +25,25 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="ressources nomenclatures corriger versions">
-      <change afterPath="$PROJECT_DIR$/migrations/Version20211021135940.php" afterDir="false" />
+    <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="ressources nomenclatures corriger versiono">
+      <change afterPath="$PROJECT_DIR$/migrations/Version20211024184741.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrations/Version20211025041546.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrations/Version20211025123104.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/DemarreRegistreController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/DesactiveAllocationController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/DesactiveOuvertController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/DesactiveRessourceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20211018162723.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20211024131139.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/OuvrirRegistreController.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Plans/AutorisationMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/AutorisationMarche.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/AllocationCredit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/AllocationCredit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/RessourceFinanciere.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/RessourceFinanciere.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +57,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="resources1" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -265,6 +281,8 @@
       <workItem from="1634637795371" duration="12347000" />
       <workItem from="1634716948634" duration="5957000" />
       <workItem from="1634880645771" duration="23037000" />
+      <workItem from="1634965395484" duration="3190000" />
+      <workItem from="1635025556089" duration="36042000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -329,7 +347,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634919620047</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="ressources nomenclatures corriger versiono">
+      <created>1634920017123</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1634920017123</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -401,7 +426,8 @@
     <MESSAGE value="ressources nomenclatures corriger version 2" />
     <MESSAGE value="ressources nomenclatures corriger version 3" />
     <MESSAGE value="ressources nomenclatures corriger versions" />
-    <option name="LAST_COMMIT_MESSAGE" value="ressources nomenclatures corriger versions" />
+    <MESSAGE value="ressources nomenclatures corriger versiono" />
+    <option name="LAST_COMMIT_MESSAGE" value="ressources nomenclatures corriger versiono" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">
@@ -412,10 +438,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="578" y="309" key="#Composer/0.0.1536.834@0.0.1536.834" timestamp="1631991990404" />
-    <state x="267" y="23" key="#Inspections" timestamp="1634417957613">
+    <state x="267" y="23" key="#Inspections" timestamp="1635094965071">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state x="267" y="23" key="#Inspections/0.0.1280.689@0.0.1280.689" timestamp="1634417957612" />
+    <state x="267" y="23" key="#Inspections/0.0.1280.689@0.0.1280.689" timestamp="1635094965071" />
     <state x="361" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1634836733314">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -424,14 +450,14 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="574" y="99" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1634883866544" />
-    <state x="346" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1634836230201">
+    <state x="346" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1635138528205">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="346" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.834@0.0.1536.834" timestamp="1634836230201" />
-    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1634883969504">
+    <state x="346" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.834@0.0.1536.834" timestamp="1635138528205" />
+    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1635177536435">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.834@0.0.1536.834" timestamp="1634883969504" />
+    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.834@0.0.1536.834" timestamp="1635177536435" />
     <state width="1024" height="214" key="GridCell.Tab.0.bottom" timestamp="1634836817875">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -460,10 +486,14 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="657" y="285" key="MultipleFileMergeDialog/0.0.1536.834@0.0.1536.834" timestamp="1632234775783" />
-    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1634910332387">
+    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1635177502358">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1634910332387" />
+    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1635177502358" />
+    <state x="604" y="340" key="NewPhpFileDialog" timestamp="1635177181212">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="604" y="340" key="NewPhpFileDialog/0.0.1536.834@0.0.1536.834" timestamp="1635177181212" />
     <state x="277" y="62" key="SettingsEditor" timestamp="1634824078813">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -472,10 +502,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1536.834@0.0.1536.834" timestamp="1634533502890" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1634919651111">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1634920024697">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1634919651111" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1634920024697" />
     <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1633772096820">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
