@@ -10,7 +10,8 @@ class ClotureRegistreController
 {
 public function __invoke(ExerciceRegistre $data):ExerciceRegistre
 {
-    $data->setEstEnCours(false);
+    $data->setEstOuvert(false)
+         ->setEstCloture(true);
     return $data;
 }
 }

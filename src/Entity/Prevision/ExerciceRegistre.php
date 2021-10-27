@@ -5,6 +5,7 @@ namespace App\Entity\Prevision;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+//use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\TermFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Nomenclatures\Nomenclature;
@@ -21,17 +22,18 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *      shortName= "registres",
  * itemOperations={
- *                  "get"={"openapi_context"={"summary"="Affiche les informations d'un registre "}},
+ *                  "get"={ "normalization_context"={"registre_detail:read"},
+ *     "openapi_context"={"summary"="Affiche les informations d'un registre "}},
  *
- *     "demarrer"={"method"="patch", "path"="/registres/demarre/{id}", "controller"="App\Controller\DemarreRegistreController",
+ *     "ouvrir"={"method"="patch", "path"="/registres/ouvre/{id}", "controller"="App\Controller\OuvrirRegistreController",
  *     "input_formats"={"json"={"application/vnd.api+json",
  *           "application/merge-patch+json","application/json","application/ld+json"}},
  *
- *     "denormalization_context"={"groups"={"demarre:write"}}
+ *     "denormalization_context"={"groups"={"ouvrir:write"}}
  *     ,
- *       "validation_groups"={"demarre"},
+ *       "validation_groups"={"ouvrir"},
  *
- *                    "openapi_context"={"summary"="demarre un registre d'un exercice"},
+ *                    "openapi_context"={"summary"="ouvre un registre pour un exercice"},
  *                 },
  *
  *    "cloturer"={"method"="patch", "path"="/registres/cloture/{id}", "controller"="App\Controller\ClotureRegistreController",
@@ -50,13 +52,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * },
  * collectionOperations={
- *                      "get"={ "order"={"id"="DESC","associationStatut.id"="DESC"},
- *                              "openapi_context"={"summary"="Affiche les informations des registres"}}
- *                               ,"post"={"openapi_context"={"summary"="Crée un registre"}}
+ *                      "get"={
+ *     "order"={"id"="DESC","associationStatut.id"="DESC"},
+ *     "openapi_context"={"summary"="Affiche les informations des registres"}
+ *     }
+ *                  ,"post"={"openapi_context"={"summary"="Crée un registre"}}
  * },
  *
  * normalizationContext={
- *                       "groups"={"registre_detail:read"}, "openapi_definition_name"= "Read"
+ *                       "groups"={"recup:read"}, "openapi_definition_name"= "Read"
  * },
  * denormalizationContext={
  *                        "groups"={"registre_detail:write"}, "openapi_definition_name"= "Write"
@@ -65,7 +69,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  )
  * @ORM\Entity(repositoryClass=ExerciceRegistreRepository::class)
  * @UniqueEntity("anneeExercice", message= "l'année de gestion existe déjà")
- * @ApiFilter(SearchFilter::class, properties={"associationStatut.statut"="exact"})
+ * @ApiFilter(SearchFilter::class, properties={"associationStatut.statut"="partial"})
  * @ApiFilter(BooleanFilter::class, properties={"estEnCours","associationStatut.estCloturer","associationStatut.estAjoutable"})
  */
 class ExerciceRegistre
@@ -74,13 +78,13 @@ class ExerciceRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"registre_detail:read"})
+     * @Groups({"registre_detail:read","recup:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=4)
-     * @Groups({"registre_detail:read","registre_detail:write"})
+     * @Groups({"registre_detail:read","registre_detail:write","recup:read"})
      * @Assert\NotBlank(message="ne peut pas être vide")
      * @Assert\Length(min=4, max=4, exactMessage="l'annee n'est pas valide")
      */
@@ -113,23 +117,28 @@ class ExerciceRegistre
     /**
      * @ORM\ManyToOne(targetEntity=Nomenclature::class, inversedBy="associationExercice")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"registre_detail:read","registre_detail:write"})
+     * @Groups({"registre_detail:read","registre_detail:write","recup:read"})
      */
     private $nomenclature;
     /**
      * @ORM\OneToMany(targetEntity=StatutRegistre::class, mappedBy="exerciceRegistre", orphanRemoval=true)
-     * @Groups({"registre_detail:read"})
+     * @Groups({"registre_detail:read","recup:read"})
      * @ApiSubresource()
      */
     private $associationStatut;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotNull(groups={"cloture","demarre"})
-     * @Groups({"cloture:write","demarre:write"})
+     * @Assert\NotNull(groups={"cloture","ouvrir"})
+     * @Groups({"registre_detail:read","cloture:write","ouvrir:write","recup:read"})
      */
-    private $estEnCours = false;
-
+    private $estOuvert = false;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull(groups={"cloture"})
+     * @Groups({"registre_detail:read","cloture:write","recup:read"})
+     */
+    private $estCloture= false;
 
 
     /**
@@ -141,13 +150,17 @@ class ExerciceRegistre
 
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="exerciceRegistre", orphanRemoval=true)
+     * @Groups({"recup:read"})
      */
     private $associationRessource;
 
     /**
      * @ORM\OneToMany(targetEntity=PlanPassation::class, mappedBy="exerciceRegistre", orphanRemoval=true)
+     * @Groups({"recup:read"})
      */
     private $associationPlan;
+
+
 
 
     public function __construct()
@@ -229,14 +242,14 @@ class ExerciceRegistre
         return $this;
     }
 
-    public function getEstEnCours(): ?bool
+    public function getEstOuvert(): ?bool
     {
-        return $this->estEnCours;
+        return $this->estOuvert;
     }
 
-    public function setEstEnCours(bool $estEnCours): self
+    public function setEstOuvert(bool $estOuvert): self
     {
-        $this->estEnCours = $estEnCours;
+        $this->estOuvert = $estOuvert;
 
         return $this;
     }
@@ -359,6 +372,18 @@ class ExerciceRegistre
     public function getStatutTest(): Collection
     {
         return $this->statutTest;
+    }
+
+    public function getEstCloture(): ?bool
+    {
+        return $this->estCloture;
+    }
+
+    public function setEstCloture(bool $estCloture): self
+    {
+        $this->estCloture = $estCloture;
+
+        return $this;
     }
 
 

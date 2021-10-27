@@ -18,23 +18,22 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "get"={"openapi_context"={"summary"="Affiche les statuts"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations d'un registre"}},
  *
- *     "desactive"={"method"="patch", "path"="/registat/desactive/{id}",
+ *     "desactiver"={"method"="patch", "path"="/registat/desactive/{id}", "controller"="App\Controller\DesactiveStatutController",
  *     "input_formats"={"json"={"application/vnd.api+json",
  *     "application/merge-patch+json","application/json","application/ld+json"}},
  *     "denormalization_context"={"groups"={"desactive:write"}
  *     },
  *       "validation_groups"={"desactive"},
  *
- *                    "openapi_context"={"summary"="empêche d'ajouter une ressource financière à un exercice "},
+ *                    "openapi_context"={"summary"="assure la desactivation du d'etat du registre"},
  *                      },
  *
- *
- *     "ferme"={"method"="patch", "path"="/registat/ferme/{id}",
+ *     "cloturer"={"method"="patch", "path"="/registat/cloture/{id}","controller"="App\Controller\ClotureStatutController",
  *     "input_formats"={"json"={"application/vnd.api+json",
  *     "application/merge-patch+json","application/json","application/ld+json"}},
- *     "denormalization_context"={"groups"={"ferme:write"}
+ *     "denormalization_context"={"groups"={"desactive:write"}
  *     },
- *       "validation_groups"={"ferme"},
+ *       "validation_groups"={"desactive"},
  *
  *                    "openapi_context"={"summary"="clôturer un statut d'un registre "},
  *                      },
@@ -51,7 +50,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * denormalizationContext={
  *                        "groups"={"registat_detail:write"}, "openapi_definition_name"= "Write"
  * },
+ *
  * )
+ *
  */
 class StatutRegistre
 {
@@ -72,21 +73,27 @@ class StatutRegistre
     private $statut;
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"desactive:write"})
+     * @Groups({"registat_detail:read","desactive:write"})
      * @Assert\NotNull(groups={"desactive"})
      */
-    private $estOuvert=true;
+    private $estEnCours=true;
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateApprobation;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"ferme:write","registre_detail:read"})
-     * @Assert\NotNull(groups={"ferme"})
+     * @Groups({"registat_detail:read","desactive:write","registre_detail:read"})
+     * @Assert\NotNull(groups={"desactive"})
+     *
      */
-    private $estCloturer= false;
+    private $estActualisable= false;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"registat_detail:read","registat_detail:write","registre_detail:read"})
+     * @Groups({"registat_detail:read","registat_detail:write","registre_detail:read","test:write"})
+     *
      */
     private $descriptionStatut;
 
@@ -101,6 +108,8 @@ class StatutRegistre
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="statutRegistre", orphanRemoval=true)
      */
     private $associationRessource;
+
+
 
 
 
@@ -140,14 +149,14 @@ class StatutRegistre
         return $this;
     }
 
-    public function getEstCloturer(): ?bool
+    public function getEstActualisable(): ?bool
     {
-        return $this->estCloturer;
+        return $this->estActualisable;
     }
 
-    public function setEstCloturer(bool $estCloturer): self
+    public function setEstActualisable(bool $estActualisable): self
     {
-        $this->estCloturer = $estCloturer;
+        $this->estActualisable = $estActualisable;
 
         return $this;
     }
@@ -183,14 +192,14 @@ class StatutRegistre
         return $this;
     }
 
-    public function getEstOuvert(): ?bool
+    public function getEstEnCours(): ?bool
     {
-        return $this->estOuvert;
+        return $this->estEnCours;
     }
 
-    public function setEstOuvert(bool $estOuvert): self
+    public function setEstEnCours(bool $estEnCours): self
     {
-        $this->estOuvert = $estOuvert;
+        $this->estEnCours = $estEnCours;
 
         return $this;
     }
@@ -201,6 +210,18 @@ class StatutRegistre
     public function getTest(): Collection
     {
         return $this->test;
+    }
+
+    public function getDateApprobation(): ?\DateTimeInterface
+    {
+        return $this->dateApprobation;
+    }
+
+    public function setDateApprobation(?\DateTimeInterface $dateApprobation): self
+    {
+        $this->dateApprobation = $dateApprobation;
+
+        return $this;
     }
 
 
