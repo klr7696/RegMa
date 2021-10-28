@@ -103,9 +103,9 @@ const handleModif = id => {
                         <td>{bailleur.designationBailleur}</td>
                         <td>{bailleur.sigleBailleur}</td>
                         <td>{bailleur.categorieBailleur}</td>
-                        <td>{bailleur.codeBailleur}</td>
+                        <td>{bailleur.montantFinancement}</td>
                         <td>{bailleur.sourceFinancement}</td>
-                        <td>{bailleur.descriptionBailleur}</td>
+                        <td>{bailleur.id}</td>
                         <td>
                           <button 
                           onClick={() => handleDelete(bailleur.id)}

@@ -9,11 +9,7 @@ const ModifExerc = () =>{
     descriptionStatut: ""
   });
   
-  const [exercs, setExercs] = useState([
-   { anneeExercice: "",
-    associationStatut: []}
-  ]
-  );
+  const [exercs, setExercs] = useState([]);
     
   const fetchExerc = async () => {
 
@@ -134,43 +130,41 @@ const ModifExerc = () =>{
                  <form onSubmit={handleSubmit}>
                    <div className="row form-group">
                 <div className="col-sm-2">
-                  <label className="col-form-label">Exercices </label>
+                  <label className="col-form-label">Exercice en cours</label>
                 </div>
-                <div className="col-sm-2">
+                <div className="col-sm-4">
                   <select 
-                  id="anneeExercice"
-                  name="anneeExercice"
+                  name="exerciceRegistre"
                   onChange={handleChange}
-                  value={modifs.statut}
+                  value={modifs.exerciceRegistre}
                  
                   className=" form-control">
                  {exercs.map(exerc => 
                  <option key={exerc.id} value={exerc.id}>
-                 {exerc.anneeExercice} 
+                 {exerc.anneeExercice} {exerc.associationStatut[0].statut}
                </option>)}  
                   </select>
                   </div>
-                  <div className="col-sm-2">
+                 {/* <div className="col-sm-2">
                   <label className="col-form-label">Etat en cours </label>
                 </div>
                 <div className="col-sm-2">
                   <select 
-                  id="statut"
-                  name="statut"
+                  name="exerciceRegistre"
                   onChange={handleChange}
                   className=" form-control">
-                  {exercs.map(exer => <option key={exer.id} value={exer.id}> 
-                 {exer.associationStatut.statut}
+                  {exercs.map(exerc => <option key={exerc.id} value={exerc.id}> 
+                 {exerc.associationStatut[0].statut}
                   </option>)}
                   </select>
-                  </div>
+                  </div>*/}
 
                   <div className="col-sm-2">
                   <label className="col-form-label">Type de modification</label>
                 </div>
-                <div className="col-sm-2">
+                <div className="col-sm-4">
                   <select 
-                  name="objetFinancement"
+                  name="statut"
                   className="form-control"
                   value={modifs.statut}
                   onChange={handleChange}
@@ -184,7 +178,7 @@ const ModifExerc = () =>{
                 <div className="col-sm-2">
                   <label className="col-form-label">Date d'approbation *</label>
                 </div>
-                <div className="col-sm-3">
+                <div className="col-sm-4">
                   <input type="date" className="form-control" />
                 </div>
                 <div className="col-sm-2">
@@ -192,7 +186,7 @@ const ModifExerc = () =>{
                     Motif de modification *
                   </label>
                 </div>
-                <div className="col-sm-5">
+                <div className="col-sm-4">
                   <textarea type="text" className="form-control" />
                 </div>
               </div>

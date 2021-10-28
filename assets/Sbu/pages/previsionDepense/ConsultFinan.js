@@ -82,12 +82,12 @@ const ConsultFinan = () => {
          <tbody>
             {finans.map(finan =>
                         <tr key={finan.id} value={finan.id}>
-                        <td>{finan.bailleurFonds}</td>
+                        <td>{finan.bailleurFonds[0].sigleBailleur}</td>
                         <td>{finan.objetFinancement}</td>
                         <td>{finan.modeFinancement} </td>
                         <td>{finan.excerciceRegistre}</td>
                         <td>{finan.montantFinancement}</td>
-                        <td>{finan.descriptionFinancement}</td>
+                        <td>{finan.id}</td>
                         <td>{}</td>
               </tr>)}
             </tbody>

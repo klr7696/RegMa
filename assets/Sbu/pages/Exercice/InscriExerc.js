@@ -49,21 +49,11 @@ const InscriExerc = ( {history}) => {
       nomenclature:`/api/nomenclatures/${exercs.nomenclature}`})
       console.log(response.data);
       toast.success("Livre Ajouté");
-      history.replace("/exercice");
-      setErrors({});
+      history.replace("sbu/exercice/new");
     } catch(error) {
-      const  {violations} = response.data;
-
-      if (violations) {
-        const apiErrors = {};
-        violations.forEach(({propertyPath, message}) => {
-          apiErrors[propertyPath] =message;
-        });
-
-        setErrors(apiErrors);
-        toast.error("Erreur");
+      setError(error.data);
+        toast.error("Erreur ");
       }
-    }
   };
 
   return (
@@ -226,9 +216,10 @@ const InscriExerc = ( {history}) => {
         </div>
         <div className="text-right col-sm-12">
           <button 
-         
+          disabled = {exercs.anneeExercice.length > 0}
           type="submit" 
-          className="btn btn-primary">
+          className="btn btn-primary"
+        >
             Créer
           </button>
         </div>

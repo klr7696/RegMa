@@ -1,26 +1,19 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 
 const ConsultNomen = (props) => {
 
-  state = {
-      anneeApplication:"",
-      decretAdoption:"",
-      assiociationCompteNature:[]
-  };
 
-setState({
-  anneeApplication: this.state.anneeApplication
-  assiociationCompteNature: this.state.assiociationCompteNature[this.]
-})
-  const [nomen, setNomen] = useState([]);
+  const [nomens, setNomens] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/nomenclatures")
       .then(response => response.data["hydra:member"])
       .then(data => setNomens(data));
+      toast.success("liste chargée avec succès");
   }, []);
 
   const convert = date => {

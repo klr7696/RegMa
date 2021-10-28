@@ -9,11 +9,11 @@ const InscriFinan = (props) => {
     const [finans, setFinans] = useState({
         objetFinancement: "Fonctionnement",
         modeFinancement: "Subvention",
-        montantFinancement: 2000000,
-        exerciceRegistre: "/api/registres/10",
-        bailleurFonds: "/api/bailleurs/1",
+        montantFinancement: 200000,
+        exerciceRegistre: "/api/registres/19",
+        bailleurFonds: "/api/bailleurs/2",
         descriptionFinancement: "",
-        statutRegistre:"/api/registats/1"
+        statutRegistre:"/api/registats/2"
     });
 
     const [error, setErrors] = useState("");
@@ -41,7 +41,7 @@ const InscriFinan = (props) => {
       }
     }, [id]);
   
-    const [exercs, setExercs] = useState([]);
+  {/*  const [exercs, setExercs] = useState([]);
   
     const fetchExercs = async () => {
       try{
@@ -58,7 +58,7 @@ const InscriFinan = (props) => {
     useEffect(() =>{
         fetchExercs();
     }, []);
-
+  */}
     const [bailleurs, setBailleurs] = useState([]);
   
     const fetchBailleurs = async () => {
@@ -149,7 +149,7 @@ const InscriFinan = (props) => {
       <div className="row">
         <div className="col-sm-12">
           <div className="card-block">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} action="/">
               <div className="row form-group">
                 <div className="col-sm-2">
                   <label className="col-form-label">Bailleur *</label>
@@ -157,8 +157,7 @@ const InscriFinan = (props) => {
                 <div className="col-sm-2">
                     <select 
                     onChange={handleChange} 
-                    name="nomenclature"
-                    id="nomenclature"
+                    name="bailleurFonds"
                     value={finans.bailleurFonds}
                     className={"form-control" + (error && " is-invalid")}
                    >
@@ -204,6 +203,7 @@ const InscriFinan = (props) => {
                 </div>
                 <div className="col-sm-6">
                   <input 
+                  id="integer"
                   type="number" 
                   name="montantFinancement"
                   value={finans.montantFinancement}
@@ -213,7 +213,7 @@ const InscriFinan = (props) => {
                 <div className="col-sm-1">
                   <label className="col-form-label">Exercice </label>
                 </div>
-                <div className="col-sm-2">
+              {/*  <div className="col-sm-2">
                     <select 
                     disabled="disabled"
                     onChange={handleChange} 
@@ -226,7 +226,7 @@ const InscriFinan = (props) => {
                        {exerc.anneeExercice}
                      </option>)}
                       </select>
-                    </div>
+                     </div>*/}
               </div>
               <div className="row form-group">
                 <div className="col-sm-2">
