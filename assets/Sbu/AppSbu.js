@@ -21,6 +21,7 @@ import InscriFinan from "./pages/previsionDepense/inscriFinan";
 import ConsultFinan from "./pages/previsionDepense/ConsultFinan";
 import InscriCredit from "./pages/previsionDepense/InscriCredit";
 import ConsultCredit from "./pages/previsionDepense/ConsultCredit";
+import OuvriExerc from "./pages/Exercice/OuvriExerc";
 
 const AppSbu = (props) =>{
     return (
@@ -112,6 +113,10 @@ const AppSbu = (props) =>{
                          <Route
                           path={`${props.match.url}/financement`}
                           component={ConsultFinan}
+                        />
+                         <Route
+                          path={`${props.match.url}/ouvr`}
+                          component={OuvriExerc}
                         />
                       </Switch>
                     </div>

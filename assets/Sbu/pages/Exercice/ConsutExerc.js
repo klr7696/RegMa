@@ -12,6 +12,9 @@ const ConsultExerc = () =>{
       .then(data => setExercs(data));
   }, []);
 
+   const magiscule = string => {
+     return string.toUpperCase()
+   }
   return (
   <section id="exp">
   <div className="product-detail-page">
@@ -87,6 +90,7 @@ const ConsultExerc = () =>{
           >
             <thead>
               <tr>
+            <th>id</th>
             <th>Année</th>
             <th>Ordonnateur</th>
             <th>Date de vote</th>
@@ -101,10 +105,11 @@ const ConsultExerc = () =>{
             {exercs.map(exerc =>
                         <tr key={exerc.id} value={exerc.id}>
                         <td>{exerc.id}</td>
+                        <td>{exerc.anneeExercice}</td>
                         <td>{exerc.ordonateurExercice}</td>
                         <td>{exerc.dateVote} </td>
                         <td>{exerc.dateAdoption}</td>
-                        <td>{exerc.description}</td>
+                        <td>{magiscule(exerc.description)}</td>
                         <td>{exerc.nomenclature}</td>
                         <td>{exerc.associationStatut.statut}</td>
                         <td>{}</td>

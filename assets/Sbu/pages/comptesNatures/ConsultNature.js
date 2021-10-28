@@ -1,14 +1,19 @@
 import axios from "axios";
 import React, {useEffect, useState } from "react";
+import { ColumnDirective, ColumnsDirective, Filter, Inject, Page, TreeGridComponent } from '@syncfusion/ej2-react-treegrid';
+import { Link } from "react-router-dom";
+
 
 const ConsultNature = () => {
-    const [chaps, setChaps] = useState([]);
+
+
+const [compte, setCompte] = useState([]);
 
     useEffect(() => {
       axios
         .get("http://localhost:8000/api/natures")
         .then(response => response.data["hydra:member"])
-        .then(data => setChaps(data));
+        .then(data => setCompte(data));
     }, []);
   
     return (
@@ -71,42 +76,29 @@ const ConsultNature = () => {
              
               <div className="page-body">
             <div className="card-block">
-            <div className="row form-group">
-        <div className="text-left col-sm-9">
-        <h5 className="card-header-text">Listes des comptes</h5>
-        </div>
-        <div className="text-right col-sm-3">
-              <input className="form-control" placeholder="Rechercher..."/>
-        </div>
-        </div>
         <div className="table-responsive dt-responsive">
-          <table
-            id="lang-file"
-            className="table table-striped table-bordered nowrap"
-          >
-        <thead>
-                    <tr>
-                      <th>Num</th>
-                      <th>Libéllé</th>
-                      <th>Section</th>
-                      <th>Hierar</th>
-                      <th>Nomen</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {chaps.map(chap =>
-                          <tr key={chap.id}>
-                            <td>{chap.numeroCompteNature}</td>
-                          <td>{chap.libelleCompteNature}</td>
-                          <td>{chap.sectionCompteNature}</td>
-                          <td>{chap.hierachieCompteNature}</td>
-                          <td>{chap.nomenclature}</td>
-                         
-                </tr>)}
-                     
-                    </tbody>
-                
-         </table>
+        <div className='control-pane'>
+    <div className='control-section'>
+     <div className='col-md-12'>
+    <div className="mb-1 d-flex justify-content-between align-items-center">
+    <h4>Liste de lignes budgétaires</h4>
+    <Link to="/compte/new" className="btn btn-primary">Ajouter de Nouveau</Link>
+    </div>   
+       <TreeGridComponent dataSource={compte}
+        childMapping='sousCompteNature' height='420' allowPaging='true' allowFiltering='true' 
+       filterSettings={{ mode: 'Immediate', type: 'FilterBar', hierarchyMode: 'Parent' }}>
+        <ColumnsDirective>
+          <ColumnDirective field='numeroCompteNature' headerText='Numéro' width='90'></ColumnDirective>
+          <ColumnDirective field='hierachieCompteNature' headerText='Hiérarchie' width='90' />
+          <ColumnDirective field='libelleCompteNature' headerText='Libéllé' width='200' />
+          <ColumnDirective field='sectionCompteNature' headerText='Section' width='100'/>
+          <ColumnDirective field='compteNature' headerText='oj' width='100'/>
+        </ColumnsDirective>
+        <Inject services={[Filter, Page]}/>
+      </TreeGridComponent>
+    </div>
+   </div>
+    </div>
            </div>
            </div></div>
                </div>

@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, {useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import NomenAPI from "../../../zservices/nomenAPI";
 
-const InscriNomen = (props) =>{
+const InscriNomen = ({history,match}) =>{
 
-  const { id = "new" } = props.match.params;
+  const { id = "new" } = match.params;
 
   const [nomens, setNomens] = useState({
     anneeApplication: "",
@@ -15,7 +16,7 @@ const InscriNomen = (props) =>{
     descriptionNomenclature: ""
   });
 
-  const [error, setErrors] = useState("");
+  const [error, setError] = useState("");
   const [editing, setEditing] = useState (false);
 
   const fetchNomen = async id => {
@@ -74,11 +75,13 @@ const InscriNomen = (props) =>{
        // res.data.headers['application/merge-patch+json'];
         await  NomenAPI.create(nomens);
         await axios.patch("http://localhost:8000/api/nomenclatures/" + nomens.nabro , {});
+        toast.success("Livre Ajouté");
+        history.replace("/sbu/nomenclature");
       console.log(nomens.nabro);
       }
-    } catch(error) {
-     console.log(error)
-     setErrors("Informations incorrectes")
+    } catch(response) {
+         console.log(error);
+       toast.error("Livre Ajouté");
     }
    
   };
@@ -149,8 +152,8 @@ const InscriNomen = (props) =>{
                     value={nomens.anneeApplication}
                     onChange={handleChange}
                     required
+                    error={error.anneeApplication}
                   />
-                   {error && <p className="invalid-feedback">{error}</p> }
                 </div>
                 <div className="col-sm-2">
                   <label className="col-form-label">
@@ -185,6 +188,7 @@ const InscriNomen = (props) =>{
                       value= {nomens.decretAdoption}
                       onChange={handleChange}
                       required
+                      error={error.decretAdoption}
                     />
                   </div>
                   <div className="col-sm-3">

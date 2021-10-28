@@ -4,7 +4,17 @@ import React, { useState, useEffect } from "react";
 
 const ConsultNomen = (props) => {
 
-  const [nomens, setNomens] = useState([]);
+  state = {
+      anneeApplication:"",
+      decretAdoption:"",
+      assiociationCompteNature:[]
+  };
+
+setState({
+  anneeApplication: this.state.anneeApplication
+  assiociationCompteNature: this.state.assiociationCompteNature[this.]
+})
+  const [nomen, setNomen] = useState([]);
 
   useEffect(() => {
     axios
@@ -13,6 +23,9 @@ const ConsultNomen = (props) => {
       .then(data => setNomens(data));
   }, []);
 
+  const convert = date => {
+    return date.toLocaleString('ko KR', {timeZone: 'UTC'})
+  }
   return (
   <section id="exp">
   <div className="product-detail-page">
@@ -85,7 +98,7 @@ const ConsultNomen = (props) => {
                         <td>{nomen.decretAdoption} </td>
                         <td>{nomen.dateAdoption}</td>
                         <td>{nomen.decretApplication}</td>
-                        <td>{nomen.dateApplication.toString('fr-FR',{timeZone: 'UTC'})}</td>
+                        <td>{nomen.dateApplication}</td>
                         <td>{nomen.assiociationCompteNature}</td>
               </tr>)}
             </tbody>

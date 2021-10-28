@@ -3,53 +3,73 @@ import React, {useState, useEffect} from "react";
 
 const ModifExerc = () =>{
 
-  const [exercs, setExercs] = useState({
-    AnneeExercice: "2019",
-    ordonateurExercice: "Borahima",
-    dateVote: "",
-    dateAdoption: "2019-10-10",
-    description: "",
-    nomenclature: "/api/nomenclatures/16"
+  const [modifs, setModifs] = useState({
+    statut: "Primitif modifif",
+    exerciceRegistre: "",
+    descriptionStatut: ""
   });
   
-  const [nomenclatures, setNomens] = useState([]);
+  const [exercs, setExercs] = useState([
+   { anneeExercice: "",
+    associationStatut: []}
+  ]
+  );
     
-  const fetchNomen = async () => {
+  const fetchExerc = async () => {
+
     try{
   const data = await axios
-  .get("http://localhost:8000/api/nomenclatures?estActif=true")
-  .then(response => response.data["hydra:member"]);
-    setNomens(data);
-    if (!chaps.nomenclature) setChaps({...chaps, nomenclature:data[0].id} )
+  .get("http://localhost:8000/api/registres")
+  //.then(reponse => console.log(reponse));
+  .then(response => response.data['hydra:member'])
+  console.log(data)
+  setExercs(data);
+    if (!modifs.exerciceRegistre) setModifs({...modifs, exerciceRegistre:data[0].id} )
     } catch (error) {
-    console.log(error.response);
+    console.log(error.data);
+    }
+  };
+  useEffect(() =>{
+    fetchExerc();
+}, []);
+
+
+ {/* const [exers, setExers] = useState([]);
+
+  const fetchExer = async () => {
+   const idl = document.getElementById("statut")
+    try{
+  const data = await axios
+  .get(`http://localhost:8000/api/registres/${idl}/association_statuts`)  
+  //.then(reponse => console.log(reponse));
+ .then(response => response.data['hydra:member'])
+  setExers(data);
+    } catch (error) {
+    console.log(error.data);
     }
   };
 
   useEffect(() =>{
-      fetchNomen();
+      fetchExer();
   }, []);
-
-
+*/}
   const [error, setError] = useState("");
 
   const handleChange = ({ currentTarget }) => {
     const { name, value } = currentTarget;
-    setExercs({...exercs, [name]: value });
+    setModifs({...modifs, [name]: value });
   };
 
   const handleSubmit = async event => {
     event.preventDefault();
-
     try {
      await axios
-      .post("http://localhost:8000/api/registres", exercs)
+      .post("http://localhost:8000/api/registres", modifs)
       console.log(response.data);
     } catch(error) {
       console.log(error.response);
      setError("Informations incorrectes")
     }
-   
   };
 
   return (
@@ -108,26 +128,57 @@ const ModifExerc = () =>{
       <div className="card">
         <div className="card-block">
           <div className="page-body">
-      <div className="row">
-        <div className="col-sm-12">
-          <div className="card-block">
-          <form>
-              <div className="row form-group">
+             <div className="row">
+              <div className="col-sm-12">
+                <div className="card-block">
+                 <form onSubmit={handleSubmit}>
+                   <div className="row form-group">
                 <div className="col-sm-2">
-                  <label className="col-form-label">Type de modification *</label>
+                  <label className="col-form-label">Exercices </label>
                 </div>
-                <div className="col-sm-3">
-                  <select className=" form-control">
-                    <option value="1">Decision modificative</option>
-                    <option value="2">Supplementaire</option>
+                <div className="col-sm-2">
+                  <select 
+                  id="anneeExercice"
+                  name="anneeExercice"
+                  onChange={handleChange}
+                  value={modifs.statut}
+                 
+                  className=" form-control">
+                 {exercs.map(exerc => 
+                 <option key={exerc.id} value={exerc.id}>
+                 {exerc.anneeExercice} 
+               </option>)}  
                   </select>
                   </div>
                   <div className="col-sm-2">
-                  <label className="col-form-label">Nombre de modification</label>
+                  <label className="col-form-label">Etat en cours </label>
                 </div>
-                  <div className="col-sm-2">
-                    <input type="text" className="form-control" placeholder="1" />
+                <div className="col-sm-2">
+                  <select 
+                  id="statut"
+                  name="statut"
+                  onChange={handleChange}
+                  className=" form-control">
+                  {exercs.map(exer => <option key={exer.id} value={exer.id}> 
+                 {exer.associationStatut.statut}
+                  </option>)}
+                  </select>
                   </div>
+
+                  <div className="col-sm-2">
+                  <label className="col-form-label">Type de modification</label>
+                </div>
+                <div className="col-sm-2">
+                  <select 
+                  name="objetFinancement"
+                  className="form-control"
+                  value={modifs.statut}
+                  onChange={handleChange}
+                  >
+                    <option value="Modificatif">Primitif modificatif</option>
+                    <option value="Supplementaire">Supplementaire</option>
+                  </select>
+                </div>
                 </div>
               <div className="row form-group">
                 <div className="col-sm-2">

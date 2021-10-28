@@ -9,17 +9,17 @@ const InscriFinan = (props) => {
     const [finans, setFinans] = useState({
         objetFinancement: "Fonctionnement",
         modeFinancement: "Subvention",
-        montantFinancement: 1000000,
+        montantFinancement: 2000000,
         exerciceRegistre: "/api/registres/10",
         bailleurFonds: "/api/bailleurs/1",
         descriptionFinancement: "",
-        statutRegistre="/api/registats/1"
+        statutRegistre:"/api/registats/1"
     });
-  
+
     const [error, setErrors] = useState("");
     const [editing, setEditing] = useState (false);
   
-   {/* const fetchFinans = async id => {
+   const fetchFinans = async id => {
       try{
     const data = await axios.get("http://localhost:8000/api/ressources/" + id)
     .then(response => response.data);
@@ -39,7 +39,7 @@ const InscriFinan = (props) => {
         setEditing(true);
         fetchFinans(id);
       }
-    }, [id]);*/}
+    }, [id]);
   
     const [exercs, setExercs] = useState([]);
   
@@ -90,7 +90,7 @@ const InscriFinan = (props) => {
   
       try {
           const response = await axios
-          .post("http://localhost:8000/api/ressources", finans)
+          .post("http://localhost:8000/api/ressources/inscription", finans)
           console.log(response.data);
       } catch(error) {
        console.log(error.response)
@@ -98,6 +98,7 @@ const InscriFinan = (props) => {
       }
      
     };
+   
     return (
         <section id="exp">
         <div className="product-detail-page">
@@ -153,7 +154,19 @@ const InscriFinan = (props) => {
                 <div className="col-sm-2">
                   <label className="col-form-label">Bailleur *</label>
                 </div>
-               
+                <div className="col-sm-2">
+                    <select 
+                    onChange={handleChange} 
+                    name="nomenclature"
+                    id="nomenclature"
+                    value={finans.bailleurFonds}
+                    className={"form-control" + (error && " is-invalid")}
+                   >
+                     {bailleurs.map(bailleur => <option key={bailleur.id} value={bailleur.id}>
+                       {bailleur.sigleBailleur}
+                     </option>)}
+                      </select>
+                    </div>
                 <div className="col-sm-1">
                   <label className="col-form-label">Objet *</label>
                 </div>
@@ -177,8 +190,8 @@ const InscriFinan = (props) => {
                    value={finans.modeFinancement}
                   onChange={handleChange}
                   className="form-control">
-                    <option value="Subvention">Subvention</option>
-                    <option value="Dotation">Dotation</option>
+                    <option value="Subvention">Subventions</option>
+                    <option value="Dotation">Dotations</option>
                     <option value="Emprunts">Emprunts</option>
                     <option value="Recette propres">Recette propres</option>
                     <option value="Dons">Dons</option>
@@ -200,7 +213,20 @@ const InscriFinan = (props) => {
                 <div className="col-sm-1">
                   <label className="col-form-label">Exercice </label>
                 </div>
-               
+                <div className="col-sm-2">
+                    <select 
+                    disabled="disabled"
+                    onChange={handleChange} 
+                    name="nomenclature"
+                    id="nomenclature"
+                    value={finans.exerciceRegistre}
+                    className={"form-control" + (error && " is-invalid")}
+                   >
+                     {exercs.map(exerc => <option key={exerc.id} value={exerc.id}>
+                       {exerc.anneeExercice}
+                     </option>)}
+                      </select>
+                    </div>
               </div>
               <div className="row form-group">
                 <div className="col-sm-2">
