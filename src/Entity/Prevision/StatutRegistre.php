@@ -60,20 +60,21 @@ class StatutRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"registat_detail:read","registre_detail:read"})
+     * @Groups({"registat_detail:read","registre_detail:read","actifregistre:read"})
      *
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"registat_detail:read","registat_detail:write","registre_detail:read"})
+     * @Groups({"registat_detail:read","registat_detail:write","registre_detail:read","actifregistre:read",
+     *     "actifressource:read"})
      * @Assert\Choice(choices={"Primitif","Primitif modificatif","Supplémentaire"}, message= "saisir des informations correctes")
      */
     private $statut;
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"registat_detail:read","desactive:write"})
+     * @Groups({"registat_detail:read","desactive:write","actifregistre:read"})
      * @Assert\NotNull(groups={"desactive"})
      */
     private $estEnCours=true;
@@ -84,7 +85,7 @@ class StatutRegistre
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"registat_detail:read","desactive:write","registre_detail:read"})
+     * @Groups({"registat_detail:read","desactive:write","registre_detail:read","actifregistre:read"})
      * @Assert\NotNull(groups={"desactive"})
      *
      */
@@ -100,12 +101,13 @@ class StatutRegistre
     /**
      * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationStatut")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"registat_detail:read","registat_detail:write"})
+     * @Groups({"registat_detail:read","registat_detail:write","actifressource:read"})
      */
     private $exerciceRegistre;
 
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="statutRegistre", orphanRemoval=true)
+     * @Groups({"actifressource:read"})
      */
     private $associationRessource;
 

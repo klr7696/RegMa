@@ -52,6 +52,18 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * },
  * collectionOperations={
+ *     "actifnomen"={"method"="get", "path"="/registres/actifnomenclature",
+ * "normalization_context"={"groups"={"actifnomen:read"}},
+ *     "openapi_context"={"summary"="Affiche la nomenclature affectée au registre"}
+ *     },
+ *
+ *      "actifregistre"={"method"="get", "path"="/registres/actif",
+ * "normalization_context"={"groups"={"actifregistre:read"}},
+ *     "openapi_context"={"summary"="Affiche le registre en cours"}
+ *     },
+ *
+ *
+ *
  *                      "get"={
  *     "order"={"id"="DESC","associationStatut.id"="DESC"},
  *     "openapi_context"={"summary"="Affiche les informations des registres"}
@@ -78,13 +90,16 @@ class ExerciceRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"registre_detail:read","recup:read"})
+     * @Groups({"registre_detail:read","recup:read","actifnomen:read","actifregistre:read",
+     *     "actifressource:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=4)
-     * @Groups({"registre_detail:read","registre_detail:write","recup:read"})
+     * @Groups({"registre_detail:read","registre_detail:write","recup:read",
+     *     "actifnomen:read","actifregistre:read",
+     *     "actifressource:read"})
      * @Assert\NotBlank(message="ne peut pas être vide")
      * @Assert\Length(min=4, max=4, exactMessage="l'annee n'est pas valide")
      */
@@ -117,12 +132,13 @@ class ExerciceRegistre
     /**
      * @ORM\ManyToOne(targetEntity=Nomenclature::class, inversedBy="associationExercice")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"registre_detail:read","registre_detail:write","recup:read"})
+     * @Groups({"registre_detail:read","registre_detail:write","recup:read",
+     * "actifnomen:read"})
      */
     private $nomenclature;
     /**
      * @ORM\OneToMany(targetEntity=StatutRegistre::class, mappedBy="exerciceRegistre", orphanRemoval=true)
-     * @Groups({"registre_detail:read","recup:read"})
+     * @Groups({"registre_detail:read","recup:read","actifregistre:read"})
      * @ApiSubresource()
      */
     private $associationStatut;
@@ -130,13 +146,14 @@ class ExerciceRegistre
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull(groups={"cloture","ouvrir"})
-     * @Groups({"registre_detail:read","cloture:write","ouvrir:write","recup:read"})
+     * @Groups({"registre_detail:read","cloture:write","ouvrir:write","recup:read",
+     * "actifregistre:read"})
      */
     private $estOuvert = false;
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull(groups={"cloture"})
-     * @Groups({"registre_detail:read","cloture:write","recup:read"})
+     * @Groups({"registre_detail:read","cloture:write","recup:read","actifregistre:read"})
      */
     private $estCloture= false;
 

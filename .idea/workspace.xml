@@ -25,21 +25,15 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="ressources">
-      <change afterPath="$PROJECT_DIR$/src/Controller/ClotureStatutController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/DesactiveStatutController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/RegistreMarche.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RegistreMarche.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="ressources2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/api_platform.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/api_platform.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/migrations/Version20211018162723.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20211027140358.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ClotureRegistreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ClotureRegistreController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/DemarreRegistreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/OuvrirRegistreController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/RessourceFinanciere.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/RessourceFinanciere.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -283,7 +277,9 @@
       <workItem from="1634880645771" duration="23037000" />
       <workItem from="1634965395484" duration="3190000" />
       <workItem from="1635025556089" duration="36042000" />
-      <workItem from="1635196170090" duration="19524000" />
+      <workItem from="1635196170090" duration="19593000" />
+      <workItem from="1635426301789" duration="1279000" />
+      <workItem from="1635477835093" duration="11704000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -355,7 +351,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634920017123</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="ressources2">
+      <created>1635366430574</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1635366430574</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -428,7 +431,8 @@
     <MESSAGE value="ressources nomenclatures corriger version 3" />
     <MESSAGE value="ressources nomenclatures corriger versions" />
     <MESSAGE value="ressources nomenclatures corriger versiono" />
-    <option name="LAST_COMMIT_MESSAGE" value="ressources nomenclatures corriger versiono" />
+    <MESSAGE value="ressources2" />
+    <option name="LAST_COMMIT_MESSAGE" value="ressources2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">

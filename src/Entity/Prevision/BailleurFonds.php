@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ApiResource(
@@ -19,6 +20,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "delete"={"openapi_context"={"summary"="Supprime un bailleur de fonds"}}
  *   },
  *     collectionOperations={
+ *     "actifressource"={"method"="get", "path"="/bailleurs/actifressource",
+ * "normalization_context"={"groups"={"actifressource:read"}},
+ *     "openapi_context"={"summary"="Affiche le registre en cours"}
+ *     },
+ *
  *     "get" ={
  *     "openapi_context"={"summary"="Affiche les informations des bailleurs de fonds"}}
  *     ,"post"={"openapi_context"={"summary"="Crée un bailleur de fonds"}}
@@ -31,6 +37,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *@ApiFilter(SearchFilter::class, properties={"sigleBailleur"="exact","associationRessource.objetFinancement"="exact",
  *     "associationRessource.associationCredit.montantInscription" ="exact"
  *     })
+ *
  */
 class BailleurFonds
 {
@@ -43,13 +50,13 @@ class BailleurFonds
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"bailleurs_detail:read","bailleurs_detail:write"})
+     * @Groups({"bailleurs_detail:read","bailleurs_detail:write","actifressource:read"})
      */
     private $designationBailleur;
 
     /**
      * @ORM\Column(type="string", length=10)
-     * @Groups({"bailleurs_detail:read","bailleurs_detail:write"})
+     * @Groups({"bailleurs_detail:read","bailleurs_detail:write","actifressource:read"})
      *
      */
     private $sigleBailleur;
@@ -68,7 +75,7 @@ class BailleurFonds
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"bailleurs_detail:read","bailleurs_detail:write"})
+     * @Groups({"bailleurs_detail:read","bailleurs_detail:write","actifressource:read"})
      */
     private $sourceFinancement;
 
@@ -80,7 +87,8 @@ class BailleurFonds
 
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="bailleurFonds", orphanRemoval=true)
-     * @Groups({"bailleurs_detail:read"})
+     * @Groups({"bailleurs_detail:read","actifressource:read"})
+     *
      *
      */
     private $associationRessource;
