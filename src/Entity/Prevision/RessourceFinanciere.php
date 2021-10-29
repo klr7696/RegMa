@@ -61,13 +61,13 @@ class RessourceFinanciere
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"ressource_detail:read"})
+     * @Groups({"ressource_detail:read","actifressource:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"ressource_detail:read","ressource_detail:write","actualise:write","bailleurs_detail:read"})
+     * @Groups({"ressource_detail:read","ressource_detail:write","actualise:write","bailleurs_detail:read","actifressource:read"})
      */
     private $objetFinancement;
 
@@ -79,7 +79,7 @@ class RessourceFinanciere
 
     /**
      * @ORM\Column(type="float")
-     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write"})
+     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write","actifressource:read"})
      */
     private $montantFinancement;
 
@@ -92,7 +92,8 @@ class RessourceFinanciere
     /**
      * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationRessource")
      * @ORM\JoinColumn(nullable=false)
-     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write"})
+     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write",
+     *     "actifressource:read"})
      */
     private $exerciceRegistre;
 

@@ -6,11 +6,11 @@ namespace App\Controller;
 
 use App\Entity\Prevision\ExerciceRegistre;
 
-class DemarreRegistreController
+class OuvrirRegistreController
 {
     public function __invoke(ExerciceRegistre $data):ExerciceRegistre
     {
-        $data->setEstEnCours(true);
+        $data->setEstOuvert(true);
         return $data;
     }
 }

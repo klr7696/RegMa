@@ -89,7 +89,7 @@ class CompteNature
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("nature_detail:read")
+     * @Groups({"nature_detail:read","actifnomen:read"})
      */
     private $id;
 
@@ -97,7 +97,7 @@ class CompteNature
      * @ORM\Column(type="string", length=7)
      * @Groups({"nature_detail:read","nature_detail:write"
      * ,"nomen_nature:read","sousnatures:read",
-     * "chapitre:write","sousnatures:write"})
+     * "chapitre:write","sousnatures:write","actifnomen:read"})
      * @Assert\NotBlank(message=" veuillez entrer le numero du compte ")
      */
     private $numeroCompteNature;
@@ -106,7 +106,7 @@ class CompteNature
      * @ORM\Column(type="string", length=255)
      * @Groups({"nature_detail:read","nature_detail:write",
      *     "nomen_nature:read","sousnatures:read",
-     * "chapitre:write","sousnatures:write"})
+     * "chapitre:write","sousnatures:write","actifnomen:read"})
      * @Assert\NotBlank(message=" veuillez entrer le libelle")
      */
     private $libelleCompteNature;
@@ -115,7 +115,7 @@ class CompteNature
      * @ORM\Column(type="string", length=30, nullable=true)
      * @Assert\Choice(choices= {"","Fonctionnement", "Investissement"})
      * @Groups({"nature_detail:read","nature_detail:write"
-     * ,"nomen_nature:read","chapitre:write",
+     * ,"nomen_nature:read","chapitre:write","actifnomen:read"
      *    })
      */
     private $sectionCompteNature;
@@ -126,7 +126,7 @@ class CompteNature
      * @Groups({"nature_detail:read","nature_detail:write"
      * ,"nomen_nature:read","sousnatures:read",
      * "chapitre:write","sousnatures:write",
-     *     "sousnatures:read"})
+     *     "sousnatures:read","actifnomen:read"})
      *
      */
     private $hierachieCompteNature;
@@ -155,7 +155,8 @@ class CompteNature
 
     /**
      * @ORM\OneToMany(targetEntity=CompteNature::class, mappedBy="compteNature")
-     * @Groups({"nature_detail:read","nature_detail:write","nomen_nature:read"})
+     * @Groups({"nature_detail:read","nature_detail:write","nomen_nature:read","actifnomen:read","actifnomen:read"})
+     *
      * @ApiSubresource()
      */
     private $sousCompteNature;

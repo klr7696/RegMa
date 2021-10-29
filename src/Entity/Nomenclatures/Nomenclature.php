@@ -50,7 +50,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * },
  *
  * normalizationContext={
- *                       "groups"={"nomen_detail:read","nomen_compte:read"}, "openapi_definition_name"= "Read"
+ *                       "groups"={"nomen_detail:read","nomen_compte:read"}, "openapi_definition_name"= "Read",
+ *     "datetime_format"="d-m-Y"
  * },
  * denormalizationContext={
  *                        "groups"={"nomen_detail:write"}, "openapi_definition_name"= "Write"
@@ -76,13 +77,13 @@ class Nomenclature
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("nomen_detail:read")
+     * @Groups({"nomen_detail:read","actifnomen:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=4)
-     * @Groups({"nomen_detail:read","nomen_detail:write"})
+     * @Groups({"nomen_detail:read","nomen_detail:write","actifnomen:read"})
      * @Assert\NotBlank(message="l'année est incorrect car vide")
      * @Assert\Length(min= 4,max=4, exactMessage="l'année est incorrect0000000",allowEmptyString="true"
      *    )
@@ -131,7 +132,7 @@ class Nomenclature
 
     /**
      * @ORM\OneToMany(targetEntity=CompteNature::class, mappedBy="nomenclature")
-     * @Groups({"nomen_detail:read"})
+     * @Groups({"nomen_detail:read","actifnomen:read"})
      * @ApiSubresource(maxDepth=1)
      */
     private $assiociationCompteNature;
@@ -186,10 +187,10 @@ class Nomenclature
         return $this;
     }
 
-    public function getDateAdoption(): ?string
+    public function getDateAdoption(): ?\DateTimeInterface
     {
 
-        return $this->dateAdoption->format('d-m-Y');
+        return $this->dateAdoption;
 
     }
 
