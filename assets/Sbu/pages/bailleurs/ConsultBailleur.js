@@ -98,12 +98,12 @@ const handleModif = id => {
             </thead>
             <tbody>
             {bailleurs.map(bailleur =>
-                        <tr key={bailleur.id}>
+               <tr key={bailleur.id}>
                         <td>{bailleur.id}</td>
                         <td>{bailleur.designationBailleur}</td>
                         <td>{bailleur.sigleBailleur}</td>
                         <td>{bailleur.categorieBailleur}</td>
-                        <td>{bailleur.montantFinancement}</td>
+                        <td>{bailleur.asso}</td>
                         <td>{bailleur.sourceFinancement}</td>
                         <td>{bailleur.id}</td>
                         <td>

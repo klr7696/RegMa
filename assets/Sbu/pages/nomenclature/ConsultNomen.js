@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 
 const ConsultNomen = (props) => {
 
+  const a = new Date("2021-11-29T11:13:40.209Z");
+
 
   const [nomens, setNomens] = useState([]);
 
@@ -89,11 +91,11 @@ const ConsultNomen = (props) => {
                         <td>{nomen.id}</td>
                         <td>{nomen.anneeApplication}</td>
                         <td>{nomen.decretAdoption} </td>
-                        <td>{nomen.dateAdoption}</td>
-                        <td>{nomen.decretApplication}</td>
+                        <td>{nomen.dateAdoption.toLocaleString("fr-FR", {timeZone: 'UTC'})}</td>
+                        <td>{nomen.decretApplication}</td> 
                         <td>{nomen.dateApplication}</td>
                         <td>{nomen.assiociationCompteNature}</td>
-              </tr>)}
+            </tr>)}
             </tbody>
           </table>
           </div>

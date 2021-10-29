@@ -9,9 +9,9 @@ const InscriFinan = (props) => {
     const [finans, setFinans] = useState({
         objetFinancement: "Fonctionnement",
         modeFinancement: "Subvention",
-        montantFinancement: 200000,
-        exerciceRegistre: "/api/registres/19",
-        bailleurFonds: "/api/bailleurs/2",
+        montantFinancement: 500000,
+        exerciceRegistre: "",
+        bailleurFonds: "/api/bailleurs/5",
         descriptionFinancement: "",
         statutRegistre:"/api/registats/2"
     });
@@ -41,7 +41,7 @@ const InscriFinan = (props) => {
       }
     }, [id]);
   
-  {/*  const [exercs, setExercs] = useState([]);
+  const [exercs, setExercs] = useState([]);
   
     const fetchExercs = async () => {
       try{
@@ -49,7 +49,7 @@ const InscriFinan = (props) => {
     .get("http://localhost:8000/api/registres")
     .then(response => response.data["hydra:member"]);
     setExercs(data);
-    if (!finans.exerc) setFinans({...finans, exercs:data[0].id} )
+    if (!finans.exerciceRegistre) setFinans({...finans, exerciceRegistre:data[0].id} )
       } catch (error) {
       console.log(error.response);
       }
@@ -58,7 +58,7 @@ const InscriFinan = (props) => {
     useEffect(() =>{
         fetchExercs();
     }, []);
-  */}
+
     const [bailleurs, setBailleurs] = useState([]);
   
     const fetchBailleurs = async () => {
@@ -67,7 +67,7 @@ const InscriFinan = (props) => {
     .get("http://localhost:8000/api/bailleurs")
     .then(response => response.data["hydra:member"]);
     setBailleurs(data);
-    if (!finans.bailleurs) setFinans({...finans, bailleurs:data[0].id} )
+    if (!finans.bailleurFonds) setFinans({...finans, bailleurFonds:data[0].id} )
       } catch (error) {
       console.log(error.response);
       }
@@ -90,7 +90,9 @@ const InscriFinan = (props) => {
   
       try {
           const response = await axios
-          .post("http://localhost:8000/api/ressources/inscription", finans)
+          .post("http://localhost:8000/api/ressources/inscription", 
+          {...finans, exerciceRegistre:`/api/registres/${finans.exerciceRegistre}`}
+          )
           console.log(response.data);
       } catch(error) {
        console.log(error.response)
@@ -154,7 +156,7 @@ const InscriFinan = (props) => {
                 <div className="col-sm-2">
                   <label className="col-form-label">Bailleur *</label>
                 </div>
-                <div className="col-sm-2">
+               {/* <div className="col-sm-2">
                     <select 
                     onChange={handleChange} 
                     name="bailleurFonds"
@@ -165,7 +167,7 @@ const InscriFinan = (props) => {
                        {bailleur.sigleBailleur}
                      </option>)}
                       </select>
-                    </div>
+                    </div>*/}
                 <div className="col-sm-1">
                   <label className="col-form-label">Objet *</label>
                 </div>
@@ -213,7 +215,7 @@ const InscriFinan = (props) => {
                 <div className="col-sm-1">
                   <label className="col-form-label">Exercice </label>
                 </div>
-              {/*  <div className="col-sm-2">
+               <div className="col-sm-2">
                     <select 
                     disabled="disabled"
                     onChange={handleChange} 
@@ -226,7 +228,7 @@ const InscriFinan = (props) => {
                        {exerc.anneeExercice}
                      </option>)}
                       </select>
-                     </div>*/}
+                     </div>
               </div>
               <div className="row form-group">
                 <div className="col-sm-2">

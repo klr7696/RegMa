@@ -3,6 +3,8 @@ import React, {useState, useEffect} from "react";
 
 const ConsultExerc = () =>{
 
+  const a = 400000;
+
   const [exercs, setExercs] = useState([]);
 
   useEffect(() => {
@@ -15,6 +17,12 @@ const ConsultExerc = () =>{
    const magiscule = string => {
      return string.toUpperCase()
    }
+   const monnaie = string => {
+    return string.toLocaleString("fr-FR", {style: 'currency', currency:'XAF'})
+  }
+   const date1 = string => {
+    return string.toLocaleString("kr-KR", {})
+  }
   return (
   <section id="exp">
   <div className="product-detail-page">
@@ -106,14 +114,14 @@ const ConsultExerc = () =>{
                         <tr key={exerc.id} value={exerc.id}>
                         <td>{exerc.id}</td>
                         <td>{exerc.anneeExercice}</td>
-                        <td>{exerc.ordonateurExercice}</td>
+                        <td>{magiscule(exerc.ordonateurExercice)}</td>
                         <td>{exerc.dateVote} </td>
-                        <td>{exerc.dateAdoption}</td>
+                        <td>{date1(exerc.dateAdoption)}</td>
                         <td>{magiscule(exerc.description)}</td>
                         <td>{exerc.nomenclature}</td>
-                        <td>{exerc.associationStatut.statut}</td>
                         <td>{}</td>
-              </tr>)}
+                        <td></td>
+            </tr>)}
             </tbody>
           </table>
           </div>
