@@ -14,7 +14,7 @@ const OuvriExerc = () => {
   const fetchExercs = async () => {
     try{
   const data = await axios
-  .get("http://localhost:8000/api/registres?estEnCours=false")
+  .get("http://localhost:8000/api/registres/actif")
   .then(response => response.data["hydra:member"]);
     setExercs(data);
     if (!ouvrs.exerciceRegistre) setOuvrs({...ouvrs, exerciceRegistre:data[0].id} )
@@ -42,6 +42,9 @@ const OuvriExerc = () => {
       const response = await axios
       .post("http://localhost:8000/api/registats", {...ouvrs,
       exerciceRegistre:`/api/registres/${ouvrs.exerciceRegistre}`})
+       if(ouvrs.exerciceRegistre){
+        await axios.patch("http://localhost:8000/api/registres/ouvre/" + ouvrs.exerciceRegistre , {});
+        }
       console.log(response.data);
       toast.success("Exercice est ouvert avec succès")
     } catch(error) {
@@ -93,7 +96,6 @@ const OuvriExerc = () => {
           </div>
         <div className="text-right col-sm-12">
           <button 
-          disabled="disabled"
           type="submit" 
           className="btn btn-primary">
             Ouvrir

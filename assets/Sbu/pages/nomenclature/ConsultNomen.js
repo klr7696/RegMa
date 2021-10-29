@@ -91,7 +91,7 @@ const ConsultNomen = (props) => {
                         <td>{nomen.id}</td>
                         <td>{nomen.anneeApplication}</td>
                         <td>{nomen.decretAdoption} </td>
-                        <td>{nomen.dateAdoption.toLocaleString("fr-FR", {timeZone: 'UTC'})}</td>
+                        <td>{nomen.dateAdoption.toLocaleString("ko-KR")}</td>
                         <td>{nomen.decretApplication}</td> 
                         <td>{nomen.dateApplication}</td>
                         <td>{nomen.assiociationCompteNature}</td>

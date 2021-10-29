@@ -9,7 +9,7 @@ const ConsultExerc = () =>{
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/registres")
+      .get("http://localhost:8000/api/registres/actif")
       .then(response => response.data["hydra:member"])
       .then(data => setExercs(data));
   }, []);
@@ -114,11 +114,6 @@ const ConsultExerc = () =>{
                         <tr key={exerc.id} value={exerc.id}>
                         <td>{exerc.id}</td>
                         <td>{exerc.anneeExercice}</td>
-                        <td>{magiscule(exerc.ordonateurExercice)}</td>
-                        <td>{exerc.dateVote} </td>
-                        <td>{date1(exerc.dateAdoption)}</td>
-                        <td>{magiscule(exerc.description)}</td>
-                        <td>{exerc.nomenclature}</td>
                         <td>{}</td>
                         <td></td>
             </tr>)}

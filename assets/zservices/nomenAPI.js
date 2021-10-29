@@ -29,7 +29,7 @@ function create(nomenclature) {
 
 function update(id, nomenclature) {
     return axios
-    .patch("http://localhost:8000/api/nomenclatures/" + id, nomenclature);
+    .put("http://localhost:8000/api/nomenclatures/" + id, nomenclature);
 }
 
 export default {

@@ -15,7 +15,7 @@ const ModifExerc = () =>{
 
     try{
   const data = await axios
-  .get("http://localhost:8000/api/registres")
+  .get("http://localhost:8000/api/registres/actif")
   //.then(reponse => console.log(reponse));
   .then(response => response.data['hydra:member'])
   console.log(data)

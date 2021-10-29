@@ -11,7 +11,7 @@ const [compte, setCompte] = useState([]);
 
     useEffect(() => {
       axios
-        .get("http://localhost:8000/api/natures")
+        .get("http://localhost:8000/api/nomenclatures/3/natures")
         .then(response => response.data["hydra:member"])
         .then(data => setCompte(data));
     }, []);
@@ -92,7 +92,6 @@ const [compte, setCompte] = useState([]);
           <ColumnDirective field='hierachieCompteNature' headerText='Hiérarchie' width='90' />
           <ColumnDirective field='libelleCompteNature' headerText='Libéllé' width='200' />
           <ColumnDirective field='sectionCompteNature' headerText='Section' width='100'/>
-          <ColumnDirective field='compteNature' headerText='oj' width='100'/>
         </ColumnsDirective>
         <Inject services={[Filter, Page]}/>
       </TreeGridComponent>

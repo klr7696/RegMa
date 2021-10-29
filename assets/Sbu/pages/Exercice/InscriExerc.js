@@ -6,7 +6,7 @@ import OuvriExerc from "./OuvriExerc";
 const InscriExerc = ( {history}) => {
 
   const [exercs, setExercs] = useState({
-    anneeExercice: "2024",
+    anneeExercice: 2021,
     ordonateurExercice: "Bourahima",
     dateVote: "",
     dateAdoption: "",
@@ -19,7 +19,7 @@ const InscriExerc = ( {history}) => {
   const fetchNomen = async () => {
     try{
   const data = await axios
-  .get("http://localhost:8000/api/nomenclatures?estActif=true")
+  .get("http://localhost:8000/api/nomenclatures")
   .then(response => response.data["hydra:member"]);
     setNomens(data);
     if (!exercs.nomenclature) setExercs({...exercs, nomenclature:data[0].id} )
@@ -51,7 +51,7 @@ const InscriExerc = ( {history}) => {
       toast.success("Livre Ajouté");
       history.replace("sbu/exercice/new");
     } catch(error) {
-      setError(error.data);
+      console.log(error);
         toast.error("Erreur ");
       }
   };
@@ -216,7 +216,6 @@ const InscriExerc = ( {history}) => {
         </div>
         <div className="text-right col-sm-12">
           <button 
-          disabled = {exercs.anneeExercice.length > 0}
           type="submit" 
           className="btn btn-primary"
         >

@@ -46,7 +46,7 @@ const InscriFinan = (props) => {
     const fetchExercs = async () => {
       try{
     const data = await axios
-    .get("http://localhost:8000/api/registres")
+    .get("http://localhost:8000/api/registres/actif")
     .then(response => response.data["hydra:member"]);
     setExercs(data);
     if (!finans.exerciceRegistre) setFinans({...finans, exerciceRegistre:data[0].id} )
@@ -91,6 +91,7 @@ const InscriFinan = (props) => {
       try {
           const response = await axios
           .post("http://localhost:8000/api/ressources/inscription", 
+          {...finans, bailleurFonds:`/api/bailleurs/${finans.bailleurFonds}`},
           {...finans, exerciceRegistre:`/api/registres/${finans.exerciceRegistre}`}
           )
           console.log(response.data);

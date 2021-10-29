@@ -8,11 +8,11 @@ const InscriNomen = ({history,match}) =>{
   const { id = "new" } = match.params;
 
   const [nomens, setNomens] = useState({
-    anneeApplication: "",
+    anneeApplication: 2000,
     decretAdoption: "",
-    dateAdoption: "",
+    dateAdoption: [],
     decretApplication: "",
-    dateApplication: "",
+    dateApplication: [],
     descriptionNomenclature: ""
   });
 
@@ -72,16 +72,18 @@ const InscriNomen = ({history,match}) =>{
       if(editing){
        await  NomenAPI.update(id, nomens);
       }else{
-       // res.data.headers['application/merge-patch+json'];
         await  NomenAPI.create(nomens);
-        await axios.patch("http://localhost:8000/api/nomenclatures/" + nomens.nabro , {});
+        if(nomens.nabro){
+          await axios.patch("http://localhost:8000/api/nomenclatures/" + nomens.nabro , {});
+        }
+
         toast.success("Livre Ajouté");
         history.replace("/sbu/nomenclature");
       console.log(nomens.nabro);
       }
     } catch(response) {
          console.log(error);
-       toast.error("Livre Ajouté");
+       toast.error("Livre Non Ajouté");
     }
    
   };
@@ -160,7 +162,7 @@ const InscriNomen = ({history,match}) =>{
                    Nomenclature abrogée
                   </label>
                 </div>
-                <div className="col-sm-2">
+               <div className="col-sm-2">
                   <select 
                   disabled="disabled"
                   onChange={handleChange} 
@@ -173,7 +175,7 @@ const InscriNomen = ({history,match}) =>{
                      {nabro.anneeApplication}
                    </option>)}
                     </select>
-                  </div>
+                   </div>
               </div>
               <div className="row form-group">
                 <div className="col-sm-2">
