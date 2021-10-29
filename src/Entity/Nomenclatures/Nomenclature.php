@@ -51,7 +51,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * normalizationContext={
  *                       "groups"={"nomen_detail:read","nomen_compte:read"}, "openapi_definition_name"= "Read",
- *     "datetime_format"="d-m-Y"
+ *     "datetime_format"="Y-m-d"
  * },
  * denormalizationContext={
  *                        "groups"={"nomen_detail:write"}, "openapi_definition_name"= "Write"
