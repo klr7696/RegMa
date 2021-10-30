@@ -52,27 +52,27 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * },
  * collectionOperations={
+ *
+ *      "get"={"openapi_context"={"summary"="fournit les details d'un registre"}, "datetime_format"="Y-m-d",
+ *     "order"={"id"="DESC","associationStatut.id"="DESC"}},
+ *
  *     "actifnomen"={"method"="get", "path"="/registres/actifnomenclature",
  * "normalization_context"={"groups"={"actifnomen:read"}},
  *     "openapi_context"={"summary"="Affiche la nomenclature affectée au registre"}
  *     },
  *
- *      "actifregistre"={"method"="get", "path"="/registres/actif",
+ *      "actifregistre"={"method"="get", "path"="/registres/actif","datetime_format"="Y-m-d",
+ *     "order"={"id"="DESC","associationStatut.id"="DESC"},
  * "normalization_context"={"groups"={"actifregistre:read"}},
  *     "openapi_context"={"summary"="Affiche le registre en cours"}
  *     },
  *
  *
- *
- *                      "get"={
- *     "order"={"id"="DESC","associationStatut.id"="DESC"},
- *     "openapi_context"={"summary"="Affiche les informations des registres"}
- *     }
- *                  ,"post"={"openapi_context"={"summary"="Crée un registre"}}
+ *                  "post"={"openapi_context"={"summary"="Crée un registre"}}
  * },
  *
  * normalizationContext={
- *                       "groups"={"recup:read"}, "openapi_definition_name"= "Read"
+ *                       "groups"={"registre_detail:read"}, "openapi_definition_name"= "Read"
  * },
  * denormalizationContext={
  *                        "groups"={"registre_detail:write"}, "openapi_definition_name"= "Write"
@@ -81,8 +81,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  )
  * @ORM\Entity(repositoryClass=ExerciceRegistreRepository::class)
  * @UniqueEntity("anneeExercice", message= "l'année de gestion existe déjà")
- * @ApiFilter(SearchFilter::class, properties={"associationStatut.statut"="partial"})
- * @ApiFilter(BooleanFilter::class, properties={"estEnCours","associationStatut.estCloturer","associationStatut.estAjoutable"})
+ * @ApiFilter(SearchFilter::class, properties={"associationStatut.statut"="exact"})
+ * @ApiFilter(BooleanFilter::class, properties={"estOuvert","estCloture","associationStatut.estEnCours","associationStatut.estActualisable"})
  */
 class ExerciceRegistre
 {
@@ -90,16 +90,16 @@ class ExerciceRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"registre_detail:read","recup:read","actifnomen:read","actifregistre:read",
+     * @Groups({"registre_detail:read","actifnomen:read","actifregistre:read",
      *     "actifressource:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=4)
-     * @Groups({"registre_detail:read","registre_detail:write","recup:read",
+     * @Groups({"registre_detail:write",
      *     "actifnomen:read","actifregistre:read",
-     *     "actifressource:read"})
+     *     "actifressource:read","registre_detail:read"})
      * @Assert\NotBlank(message="ne peut pas être vide")
      * @Assert\Length(min=4, max=4, exactMessage="l'annee n'est pas valide")
      */
@@ -108,37 +108,37 @@ class ExerciceRegistre
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"registre_detail:read","registre_detail:write"})
+     * @Groups({"registre_detail:write","recup:read"})
      */
     private $ordonateurExercice;
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"registre_detail:read","registre_detail:write"})
+     * @Groups({"registre_detail:write","registre_detail:read"})
      */
     private $dateVote;
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"registre_detail:read","registre_detail:write"})
+     * @Groups({"registre_detail:write","registre_detail:read"})
      */
     private $dateAdoption;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"registre_detail:read","registre_detail:write"})
+     * @Groups({"registre_detail:write","registre_detail:read"})
      */
     private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity=Nomenclature::class, inversedBy="associationExercice")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"registre_detail:read","registre_detail:write","recup:read",
-     * "actifnomen:read"})
+     * @Groups({"registre_detail:write",
+     * "actifnomen:read","registre_detail:read"})
      */
     private $nomenclature;
     /**
      * @ORM\OneToMany(targetEntity=StatutRegistre::class, mappedBy="exerciceRegistre", orphanRemoval=true)
-     * @Groups({"registre_detail:read","recup:read","actifregistre:read"})
+     * @Groups({"actifregistre:read","registre_detail:read"})
      * @ApiSubresource()
      */
     private $associationStatut;
@@ -146,34 +146,34 @@ class ExerciceRegistre
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull(groups={"cloture","ouvrir"})
-     * @Groups({"registre_detail:read","cloture:write","ouvrir:write","recup:read",
-     * "actifregistre:read"})
+     * @Groups({"cloture:write","ouvrir:write",
+     * "actifregistre:read","registre_detail:read"})
      */
     private $estOuvert = false;
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull(groups={"cloture"})
-     * @Groups({"registre_detail:read","cloture:write","recup:read","actifregistre:read"})
+     * @Groups({"cloture:write","actifregistre:read","registre_detail:read"})
      */
     private $estCloture= false;
 
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"registre_detail:read","cloture:write"})
+     * @Groups({"cloture:write","registre_detail:read"})
      * @Assert\NotBlank(groups={"cloture"}, message="veuillez saisir la date de cloture de l'exercice en cours")
      */
     private $dateCloture;
 
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="exerciceRegistre", orphanRemoval=true)
-     * @Groups({"recup:read"})
+     *
      */
     private $associationRessource;
 
     /**
      * @ORM\OneToMany(targetEntity=PlanPassation::class, mappedBy="exerciceRegistre", orphanRemoval=true)
-     * @Groups({"recup:read"})
+     *
      */
     private $associationPlan;
 
@@ -343,9 +343,9 @@ class ExerciceRegistre
         return $this;
     }
 
-    public function getDateVote(): ?string
+    public function getDateVote(): ? \DateTimeInterface
     {
-        return $this->dateVote->format('d/m/Y');
+        return $this->dateVote;
     }
 
     public function setDateVote(?\DateTimeInterface $dateVote): self
@@ -355,9 +355,9 @@ class ExerciceRegistre
         return $this;
     }
 
-    public function getDateAdoption(): ?string
+    public function getDateAdoption(): ? \DateTimeInterface
     {
-        return $this->dateAdoption->format('d/m/Y');
+        return $this->dateAdoption;
     }
 
     public function setDateAdoption(?\DateTimeInterface $dateAdoption): self
@@ -367,13 +367,10 @@ class ExerciceRegistre
         return $this;
     }
 
-    public function getDateCloture(): ?string
+    public function getDateCloture(): ? \DateTimeInterface
     {
-        $cloture= $this->dateCloture;
-        if($cloture !== NULL){
-            return $cloture->format('d/m/Y');
-        }
-        return "";
+        return $this->dateCloture;
+
     }
 
     public function setDateCloture(?\DateTimeInterface $dateCloture): self
@@ -383,13 +380,6 @@ class ExerciceRegistre
         return $this;
     }
 
-    /**
-     * @return Collection|StatutRegistre[]
-     */
-    public function getStatutTest(): Collection
-    {
-        return $this->statutTest;
-    }
 
     public function getEstCloture(): ?bool
     {

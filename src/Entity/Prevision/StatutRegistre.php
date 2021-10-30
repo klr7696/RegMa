@@ -60,7 +60,7 @@ class StatutRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"registat_detail:read","registre_detail:read","actifregistre:read"})
+     * @Groups({"registat_detail:read","actifregistre:read","registre_detail:read"})
      *
      */
     private $id;
@@ -80,12 +80,13 @@ class StatutRegistre
     private $estEnCours=true;
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"registat_detail:read","registat_detail:write"})
      */
     private $dateApprobation;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"registat_detail:read","desactive:write","registre_detail:read","actifregistre:read"})
+     * @Groups({"registat_detail:read","desactive:write","actifregistre:read"})
      * @Assert\NotNull(groups={"desactive"})
      *
      */
@@ -93,7 +94,7 @@ class StatutRegistre
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"registat_detail:read","registat_detail:write","registre_detail:read","test:write"})
+     * @Groups({"registat_detail:read","registat_detail:write"})
      *
      */
     private $descriptionStatut;
@@ -107,7 +108,7 @@ class StatutRegistre
 
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="statutRegistre", orphanRemoval=true)
-     * @Groups({"actifressource:read"})
+     *
      */
     private $associationRessource;
 
