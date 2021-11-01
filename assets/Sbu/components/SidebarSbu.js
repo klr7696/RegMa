@@ -57,9 +57,9 @@ const SidebarSbu = () => {
               </a>
               <ul className="pcoded-submenu">
                 <li className="">
-                  <a href="#/sbu/nomenclature">
+                  <a href="#/sbu/nomenclatures">
                   <i className="feather icon-edit"></i>
-                    <span className="pcoded-mtext">Création</span>
+                    <span className="pcoded-mtext">Nomenclature</span>
                   </a>
                 </li>
                 <li className="">

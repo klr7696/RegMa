@@ -1,3 +1,4 @@
+import { setCurrencyCode } from '@syncfusion/ej2-base';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
@@ -70,6 +71,7 @@ const ConsultFinan = () => {
        >
          <thead>
            <tr>
+              <th>id</th>
              <th>Bailleur</th>
              <th>Objet</th>
              <th>Mode</th>
@@ -82,12 +84,13 @@ const ConsultFinan = () => {
          <tbody>
             {finans.map(finan =>
                         <tr key={finan.id} value={finan.id}>
+                        <td>{finan.id}</td>
                         <td>{finan.bailleurFonds[0].sigleBailleur}</td>
                         <td>{finan.objetFinancement}</td>
                         <td>{finan.modeFinancement} </td>
                         <td>{finan.excerciceRegistre}</td>
-                        <td>{finan.montantFinancement}</td>
-                        <td>{finan.id}</td>
+                        <td>{finan.montantFinancement.toLocaleString('fr-FR', {style: 'currency', currency: 'XAF'})}</td>
+                        <td>{finan.descriptionFinancement}</td>
                         <td>{}</td>
               </tr>)}
             </tbody>

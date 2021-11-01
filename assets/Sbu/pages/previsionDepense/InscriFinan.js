@@ -1,3 +1,4 @@
+import { NumberFormat } from "@syncfusion/ej2-base/src/intl/number-formatter";
 import axios from "axios";
 import React, {useState, useEffect } from "react";
 
@@ -7,14 +8,18 @@ const InscriFinan = (props) => {
     const { id = "new" } = props.match.params;
 
     const [finans, setFinans] = useState({
-        objetFinancement: "Fonctionnement",
+        objetFinancement: "Fonctionnemen",
         modeFinancement: "Subvention",
-        montantFinancement: 500000,
-        exerciceRegistre: "",
-        bailleurFonds: "/api/bailleurs/5",
+        montantFinancement: 0,
+        exerciceRegistre: "/api/registres/1",
+        bailleurFonds: "/api/bailleurs/1",
         descriptionFinancement: "",
-        statutRegistre:"/api/registats/2"
+        statutRegistre:"/api/registats/4"
     });
+
+    const formatNumber = (number) => {
+      return number.parseFloat(number, 10)
+    }
 
     const [error, setErrors] = useState("");
     const [editing, setEditing] = useState (false);
@@ -82,7 +87,6 @@ const InscriFinan = (props) => {
       const { name, value } = currentTarget;
       setFinans({...finans, [name]: value });
     };
-  
    
   
     const handleSubmit = async event => {
@@ -90,9 +94,9 @@ const InscriFinan = (props) => {
   
       try {
           const response = await axios
-          .post("http://localhost:8000/api/ressources/inscription", 
-          {...finans, bailleurFonds:`/api/bailleurs/${finans.bailleurFonds}`},
-          {...finans, exerciceRegistre:`/api/registres/${finans.exerciceRegistre}`}
+          .post("http://localhost:8000/api/ressources/inscription", finans
+         // {...finans, bailleurFonds:`/api/bailleurs/${finans.bailleurFonds}`},
+          //{...finans, exerciceRegistre:`/api/registres/${finans.exerciceRegistre}`}
           )
           console.log(response.data);
       } catch(error) {
@@ -176,7 +180,7 @@ const InscriFinan = (props) => {
                   <select 
                   name="objetFinancement"
                   className="form-control"
-                  value={finans.objetFinancement}
+                  value= {finans.objetFinancement}
                   onChange={handleChange}
                   >
                     <option value="Fonctionnement">Fonctionnement</option>
@@ -206,12 +210,11 @@ const InscriFinan = (props) => {
                 </div>
                 <div className="col-sm-6">
                   <input 
-                  id="integer"
-                  type="number" 
+                  type="number"
                   name="montantFinancement"
                   value={finans.montantFinancement}
                   onChange={handleChange}
-                  className="form-control" />
+                  className={"form-control" + (error && " is-invalid")} />
                 </div>
                 <div className="col-sm-1">
                   <label className="col-form-label">Exercice </label>

@@ -5,6 +5,7 @@ const ConsultExerc = () =>{
 
   const a = 400000;
 
+
   const [exercs, setExercs] = useState([]);
 
   useEffect(() => {

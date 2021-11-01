@@ -8,11 +8,11 @@ const InscriNomen = ({history,match}) =>{
   const { id = "new" } = match.params;
 
   const [nomens, setNomens] = useState({
-    anneeApplication: 2000,
+    anneeApplication: "",
     decretAdoption: "",
-    dateAdoption: [],
+    dateAdoption: "",
     decretApplication: "",
-    dateApplication: [],
+    dateApplication:"",
     descriptionNomenclature: ""
   });
 
@@ -31,6 +31,7 @@ const InscriNomen = ({history,match}) =>{
       dateApplication, descriptionNomenclature });
     } catch (error) {
     console.log(error.response);
+    toast.error("Nomenclature non trouvée");
     }
   };
 
@@ -71,19 +72,20 @@ const InscriNomen = ({history,match}) =>{
     try {
       if(editing){
        await  NomenAPI.update(id, nomens);
+       toast.success("Nomenclature Modifiée");
+       history.replace("/sbu/nomenclatures");
       }else{
         await  NomenAPI.create(nomens);
         if(nomens.nabro){
           await axios.patch("http://localhost:8000/api/nomenclatures/" + nomens.nabro , {});
         }
-
-        toast.success("Livre Ajouté");
-        history.replace("/sbu/nomenclature");
+      toast.success("Nomenclature Ajoutée");
+       history.replace("/sbu/nomenclatures");
       console.log(nomens.nabro);
       }
     } catch(response) {
          console.log(error);
-       toast.error("Livre Non Ajouté");
+        toast.error("Nomenclature Non Ajouté");
     }
    
   };
@@ -107,7 +109,7 @@ const InscriNomen = ({history,match}) =>{
         <li className="nav-item">
           <a
             className="nav-link active f-18 p-b-0"
-            href="#/sbu/nomenclature/new"
+            href="#/sbu/nomenclatures/new"
           >
             Enregistrement
           </a>
@@ -117,7 +119,7 @@ const InscriNomen = ({history,match}) =>{
         <li className="nav-item m-b-0">
           <a
             className="nav-link f-18 p-b-0"
-            href="#/sbu/nomenclature"
+            href="#/sbu/nomenclatures"
           >
             Consultation
           </a>
@@ -157,7 +159,8 @@ const InscriNomen = ({history,match}) =>{
                     error={error.anneeApplication}
                   />
                 </div>
-                <div className="col-sm-2">
+            
+              {( !editing && <> <div className="col-sm-2">
                   <label className="col-form-label">
                    Nomenclature abrogée
                   </label>
@@ -175,7 +178,8 @@ const InscriNomen = ({history,match}) =>{
                      {nabro.anneeApplication}
                    </option>)}
                     </select>
-                   </div>
+                   </div></>)
+                   }
               </div>
               <div className="row form-group">
                 <div className="col-sm-2">
@@ -249,8 +253,8 @@ const InscriNomen = ({history,match}) =>{
                 </div>
               </div>
               <div className="text-right col-sm-12">
-                <button type="submit" className="btn btn-primary">
-                  Créer
+                <button type="submit" className="btn btn-primary" >
+                   {(!editing && <>Créer</>) || (<>Modifier</>)}
                 </button>
               </div>
             </form>

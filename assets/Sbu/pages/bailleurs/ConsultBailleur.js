@@ -109,7 +109,9 @@ const handleModif = id => {
                         <td>
                           <button 
                           onClick={() => handleDelete(bailleur.id)}
-                          className="btn btn-sm btn-danger" >
+                          className="btn btn-sm btn-danger "
+                          disabled
+                           >
                             Supprimer
                           </button>
                            <button 

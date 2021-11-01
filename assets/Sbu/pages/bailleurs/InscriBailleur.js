@@ -108,9 +108,12 @@ const InscriBailleur = (props) => {
           <div className="page-body">
       <div className="row">
         <div className="col-sm-12">
-          {!editing && <h3>Creation</h3> || <h3>Modifier</h3>}
           <div className="card-block">
           <form onSubmit={handleSubmit}>
+        
+         { /* <div className="card-header text-center">
+               {!editing && <h3>Création</h3> || <h3>Modifier</h3>}
+              </div>*/}
             <div className="row form-group">
               <div className="col-sm-2">
                 <label className="col-form-label">Désignation *</label>
@@ -202,7 +205,7 @@ const InscriBailleur = (props) => {
                 </div>
               </div>
               <div className="text-right col-sm-12">
-                <button type="submit" className="btn btn-primary">Enregistrer</button>
+                <button type="submit" className="btn btn-primary">{!editing && "Création" || "Modifier"}</button>
               </div>
             </form>
           </div>

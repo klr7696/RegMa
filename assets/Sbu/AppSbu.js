@@ -54,11 +54,11 @@ const AppSbu = (props) =>{
                           component={ConsultBaill}
                         />
                         <Route
-                          path={`${props.match.url}/nomenclature/:id`}
+                          path={`${props.match.url}/nomenclatures/:id`}
                           component={InscriNomen}
                         />
                          <Route
-                          path={`${props.match.url}/nomenclature`}
+                          path={`${props.match.url}/nomenclatures`}
                           component={ConsultNomen}
                         />
                          <Route
