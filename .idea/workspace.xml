@@ -26,8 +26,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="ressourcesss">
+      <change afterPath="$PROJECT_DIR$/src/Controller/DesactiveAutorisationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20211018162723.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20211101053029.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20211018162723.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20211102131332.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Administration/MairieCommunale.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Administration/MairieCommunale.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Plans/AutorisationMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/AutorisationMarche.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/AllocationCredit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/AllocationCredit.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" afterDir="false" />
@@ -394,17 +398,6 @@
                 </map>
               </option>
               <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="main" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
             </State>
           </value>
         </entry>
@@ -511,10 +504,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="657" y="285" key="MultipleFileMergeDialog/0.0.1536.834@0.0.1536.834" timestamp="1632234775783" />
-    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1635341809955">
+    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1635869095533">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1635341809955" />
+    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1635869095533" />
     <state x="604" y="340" key="NewPhpFileDialog" timestamp="1635177181212">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -527,10 +520,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1536.834@0.0.1536.834" timestamp="1634533502890" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1635598128491">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1635846075545">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1635598128491" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1635846075545" />
     <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1633772096820">
       <screen x="0" y="0" width="1536" height="834" />
     </state>

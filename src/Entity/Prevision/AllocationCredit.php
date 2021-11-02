@@ -85,28 +85,24 @@ class AllocationCredit
 
 
     /**
-     * @ORM\ManyToOne(targetEntity=MairieCommunale::class, inversedBy="associationAllocation")
-     * @ORM\JoinColumn(nullable=false)
-     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write"})
-     */
-    private $mairieCommunale;
-
-    /**
      * @ORM\Column(type="boolean")
-     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write"})
+     * @Assert\NotNull(groups="aldesactive")
+     * @Groups({"allocation_detail:read","aldesactive:write"})
      */
-    private $estValide;
+    private $estValide =true;
 
     /**
      * @ORM\ManyToOne(targetEntity=AutorisationMarche::class, inversedBy="associationAllocation")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"alactualise:write","allocation_detail:write"})
      */
     private $autorisationMarche;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="associationAllocation")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity=AllocationCredit::class, cascade={"persist", "remove"})
+     * @Groups({"alactualise:write"})
      */
-    private $compteNature;
+    private $actualiseAllocation;
 
     public function getId(): ?int
     {
@@ -149,17 +145,7 @@ class AllocationCredit
         return $this;
     }
 
-    public function getMairieCommunale(): ?MairieCommunale
-    {
-        return $this->mairieCommunale;
-    }
 
-    public function setMairieCommunale(?MairieCommunale $mairieCommunale): self
-    {
-        $this->mairieCommunale = $mairieCommunale;
-
-        return $this;
-    }
 
     public function getEstValide(): ?bool
     {
@@ -193,6 +179,18 @@ class AllocationCredit
     public function setCompteNature(?CompteNature $compteNature): self
     {
         $this->compteNature = $compteNature;
+
+        return $this;
+    }
+
+    public function getActualiseAllocation(): ?self
+    {
+        return $this->actualiseAllocation;
+    }
+
+    public function setActualiseAllocation(?self $actualiseAllocation): self
+    {
+        $this->actualiseAllocation = $actualiseAllocation;
 
         return $this;
     }

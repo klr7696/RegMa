@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use App\Entity\Plans\AutorisationMarche;
 use App\Repository\Prevision\StatutRegistreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -74,7 +75,8 @@ class StatutRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"registat_detail:read","actifregistre:read","registre_detail:read","actifressource:read"})
+     * @Groups({"registat_detail:read","actifregistre:read","registre_detail:read",
+     *     "actifressource:read","resencours:read","autoencours:read"})
      *
      */
     private $id;
@@ -82,13 +84,14 @@ class StatutRegistre
     /**
      * @ORM\Column(type="string", length=50)
      * @Groups({"registat_detail:read","registat_detail:write","registre_detail:read","actifregistre:read",
-     *     "actifressource:read"})
+     *     "actifressource:read","resencours:read","autoencours:read"})
      * @Assert\Choice(choices={"Primitif","Primitif modificatif","Supplémentaire"}, message= "saisir des informations correctes")
      */
     private $statut;
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"registat_detail:read","desactive:write","actifregistre:read","actifressource:read"})
+     * @Groups({"registat_detail:read","desactive:write","actifregistre:read",
+     *     "actifressource:read","resencours:read","autoencours:read"})
      * @Assert\NotNull(groups={"desactive"})
      */
     private $estEnCours=true;
@@ -100,7 +103,8 @@ class StatutRegistre
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"registat_detail:read","desactive:write","actifregistre:read","actifressource:read"})
+     * @Groups({"registat_detail:read","desactive:write","actifregistre:read",
+     *     "actifressource:read","resencours:read","autoencours:read"})
      * @Assert\NotNull(groups={"desactive"})
      *
      */
@@ -127,6 +131,11 @@ class StatutRegistre
      */
     private $associationRessource;
 
+    /**
+     * @ORM\OneToMany(targetEntity=AutorisationMarche::class, mappedBy="associationStatut", orphanRemoval=true)
+     */
+    private $autorisationMarches;
+
 
 
 
@@ -135,6 +144,7 @@ class StatutRegistre
     {
         $this->associationRessource = new ArrayCollection();
         $this->test = new ArrayCollection();
+        $this->autorisationMarches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -238,6 +248,36 @@ class StatutRegistre
     public function setDateApprobation(?\DateTimeInterface $dateApprobation): self
     {
         $this->dateApprobation = $dateApprobation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AutorisationMarche[]
+     */
+    public function getAutorisationMarches(): Collection
+    {
+        return $this->autorisationMarches;
+    }
+
+    public function addAutorisationMarch(AutorisationMarche $autorisationMarch): self
+    {
+        if (!$this->autorisationMarches->contains($autorisationMarch)) {
+            $this->autorisationMarches[] = $autorisationMarch;
+            $autorisationMarch->setAssociationStatut($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAutorisationMarch(AutorisationMarche $autorisationMarch): self
+    {
+        if ($this->autorisationMarches->removeElement($autorisationMarch)) {
+            // set the owning side to null (unless already changed)
+            if ($autorisationMarch->getAssociationStatut() === $this) {
+                $autorisationMarch->setAssociationStatut(null);
+            }
+        }
 
         return $this;
     }

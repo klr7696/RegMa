@@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Nomenclatures\Nomenclature;
+use App\Entity\Plans\AutorisationMarche;
 use App\Entity\Plans\PlanPassation;
 use App\Repository\Prevision\ExerciceRegistreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -88,7 +89,7 @@ class ExerciceRegistre
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"registre_detail:read","actifnomen:read","actifregistre:read",
-     *     "actifressource:read"})
+     *     "actifressource:read","resencours:read","autoencours:read"})
      */
     private $id;
 
@@ -96,7 +97,7 @@ class ExerciceRegistre
      * @ORM\Column(type="integer")
      * @Groups({"registre_detail:write",
      *     "actifnomen:read","actifregistre:read",
-     *     "actifressource:read","registre_detail:read"})
+     *     "actifressource:read","registre_detail:read","resencours:read","autoencours:read"})
      * @Assert\NotBlank(message="l'année est incorrect car vide")
      * @Assert\Type(type="numeric",message="l'année est incorrect")
      * @Assert\Length(min=4,max=4, exactMessage="l'année est incorrect")
@@ -145,13 +146,14 @@ class ExerciceRegistre
      * @ORM\Column(type="boolean")
      * @Assert\NotNull(groups={"cloture","ouvrir"})
      * @Groups({"cloture:write","ouvrir:write",
-     * "actifregistre:read","registre_detail:read","actifressource:read"})
+     * "actifregistre:read","registre_detail:read","actifressource:read","resencours:read","autoencours:read"})
      */
     private $estOuvert = false;
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull(groups={"cloture","ouvrir"})
-     * @Groups({"cloture:write","ouvrir:write","actifregistre:read","registre_detail:read","actifressource:read"})
+     * @Groups({"cloture:write","ouvrir:write","actifregistre:read",
+     *     "registre_detail:read","actifressource:read","resencours:read","autoencours:read"})
      */
     private $estCloture= false;
 
@@ -175,6 +177,11 @@ class ExerciceRegistre
      */
     private $associationPlan;
 
+    /**
+     * @ORM\OneToMany(targetEntity=AutorisationMarche::class, mappedBy="associationRegistre", orphanRemoval=true)
+     */
+    private $autorisationMarches;
+
 
 
 
@@ -183,6 +190,7 @@ class ExerciceRegistre
         $this->associationRessource = new ArrayCollection();
         $this->associationStatut = new ArrayCollection();
         $this->associationPlan = new ArrayCollection();
+        $this->autorisationMarches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -387,6 +395,36 @@ class ExerciceRegistre
     public function setEstCloture(bool $estCloture): self
     {
         $this->estCloture = $estCloture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AutorisationMarche[]
+     */
+    public function getAutorisationMarches(): Collection
+    {
+        return $this->autorisationMarches;
+    }
+
+    public function addAutorisationMarch(AutorisationMarche $autorisationMarch): self
+    {
+        if (!$this->autorisationMarches->contains($autorisationMarch)) {
+            $this->autorisationMarches[] = $autorisationMarch;
+            $autorisationMarch->setAssociationRegistre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAutorisationMarch(AutorisationMarche $autorisationMarch): self
+    {
+        if ($this->autorisationMarches->removeElement($autorisationMarch)) {
+            // set the owning side to null (unless already changed)
+            if ($autorisationMarch->getAssociationRegistre() === $this) {
+                $autorisationMarch->setAssociationRegistre(null);
+            }
+        }
 
         return $this;
     }

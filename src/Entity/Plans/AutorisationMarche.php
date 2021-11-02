@@ -2,20 +2,72 @@
 
 namespace App\Entity\Plans;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Administration\MairieCommunale;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use App\Entity\Nomenclatures\CompteNature;
 use App\Entity\Prevision\AllocationCredit;
+use App\Entity\Prevision\BailleurFonds;
+use App\Entity\Prevision\CreditOuvert;
+use App\Entity\Prevision\ExerciceRegistre;
+use App\Entity\Prevision\StatutRegistre;
 use App\Repository\Plans\AutorisationMarcheRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "autorisations"
+ *     shortName= "autorisations",
+ *     itemOperations={
+ *                  "get"={"openapi_context"={"summary"="Affiche les informations d'une autorisation "}},
+ *     "delete"={"openapi_context"={"summary"="Supprime une autorisation"}},
+ *     "put"={"openapi_context"={"summary"="Modifie les informations d'une autorisation"}},
+ *
+ *     "desactiver"= {
+ *     "method"="patch", "path"="/autorisations/desactive/{id}", "controller"="App\Controller\DesactiveAutorisationController",
+ *     "input_formats"={"json"={"application/vnd.api+json","application/merge-patch+json","application/json","application/ld+json"}},
+ * "denormalization_context"={"groups"={"audesactive:write"}},
+ *       "validation_groups"={"audesactive"},
+"openapi_context"={"summary"="desactive une autorisation"},
+ *                 },
+ *
+ *   },
+ * collectionOperations={
+ *                      "get"={ "order"={"id"="DESC"},
+ *                              "openapi_context"={"summary"="Affiche les informations des autorisations"},
+ *     },
+ *
+ * "autoencours"={ "method"="get", "path"="/autorisations/encours",
+ *     "normalization_context"={"groups"={"autoencours:read"}},
+ *     "order"={"id"="DESC"},
+ *                              "openapi_context"={"summary"="Affiche les informations des autorisations"},
+ *     }
+ *
+ *     ,"inscription"={ "method"="post", "path"="/autorisations/inscription",
+ *     "openapi_context"={"summary"="Crée une autorisation"},},
+ *
+ *     "actualisation"={"method"="post","path"="/autorisations/actualise","openapi_context"={"summary"="Actualise une autorisation"},
+ *     "denormalization_context"={"groups"={"auactualise:write"}, "disable_type_enforcement"=true},
+ *       "validation_groups"={"auactualise"}
+ *     }
+ *
+ * },
+ *
+ * normalizationContext={
+ *                       "groups"={"autorisation_detail:read"}, "openapi_definition_name"= "Read"
+ * },
+ * denormalizationContext={
+ *                        "groups"={"autorisation_detail:write"}, "openapi_definition_name"= "Write",
+ *     "disable_type_enforcement"=true
+ * },
+ *     subresourceOperations={}
  * )
  * @ORM\Entity(repositoryClass=AutorisationMarcheRepository::class)
+ * @ApiFilter(BooleanFilter::class, properties={"associationRegistre.estOuvert","associationStatut.estEncours","estValide"})
  */
 class AutorisationMarche
 {
@@ -23,21 +75,29 @@ class AutorisationMarche
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
+     *     "autoencours:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
+     *     "autoencours:read"})
      */
     private $objetAutorisation;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(type="numeric",message="le montant est incorrecte")
+     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
+     *     "autoencours:read"})
      */
     private $montantAutorisation;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write"})
      */
     private $explicationAutorisation;
 
@@ -59,14 +119,60 @@ class AutorisationMarche
     /**
      * @ORM\ManyToOne(targetEntity=MairieCommunale::class, inversedBy="associationAutorisation")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
+     *     "autoencours:read"})
      */
     private $mairieCommunale;
 
     /**
      * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="associationAutorisation")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
+     *     "autoencours:read"})
      */
     private $compteNature;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="autorisationMarches")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
+     *     "autoencours:read"})
+     */
+    private $associationRegistre;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=StatutRegistre::class, inversedBy="autorisationMarches")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
+     *     "autoencours:read"})
+     */
+    private $associationStatut;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=BailleurFonds::class, inversedBy="autorisationMarches")
+     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
+     *     "autoencours:read"})
+     */
+    private $associationBailleur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CreditOuvert::class, inversedBy="autorisationMarches")
+     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write"})
+     */
+    private $associationCredit;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull(groups={"audesactive"})
+     * @Groups({"autorisation_detail:read","audesactive:write"})
+     */
+    private $estValide =true;
+
+    /**
+     * @ORM\OneToOne(targetEntity=AutorisationMarche::class, cascade={"persist", "remove"})
+     * @Groups({"autorisation_detail:read","auactualise:write"})
+     */
+    private $actualisationAutorisation;
 
 
 
@@ -75,6 +181,7 @@ class AutorisationMarche
         $this->associationLot = new ArrayCollection();
         $this->associationException = new ArrayCollection();
         $this->associationAllocation = new ArrayCollection();
+        $this->associationBailleur = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -99,7 +206,7 @@ class AutorisationMarche
         return $this->montantAutorisation;
     }
 
-    public function setMontantAutorisation(float $montantAutorisation): self
+    public function setMontantAutorisation($montantAutorisation): self
     {
         $this->montantAutorisation = $montantAutorisation;
 
@@ -228,6 +335,90 @@ class AutorisationMarche
     public function setCompteNature(?CompteNature $compteNature): self
     {
         $this->compteNature = $compteNature;
+
+        return $this;
+    }
+
+    public function getAssociationRegistre(): ?ExerciceRegistre
+    {
+        return $this->associationRegistre;
+    }
+
+    public function setAssociationRegistre(?ExerciceRegistre $associationRegistre): self
+    {
+        $this->associationRegistre = $associationRegistre;
+
+        return $this;
+    }
+
+    public function getAssociationStatut(): ?StatutRegistre
+    {
+        return $this->associationStatut;
+    }
+
+    public function setAssociationStatut(?StatutRegistre $associationStatut): self
+    {
+        $this->associationStatut = $associationStatut;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BailleurFonds[]
+     */
+    public function getAssociationBailleur(): Collection
+    {
+        return $this->associationBailleur;
+    }
+
+    public function addAssociationBailleur(BailleurFonds $associationBailleur): self
+    {
+        if (!$this->associationBailleur->contains($associationBailleur)) {
+            $this->associationBailleur[] = $associationBailleur;
+        }
+
+        return $this;
+    }
+
+    public function removeAssociationBailleur(BailleurFonds $associationBailleur): self
+    {
+        $this->associationBailleur->removeElement($associationBailleur);
+
+        return $this;
+    }
+
+    public function getAssociationCredit(): ?CreditOuvert
+    {
+        return $this->associationCredit;
+    }
+
+    public function setAssociationCredit(?CreditOuvert $associationCredit): self
+    {
+        $this->associationCredit = $associationCredit;
+
+        return $this;
+    }
+
+    public function getEstValide(): ?bool
+    {
+        return $this->estValide;
+    }
+
+    public function setEstValide(bool $estValide): self
+    {
+        $this->estValide = $estValide;
+
+        return $this;
+    }
+
+    public function getActualisationAutorisation(): ?self
+    {
+        return $this->actualisationAutorisation;
+    }
+
+    public function setActualisationAutorisation(?self $actualisationAutorisation): self
+    {
+        $this->actualisationAutorisation = $actualisationAutorisation;
 
         return $this;
     }

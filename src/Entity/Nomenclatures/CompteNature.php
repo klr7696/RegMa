@@ -173,10 +173,7 @@ class CompteNature
      */
     private $associationAutorisation;
 
-    /**
-     * @ORM\OneToMany(targetEntity=AllocationCredit::class, mappedBy="compteNature", orphanRemoval=true)
-     */
-    private $associationAllocation;
+
 
     /**
      * @ORM\OneToMany(targetEntity=Engagement::class, mappedBy="compteNature", orphanRemoval=true)
@@ -198,7 +195,6 @@ class CompteNature
         $this->sousCompteNature = new ArrayCollection();
         $this->associationCreditOuvert = new ArrayCollection();
         $this->associationAutorisation = new ArrayCollection();
-        $this->associationAllocation = new ArrayCollection();
         $this->associationEngagement = new ArrayCollection();
         $this->associationMandat = new ArrayCollection();
         $this->associationImputation = new ArrayCollection();
@@ -383,35 +379,6 @@ class CompteNature
         return $this;
     }
 
-    /**
-     * @return Collection|AllocationCredit[]
-     */
-    public function getAssociationAllocation(): Collection
-    {
-        return $this->associationAllocation;
-    }
-
-    public function addAssociationAllocation(AllocationCredit $associationAllocation): self
-    {
-        if (!$this->associationAllocation->contains($associationAllocation)) {
-            $this->associationAllocation[] = $associationAllocation;
-            $associationAllocation->setCompteNature($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAssociationAllocation(AllocationCredit $associationAllocation): self
-    {
-        if ($this->associationAllocation->removeElement($associationAllocation)) {
-            // set the owning side to null (unless already changed)
-            if ($associationAllocation->getCompteNature() === $this) {
-                $associationAllocation->setCompteNature(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|Engagement[]

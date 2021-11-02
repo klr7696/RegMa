@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Entity\Nomenclatures\CompteNature;
+use App\Entity\Plans\AutorisationMarche;
 use App\Repository\Prevision\CreditOuvertRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "ouverts",
+ *     shortName= "aaouverts",
  *      itemOperations={
  *                  "get"={"openapi_context"={"summary"="Affiche les informations d'un Credit Ouvert "}},
  *     "delete"={"openapi_context"={"summary"="Supprime un Credit Ouvert"}},
@@ -111,9 +112,15 @@ class CreditOuvert
      */
     private $actualiseCredit;
 
+    /**
+     * @ORM\OneToMany(targetEntity=AutorisationMarche::class, mappedBy="associationCredit")
+     */
+    private $autorisationMarches;
+
     public function __construct()
     {
         $this->associationAllocation = new ArrayCollection();
+        $this->autorisationMarches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -221,6 +228,36 @@ class CreditOuvert
     public function setActualiseCredit(?self $actualiseCredit): self
     {
         $this->actualiseCredit = $actualiseCredit;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AutorisationMarche[]
+     */
+    public function getAutorisationMarches(): Collection
+    {
+        return $this->autorisationMarches;
+    }
+
+    public function addAutorisationMarch(AutorisationMarche $autorisationMarch): self
+    {
+        if (!$this->autorisationMarches->contains($autorisationMarch)) {
+            $this->autorisationMarches[] = $autorisationMarch;
+            $autorisationMarch->setAssociationCredit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAutorisationMarch(AutorisationMarche $autorisationMarch): self
+    {
+        if ($this->autorisationMarches->removeElement($autorisationMarch)) {
+            // set the owning side to null (unless already changed)
+            if ($autorisationMarch->getAssociationCredit() === $this) {
+                $autorisationMarch->setAssociationCredit(null);
+            }
+        }
 
         return $this;
     }

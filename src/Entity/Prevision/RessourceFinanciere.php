@@ -5,6 +5,7 @@ namespace App\Entity\Prevision;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Operations\Imputation;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\Prevision\RessourceFinanciereRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "ressources",
+ *     shortName= "aaaressources",
  *
  *     itemOperations={
  *                  "get"={"openapi_context"={"summary"="Affiche les informations d'une ressource "}},
@@ -34,8 +35,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  * collectionOperations={
  *                      "get"={ "order"={"id"="DESC"},
  *                              "openapi_context"={"summary"="Affiche les informations des registres"},
+ *     },
+ *
+ * "ressencours"={ "method"="get", "path"="/ressources/encours",
+ *     "normalization_context"={"groups"={"resencours:read"}},
+ *     "order"={"id"="DESC"},
+ *                              "openapi_context"={"summary"="Affiche les informations des registres"},
  *     }
- *                               ,"inscription"={ "method"="post", "path"="/ressources/inscription",
+ *
+ *     ,"inscription"={ "method"="post", "path"="/ressources/inscription",
  *     "openapi_context"={"summary"="Crée une ressource"},},
  *
  *     "actualisation"={"method"="post","path"="/ressources/actualise","openapi_context"={"summary"="Actualise une ressource"},
@@ -55,6 +63,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     subresourceOperations={}
  * )
  * @ORM\Entity(repositoryClass=RessourceFinanciereRepository::class)
+ * @ApiFilter(BooleanFilter::class, properties={"exerciceRegistre.estOuvert","statutRegistre.estEncours"})
  */
 class RessourceFinanciere
 {
@@ -62,25 +71,27 @@ class RessourceFinanciere
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"ressource_detail:read","actifressource:read"})
+     * @Groups({"ressource_detail:read","actifressource:read","resencours:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"ressource_detail:read","ressource_detail:write","actualise:write","bailleurs_detail:read","actifressource:read"})
+     * @Groups({"ressource_detail:read","ressource_detail:write",
+     *     "actualise:write","bailleurs_detail:read","actifressource:read","resencours:read"})
      */
     private $objetFinancement;
 
     /**
      * @ORM\Column(type="string", length=100)
-     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write","actifressource:read"})
+     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write","actifressource:read","resencours:read"})
      */
     private $modeFinancement;
 
     /**
      * @ORM\Column(type="float")
-     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write","actifressource:read"})
+     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write",
+     *     "actifressource:read","resencours:read"})
      * @Assert\Type(type="numeric",message="veuillez entrer une somme correct")
      */
     private $montantFinancement;
@@ -94,20 +105,22 @@ class RessourceFinanciere
     /**
      * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationRessource")
      * @ORM\JoinColumn(nullable=false)
-     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write"})
+     *  @Groups({"ressource_detail:read","ressource_detail:write",
+     *     "actualise:write","resencours:read"})
      */
     private $exerciceRegistre;
 
     /**
      * @ORM\ManyToOne(targetEntity=BailleurFonds::class, inversedBy="associationRessource")
      * @ORM\JoinColumn(nullable=false)
-     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write"})
+     *  @Groups({"ressource_detail:read","ressource_detail:write",
+     *     "actualise:write","resencours:read"})
      */
     private $bailleurFonds;
 
     /**
      * @ORM\OneToMany(targetEntity=CreditOuvert::class, mappedBy="ressourceFinanciere", orphanRemoval=true)
-     * @Groups({"ressource_detail:read","bailleurs_detail:read"})
+     * @Groups({"ressource_detail:read","bailleurs_detail:read","resencours:read"})
      *
      */
     private $associationCredit;
@@ -120,16 +133,17 @@ class RessourceFinanciere
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"ressource_detail:read","desactive:write"})
+     * @Groups({"ressource_detail:read","desactive:write","actifressource:read","resencours:read"})
      * @Assert\NotNull(groups={"desactive"})
-     * @Groups({"actifressource:read"})
+     *
      */
     private $estValide= true;
 
     /**
      * @ORM\ManyToOne(targetEntity=StatutRegistre::class, inversedBy="associationRessource")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"ressource_detail:read","ressource_detail:write","actualise:write","actifressource:read"})
+     * @Groups({"ressource_detail:read","ressource_detail:write","actualise:write",
+     *     "actifressource:read","resencours:read"})
      */
     private $statutRegistre;
 
