@@ -47,7 +47,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                       "groups"={"ouvert_detail:read"}, "openapi_definition_name"= "Read"
  * },
  * denormalizationContext={
- *                        "groups"={"ouvert_detail:write"}, "openapi_definition_name"= "Write"
+ *                        "groups"={"ouvert_detail:write"}, "openapi_definition_name"= "Write",
+ *     "disable_type_enforcement"=true
  * },
  *     subresourceOperations={}
  * )
@@ -66,6 +67,7 @@ class CreditOuvert
     /**
      * @ORM\Column(type="float")
      * @Groups({"ouvert_detail:read","ouvert_detail:write","oactualise:write","bailleurs_detail:read"})
+     * @Assert\Type(type="numeric",message="le montant est incorrect")
      */
     private $montantInscription;
 
@@ -124,7 +126,7 @@ class CreditOuvert
         return $this->montantInscription;
     }
 
-    public function setMontantInscription(float $montantInscription): self
+    public function setMontantInscription($montantInscription): self
     {
         $this->montantInscription = $montantInscription;
 

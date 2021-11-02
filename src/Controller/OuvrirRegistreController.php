@@ -10,7 +10,8 @@ class OuvrirRegistreController
 {
     public function __invoke(ExerciceRegistre $data):ExerciceRegistre
     {
-        $data->setEstOuvert(true);
+        $data->setEstOuvert(true)
+             ->setEstCloture(false);
         return $data;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Entity\Prevision;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use App\Repository\Prevision\BailleurFondsRepository;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,7 +23,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *     collectionOperations={
  *     "actifressource"={"method"="get", "path"="/bailleurs/actifressource",
  * "normalization_context"={"groups"={"actifressource:read"}},
- *     "openapi_context"={"summary"="Affiche le registre en cours"}
+ *     "openapi_context"={"summary"="Affiche les ressources du registre en cours"}
  *     },
  *
  *     "get" ={
@@ -34,10 +35,12 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *      denormalizationContext={"groups"={"bailleurs_detail:write"}, "openapi_definition_name"= "Write"},
  * )
  * @ORM\Entity(repositoryClass=BailleurFondsRepository::class)
- *@ApiFilter(SearchFilter::class, properties={"sigleBailleur"="exact","associationRessource.objetFinancement"="exact",
- *     "associationRessource.associationCredit.montantInscription" ="exact"
+ *@ApiFilter(SearchFilter::class, properties={"sigleBailleur"="exact"
  *     })
  *
+ *@ApiFilter(BooleanFilter::class,
+ *     properties={"associationRessource.statutRegistre.exerciceRegistre.estOuvert","associationRessource.estValide",
+ *     "associationRessource.statutRegistre.estEnCours","associationRessource.statutRegistre.estActualisable"})
  */
 class BailleurFonds
 {
@@ -45,6 +48,7 @@ class BailleurFonds
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"actifressource:read"})
      */
     private $id;
 

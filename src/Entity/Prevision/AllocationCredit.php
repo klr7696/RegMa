@@ -9,6 +9,7 @@ use App\Entity\Plans\AutorisationMarche;
 use App\Repository\Prevision\AllocationCreditRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -21,7 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "desactiver"= {
  *     "method"="patch", "path"="/allocations/desactive/{id}", "controller"="App\Controller\DesactiveAllocationController",
  *     "input_formats"={"json"={"application/vnd.api+json","application/merge-patch+json","application/json","application/ld+json"}},
- *  "denormalization_context"={"groups"={"aldesactive:write"}},
+ *  "denormalization_context"={"groups"={"aldesactive:write"},"disable_type_enforcement"=true},
  *       "validation_groups"={"aldesactive"},
  *  "openapi_context"={"summary"="desactive une allocation actualisé"},
  *                 },
@@ -34,7 +35,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "openapi_context"={"summary"="Crée une allocation"},},
  *
  *     "actualisation"={"method"="post","path"="/allocations/actualise","openapi_context"={"summary"="Actualise une allocation"},
- *     "denormalization_context"={"groups"={"alactualise:write"}},
+ *     "denormalization_context"={"groups"={"alactualise:write"},"disable_type_enforcement"=true},
  *       "validation_groups"={"alactualise"}
  *     }
  *
@@ -63,6 +64,7 @@ class AllocationCredit
     /**
      * @ORM\Column(type="float")
      * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write"})
+     * @Assert\Type(type="numeric", message="le montant est incorrect")
      */
     private $montantAllouer;
 
@@ -116,7 +118,7 @@ class AllocationCredit
         return $this->montantAllouer;
     }
 
-    public function setMontantAllouer(float $montantAllouer): self
+    public function setMontantAllouer($montantAllouer): self
     {
         $this->montantAllouer = $montantAllouer;
 

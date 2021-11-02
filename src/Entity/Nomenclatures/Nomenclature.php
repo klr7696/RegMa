@@ -54,7 +54,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "datetime_format"="Y-m-d"
  * },
  * denormalizationContext={
- *                        "groups"={"nomen_detail:write"}, "openapi_definition_name"= "Write"
+ *                        "groups"={"nomen_detail:write"}, "openapi_definition_name"= "Write","disable_type_enforcement"=true
  * },
  * subresourceOperations={
  *                        "assiociation_compte_natures_get_subresource"= {
@@ -77,17 +77,16 @@ class Nomenclature
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"nomen_detail:read","actifnomen:read"})
+     * @Groups({"nomen_detail:read","actifnomen:read","registre_detail:read"})
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=4)
-     * @Groups({"nomen_detail:read","nomen_detail:write","actifnomen:read"})
+     * @ORM\Column(type="integer")
+     * @Groups({"nomen_detail:read","nomen_detail:write","actifnomen:read","registre_detail:read"})
      * @Assert\NotBlank(message="l'année est incorrect car vide")
-     * @Assert\Length(min= 4,max=4, exactMessage="l'année est incorrect0000000",allowEmptyString="true"
-     *    )
-     *
+     * @Assert\Type(type="numeric",message="l'année est incorrect")
+     * @Assert\Length(min=4,max=4, exactMessage="l'année est incorrect")
      */
     private $anneeApplication;
 
@@ -163,12 +162,12 @@ class Nomenclature
         return $this->id;
     }
 
-    public function getAnneeApplication(): ?string
+    public function getAnneeApplication(): ?int
     {
         return $this->anneeApplication;
     }
 
-    public function setAnneeApplication(?string $anneeApplication): self
+    public function setAnneeApplication($anneeApplication): self
     {
         $this->anneeApplication = $anneeApplication;
 

@@ -45,11 +45,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "get" ={"openapi_context"={"summary"="Affiche les informations des comptes natures"}},
  *
  *     "chapitres"={ "method"="post",    "path"="/natures/chapitres",
- *                  "denormalization_context"={"groups"={"chapitre:write"}},
+ *                  "denormalization_context"={"groups"={"chapitre:write"},"disable_type_enforcement"=true},
  *                  "openapi_context"={"summary"="Crée un Chapitre de type compte nature"}
  *            },
  *     "sousnatures"={ "method"="post",    "path"="/natures/sousnatures",
- *                  "denormalization_context"={"groups"={"sousnatures:write"}},
+ *                  "denormalization_context"={"groups"={"sousnatures:write"},"disable_type_enforcement"=true},
  *                  "openapi_context"={"summary"="Crée un Article ou un paragraphe de type compte nature"}
  *             },
  * },
@@ -57,7 +57,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * normalizationContext={"groups"={"nature_detail:read","nomen_detail:read"}, "openapi_definition_name"= "Read"},
  *
- * denormalizationContext={"groups"={"nature_detail:write"}, "openapi_definition_name"= "Write"},
+ * denormalizationContext={"groups"={"nature_detail:write"}, "openapi_definition_name"= "Write",
+ *     "disable_type_enforcement"=true},
  *
  * subresourceOperations={
  *             "api_nomenclatures_assiociation_compte_natures_get_subresource"=
@@ -94,11 +95,12 @@ class CompteNature
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=7)
+     * @ORM\Column(type="integer", length=4)
      * @Groups({"nature_detail:read","nature_detail:write"
      * ,"nomen_nature:read","sousnatures:read",
      * "chapitre:write","sousnatures:write","actifnomen:read"})
      * @Assert\NotBlank(message=" veuillez entrer le numero du compte ")
+     * @Assert\Type(type="numeric", message="le numero de compte nature est incorrect")
      */
     private $numeroCompteNature;
 

@@ -39,7 +39,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "openapi_context"={"summary"="Crée une ressource"},},
  *
  *     "actualisation"={"method"="post","path"="/ressources/actualise","openapi_context"={"summary"="Actualise une ressource"},
- *     "denormalization_context"={"groups"={"actualise:write"}},
+ *     "denormalization_context"={"groups"={"actualise:write"}, "disable_type_enforcement"=true},
  *       "validation_groups"={"actualise"}
  *     }
  *
@@ -49,7 +49,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                       "groups"={"ressource_detail:read"}, "openapi_definition_name"= "Read"
  * },
  * denormalizationContext={
- *                        "groups"={"ressource_detail:write"}, "openapi_definition_name"= "Write"
+ *                        "groups"={"ressource_detail:write"}, "openapi_definition_name"= "Write",
+ *     "disable_type_enforcement"=true
  * },
  *     subresourceOperations={}
  * )
@@ -73,13 +74,14 @@ class RessourceFinanciere
 
     /**
      * @ORM\Column(type="string", length=100)
-     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write"})
+     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write","actifressource:read"})
      */
     private $modeFinancement;
 
     /**
      * @ORM\Column(type="float")
      *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write","actifressource:read"})
+     * @Assert\Type(type="numeric",message="veuillez entrer une somme correct")
      */
     private $montantFinancement;
 
@@ -92,8 +94,7 @@ class RessourceFinanciere
     /**
      * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationRessource")
      * @ORM\JoinColumn(nullable=false)
-     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write",
-     *     "actifressource:read"})
+     *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write"})
      */
     private $exerciceRegistre;
 
@@ -121,13 +122,14 @@ class RessourceFinanciere
      * @ORM\Column(type="boolean")
      * @Groups({"ressource_detail:read","desactive:write"})
      * @Assert\NotNull(groups={"desactive"})
+     * @Groups({"actifressource:read"})
      */
     private $estValide= true;
 
     /**
      * @ORM\ManyToOne(targetEntity=StatutRegistre::class, inversedBy="associationRessource")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"ressource_detail:read","ressource_detail:write","actualise:write"})
+     * @Groups({"ressource_detail:read","ressource_detail:write","actualise:write","actifressource:read"})
      */
     private $statutRegistre;
 
@@ -183,7 +185,7 @@ class RessourceFinanciere
         return $this->montantFinancement;
     }
 
-    public function setMontantFinancement(float $montantFinancement): self
+    public function setMontantFinancement($montantFinancement): self
     {
         $this->montantFinancement = $montantFinancement;
 

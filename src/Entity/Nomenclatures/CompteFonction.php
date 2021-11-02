@@ -30,17 +30,18 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "get" ={"openapi_context"={"summary"="Affiche les informations des comptes fonctions"}},
 
  *     "divisions"={ "method"="post",    "path"="/fonctions/divisions",
- *                  "denormalization_context"={"groups"={"divisions:write"}},
+ *                  "denormalization_context"={"groups"={"divisions:write"},"disable_type_enforcement"=true},
  *                  "openapi_context"={"summary"="Crée une Division de type compte fonction"}
  *            },
  *     "sousfonctions"={ "method"="post",    "path"="/fonctions/sousfonctions",
- *                  "denormalization_context"={"groups"={"sousfonctions:write"}},
+ *                  "denormalization_context"={"groups"={"sousfonctions:write"},"disable_type_enforcement"=true},
  *                  "openapi_context"={"summary"="Crée un Groupe ou une Classse de type compte fonction"}
  *             },
  * },
  *     shortName= "fonctions",
  *     normalizationContext={"groups"={"fonction_detail:read","nomen_detail:read"}, "openapi_definition_name"= "Read"},
- *     denormalizationContext={"groups"={"fonction_detail:write"}, "openapi_definition_name"= "Write"},
+ *     denormalizationContext={"groups"={"fonction_detail:write"}, "openapi_definition_name"= "Write",
+ *     "disable_type_enforcement"=true},
  *     subresourceOperations={
  *             "api_nomenclatures_assiociation_compte_fonctions_get_subresource"= {
  *              "normalization_context"={"groups"={"nomen_fonction:read"}},
@@ -77,11 +78,12 @@ class CompteFonction
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=7)
+     * @ORM\Column(type="integer",length=4)
      * @Groups({"fonction_detail:read","fonction_detail:write",
      *     "nomen_fonction:read","sousfonctions:read",
      *     "divisions:write","sousfonctions:write"})
      * @Assert\NotBlank(message="veuillez entrer le numero du compte")
+     * @Assert\Type(type="numeric", message="le numero de compte fonction est incorrect")
      */
     private $numeroCompteFonction;
 
@@ -156,12 +158,12 @@ class CompteFonction
         return $this->id;
     }
 
-    public function getNumeroCompteFonction(): ?string
+    public function getNumeroCompteFonction(): ?int
     {
         return $this->numeroCompteFonction;
     }
 
-    public function setNumeroCompteFonction(string $numeroCompteFonction): self
+    public function setNumeroCompteFonction($numeroCompteFonction): self
     {
         $this->numeroCompteFonction = $numeroCompteFonction;
 
