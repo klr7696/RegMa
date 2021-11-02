@@ -5,7 +5,6 @@ namespace App\Entity\Prevision;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
-//use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\TermFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Nomenclatures\Nomenclature;
@@ -53,19 +52,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  * },
  * collectionOperations={
  *
- *      "get"={"openapi_context"={"summary"="fournit les details d'un registre"}, "datetime_format"="Y-m-d",
- *     "order"={"id"="DESC","associationStatut.id"="DESC"}},
+ *      "get"={"openapi_context"={"summary"="fournit les details d'un registre
+ *  pour ouvrir un registre=estOuvert=false&estCloture=false"}, "datetime_format"="Y-m-d",
+ *     "order"={"id"="DESC"}},
  *
  *     "actifnomen"={"method"="get", "path"="/registres/actifnomenclature",
  * "normalization_context"={"groups"={"actifnomen:read"}},
  *     "openapi_context"={"summary"="Affiche la nomenclature affectée au registre"}
  *     },
  *
- *      "actifregistre"={"method"="get", "path"="/registres/actif","datetime_format"="Y-m-d",
- *     "order"={"id"="DESC","associationStatut.id"="DESC"},
- * "normalization_context"={"groups"={"actifregistre:read"}},
- *     "openapi_context"={"summary"="Affiche le registre en cours"}
- *     },
+ *
  *
  *
  *                  "post"={"openapi_context"={"summary"="Crée un registre"}}
@@ -75,14 +71,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                       "groups"={"registre_detail:read"}, "openapi_definition_name"= "Read"
  * },
  * denormalizationContext={
- *                        "groups"={"registre_detail:write"}, "openapi_definition_name"= "Write"
+ *                        "groups"={"registre_detail:write"}, "openapi_definition_name"= "Write",
+ *     "disable_type_enforcement"=true
  * },
  *     subresourceOperations={}
  *  )
  * @ORM\Entity(repositoryClass=ExerciceRegistreRepository::class)
  * @UniqueEntity("anneeExercice", message= "l'année de gestion existe déjà")
  * @ApiFilter(SearchFilter::class, properties={"associationStatut.statut"="exact"})
- * @ApiFilter(BooleanFilter::class, properties={"estOuvert","estCloture","associationStatut.estEnCours","associationStatut.estActualisable"})
+ * @ApiFilter(BooleanFilter::class, properties={"estOuvert","estCloture"})
  */
 class ExerciceRegistre
 {
@@ -96,12 +93,13 @@ class ExerciceRegistre
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="integer")
      * @Groups({"registre_detail:write",
      *     "actifnomen:read","actifregistre:read",
      *     "actifressource:read","registre_detail:read"})
-     * @Assert\NotBlank(message="ne peut pas être vide")
-     * @Assert\Length(min=4, max=4, exactMessage="l'annee n'est pas valide")
+     * @Assert\NotBlank(message="l'année est incorrect car vide")
+     * @Assert\Type(type="numeric",message="l'année est incorrect")
+     * @Assert\Length(min=4,max=4, exactMessage="l'année est incorrect")
      */
     private $anneeExercice;
 
@@ -138,7 +136,7 @@ class ExerciceRegistre
     private $nomenclature;
     /**
      * @ORM\OneToMany(targetEntity=StatutRegistre::class, mappedBy="exerciceRegistre", orphanRemoval=true)
-     * @Groups({"actifregistre:read","registre_detail:read"})
+     * @Groups({"registre_detail:read"})
      * @ApiSubresource()
      */
     private $associationStatut;
@@ -192,12 +190,12 @@ class ExerciceRegistre
         return $this->id;
     }
 
-    public function getAnneeExercice(): ?string
+    public function getAnneeExercice(): ?int
     {
         return $this->anneeExercice;
     }
 
-    public function setAnneeExercice(string $anneeExercice): self
+    public function setAnneeExercice($anneeExercice): self
     {
         $this->anneeExercice = $anneeExercice;
 

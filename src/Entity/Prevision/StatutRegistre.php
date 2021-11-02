@@ -2,7 +2,10 @@
 
 namespace App\Entity\Prevision;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use App\Repository\Prevision\StatutRegistreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -41,6 +44,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  *
  *     collectionOperations={
+ *
+ *      "actifregistre"={"method"="get", "path"="/registat/actif","datetime_format"="Y-m-d",
+ *     "order"={"id"="DESC"},
+ * "normalization_context"={"groups"={"actifregistre:read"}},
+ *     "openapi_context"={"summary"="Affiche le registre en cours pour un registre en cours.
+ * Utiliser au niveau des ressources=estEncours=true&exerciceRegistre.estOuvert=true
+ *    pour changer le statut d’un registre=estEncours=true&exerciceRegistre.estOuvert=true&statut=Primitif
+ *     pour actualiser une ressource estActualisable=true&exerciceRegistre.estOuvert=true"}
+ *     },
+ *
  *     "get"={ "order"={"id"="DESC"}, "openapi_context"={"summary"="affiche un statut registre"}},
  *     "post"={"openapi_context"={"summary"="Crée un statut registre"}}
  *     },
@@ -52,7 +65,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * },
  *
  * )
- *
+ * @ApiFilter(BooleanFilter::class, properties={"estEncours","estActualisable","exerciceRegistre.estOuvert","exerciceRegistre.estCloture"})
+ * @ApiFilter(SearchFilter::class, properties={"statut"="start"})
  */
 class StatutRegistre
 {
@@ -103,6 +117,7 @@ class StatutRegistre
      * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationStatut")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"registat_detail:read","registat_detail:write","actifressource:read"})
+     * @Groups({"actifregistre:read"})
      */
     private $exerciceRegistre;
 
