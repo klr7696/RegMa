@@ -1,3 +1,5 @@
+import axios from "axios";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Pagination from "../../../zforms/Pagination";
@@ -7,8 +9,10 @@ const ConsultNomen = ({ history }) => {
   const [nomens, setNomens] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [nome, setNome] = useState([]);
+  const [load, setLoad] = useState(true);
 
-  // permet d'aller recuperer les nomenclatures
+  // permet d'aller recuperer les  nomenclatures
   const fetchNomens = async () => {
     try {
       const data = await  NomenAPI.findAll()
@@ -40,6 +44,18 @@ const ConsultNomen = ({ history }) => {
     history.replace(`/sbu/nomenclatures/${id}`);
     toast.info("Modification d'une nomenclaclature");
   };
+  
+ //affichage des données d'une nomenclature
+  const handleView = (id) => {
+       axios
+      .get(`http://localhost:8000/api/nomenclatures/${id}`)
+      .then(response => { setNome(response.data);
+        setLoad(false);
+      })
+     .catch(error => console.log(error) ) 
+    }
+    //formatage de date en francais
+  const formatDate = (str) => moment(str).format('DD/MM/YYYY');
 
   //gestion du chargement
   const handleChangePage = (page) => setCurrentPage(page);
@@ -66,6 +82,49 @@ const ConsultNomen = ({ history }) => {
     currentPage,
     itemsPerPage
   );
+
+  //condition d'afichage des données dans le modal
+  const resultModal = !load ? 
+  (
+    <div className="modal fade" id="large-Modal" tabIndex={-1} role="dialog">
+    <div className="modal-dialog modal-lg" role="document">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h4 className="modal-title">Infos supplémentaires</h4>
+        </div>
+        <div className="modal-body">
+                              <h5>Décret d'adoption</h5>
+                             <p>{nome.decretAdoption}</p>
+                              <h5>Décret d'application</h5>
+                              <p>{nome.decretApplication}</p>
+                                <h5>Description</h5>
+                                  <p>{nome.descriptionNomenclature}</p>
+        </div>
+        <div className="modal-footer">
+          <button type="button" className="btn btn-default waves-effect " data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  )
+  :
+  (
+    <div className="modal fade" id="large-Modal" tabIndex={-1} role="dialog">
+    <div className="modal-dialog modal-lg" role="document">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h4 className="modal-title">Chargement ...</h4>
+        </div>
+        <div className="modal-body">
+                         <p>Patientez un instant</p>
+        </div>
+        <div className="modal-footer">
+          <button type="button" className="btn btn-default waves-effect " data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  )
 
   return (
     <section id="exp">
@@ -127,9 +186,7 @@ const ConsultNomen = ({ history }) => {
                           <tr>
                             <th>id</th>
                             <th>Année application</th>
-                            <th>Décret d'adoption</th>
                             <th>Date d'adoption</th>
-                            <th>Décret d'application</th>
                             <th>Date d'application</th>
                             <th>Action</th>
                           </tr>
@@ -139,14 +196,11 @@ const ConsultNomen = ({ history }) => {
                             <tr key={nomen.id}>
                               <td>{nomen.id}</td>
                               <td>{nomen.anneeApplication}</td>
-                              <td>{nomen.decretAdoption} </td>
-                              <td>{nomen.dateAdoption}</td>
-                              <td>{nomen.decretApplication}</td>
-                              <td>{nomen.dateApplication}</td>
-
+                              <td>{formatDate(nomen.dateAdoption)}</td>
+                              <td>{formatDate(nomen.dateApplication)}</td>
                               <td>
                                 <button
-                                  onClick={() => handleDelete(nomen.id)}
+                                 // onClick={() => handleDelete(nomen.id)}
                                   className="m-r-20 btn btn-sm btn-danger "
                                   disabled={
                                     nomen.assiociationCompteNature.length > 0
@@ -158,18 +212,16 @@ const ConsultNomen = ({ history }) => {
                                   disabled={
                                     nomen.assiociationCompteNature.length > 0
                                   }
-                                  onClick={() => handleModif(nomen.id)}
+                                  //onClick={() => handleModif(nomen.id)}
                                   className="m-r-20 btn btn-sm btn-primary"
                                 >
                                   <i className="fa fa-edit"></i>
                                 </button>
 
                                 <button
-                                  onClick={() => handleView(nomen.id)}
+                                 // onClick={() => handleView(nomen.id)}
                                   className="btn btn-sm btn-secondary "
-                                  disabled={
-                                    nomen.assiociationCompteNature.length > 0
-                                  }
+                                  data-toggle="modal" data-target="#large-Modal"
                                 >
                                   <i className="fa fa-eye"></i>
                                 </button>
@@ -194,6 +246,10 @@ const ConsultNomen = ({ history }) => {
           </div>
         </div>
       </div>
+     <div>
+       {resultModal}
+</div>
+
     </section>
   );
 };

@@ -8,7 +8,7 @@ function findAll() {
 
 function find(id) {
     return axios 
-    .get("http://localhost:8000/api/nomenclatures")
+    .get("http://localhost:8000/api/nomenclatures/" + id)
     .then(response => response.data);
 }
 

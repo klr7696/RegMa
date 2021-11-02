@@ -81,11 +81,12 @@ const InscriNomen = ({history,match}) =>{
         }
       toast.success("Nomenclature Ajoutée");
        history.replace("/sbu/nomenclatures");
-      console.log(nomens.nabro);
       }
     } catch(response) {
          console.log(error);
-        toast.error("Nomenclature Non Ajouté");
+          setError("Existe déjà")
+          toast.error("Nomenclature Non Ajouté");
+
     }
    
   };
@@ -158,6 +159,7 @@ const InscriNomen = ({history,match}) =>{
                     required
                     error={error.anneeApplication}
                   />
+                   {error && <p className="invalid-feedback">{error}</p>}
                 </div>
             
               {( !editing && <> <div className="col-sm-2">
