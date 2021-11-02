@@ -74,7 +74,7 @@ class StatutRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"registat_detail:read","actifregistre:read","registre_detail:read"})
+     * @Groups({"registat_detail:read","actifregistre:read","registre_detail:read","actifressource:read"})
      *
      */
     private $id;
@@ -88,7 +88,7 @@ class StatutRegistre
     private $statut;
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"registat_detail:read","desactive:write","actifregistre:read"})
+     * @Groups({"registat_detail:read","desactive:write","actifregistre:read","actifressource:read"})
      * @Assert\NotNull(groups={"desactive"})
      */
     private $estEnCours=true;
@@ -100,7 +100,7 @@ class StatutRegistre
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"registat_detail:read","desactive:write","actifregistre:read"})
+     * @Groups({"registat_detail:read","desactive:write","actifregistre:read","actifressource:read"})
      * @Assert\NotNull(groups={"desactive"})
      *
      */
@@ -116,8 +116,8 @@ class StatutRegistre
     /**
      * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationStatut")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"registat_detail:read","registat_detail:write","actifressource:read"})
-     * @Groups({"actifregistre:read"})
+     * @Groups({"registat_detail:read","registat_detail:write"})
+     * @Groups({"actifregistre:read","actifressource:read"})
      */
     private $exerciceRegistre;
 

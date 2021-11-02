@@ -145,13 +145,13 @@ class ExerciceRegistre
      * @ORM\Column(type="boolean")
      * @Assert\NotNull(groups={"cloture","ouvrir"})
      * @Groups({"cloture:write","ouvrir:write",
-     * "actifregistre:read","registre_detail:read"})
+     * "actifregistre:read","registre_detail:read","actifressource:read"})
      */
     private $estOuvert = false;
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotNull(groups={"cloture"})
-     * @Groups({"cloture:write","actifregistre:read","registre_detail:read"})
+     * @Assert\NotNull(groups={"cloture","ouvrir"})
+     * @Groups({"cloture:write","ouvrir:write","actifregistre:read","registre_detail:read","actifressource:read"})
      */
     private $estCloture= false;
 
