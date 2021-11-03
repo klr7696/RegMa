@@ -200,7 +200,7 @@ const ConsultNomen = ({ history }) => {
                               <td>{formatDate(nomen.dateApplication)}</td>
                               <td>
                                 <button
-                                 // onClick={() => handleDelete(nomen.id)}
+                                  onClick={() => handleDelete(nomen.id)}
                                   className="m-r-20 btn btn-sm btn-danger "
                                   disabled={
                                     nomen.assiociationCompteNature.length > 0
@@ -212,14 +212,14 @@ const ConsultNomen = ({ history }) => {
                                   disabled={
                                     nomen.assiociationCompteNature.length > 0
                                   }
-                                  //onClick={() => handleModif(nomen.id)}
+                                  onClick={() => handleModif(nomen.id)}
                                   className="m-r-20 btn btn-sm btn-primary"
                                 >
                                   <i className="fa fa-edit"></i>
                                 </button>
 
                                 <button
-                                 // onClick={() => handleView(nomen.id)}
+                                  onClick={() => handleView(nomen.id)}
                                   className="btn btn-sm btn-secondary "
                                   data-toggle="modal" data-target="#large-Modal"
                                 >

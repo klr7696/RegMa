@@ -1,4 +1,3 @@
-import { NumberFormat } from "@syncfusion/ej2-base/src/intl/number-formatter";
 import axios from "axios";
 import React, {useState, useEffect } from "react";
 
@@ -8,18 +7,14 @@ const InscriFinan = (props) => {
     const { id = "new" } = props.match.params;
 
     const [finans, setFinans] = useState({
-        objetFinancement: "Fonctionnemen",
+        objetFinancement: "Fonctionnement",
         modeFinancement: "Subvention",
-        montantFinancement: 0,
-        exerciceRegistre: "/api/registres/1",
-        bailleurFonds: "/api/bailleurs/1",
+        montantFinancement: "",
+        exerciceRegistre: "",
+        bailleurFonds: "",
         descriptionFinancement: "",
-        statutRegistre:"/api/registats/4"
+        statutRegistre:"/api/registats/1"
     });
-
-    const formatNumber = (number) => {
-      return number.parseFloat(number, 10)
-    }
 
     const [error, setErrors] = useState("");
     const [editing, setEditing] = useState (false);
@@ -51,10 +46,11 @@ const InscriFinan = (props) => {
     const fetchExercs = async () => {
       try{
     const data = await axios
-    .get("http://localhost:8000/api/registres/actif")
+    .get("http://localhost:8000/api/registat/actif")
     .then(response => response.data["hydra:member"]);
     setExercs(data);
-    if (!finans.exerciceRegistre) setFinans({...finans, exerciceRegistre:data[0].id} )
+    if (!finans.exerciceRegistre) setFinans({...finans, exerciceRegistre:data[0].exerciceRegistre.id} )
+    if (!finans.statutRegistre) setFinans({...finans, statutRegistre:data[0].id} )
       } catch (error) {
       console.log(error.response);
       }
@@ -69,7 +65,7 @@ const InscriFinan = (props) => {
     const fetchBailleurs = async () => {
       try{
     const data = await axios
-    .get("http://localhost:8000/api/bailleurs")
+    .get("http://localhost:8000/api/bailleurs/actifressource")
     .then(response => response.data["hydra:member"]);
     setBailleurs(data);
     if (!finans.bailleurFonds) setFinans({...finans, bailleurFonds:data[0].id} )
@@ -88,22 +84,23 @@ const InscriFinan = (props) => {
       setFinans({...finans, [name]: value });
     };
    
-  
     const handleSubmit = async event => {
       event.preventDefault();
   
       try {
           const response = await axios
-          .post("http://localhost:8000/api/ressources/inscription", finans
-         // {...finans, bailleurFonds:`/api/bailleurs/${finans.bailleurFonds}`},
-          //{...finans, exerciceRegistre:`/api/registres/${finans.exerciceRegistre}`}
-          )
+          .post("http://localhost:8000/api/ressources/inscription",
+        {...finans, exerciceRegistre:`/api/registres/${finans.exerciceRegistre}`,
+        bailleurFonds:`/api/bailleurs/${finans.bailleurFonds}` 
+       // statutRegistre:`/api/registats/${finans.statutRegistre}`,
+        // ...finans, bailleurFonds:`/api/bailleurs/${finans.bailleurFonds}`
+      }  
+        );
           console.log(response.data);
       } catch(error) {
        console.log(error.response)
        setErrors("Informations incorrectes")
       }
-     
     };
    
     return (
@@ -161,7 +158,7 @@ const InscriFinan = (props) => {
                 <div className="col-sm-2">
                   <label className="col-form-label">Bailleur *</label>
                 </div>
-               {/* <div className="col-sm-2">
+               <div className="col-sm-2">
                     <select 
                     onChange={handleChange} 
                     name="bailleurFonds"
@@ -172,7 +169,7 @@ const InscriFinan = (props) => {
                        {bailleur.sigleBailleur}
                      </option>)}
                       </select>
-                    </div>*/}
+                    </div>
                 <div className="col-sm-1">
                   <label className="col-form-label">Objet *</label>
                 </div>
@@ -219,17 +216,17 @@ const InscriFinan = (props) => {
                 <div className="col-sm-1">
                   <label className="col-form-label">Exercice </label>
                 </div>
-               <div className="col-sm-2">
+               <div className="col-sm-3">
                     <select 
                     disabled="disabled"
                     onChange={handleChange} 
-                    name="nomenclature"
-                    id="nomenclature"
+                    name="exerciceRegistre"
+                    id="exerciceRegistre"
                     value={finans.exerciceRegistre}
                     className={"form-control" + (error && " is-invalid")}
                    >
                      {exercs.map(exerc => <option key={exerc.id} value={exerc.id}>
-                       {exerc.anneeExercice}
+                       {exerc.statut} {exerc.exerciceRegistre.anneeExercice}
                      </option>)}
                       </select>
                      </div>

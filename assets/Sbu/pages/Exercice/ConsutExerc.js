@@ -1,16 +1,14 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
+import formatDate from "../../../zforms/FormatDate";
 
 const ConsultExerc = () =>{
-
-  const a = 400000;
-
 
   const [exercs, setExercs] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/registres/actif")
+      .get("http://localhost:8000/api/registres")
       .then(response => response.data["hydra:member"])
       .then(data => setExercs(data));
   }, []);
@@ -18,12 +16,7 @@ const ConsultExerc = () =>{
    const magiscule = string => {
      return string.toUpperCase()
    }
-   const monnaie = string => {
-    return string.toLocaleString("fr-FR", {style: 'currency', currency:'XAF'})
-  }
-   const date1 = string => {
-    return string.toLocaleString("kr-KR", {})
-  }
+
   return (
   <section id="exp">
   <div className="product-detail-page">
@@ -104,10 +97,9 @@ const ConsultExerc = () =>{
             <th>Ordonnateur</th>
             <th>Date de vote</th>
             <th>Date d'adoption</th>
-            <th>Description</th>
             <th>Nomenclature</th>
-            <td>Statut</td>
-            <td>Action</td>
+            <th>Statut</th>
+            <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -115,7 +107,11 @@ const ConsultExerc = () =>{
                         <tr key={exerc.id} value={exerc.id}>
                         <td>{exerc.id}</td>
                         <td>{exerc.anneeExercice}</td>
-                        <td>{}</td>
+                        <td></td>
+                        <td>{formatDate(exerc.dateVote)}</td>
+                        <td>{formatDate(exerc.dateAdoption)}</td>
+                        <td>Nomenclature {exerc.nomenclature.anneeApplication}</td>
+                        <td>{exerc.associationStatut[0].statut}</td>
                         <td></td>
             </tr>)}
             </tbody>

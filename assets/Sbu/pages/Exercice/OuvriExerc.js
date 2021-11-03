@@ -14,7 +14,7 @@ const OuvriExerc = () => {
   const fetchExercs = async () => {
     try{
   const data = await axios
-  .get("http://localhost:8000/api/registres/actif")
+  .get("http://localhost:8000/api/registres?estOuvert=false&estCloture=false")
   .then(response => response.data["hydra:member"]);
     setExercs(data);
     if (!ouvrs.exerciceRegistre) setOuvrs({...ouvrs, exerciceRegistre:data[0].id} )

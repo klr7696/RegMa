@@ -15,7 +15,7 @@ const ModifExerc = () =>{
 
     try{
   const data = await axios
-  .get("http://localhost:8000/api/registres/actif")
+  .get("http://localhost:8000/api/registat/actif?estEncours=true&exerciceResgistre.estOuvert=true&statut=Primitif")
   //.then(reponse => console.log(reponse));
   .then(response => response.data['hydra:member'])
   console.log(data)
@@ -141,7 +141,7 @@ const ModifExerc = () =>{
                   className=" form-control">
                  {exercs.map(exerc => 
                  <option key={exerc.id} value={exerc.id}>
-                 {exerc.anneeExercice} {exerc.associationStatut[0].statut}
+                {exerc.statut} {exerc.exerciceRegistre.anneeExercice}
                </option>)}  
                   </select>
                   </div>
