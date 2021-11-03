@@ -77,13 +77,15 @@ class Nomenclature
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"nomen_detail:read","actifnomen:read","registre_detail:read"})
+     * @Groups({"nomen_detail:read","actifnomen:read",
+     *     "registre_collect:read","registre_detail:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"nomen_detail:read","nomen_detail:write","actifnomen:read","registre_detail:read"})
+     * @Groups({"nomen_detail:read","nomen_detail:write","actifnomen:read",
+     *     "registre_collect:read","registre_detail:read"})
      * @Assert\NotBlank(message="l'année est incorrect car vide")
      * @Assert\Type(type="numeric",message="l'année est incorrect")
      * @Assert\Length(min=4,max=4, exactMessage="l'année est incorrect")

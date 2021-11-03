@@ -37,19 +37,20 @@ class MairieCommunale
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"mairie_detail:read","autoencours:read"})
+     * @Groups({"mairie_detail:read","autoencours:read","ouveralloc:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"mairie_detail:read","mairie_detail:write","autoencours:read"})
+     * @Groups({"mairie_detail:read","mairie_detail:write","autoencours:read",
+     *     "ouveralloc:read"})
      */
     private $designationMairie;
 
     /**
      * @ORM\Column(type="string", length=10)
-     * @Groups({"mairie_detail:read","mairie_detail:write","autoencours:read"})
+     * @Groups({"mairie_detail:read","mairie_detail:write","autoencours:read","ouveralloc:read"})
      */
     private $abbreviationMairie;
 

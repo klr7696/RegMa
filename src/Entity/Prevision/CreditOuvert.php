@@ -4,6 +4,7 @@ namespace App\Entity\Prevision;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Entity\Nomenclatures\CompteNature;
 use App\Entity\Plans\AutorisationMarche;
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "aaouverts",
+ *     shortName= "ouverts",
  *      itemOperations={
  *                  "get"={"openapi_context"={"summary"="Affiche les informations d'un Credit Ouvert "}},
  *     "delete"={"openapi_context"={"summary"="Supprime un Credit Ouvert"}},
@@ -51,7 +52,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                        "groups"={"ouvert_detail:write"}, "openapi_definition_name"= "Write",
  *     "disable_type_enforcement"=true
  * },
- *     subresourceOperations={}
+ *     subresourceOperations={
+ *     "api_ressources_association_credits_get_subresource"={
+ *     "normalization_context"={"groups"={"ressouvre:read"}}
+ *     },
+ *     "association_allocations_get_subresource"={"path"="/ouverts/{id}/allocations",
+ *     "openapi_context"={"summary"="Liste les allocations d'un credit ouvert sur un registre"}
+ *     },
+ *
+ *     }
  * )
  * @ORM\Entity(repositoryClass=CreditOuvertRepository::class)
  */
@@ -61,27 +70,29 @@ class CreditOuvert
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"ouvert_detail:read"})
+     * @Groups({"ouvert_detail:read","ressouvre:read","autoalloc:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"ouvert_detail:read","ouvert_detail:write","oactualise:write","bailleurs_detail:read"})
+     * @Groups({"ouvert_detail:read","ouvert_detail:write","oactualise:write",
+     *     "bailleurs_detail:read","ressouvre:read","autoalloc:read"})
      * @Assert\Type(type="numeric",message="le montant est incorrect")
      */
     private $montantInscription;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"ouvert_detail:read","ouvert_detail:write","oactualise:write"})
+     * @Groups({"ouvert_detail:read","ouvert_detail:write",
+     *     "oactualise:write","ressouvre:read"})
      */
     private $descriptionInscription;
 
     /**
      * @ORM\ManyToOne(targetEntity=RessourceFinanciere::class, inversedBy="associationCredit")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"ouvert_detail:read","ouvert_detail:write","oactualise:write"})
+     * @Groups({"ouvert_detail:read","ouvert_detail:write","oactualise:write","autoalloc:read"})
      *
      */
     private $ressourceFinanciere;
@@ -89,26 +100,27 @@ class CreditOuvert
     /**
      * @ORM\OneToMany(targetEntity=AllocationCredit::class, mappedBy="creditOuvert", orphanRemoval=true)
      * @Groups({"ouvert_detail:read"})
+     * @ApiSubresource()
      */
     private $associationAllocation;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull(groups="desactive")
-     * @Groups({"ouvert_detail:read","odesactive:write"})
+     * @Groups({"ouvert_detail:read","odesactive:write","ressouvre:read"})
      */
     private $estValide =true;
 
     /**
      * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="associationCreditOuvert")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"ouvert_detail:read","ouvert_detail:write","oactualise:write"})
+     * @Groups({"ouvert_detail:read","ouvert_detail:write","oactualise:write","ressouvre:read"})
      */
     private $compteNature;
 
     /**
      * @ORM\OneToOne(targetEntity=CreditOuvert::class, cascade={"persist", "remove"})
-     * @Groups({"ouvert_detail:read","oactualise:write"})
+     * @Groups({"ouvert_detail:read","oactualise:write","ressouvre:read"})
      */
     private $actualiseCredit;
 

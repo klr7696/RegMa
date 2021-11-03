@@ -4,6 +4,7 @@ namespace App\Entity\Plans;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Administration\MairieCommunale;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use App\Entity\Nomenclatures\CompteNature;
@@ -64,7 +65,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                        "groups"={"autorisation_detail:write"}, "openapi_definition_name"= "Write",
  *     "disable_type_enforcement"=true
  * },
- *     subresourceOperations={}
+ *     subresourceOperations={
+
+ *      "association_allocations_get_subresource"={"path"="/autorisations/{id}/allocations",
+ *     "openapi_context"={"summary"="liste les allocations d'une autorisation"},
+ *    }
+ *     }
  * )
  * @ORM\Entity(repositoryClass=AutorisationMarcheRepository::class)
  * @ApiFilter(BooleanFilter::class, properties={"associationRegistre.estOuvert","associationStatut.estEncours","estValide"})
@@ -76,14 +82,14 @@ class AutorisationMarche
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
-     *     "autoencours:read"})
+     *     "autoencours:read","ouveralloc:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
-     *     "autoencours:read"})
+     *     "autoencours:read","ouveralloc:read"})
      */
     private $objetAutorisation;
 
@@ -91,13 +97,13 @@ class AutorisationMarche
      * @ORM\Column(type="float")
      * @Assert\Type(type="numeric",message="le montant est incorrecte")
      * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
-     *     "autoencours:read"})
+     *     "autoencours:read","ouveralloc:read"})
      */
     private $montantAutorisation;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write"})
+     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write","ouveralloc:read"})
      */
     private $explicationAutorisation;
 
@@ -113,6 +119,7 @@ class AutorisationMarche
 
     /**
      * @ORM\OneToMany(targetEntity=AllocationCredit::class, mappedBy="autorisationMarche")
+     * @ApiSubresource()
      */
     private $associationAllocation;
 
@@ -120,7 +127,7 @@ class AutorisationMarche
      * @ORM\ManyToOne(targetEntity=MairieCommunale::class, inversedBy="associationAutorisation")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
-     *     "autoencours:read"})
+     *     "autoencours:read","ouveralloc:read"})
      */
     private $mairieCommunale;
 

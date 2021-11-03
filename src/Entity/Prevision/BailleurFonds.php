@@ -49,21 +49,21 @@ class BailleurFonds
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"actifressource:read","resencours:read"})
+     * @Groups({"actifressource:read","resencours:read","regisress:read","autoalloc:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"bailleurs_detail:read","bailleurs_detail:write",
-     *     "actifressource:read","resencours:read"})
+     *     "actifressource:read","resencours:read","regisress:read","autoalloc:read"})
      */
     private $designationBailleur;
 
     /**
      * @ORM\Column(type="string", length=10)
      * @Groups({"bailleurs_detail:read","bailleurs_detail:write",
-     *     "actifressource:read","resencours:read"})
+     *     "actifressource:read","resencours:read","regisress:read"})
      *
      */
     private $sigleBailleur;
@@ -83,7 +83,7 @@ class BailleurFonds
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"bailleurs_detail:read","bailleurs_detail:write",
-     *     "actifressource:read","resencours:read"})
+     *     "actifressource:read","resencours:read","regisress:read","autoalloc:read"})
      */
     private $sourceFinancement;
 

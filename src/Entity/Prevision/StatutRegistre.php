@@ -46,6 +46,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  *     collectionOperations={
  *
+ *     "definir"={ "method"="post", "path"="/registats/definis",
+ *     "openapi_context"={"summary"="defini le statut primitif pour un registre"},},
+ *
+ *     "changer"={"method"="post","path"="/registats/change","openapi_context"={"summary"="defini le statut d'un registre"},
+ *     "denormalization_context"={"groups"={"change:write"}, "disable_type_enforcement"=true},
+ *       "validation_groups"={"change"}
+ *     },
+ *
  *      "actifregistre"={"method"="get", "path"="/registat/actif","datetime_format"="Y-m-d",
  *     "order"={"id"="DESC"},
  * "normalization_context"={"groups"={"actifregistre:read"}},
@@ -56,7 +64,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *
  *     "get"={ "order"={"id"="DESC"}, "openapi_context"={"summary"="affiche un statut registre"}},
- *     "post"={"openapi_context"={"summary"="Crée un statut registre"}}
+ *
  *     },
  *     normalizationContext={
  *                       "groups"={"registat_detail:read"}, "openapi_definition_name"= "Read"
@@ -65,6 +73,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                        "groups"={"registat_detail:write"}, "openapi_definition_name"= "Write"
  * },
  *
+ *     subresourceOperations={
+ *      "api_registres_association_statuts_get_subresource"={
+ *
+ *
+ *    "normalization_context"={"groups"={"infos:read"}}
+ *
+ *     }
+ *     }
  * )
  * @ApiFilter(BooleanFilter::class, properties={"estEncours","estActualisable","exerciceRegistre.estOuvert","exerciceRegistre.estCloture"})
  * @ApiFilter(SearchFilter::class, properties={"statut"="start"})
@@ -75,36 +91,41 @@ class StatutRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"registat_detail:read","actifregistre:read","registre_detail:read",
-     *     "actifressource:read","resencours:read","autoencours:read"})
+     * @Groups({"registat_detail:read","actifregistre:read",
+     *     "actifressource:read","resencours:read","autoencours:read","infos:read",
+     *     "regisress:read"})
      *
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"registat_detail:read","registat_detail:write","registre_detail:read","actifregistre:read",
-     *     "actifressource:read","resencours:read","autoencours:read"})
-     * @Assert\Choice(choices={"Primitif","Primitif modificatif","Supplémentaire"}, message= "saisir des informations correctes")
+     * @Groups({"registat_detail:read","registat_detail:write","actifregistre:read",
+     *     "actifressource:read","resencours:read","autoencours:read",
+     *     "infos:read","regisress:read","change:write"})
+     *
+     * @Assert\Choice(choices={"Primitif","Primitif modificatif","Supplémentaire"}, message= "saisir des informations correctes",
+     *     groups={"Default","change"})
      */
     private $statut;
     /**
      * @ORM\Column(type="boolean")
      * @Groups({"registat_detail:read","desactive:write","actifregistre:read",
-     *     "actifressource:read","resencours:read","autoencours:read"})
+     *     "actifressource:read","resencours:read","autoencours:read",
+     *     "infos:read"})
      * @Assert\NotNull(groups={"desactive"})
      */
     private $estEnCours=true;
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"registat_detail:read","registat_detail:write"})
+     * @Groups({"registat_detail:read","change:write"})
      */
     private $dateApprobation;
 
     /**
      * @ORM\Column(type="boolean")
      * @Groups({"registat_detail:read","desactive:write","actifregistre:read",
-     *     "actifressource:read","resencours:read","autoencours:read"})
+     *     "actifressource:read","resencours:read","autoencours:read","infos:read"})
      * @Assert\NotNull(groups={"desactive"})
      *
      */
@@ -112,7 +133,7 @@ class StatutRegistre
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"registat_detail:read","registat_detail:write"})
+     * @Groups({"registat_detail:read","change:write"})
      *
      */
     private $descriptionStatut;
@@ -121,13 +142,13 @@ class StatutRegistre
      * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationStatut")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"registat_detail:read","registat_detail:write"})
-     * @Groups({"actifregistre:read","actifressource:read"})
+     * @Groups({"actifregistre:read","actifressource:read","change:write"})
      */
     private $exerciceRegistre;
 
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="statutRegistre", orphanRemoval=true)
-     *
+     * @Groups({"infos:read"})
      */
     private $associationRessource;
 
@@ -135,6 +156,13 @@ class StatutRegistre
      * @ORM\OneToMany(targetEntity=AutorisationMarche::class, mappedBy="associationStatut", orphanRemoval=true)
      */
     private $autorisationMarches;
+
+    /**
+     * @ORM\OneToOne(targetEntity=StatutRegistre::class, cascade={"persist", "remove"})
+     * @Assert\NotNull(groups={"change"},message="il renseigner le statut à desactiver")
+     * @Groups({"change:write","actifregistre:read"})
+     */
+    private $statutClos;
 
 
 
@@ -278,6 +306,18 @@ class StatutRegistre
                 $autorisationMarch->setAssociationStatut(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatutClos(): ?self
+    {
+        return $this->statutClos;
+    }
+
+    public function setStatutClos(?self $statutClos): self
+    {
+        $this->statutClos = $statutClos;
 
         return $this;
     }

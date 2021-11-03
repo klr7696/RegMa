@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *      shortName= "registres",
  * itemOperations={
- *                  "get"={ "normalization_context"={"registre_detail:read"},
+ *                  "get"={"normalization_context"={"groups"={"registre_detail:read"}},
  *     "openapi_context"={"summary"="Affiche les informations d'un registre "}},
  *
  *     "ouvrir"={"method"="patch", "path"="/registres/ouvre/{id}", "controller"="App\Controller\OuvrirRegistreController",
@@ -53,7 +53,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * },
  * collectionOperations={
  *
- *      "get"={"openapi_context"={"summary"="fournit les details d'un registre
+ *      "get"={"normalization_context"={"groups"={"registre_collect:read"}},
+ *     "openapi_context"={"summary"="fournit les details d'un registre
  *  pour ouvrir un registre=estOuvert=false&estCloture=false"}, "datetime_format"="Y-m-d",
  *     "order"={"id"="DESC"}},
  *
@@ -68,14 +69,24 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                  "post"={"openapi_context"={"summary"="Crée un registre"}}
  * },
  *
- * normalizationContext={
- *                       "groups"={"registre_detail:read"}, "openapi_definition_name"= "Read"
- * },
+ *
  * denormalizationContext={
  *                        "groups"={"registre_detail:write"}, "openapi_definition_name"= "Write",
  *     "disable_type_enforcement"=true
  * },
- *     subresourceOperations={}
+ *     subresourceOperations={
+ *      "association_statuts_get_subresource"={
+ *     "path"="/registres/{id}/infos",
+ *     "openapi_context"={"summary"="fournit les informations d'un registre"},
+ *     },
+ *
+ *      "association_ressources_get_subresource"={
+ *     "path"="/registres/{id}/ressources",
+ *     "openapi_context"={"summary"="listes les ressources d'un registre"}
+ *     },
+        "autorisation_marches_get_subresource"={}
+ *
+ *     }
  *  )
  * @ORM\Entity(repositoryClass=ExerciceRegistreRepository::class)
  * @UniqueEntity("anneeExercice", message= "l'année de gestion existe déjà")
@@ -89,7 +100,7 @@ class ExerciceRegistre
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"registre_detail:read","actifnomen:read","actifregistre:read",
-     *     "actifressource:read","resencours:read","autoencours:read"})
+     *     "actifressource:read","resencours:read","autoencours:read","registre_collect:read"})
      */
     private $id;
 
@@ -97,7 +108,8 @@ class ExerciceRegistre
      * @ORM\Column(type="integer")
      * @Groups({"registre_detail:write",
      *     "actifnomen:read","actifregistre:read",
-     *     "actifressource:read","registre_detail:read","resencours:read","autoencours:read"})
+     *     "actifressource:read","registre_detail:read","resencours:read",
+     *     "autoencours:read","registre_collect:read"})
      * @Assert\NotBlank(message="l'année est incorrect car vide")
      * @Assert\Type(type="numeric",message="l'année est incorrect")
      * @Assert\Length(min=4,max=4, exactMessage="l'année est incorrect")
@@ -107,24 +119,24 @@ class ExerciceRegistre
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"registre_detail:write","recup:read"})
+     * @Groups({"registre_detail:write","recup:read","registre_collect:read"})
      */
     private $ordonateurExercice;
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"registre_detail:write","registre_detail:read"})
+     * @Groups({"registre_detail:write","registre_detail:read","registre_collect:read"})
      */
     private $dateVote;
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"registre_detail:write","registre_detail:read"})
+     * @Groups({"registre_detail:write","registre_detail:read","registre_collect:read"})
      */
     private $dateAdoption;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"registre_detail:write","registre_detail:read"})
+     * @Groups({"registre_detail:write","registre_detail:read","registre_collect:read"})
      */
     private $description;
 
@@ -132,12 +144,12 @@ class ExerciceRegistre
      * @ORM\ManyToOne(targetEntity=Nomenclature::class, inversedBy="associationExercice")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"registre_detail:write",
-     * "actifnomen:read","registre_detail:read"})
+     * "actifnomen:read","registre_detail:read","registre_collect:read"})
      */
     private $nomenclature;
     /**
      * @ORM\OneToMany(targetEntity=StatutRegistre::class, mappedBy="exerciceRegistre", orphanRemoval=true)
-     * @Groups({"registre_detail:read"})
+     *
      * @ApiSubresource()
      */
     private $associationStatut;
@@ -146,27 +158,30 @@ class ExerciceRegistre
      * @ORM\Column(type="boolean")
      * @Assert\NotNull(groups={"cloture","ouvrir"})
      * @Groups({"cloture:write","ouvrir:write",
-     * "actifregistre:read","registre_detail:read","actifressource:read","resencours:read","autoencours:read"})
+     * "actifregistre:read","registre_detail:read","actifressource:read",
+     *     "resencours:read","autoencours:read","registre_collect:read"})
      */
     private $estOuvert = false;
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull(groups={"cloture","ouvrir"})
      * @Groups({"cloture:write","ouvrir:write","actifregistre:read",
-     *     "registre_detail:read","actifressource:read","resencours:read","autoencours:read"})
+     *     "registre_detail:read","actifressource:read","resencours:read",
+     *     "autoencours:read","registre_collect:read"})
      */
     private $estCloture= false;
 
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"cloture:write","registre_detail:read"})
+     * @Groups({"cloture:write","registre_detail:read","registre_collect:read"})
      * @Assert\NotBlank(groups={"cloture"}, message="veuillez saisir la date de cloture de l'exercice en cours")
      */
     private $dateCloture;
 
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="exerciceRegistre", orphanRemoval=true)
+     * @ApiSubresource(maxDepth=1)
      *
      */
     private $associationRessource;
@@ -179,6 +194,7 @@ class ExerciceRegistre
 
     /**
      * @ORM\OneToMany(targetEntity=AutorisationMarche::class, mappedBy="associationRegistre", orphanRemoval=true)
+     * @ApiSubresource(maxDepth=1)
      */
     private $autorisationMarches;
 
