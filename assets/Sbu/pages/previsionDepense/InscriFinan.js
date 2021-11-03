@@ -10,10 +10,10 @@ const InscriFinan = (props) => {
         objetFinancement: "Fonctionnement",
         modeFinancement: "Subvention",
         montantFinancement: "",
+        descriptionFinancement: "",
         exerciceRegistre: "",
         bailleurFonds: "",
-        descriptionFinancement: "",
-        statutRegistre:"/api/registats/1"
+        statutRegistre:""
     });
 
     const [error, setErrors] = useState("");
@@ -91,9 +91,8 @@ const InscriFinan = (props) => {
           const response = await axios
           .post("http://localhost:8000/api/ressources/inscription",
         {...finans, exerciceRegistre:`/api/registres/${finans.exerciceRegistre}`,
-        bailleurFonds:`/api/bailleurs/${finans.bailleurFonds}` 
-       // statutRegistre:`/api/registats/${finans.statutRegistre}`,
-        // ...finans, bailleurFonds:`/api/bailleurs/${finans.bailleurFonds}`
+        bailleurFonds:`/api/bailleurs/${finans.bailleurFonds}`,
+       // statutRegistre:`/api/registats/${finans.statutRegistre}`
       }  
         );
           console.log(response.data);
