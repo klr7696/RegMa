@@ -4,7 +4,6 @@ import HeaderSbu from "./components/HeaderSbu";
 import SidebarSbu from "./components/SidebarSbu";
 import Allocation from "./pages/Allocation";
 import CompteFonction from "./pages/CompteFonction";
-import CreditOuvert from "./pages/CreditOuvert";
 import InscriBailleur from "./pages/bailleurs/InscriBailleur";
 import ConsultBaill from "./pages/bailleurs/ConsultBailleur";
 import InscriNomen from "./pages/nomenclature/InscriNomen";
@@ -17,11 +16,10 @@ import InscriExerc from "./pages/Exercice/InscriExerc";
 import ClosExerc from "./pages/Exercice/ClosExerc";
 import ModifExerc from "./pages/Exercice/ModifExerc";
 import ConsultExerc from "./pages/Exercice/ConsutExerc";
-import InscriFinan from "./pages/previsionDepense/inscriFinan";
-import ConsultFinan from "./pages/previsionDepense/ConsultFinan";
-import InscriCredit from "./pages/previsionDepense/InscriCredit";
-import ConsultCredit from "./pages/previsionDepense/ConsultCredit";
 import OuvriExerc from "./pages/Exercice/OuvriExerc";
+import InscriRessource from "./pages/previsionDepense/InscriRessource";
+import ConsultRessource from "./pages/previsionDepense/ConsultRessource";
+import InscriCredit from "./pages/previsionDepense/InscriCredit";
 
 const AppSbu = (props) =>{
     return (
@@ -37,10 +35,6 @@ const AppSbu = (props) =>{
                   <div className="pcoded-inner-content">
                     <div className="main-body">
                       <Switch>
-                        <Route
-                          path={`${props.match.url}/credit-ouvert`}
-                          component={CreditOuvert}
-                        />
                         <Route
                           path={`${props.match.url}/allocation`}
                           component={Allocation}
@@ -93,31 +87,27 @@ const AppSbu = (props) =>{
                           path={`${props.match.url}/clos-exercice`}
                           component={ClosExerc}
                         />
-                        
-                         <Route
-                          path={`${props.match.url}/cred-ouvert/:id`}
-                          component={InscriCredit}
-                        />
-                        <Route
-                          path={`${props.match.url}/cred-ouvert`}
-                          component={ConsultCredit}
-                        />
                         <Route
                           path={`${props.match.url}/compte-fonction`}
                           component={CompteFonction}
                         />
                          <Route
-                          path={`${props.match.url}/financement/:id`}
-                          component={InscriFinan}
-                        />
-                         <Route
-                          path={`${props.match.url}/financement`}
-                          component={ConsultFinan}
-                        />
-                         <Route
                           path={`${props.match.url}/ouvr`}
                           component={OuvriExerc}
                         />
+                          <Route
+                          path={`${props.match.url}/ressources/:id`}
+                          component={InscriRessource}
+                        />
+                        <Route
+                          path={`${props.match.url}/ressources`}
+                          component={ConsultRessource}
+                        />
+                        <Route
+                          path={`${props.match.url}/credit-ouvert/:id`}
+                          component={InscriCredit}
+                        />
+                         
                       </Switch>
                     </div>
                   </div>

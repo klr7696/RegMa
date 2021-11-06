@@ -4,8 +4,9 @@ import React, {useState, useEffect} from "react";
 const ModifExerc = () =>{
 
   const [modifs, setModifs] = useState({
-    statut: "Primitif modifif",
+    statut: "Primitif modificatif",
     exerciceRegistre: "",
+    dateApprobation: "",
     descriptionStatut: ""
   });
   
@@ -18,9 +19,8 @@ const ModifExerc = () =>{
   .get("http://localhost:8000/api/registat/actif?estEncours=true&exerciceResgistre.estOuvert=true&statut=Primitif")
   //.then(reponse => console.log(reponse));
   .then(response => response.data['hydra:member'])
-  console.log(data)
-  setExercs(data);
-    if (!modifs.exerciceRegistre) setModifs({...modifs, exerciceRegistre:data[0].id} )
+   setExercs(data);
+    if (!modifs.exerciceRegistre) setModifs({...modifs, exerciceRegistre:data[0].exerciceRegistre.id} )
     } catch (error) {
     console.log(error.data);
     }
@@ -29,27 +29,7 @@ const ModifExerc = () =>{
     fetchExerc();
 }, []);
 
-
- {/* const [exers, setExers] = useState([]);
-
-  const fetchExer = async () => {
-   const idl = document.getElementById("statut")
-    try{
-  const data = await axios
-  .get(`http://localhost:8000/api/registres/${idl}/association_statuts`)  
-  //.then(reponse => console.log(reponse));
- .then(response => response.data['hydra:member'])
-  setExers(data);
-    } catch (error) {
-    console.log(error.data);
-    }
-  };
-
-  useEffect(() =>{
-      fetchExer();
-  }, []);
-*/}
-  const [error, setError] = useState("");
+  const [error, setErrors] = useState("");
 
   const handleChange = ({ currentTarget }) => {
     const { name, value } = currentTarget;
@@ -59,12 +39,14 @@ const ModifExerc = () =>{
   const handleSubmit = async event => {
     event.preventDefault();
     try {
-     await axios
-      .post("http://localhost:8000/api/registres", modifs)
+     const response = await axios
+      .post("http://localhost:8000/api/registats",  {...modifs,
+        exerciceRegistre:`/api/registres/${modifs.exerciceRegistre}`
+    }  )
       console.log(response.data);
     } catch(error) {
-      console.log(error.response);
-     setError("Informations incorrectes")
+     console.log(error.response);
+     setErrors("Informations incorrectes")
     }
   };
 
@@ -137,7 +119,6 @@ const ModifExerc = () =>{
                   name="exerciceRegistre"
                   onChange={handleChange}
                   value={modifs.exerciceRegistre}
-                 
                   className=" form-control">
                  {exercs.map(exerc => 
                  <option key={exerc.id} value={exerc.id}>
@@ -145,19 +126,6 @@ const ModifExerc = () =>{
                </option>)}  
                   </select>
                   </div>
-                 {/* <div className="col-sm-2">
-                  <label className="col-form-label">Etat en cours </label>
-                </div>
-                <div className="col-sm-2">
-                  <select 
-                  name="exerciceRegistre"
-                  onChange={handleChange}
-                  className=" form-control">
-                  {exercs.map(exerc => <option key={exerc.id} value={exerc.id}> 
-                 {exerc.associationStatut[0].statut}
-                  </option>)}
-                  </select>
-                  </div>*/}
 
                   <div className="col-sm-2">
                   <label className="col-form-label">Type de modification</label>
@@ -179,7 +147,12 @@ const ModifExerc = () =>{
                   <label className="col-form-label">Date d'approbation *</label>
                 </div>
                 <div className="col-sm-4">
-                  <input type="date" className="form-control" />
+                  <input  
+                  type="date"
+                  name="dateApprobation" 
+                  className="form-control"
+                  value={modifs.dateApprobation}
+                  onChange={handleChange}/>
                 </div>
                 <div className="col-sm-2">
                   <label className="col-form-label">
@@ -187,7 +160,13 @@ const ModifExerc = () =>{
                   </label>
                 </div>
                 <div className="col-sm-4">
-                  <textarea type="text" className="form-control" />
+                  <textarea 
+                  type="text"
+                  name="descriptionStatut" 
+                  className="form-control"
+                  value={modifs.descriptionStatut}
+                  onChange={handleChange}
+                   />
                 </div>
               </div>
               <div className="text-right col-sm-12">

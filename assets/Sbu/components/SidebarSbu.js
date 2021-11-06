@@ -25,13 +25,13 @@ const SidebarSbu = () => {
               </a>
               <ul className="pcoded-submenu">
               <li className="">
-                <a href="#/sbu/financement">
+                <a href="#/sbu/ressources">
                 <i className="feather icon-briefcase"></i>
                   <span className="pcoded-mtext">Ressource financière</span>
                 </a>
               </li>
               <li >
-                <a href="#/sbu/cred-ouvert">
+                <a href="#/sbu/credit-ouvert/new">
                 <i className="feather icon-menu"></i> 
                   <span className="pcoded-mtext">Crédit ouvert</span>
                 </a>

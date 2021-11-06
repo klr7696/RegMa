@@ -1,13 +1,16 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import { toast } from "react-toastify";
+import ExercAPI from "../../../zservices/exercAPI";
 import OuvriExerc from "./OuvriExerc";
 
-const InscriExerc = ( {history}) => {
+const InscriExerc = ( {history,match}) => {
+
+ const { id = "new" } = match.params;
 
   const [exercs, setExercs] = useState({
     anneeExercice: 2021,
-    ordonateurExercice: "Bourahima",
+    ordonateurExercice: "",
     dateVote: "",
     dateAdoption: "",
     description: "",
@@ -15,6 +18,30 @@ const InscriExerc = ( {history}) => {
   });
 
   const [nomenclatures, setNomens] = useState([]);
+ const [editing, setEditing] = useState (false);
+
+  const fetchExers = async id => {
+    try{
+  const data = await axios.get("http://localhost:8000/api/registres/" + id)
+  .then(response => response.data);
+  
+  const { anneeExercice, ordonateurExercice, dateVote, dateAdoption,
+    description, nomenclature } = data;
+    
+    setExercs({ anneeExercice, ordonateurExercice, dateVote, dateAdoption,
+      description, nomenclature });
+    } catch (error) {
+    console.log(error);
+    toast.error("Exercice non trouvée");
+    }
+  };
+
+  useEffect(() =>{
+    if (id !== "new"){
+      setEditing(true);
+      fetchExers(id);
+    }
+  }, [id]);
     
   const fetchNomen = async () => {
     try{
@@ -44,16 +71,21 @@ const InscriExerc = ( {history}) => {
     event.preventDefault();
 
     try {
-      const response = await axios
-      .post("http://localhost:8000/api/registres", {...exercs,
-      nomenclature:`/api/nomenclatures/${exercs.nomenclature}`})
-      console.log(response.data);
-      toast.success("Livre Ajouté");
-      history.replace("sbu/exercice/new");
-    } catch(error) {
-      console.log(error);
-        toast.error("Erreur ");
-      }
+      if(editing){
+       await  ExercAPI.update(id, exercs);
+       toast.success("Exercice Modifié");
+       history.replace("/sbu/exercices");
+      }else{
+        const response = await  ExercAPI.create({...exercs, nomenclature:`/api/nomenclatures/${exercs.nomenclature}`});
+       toast.success("Exercice Ajouté");
+       history.replace("/sbu/exercices");
+       console.log(response.data);
+    } 
+  }catch(error) {
+         console.log(error.response);
+          setError("Existe déjà")
+          toast.error("Exercice Non Ajouté");
+    }
   };
 
   return (
@@ -215,10 +247,10 @@ const InscriExerc = ( {history}) => {
           </div>
         </div>
         <div className="text-right col-sm-12">
-          <button 
+           <button 
           type="submit" 
           className="btn btn-primary"
-        >
+          >
             Créer
           </button>
         </div>

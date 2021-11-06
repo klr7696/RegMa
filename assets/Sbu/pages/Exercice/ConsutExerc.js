@@ -98,7 +98,6 @@ const ConsultExerc = () =>{
             <th>Date de vote</th>
             <th>Date d'adoption</th>
             <th>Nomenclature</th>
-            <th>Statut</th>
             <th>Action</th>
               </tr>
             </thead>
@@ -111,7 +110,6 @@ const ConsultExerc = () =>{
                         <td>{formatDate(exerc.dateVote)}</td>
                         <td>{formatDate(exerc.dateAdoption)}</td>
                         <td>Nomenclature {exerc.nomenclature.anneeApplication}</td>
-                        <td>{exerc.associationStatut[0].statut}</td>
                         <td></td>
             </tr>)}
             </tbody>

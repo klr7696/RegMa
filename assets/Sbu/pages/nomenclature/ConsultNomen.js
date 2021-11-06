@@ -71,7 +71,6 @@ const ConsultNomen = ({ history }) => {
   //filtrage des nomenclatures en fonctions de la recherche
   const filteredNomens = nomens.filter(
     (n) =>
-      n.anneeApplication.toLowerCase().includes(search.toLowerCase()) ||
       n.decretAdoption.toLowerCase().includes(search.toLowerCase()) ||
       n.decretApplication.toLowerCase().includes(search.toLowerCase())
   );
