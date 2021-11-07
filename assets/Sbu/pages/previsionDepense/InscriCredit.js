@@ -6,7 +6,7 @@ const InscriCredit = () => {
     const [creds, setCreds] = useState({
         montantInscription:"",
         ressourceFinanciere: "",
-        CompteNature: "",
+        compteNature: "",
         descriptionInscription: ""
       });
     
@@ -20,7 +20,6 @@ const InscriCredit = () => {
       .get("http://localhost:8000/api/ressources")
       .then(response => response.data["hydra:member"]);
         setFinans(data);
-        if (!creds.finans) setCreds({...creds, finans:data[0].id} )
         } catch (error) {
         console.log(error.response);
         }
@@ -59,7 +58,7 @@ const InscriCredit = () => {
     .get("http://localhost:8000/api/natures")
     .then(response => response.data["hydra:member"]);
       setNatures(data);
-      if (!creds.CompteNature) setCreds({...creds, CompteNature:data[0].id} )
+     if (!creds.compteNature) setCreds({...creds, compteNature:data[0].id} )
       } catch (error) {
       console.log(error.response);
       }
@@ -71,12 +70,15 @@ const InscriCredit = () => {
 
       const handleSubmit = async event => {
         event.preventDefault();
+        console.log(creds)
     
-        try {
+       try {
           const response = await axios
-          .post("http://localhost:8000/api/ouverts/inscription", {...creds,
+          .post("http://localhost:8000/api/ouverts/inscription",
+           {...creds,
         ressourceFinanciere:`/api/ressources/${creds.ressourceFinanciere}`,
-        CompteNature:`/api/ressources/${creds.CompteNature}`});
+        compteNature:`/api/natures/${creds.compteNature}`}
+       );
           console.log(response.data);
         } catch(error) {
           console.log(error.response);
@@ -103,7 +105,7 @@ const InscriCredit = () => {
             <li className="nav-item">
               <a
                 className="nav-link active f-18 p-b-0"
-                href="#/sbu/cred-ouvert/new"
+                href="#/sbu/credit-ouvert/new"
               >
                 Création
               </a>
@@ -113,7 +115,7 @@ const InscriCredit = () => {
             <li className="nav-item m-b-0">
               <a
                 className="nav-link f-18 p-b-0"
-                href="#/sbu/red-ouver"
+                href="#/sbu/cred-ouver"
               >
                 Actualisation
               </a>
@@ -122,7 +124,7 @@ const InscriCredit = () => {
             <li className="nav-item m-b-0">
               <a
                 className="nav-link f-18 p-b-0"
-                href="#/sbu/cred-ouvert"
+                href="#/sbu/credit-ouvert"
               >
                 Consultation
               </a>
@@ -146,21 +148,58 @@ const InscriCredit = () => {
                     <div className="col-sm-2">
                   <label className="col-form-label">Bailleur *</label>
                     </div>
-                    <div className="col-sm-2">
+                    <div className="col-sm-4">
                     <select 
+                 // disabled="disabled"
                   onChange={handleChange} 
                   name="ressourceFinanciere"
                   id="ressourceFinanciere"
                   value={creds.ressourceFinanciere}
                   className="form-control"
-                 >
+                 > <option value="">Choisir ...</option>
                    {finans.map(finan => <option key={finan.id} value={finan.id}>
                      {finan.id}
                    </option>)}
                     </select>
                     </div>
-                  
-                      <div className="col-sm-1">
+                    <div className="col-sm-2">
+                   <label className="col-form-label">Objet *</label>
+                    </div>
+                    <div className="col-sm-4">
+                  <select 
+                   disabled="disabled"
+                  onChange={handleChange} 
+                  name="ressourceFinanciere"
+                  id="ressourceFinanciere"
+                  value={creds.ressourceFinanciere}
+                  className="form-control"
+                 ><option value="">...</option>
+                   {finans.map(finan => <option key={finan.id} value={finan.id}>
+                     {finan.objetFinancement}
+                   </option>)}
+                    </select>
+                   </div>
+                    
+                  </div>
+                  <div className="row form-group">
+                <div className="col-sm-2">
+                  <label className="col-form-label">Montant (FCFA)</label>
+                </div>
+                <div className="col-sm-4">
+                  <select 
+                   disabled="disabled"
+                  onChange={handleChange} 
+                  name="ressourceFinanciere"
+                  id="ressourceFinanciere"
+                  value={creds.ressourceFinanciere}
+                  className="form-control"
+                 ><option value="">...</option>
+                   {finans.map(finan => <option key={finan.id} value={finan.id}>
+                     {finan.objetFinancement}
+                   </option>)}
+                    </select>
+                   </div>
+                   <div className="col-sm-2">
                   <label className="col-form-label">Exercice</label>
                 </div>
                 <div className="col-sm-4">
@@ -176,25 +215,6 @@ const InscriCredit = () => {
                      </option>)}
                       </select>
                      </div>
-                  </div>
-                  <div className="row form-group">
-                <div className="col-sm-2">
-                  <label className="col-form-label">Montant (FCFA)</label>
-                </div>
-                <div className="col-sm-2">
-                  <select 
-                  onChange={handleChange} 
-                  name="ressourceFinanciere"
-                  id="ressourceFinanciere"
-                  value={creds.ressourceFinanciere}
-                  className="form-control"
-                 >
-                   {finans.map(finan => <option key={finan.id} value={finan.id}>
-                     {finan.objetFinancement}
-                   </option>)}
-                    </select>
-                   </div>
-             
                 </div>
                 </div>
                 </div>
@@ -241,7 +261,7 @@ const InscriCredit = () => {
                   disabled="disabled"
                   name="CompteNature"
                   className="form-control"
-                  value={creds.CompteNature}
+                  value={creds.compteNature}
                  >
                    {natures.map(nature => <option key={nature.id} value={nature.id}>
                      {nature.sectionCompteNature}
@@ -258,7 +278,7 @@ const InscriCredit = () => {
                  disabled="disabled"
                   name="CompteNature"
                   className="form-control"
-                  value={creds.CompteNature}
+                  value={creds.compteNature}
                  >
                    {natures.map(nature => <option key={nature.id} value={nature.id}>
                      {nature.libelleCompteNature}

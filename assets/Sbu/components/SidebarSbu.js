@@ -37,7 +37,7 @@ const SidebarSbu = () => {
                 </a>
               </li>
               <li >
-                <a href="#/sbu/allocation">
+                <a href="#/sbu/credit-alloue/new">
                 <i className="feather icon-navigation"></i> 
                   <span className="pcoded-mtext">Allocation</span>
                 </a>

@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Switch, withRouter } from "react-router";
 import HeaderSbu from "./components/HeaderSbu";
 import SidebarSbu from "./components/SidebarSbu";
-import Allocation from "./pages/Allocation";
 import CompteFonction from "./pages/CompteFonction";
 import InscriBailleur from "./pages/bailleurs/InscriBailleur";
 import ConsultBaill from "./pages/bailleurs/ConsultBailleur";
@@ -20,6 +19,9 @@ import OuvriExerc from "./pages/Exercice/OuvriExerc";
 import InscriRessource from "./pages/previsionDepense/InscriRessource";
 import ConsultRessource from "./pages/previsionDepense/ConsultRessource";
 import InscriCredit from "./pages/previsionDepense/InscriCredit";
+import ConsutCredit from "./pages/previsionDepense/ConsutCredit";
+import InscriAlloc from "./pages/previsionDepense/InscriAlloc";
+import ConsutAlloc from "./pages/previsionDepense/ConsutAlloc";
 
 const AppSbu = (props) =>{
     return (
@@ -35,10 +37,6 @@ const AppSbu = (props) =>{
                   <div className="pcoded-inner-content">
                     <div className="main-body">
                       <Switch>
-                        <Route
-                          path={`${props.match.url}/allocation`}
-                          component={Allocation}
-                        />
                          <Route
                           path={`${props.match.url}/bailleurs/:id`}
                           component={InscriBailleur}
@@ -107,7 +105,18 @@ const AppSbu = (props) =>{
                           path={`${props.match.url}/credit-ouvert/:id`}
                           component={InscriCredit}
                         />
-                         
+                          <Route
+                          path={`${props.match.url}/credit-ouvert`}
+                          component={ConsutCredit}
+                        />
+                        <Route
+                          path={`${props.match.url}/credit-alloue/:id`}
+                          component={InscriAlloc}
+                        />
+                         <Route
+                          path={`${props.match.url}/credit-alloue`}
+                          component={ConsutAlloc}
+                        />
                       </Switch>
                     </div>
                   </div>
