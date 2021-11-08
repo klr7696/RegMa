@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
+import OuvriExerc from "./OuvriExerc";
 
 const ModifExerc = () =>{
 
@@ -53,18 +54,7 @@ const ModifExerc = () =>{
   return (
     <section id="exp">
     <div className="product-detail-page">
-      <h3 className="card-header">
-        <div className="row">
-        <div className="text-left col-sm-6">
-        EXERCICE
-        </div>
-        <div className="text-right col-sm-6">
-            <button className="btn-sm btn-secondary">
-              Gestion 2021
-            </button>
-          </div>
-        </div>
-      </h3>
+    <OuvriExerc/>
       <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
         <li className="nav-item">
           <a
@@ -138,7 +128,7 @@ const ModifExerc = () =>{
                   onChange={handleChange}
                   >
                     <option value="Modificatif">Primitif modificatif</option>
-                    <option value="Supplementaire">Supplementaire</option>
+                    <option value="Supplémentaire">Supplémentaire</option>
                   </select>
                 </div>
                 </div>

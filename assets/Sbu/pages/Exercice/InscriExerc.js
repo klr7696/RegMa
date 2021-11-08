@@ -17,8 +17,8 @@ const InscriExerc = ( {history,match}) => {
     nomenclature: ""
   });
 
-  const [nomenclatures, setNomens] = useState([]);
- const [editing, setEditing] = useState (false);
+const [nomenclatures, setNomens] = useState([]);
+const [editing, setEditing] = useState (false);
 
   const fetchExers = async id => {
     try{
@@ -58,8 +58,7 @@ const InscriExerc = ( {history,match}) => {
   useEffect(() =>{
       fetchNomen();
   }, []);
-
-
+  
   const [error, setError] = useState("");
 
   const handleChange = ({ currentTarget }) => {
@@ -91,18 +90,7 @@ const InscriExerc = ( {history,match}) => {
   return (
     <section id="exp">
     <div className="product-detail-page">
-      <h3 className="card-header">
-        <div className="row">
-        <div className="text-left col-sm-6">
-        EXERCICE
-        </div>
-        <div className="text-right col-sm-6">
-            <button className="btn-sm btn-secondary">
-              Gestion 2021
-            </button>
-          </div>
-        </div>
-      </h3>
+      <OuvriExerc/>
       <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
         <li className="nav-item">
           <a
@@ -143,7 +131,7 @@ const InscriExerc = ( {history,match}) => {
       </ul>
    <div className="page-body">
   <div className="row">
-    <div className="col-xl-8 col-md-12">
+    <div className="col-md-12">
       <div className="card table-card">
         <div className="card-header">
         <form onSubmit={handleSubmit}>
@@ -223,7 +211,6 @@ const InscriExerc = ( {history,match}) => {
               name="dateAdoption"
               type="date"
               className={"form-control required" + (error && " is-invalid")}
-              data-a-sign="MR. "
               value={exercs.dateAdoption}
               onChange={handleChange}
             />
@@ -255,13 +242,6 @@ const InscriExerc = ( {history,match}) => {
           </button>
         </div>
       </form>
-        </div>
-      </div>
-    </div>
-    <div className="col-xl-4 col-md-12">
-      <div className="card table-card">
-        <div className="card-header">
-          <OuvriExerc/>
         </div>
       </div>
     </div>

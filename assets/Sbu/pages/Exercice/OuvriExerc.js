@@ -1,107 +1,50 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
-import { toast } from "react-toastify";
 
 const OuvriExerc = () => {
-
-  const [ouvrs, setOuvrs] = useState({
-    statut: "Primitif",
-    exerciceRegistre: ""
+  const [exers, setExers] = useState({
+    statut:""
   });
-
-  const [exercs, setExercs] = useState([]);
     
-  const fetchExercs = async () => {
+  const fetchExer = async () => {
+
     try{
   const data = await axios
-  .get("http://localhost:8000/api/registres?estOuvert=false&estCloture=false")
-  .then(response => response.data["hydra:member"]);
-    setExercs(data);
-    if (!ouvrs.exerciceRegistre) setOuvrs({...ouvrs, exerciceRegistre:data[0].id} )
+  .get("http://localhost:8000/api/registat/actif?estEncours=true&exerciceResgistre.estOuvert=true")
+  //.then(reponse => console.log(reponse));
+  .then(response => response.data['hydra:member'])
+   setExers(data);
     } catch (error) {
-    console.log(error);
+    console.log(error.data);
     }
   };
-
   useEffect(() =>{
-      fetchExercs();
-  }, []);
+    fetchExer();
+}, []);
 
-
-  const [error, setError] = useState("");
-
-  const handleChange = ({ currentTarget }) => {
-    const { name, value } = currentTarget;
-    setOuvrs({...ouvrs, [name]: value });
-  };
- 
-  const handleSubmit = async event => {
-    event.preventDefault();
-
-    try {
-      const response = await axios
-      .post("http://localhost:8000/api/registats", {...ouvrs,
-      exerciceRegistre:`/api/registres/${ouvrs.exerciceRegistre}`})
-       if(ouvrs.exerciceRegistre){
-        await axios.patch("http://localhost:8000/api/registres/ouvre/" + ouvrs.exerciceRegistre , {});
-        }
-      console.log(response.data);
-      toast.success("Exercice est ouvert avec succès")
-    } catch(error) {
-      console.log(response.error);
-     setError("Informations incorrectes")
-    }
-   
-  };
 
   return (
-   <div className="page-body">
-        <form onSubmit={handleSubmit}>
-      
-          <div className="row form-group">
-          <div className="col-sm-4">
-              <label className="col-form-label">Registre</label>
-            </div>
-              <div className="col-sm-8">
-              <select 
-              onChange={handleChange} 
-              name="exerciceRegistre"
-              id="exerciceRegistre"
-              value={ouvrs.exerciceRegistre}
-              className={"form-control" + (error && " is-invalid")}
-             >
-               {exercs.map(exerc => <option key={exerc.id} value={exerc.id}>
-                 {exerc.anneeExercice}
-               </option>)}
-                </select>
-              </div>
+   <div>
+         <h3 className="card-header">
+        <div className="row">
+        <div className="text-left col-sm-7">
+        EXERCICE
         </div>
-        
-        <div className="row form-group">
-          <div className="col-sm-4">
-            <label className="col-form-label">Status </label>
+        <div className="text-right col-sm-5 waves-effect waves-light p-b-10">
+                  <select 
+                  disabled="disabled"
+                  name="exerciceRegistre"
+                  className={"text-center p-10 form-control" + (exers.statut="Primitif" && "bg-success") +
+                  (exer.statut="Supplémentaire" && "bg-danger")
+                  }>
+                 {exers.map(exer => 
+                 <option key={exer.id} value={exer.id}>
+                Exercice {exer.statut} {exer.exerciceRegistre.anneeExercice}
+               </option>)}  
+                  </select>
           </div>
-          <div className="col-sm-8">
-            <input
-              name="statut"
-              id="statut"
-              type="text"
-              className={"form-control required" + (error && " is-invalid")}
-              value={ouvrs.statut}
-              onChange={handleChange}
-            //  disabled="disabled"
-            />
-            {error && <p className="invalid-feedback">{error}</p>}
-          </div>
-          </div>
-        <div className="text-right col-sm-12">
-          <button 
-          type="submit" 
-          className="btn btn-primary">
-            Ouvrir
-          </button>
         </div>
-      </form>
+      </h3>
   </div>
   );
 };
