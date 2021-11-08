@@ -4,16 +4,28 @@
 namespace App\Controller;
 
 
+
+
+
 use App\Entity\Prevision\StatutRegistre;
+
 
 class DesactiveStatutController
 {
-    public function __invoke(StatutRegistre $data):StatutRegistre
+
+
+    public function __invoke(StatutRegistre $data)
     {
-        if($data->getId()>=1){
-            $data->setEstEnCours(false)
-                ->setEstActualisable(true);
-        }
+       $statut = $data->getStatutRegistre();
+           if ($statut !== null)
+           {
+               $statut->setEstEnCours(false)
+                        ->setEstActualisable(false);
+               $data->setStatutRegistre($statut);
+           }
+
+        $data->setEstEnCours(false)
+             ->setEstActualisable(true);
 
         return $data;
     }

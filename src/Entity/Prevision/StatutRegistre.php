@@ -17,12 +17,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=StatutRegistreRepository::class)
  * @ApiResource(
- *     shortName= "registat",
+ *     shortName= "registats",
  *     itemOperations={
  *     "get"={"openapi_context"={"summary"="Affiche les statuts"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations d'un registre"}},
  *
- *     "desactiver"={"method"="patch", "path"="/registat/desactive/{id}", "controller"="App\Controller\DesactiveStatutController",
+ *     "desactiver"={"method"="patch", "path"="/registats/desactive/{id}", "controller"="App\Controller\DesactiveStatutController",
  *     "input_formats"={"json"={"application/vnd.api+json",
  *     "application/merge-patch+json","application/json","application/ld+json"}},
  *     "denormalization_context"={"groups"={"desactive:write"}
@@ -32,12 +32,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                    "openapi_context"={"summary"="assure la desactivation du d'etat du registre"},
  *                      },
  *
- *     "cloturer"={"method"="patch", "path"="/registat/cloture/{id}","controller"="App\Controller\ClotureStatutController",
+ *     "cloturerRegistre"={"method"="patch", "path"="/registres/cloture/{id}","controller"="App\Controller\ClotureRegistreController",
  *     "input_formats"={"json"={"application/vnd.api+json",
  *     "application/merge-patch+json","application/json","application/ld+json"}},
- *     "denormalization_context"={"groups"={"desactive:write"}
+ *     "denormalization_context"={"groups"={"registre_cloture:write"}
  *     },
- *       "validation_groups"={"desactive"},
+ *       "validation_groups"={"registre_cloture"},
  *
  *                    "openapi_context"={"summary"="clôturer un statut d'un registre "},
  *                      },
@@ -54,9 +54,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *       "validation_groups"={"change"}
  *     },
  *
- *      "actifregistre"={"method"="get", "path"="/registat/actif","datetime_format"="Y-m-d",
+ *      "registreOuvert"={"method"="get", "path"="/registres/ouvert","datetime_format"="Y-m-d",
  *     "order"={"id"="DESC"},
- * "normalization_context"={"groups"={"actifregistre:read"}},
+ * "normalization_context"={"groups"={"registre_ouvert:read"}},
  *     "openapi_context"={"summary"="Affiche le registre en cours pour un registre en cours.
  * Utiliser au niveau des ressources=estEncours=true&exerciceRegistre.estOuvert=true
  *    pour changer le statut d’un registre=estEncours=true&exerciceRegistre.estOuvert=true&statut=Primitif
@@ -91,7 +91,7 @@ class StatutRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"registat_detail:read","actifregistre:read",
+     * @Groups({"registat_detail:read","registre_ouvert:read",
      *     "actifressource:read","resencours:read","autoencours:read","infos:read",
      *     "regisress:read"})
      *
@@ -101,8 +101,8 @@ class StatutRegistre
     /**
      * @ORM\Column(type="string", length=50)
      * @Groups({"registat_detail:read","registat_detail:write","actifregistre:read",
-     *     "actifressource:read","resencours:read","autoencours:read",
-     *     "infos:read","regisress:read","change:write"})
+     *     "registre_ouvert:read","resencours:read","autoencours:read",
+     *     "infos:read","regisress:read","change:write","registreouvre:write"})
      *
      * @Assert\Choice(choices={"Primitif","Primitif modificatif","Supplémentaire"}, message= "saisir des informations correctes",
      *     groups={"Default","change"})
@@ -111,9 +111,9 @@ class StatutRegistre
     /**
      * @ORM\Column(type="boolean")
      * @Groups({"registat_detail:read","desactive:write","actifregistre:read",
-     *     "actifressource:read","resencours:read","autoencours:read",
-     *     "infos:read"})
-     * @Assert\NotNull(groups={"desactive"})
+     *     "registre_ouvert:read","resencours:read","autoencours:read",
+     *     "infos:read","registre_cloture:write"})
+     * @Assert\NotNull(groups={"desactive","registre_cloture"})
      */
     private $estEnCours=true;
     /**
@@ -124,9 +124,10 @@ class StatutRegistre
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"registat_detail:read","desactive:write","actifregistre:read",
-     *     "actifressource:read","resencours:read","autoencours:read","infos:read"})
-     * @Assert\NotNull(groups={"desactive"})
+     * @Groups({"registat_detail:read","desactive:write","registre_ouvert:read",
+     *     "actifressource:read","resencours:read","autoencours:read",
+     *     "infos:read","registre_cloture:write"})
+     * @Assert\NotNull(groups={"desactive","registre_cloture"})
      *
      */
     private $estActualisable= false;
@@ -139,10 +140,11 @@ class StatutRegistre
     private $descriptionStatut;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationStatut")
+     * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationStatut",cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"registat_detail:read","registat_detail:write"})
-     * @Groups({"actifregistre:read","actifressource:read","change:write"})
+     * @Groups({"registre_ouvert:read","actifressource:read","change:write","registre_cloture:write"})
+     *
      */
     private $exerciceRegistre;
 
@@ -158,11 +160,17 @@ class StatutRegistre
     private $autorisationMarches;
 
     /**
-     * @ORM\OneToOne(targetEntity=StatutRegistre::class, cascade={"persist", "remove"})
-     * @Assert\NotNull(groups={"change"},message="il renseigner le statut à desactiver")
-     * @Groups({"change:write","actifregistre:read"})
+     * @ORM\OneToOne(targetEntity=StatutRegistre::class, inversedBy="statutRegistre", cascade={"persist", "remove"})
      */
     private $statutClos;
+
+    /**
+     * @ORM\OneToOne(targetEntity=StatutRegistre::class, mappedBy="statutClos", cascade={"persist", "remove"})
+     * @Groups({"desactive:write","change:write"})
+     */
+    private $statutRegistre;
+
+
 
 
 
@@ -260,13 +268,6 @@ class StatutRegistre
         return $this;
     }
 
-    /**
-     * @return Collection|ExerciceRegistre[]
-     */
-    public function getTest(): Collection
-    {
-        return $this->test;
-    }
 
     public function getDateApprobation(): ?\DateTimeInterface
     {
@@ -322,5 +323,26 @@ class StatutRegistre
         return $this;
     }
 
+    public function getStatutRegistre(): ?self
+    {
+        return $this->statutRegistre;
+    }
+
+    public function setStatutRegistre(?self $statutRegistre): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($statutRegistre === null && $this->statutRegistre !== null) {
+            $this->statutRegistre->setStatutClos(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($statutRegistre !== null && $statutRegistre->getStatutClos() !== $this) {
+            $statutRegistre->setStatutClos($this);
+        }
+
+        $this->statutRegistre = $statutRegistre;
+
+        return $this;
+    }
 
 }

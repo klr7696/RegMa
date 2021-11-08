@@ -4,14 +4,18 @@
 namespace App\Controller;
 
 
-use App\Entity\Prevision\ExerciceRegistre;
+
+use App\Entity\Prevision\StatutRegistre;
 
 class ClotureRegistreController
 {
-public function __invoke(ExerciceRegistre $data):ExerciceRegistre
-{
-    $data->setEstOuvert(false)
-         ->setEstCloture(true);
-    return $data;
-}
+    public function __invoke(StatutRegistre $data)
+    {
+        $reg = $data->getExerciceRegistre()->setEstOuvert(false);
+        $data->setEstEnCours(false)
+            ->setEstActualisable(false)
+            ->setExerciceRegistre($reg);
+
+        return $data;
+    }
 }

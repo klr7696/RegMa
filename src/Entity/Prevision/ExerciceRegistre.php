@@ -36,7 +36,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                    "openapi_context"={"summary"="ouvre un registre pour un exercice"},
  *                 },
  *
- *    "cloturer"={"method"="patch", "path"="/registres/cloture/{id}", "controller"="App\Controller\ClotureRegistreController",
+ *    "cloturer"={"method"="patch", "path"="/registres/cloturessssss/{id}", "controller"="App\Controller\ClotureStatutController",
  *     "input_formats"={"json"={"application/vnd.api+json",
  *           "application/merge-patch+json","application/json","application/ld+json"}},
  *
@@ -63,7 +63,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "openapi_context"={"summary"="Affiche la nomenclature affectée au registre"}
  *     },
  *
- *
+ *      "ouvrir"={ "method"="post", "path"="/registres/ouvrir",
+ *     "openapi_context"={"summary"="permet l'ouverture d'un registre"},
+ *     "denormalization_context"={"groups"={"registreouvre:write"},"disable_type_enforcement"=true}
+ *     },
  *
  *
  *                  "post"={"openapi_context"={"summary"="Crée un registre"}}
@@ -99,44 +102,49 @@ class ExerciceRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"registre_detail:read","actifnomen:read","actifregistre:read",
+     * @Groups({"registre_detail:read","actifnomen:read","registre_ouvert:read",
      *     "actifressource:read","resencours:read","autoencours:read","registre_collect:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"registre_detail:write",
-     *     "actifnomen:read","actifregistre:read",
-     *     "actifressource:read","registre_detail:read","resencours:read",
-     *     "autoencours:read","registre_collect:read"})
      * @Assert\NotBlank(message="l'année est incorrect car vide")
      * @Assert\Type(type="numeric",message="l'année est incorrect")
      * @Assert\Length(min=4,max=4, exactMessage="l'année est incorrect")
+     * @Groups({"registre_detail:write",
+     *     "actifnomen:read","actifregistre:read",
+     *     "registre_ouvert:read","registre_detail:read","resencours:read",
+     *     "autoencours:read","registre_collect:read","registreouvre:write"
+     * })
      */
     private $anneeExercice;
 
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"registre_detail:write","recup:read","registre_collect:read"})
+     * @Groups({"registre_detail:write","recup:read",
+     *     "registre_collect:read","registreouvre:write"})
      */
     private $ordonateurExercice;
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"registre_detail:write","registre_detail:read","registre_collect:read"})
+     * @Groups({"registre_detail:write","registre_detail:read",
+     *     "registre_collect:read","registreouvre:write"})
      */
     private $dateVote;
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"registre_detail:write","registre_detail:read","registre_collect:read"})
+     * @Groups({"registre_detail:write","registre_detail:read",
+     *     "registre_collect:read","registreouvre:write"})
      */
     private $dateAdoption;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"registre_detail:write","registre_detail:read","registre_collect:read"})
+     * @Groups({"registre_detail:write","registre_detail:read",
+     *     "registre_collect:read","registreouvre:write"})
      */
     private $description;
 
@@ -144,12 +152,13 @@ class ExerciceRegistre
      * @ORM\ManyToOne(targetEntity=Nomenclature::class, inversedBy="associationExercice")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"registre_detail:write",
-     * "actifnomen:read","registre_detail:read","registre_collect:read"})
+     * "actifnomen:read","registre_detail:read",
+     *     "registre_collect:read","registreouvre:write"})
      */
     private $nomenclature;
     /**
-     * @ORM\OneToMany(targetEntity=StatutRegistre::class, mappedBy="exerciceRegistre", orphanRemoval=true)
-     *
+     * @ORM\OneToMany(targetEntity=StatutRegistre::class, mappedBy="exerciceRegistre", orphanRemoval=true,cascade={"persist", "remove"})
+     * @Groups({"registreouvre:write"})
      * @ApiSubresource()
      */
     private $associationStatut;
@@ -158,23 +167,14 @@ class ExerciceRegistre
      * @ORM\Column(type="boolean")
      * @Assert\NotNull(groups={"cloture","ouvrir"})
      * @Groups({"cloture:write","ouvrir:write",
-     * "actifregistre:read","registre_detail:read","actifressource:read",
-     *     "resencours:read","autoencours:read","registre_collect:read"})
+     * "registre_ouvert:read","registre_detail:read","actifressource:read",
+     *     "resencours:read","autoencours:read","registre_collect:read","registre_cloture:write"})
      */
-    private $estOuvert = false;
-    /**
-     * @ORM\Column(type="boolean")
-     * @Assert\NotNull(groups={"cloture","ouvrir"})
-     * @Groups({"cloture:write","ouvrir:write","actifregistre:read",
-     *     "registre_detail:read","actifressource:read","resencours:read",
-     *     "autoencours:read","registre_collect:read"})
-     */
-    private $estCloture= false;
-
+    private $estOuvert = true;
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"cloture:write","registre_detail:read","registre_collect:read"})
+     * @Groups({"cloture:write","registre_detail:read","registre_collect:read","registre_cloture:write"})
      * @Assert\NotBlank(groups={"cloture"}, message="veuillez saisir la date de cloture de l'exercice en cours")
      */
     private $dateCloture;
@@ -402,18 +402,6 @@ class ExerciceRegistre
         return $this;
     }
 
-
-    public function getEstCloture(): ?bool
-    {
-        return $this->estCloture;
-    }
-
-    public function setEstCloture(bool $estCloture): self
-    {
-        $this->estCloture = $estCloture;
-
-        return $this;
-    }
 
     /**
      * @return Collection|AutorisationMarche[]
