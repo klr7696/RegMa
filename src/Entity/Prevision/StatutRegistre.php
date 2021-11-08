@@ -86,7 +86,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  *     }
  * )
- * @ApiFilter(BooleanFilter::class, properties={"estEncours","estActualisable","exerciceRegistre.estOuvert","exerciceRegistre.estCloture"})
+ * @ApiFilter(BooleanFilter::class, properties={"estEnCours","estActualisable","exerciceRegistre.estOuvert"})
  * @ApiFilter(SearchFilter::class, properties={"statut"="start"})
  * @UniqueEntity({"statut","exerciceRegistre"},message="le statut existe deja")
  */
@@ -120,7 +120,7 @@ class StatutRegistre
      *     "infos:read","registre_cloture:write"})
      * @Assert\NotNull(groups={"desactive","registre_cloture"})
      */
-    private $estEnCours=true;
+    private $estEnCours= true;
     /**
      * @ORM\Column(type="date", nullable=true)
      * @Groups({"registat_detail:read","change:write"})
