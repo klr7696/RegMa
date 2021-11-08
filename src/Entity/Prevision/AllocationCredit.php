@@ -47,7 +47,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  * denormalizationContext={
  *                        "groups"={"allocation_detail:write"}, "openapi_definition_name"= "Write"
  * },
- *     subresourceOperations={}
+ *     subresourceOperations={
+ *     "api_ouverts_association_allocations_get_subresource"={
+
+ *     "normalization_context"={"groups"={"ouveralloc:read"}}
+ *     },
+ *     "api_autorisations_association_allocations_get_subresource"={
+ *     "normalization_context"={"groups"={"autoalloc:read"}}
+ *     }
+ *     }
  * )
  * @ORM\Entity(repositoryClass=AllocationCreditRepository::class)
  */
@@ -57,27 +65,31 @@ class AllocationCredit
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write"})
+     * @Groups({"allocation_detail:read","allocation_detail:write",
+     *     "alactualise:write","ouveralloc:read","autoalloc:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write"})
+     * @Groups({"allocation_detail:read","allocation_detail:write",
+     *     "alactualise:write","ouveralloc:read","autoalloc:read"})
      * @Assert\Type(type="numeric", message="le montant est incorrect")
      */
     private $montantAllouer;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write"})
+     * @Groups({"allocation_detail:read","allocation_detail:write",
+     *     "alactualise:write","ouveralloc:read","autoalloc:read"})
      */
     private $descriptionAllocation;
 
     /**
      * @ORM\ManyToOne(targetEntity=CreditOuvert::class, inversedBy="associationAllocation")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write","bailleurs_detail:read"})
+     * @Groups({"allocation_detail:read","allocation_detail:write",
+     *     "alactualise:write","bailleurs_detail:read","autoalloc:read"})
      *
      */
     private $creditOuvert;
@@ -85,28 +97,24 @@ class AllocationCredit
 
 
     /**
-     * @ORM\ManyToOne(targetEntity=MairieCommunale::class, inversedBy="associationAllocation")
-     * @ORM\JoinColumn(nullable=false)
-     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write"})
-     */
-    private $mairieCommunale;
-
-    /**
      * @ORM\Column(type="boolean")
-     * @Groups({"allocation_detail:read","allocation_detail:write","alactualise:write"})
+     * @Assert\NotNull(groups="aldesactive")
+     * @Groups({"allocation_detail:read","aldesactive:write","ouveralloc:read","autoalloc:read"})
      */
-    private $estValide;
+    private $estValide =true;
 
     /**
      * @ORM\ManyToOne(targetEntity=AutorisationMarche::class, inversedBy="associationAllocation")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"alactualise:write","allocation_detail:write","ouveralloc:read"})
      */
     private $autorisationMarche;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="associationAllocation")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity=AllocationCredit::class, cascade={"persist", "remove"})
+     * @Groups({"alactualise:write","ouveralloc:read","autoalloc:read"})
      */
-    private $compteNature;
+    private $actualiseAllocation;
 
     public function getId(): ?int
     {
@@ -149,17 +157,7 @@ class AllocationCredit
         return $this;
     }
 
-    public function getMairieCommunale(): ?MairieCommunale
-    {
-        return $this->mairieCommunale;
-    }
 
-    public function setMairieCommunale(?MairieCommunale $mairieCommunale): self
-    {
-        $this->mairieCommunale = $mairieCommunale;
-
-        return $this;
-    }
 
     public function getEstValide(): ?bool
     {
@@ -193,6 +191,18 @@ class AllocationCredit
     public function setCompteNature(?CompteNature $compteNature): self
     {
         $this->compteNature = $compteNature;
+
+        return $this;
+    }
+
+    public function getActualiseAllocation(): ?self
+    {
+        return $this->actualiseAllocation;
+    }
+
+    public function setActualiseAllocation(?self $actualiseAllocation): self
+    {
+        $this->actualiseAllocation = $actualiseAllocation;
 
         return $this;
     }

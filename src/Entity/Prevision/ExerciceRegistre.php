@@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Nomenclatures\Nomenclature;
+use App\Entity\Plans\AutorisationMarche;
 use App\Entity\Plans\PlanPassation;
 use App\Repository\Prevision\ExerciceRegistreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -21,30 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *      shortName= "registres",
  * itemOperations={
- *                  "get"={ "normalization_context"={"registre_detail:read"},
- *     "openapi_context"={"summary"="Affiche les informations d'un registre "}},
- *
- *     "ouvrir"={"method"="patch", "path"="/registres/ouvre/{id}", "controller"="App\Controller\OuvrirRegistreController",
- *     "input_formats"={"json"={"application/vnd.api+json",
- *           "application/merge-patch+json","application/json","application/ld+json"}},
- *
- *     "denormalization_context"={"groups"={"ouvrir:write"}}
- *     ,
- *       "validation_groups"={"ouvrir"},
- *
- *                    "openapi_context"={"summary"="ouvre un registre pour un exercice"},
- *                 },
- *
- *    "cloturer"={"method"="patch", "path"="/registres/cloture/{id}", "controller"="App\Controller\ClotureRegistreController",
- *     "input_formats"={"json"={"application/vnd.api+json",
- *           "application/merge-patch+json","application/json","application/ld+json"}},
- *
- *     "denormalization_context"={"groups"={"cloture:write"}}
- *     ,
- *       "validation_groups"={"cloture"},
- *
- *                    "openapi_context"={"summary"="clôture un registre d'un exercice"},
- *                 },
+ *     "get"={"normalization_context"={"groups"={"registre_detail:read"}},
+ *            "openapi_context"={"summary"="Affiche les informations d'un registre "}},
  *
  *     "delete"={"openapi_context"={"summary"="Supprime un registre"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations d'un registre"}}
@@ -52,7 +31,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * },
  * collectionOperations={
  *
- *      "get"={"openapi_context"={"summary"="fournit les details d'un registre
+ *      "get"={"normalization_context"={"groups"={"registre_collect:read"}},
+ *     "openapi_context"={"summary"="fournit les details d'un registre
  *  pour ouvrir un registre=estOuvert=false&estCloture=false"}, "datetime_format"="Y-m-d",
  *     "order"={"id"="DESC"}},
  *
@@ -61,25 +41,39 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "openapi_context"={"summary"="Affiche la nomenclature affectée au registre"}
  *     },
  *
+ *      "ouvrir"={ "method"="post", "path"="/registres/ouvrir",
+ *     "controller"="App\Controller\Previsions\OuvrirRegistreController",
+ *     "openapi_context"={"summary"="permet l'ouverture d'un registre"},
+ *     "denormalization_context"={"groups"={"registreouvre:write"},"disable_type_enforcement"=true}
+ *     },
  *
  *
  *
- *                  "post"={"openapi_context"={"summary"="Crée un registre"}}
  * },
  *
- * normalizationContext={
- *                       "groups"={"registre_detail:read"}, "openapi_definition_name"= "Read"
- * },
+ *
  * denormalizationContext={
  *                        "groups"={"registre_detail:write"}, "openapi_definition_name"= "Write",
  *     "disable_type_enforcement"=true
  * },
- *     subresourceOperations={}
+ *     subresourceOperations={
+ *      "association_statuts_get_subresource"={
+ *     "path"="/registres/{id}/infos",
+ *     "openapi_context"={"summary"="fournit les informations d'un registre"},
+ *     },
+ *
+ *      "association_ressources_get_subresource"={
+ *     "path"="/registres/{id}/ressources",
+ *     "openapi_context"={"summary"="listes les ressources d'un registre"}
+ *     },
+        "autorisation_marches_get_subresource"={}
+ *
+ *     }
  *  )
  * @ORM\Entity(repositoryClass=ExerciceRegistreRepository::class)
  * @UniqueEntity("anneeExercice", message= "l'année de gestion existe déjà")
  * @ApiFilter(SearchFilter::class, properties={"associationStatut.statut"="exact"})
- * @ApiFilter(BooleanFilter::class, properties={"estOuvert","estCloture"})
+ * @ApiFilter(BooleanFilter::class, properties={"estOuvert"})
  */
 class ExerciceRegistre
 {
@@ -87,43 +81,50 @@ class ExerciceRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"registre_detail:read","actifnomen:read","actifregistre:read",
-     *     "actifressource:read"})
+     * @Groups({"registre_detail:read","actifnomen:read","registre_ouvert:read",
+     *     "actifressource:read","resencours:read","autoencours:read","registre_collect:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"registre_detail:write",
-     *     "actifnomen:read","actifregistre:read",
-     *     "actifressource:read","registre_detail:read"})
      * @Assert\NotBlank(message="l'année est incorrect car vide")
      * @Assert\Type(type="numeric",message="l'année est incorrect")
      * @Assert\Length(min=4,max=4, exactMessage="l'année est incorrect")
+     * @Groups({"registre_detail:write",
+     *     "actifnomen:read",
+     *     "registre_ouvert:read","registre_detail:read","resencours:read",
+     *     "autoencours:read","registre_collect:read","registreouvre:write"
+     * })
+     *
      */
     private $anneeExercice;
 
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"registre_detail:write","recup:read"})
+     * @Groups({"registre_detail:write","recup:read",
+     *     "registre_collect:read","registreouvre:write"})
      */
     private $ordonateurExercice;
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"registre_detail:write","registre_detail:read"})
+     * @Groups({"registre_detail:write","registre_detail:read",
+     *     "registre_collect:read","registreouvre:write"})
      */
     private $dateVote;
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"registre_detail:write","registre_detail:read"})
+     * @Groups({"registre_detail:write","registre_detail:read",
+     *     "registre_collect:read","registreouvre:write"})
      */
     private $dateAdoption;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"registre_detail:write","registre_detail:read"})
+     * @Groups({"registre_detail:write","registre_detail:read",
+     *     "registre_collect:read","registreouvre:write"})
      */
     private $description;
 
@@ -131,40 +132,35 @@ class ExerciceRegistre
      * @ORM\ManyToOne(targetEntity=Nomenclature::class, inversedBy="associationExercice")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"registre_detail:write",
-     * "actifnomen:read","registre_detail:read"})
+     * "actifnomen:read","registre_detail:read",
+     *     "registre_collect:read","registreouvre:write"})
      */
     private $nomenclature;
     /**
-     * @ORM\OneToMany(targetEntity=StatutRegistre::class, mappedBy="exerciceRegistre", orphanRemoval=true)
-     * @Groups({"registre_detail:read"})
+     * @ORM\OneToMany(targetEntity=StatutRegistre::class, mappedBy="exerciceRegistre", orphanRemoval=true,cascade={"persist", "remove"})
+     * @Groups({"registreouvre:write"})
      * @ApiSubresource()
      */
     private $associationStatut;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotNull(groups={"cloture","ouvrir"})
-     * @Groups({"cloture:write","ouvrir:write",
-     * "actifregistre:read","registre_detail:read","actifressource:read"})
+     *
+     * @Groups({ "registre_ouvert:read","registre_detail:read","actifressource:read",
+     *     "resencours:read","autoencours:read","registre_collect:read","registre_cloture:write"})
      */
-    private $estOuvert = false;
-    /**
-     * @ORM\Column(type="boolean")
-     * @Assert\NotNull(groups={"cloture","ouvrir"})
-     * @Groups({"cloture:write","ouvrir:write","actifregistre:read","registre_detail:read","actifressource:read"})
-     */
-    private $estCloture= false;
-
+    private $estOuvert = true;
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"cloture:write","registre_detail:read"})
+     * @Groups({"registre_detail:read","registre_collect:read","registre_cloture:write"})
      * @Assert\NotBlank(groups={"cloture"}, message="veuillez saisir la date de cloture de l'exercice en cours")
      */
     private $dateCloture;
 
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="exerciceRegistre", orphanRemoval=true)
+     * @ApiSubresource(maxDepth=1)
      *
      */
     private $associationRessource;
@@ -175,6 +171,12 @@ class ExerciceRegistre
      */
     private $associationPlan;
 
+    /**
+     * @ORM\OneToMany(targetEntity=AutorisationMarche::class, mappedBy="associationRegistre", orphanRemoval=true)
+     * @ApiSubresource(maxDepth=1)
+     */
+    private $autorisationMarches;
+
 
 
 
@@ -183,6 +185,7 @@ class ExerciceRegistre
         $this->associationRessource = new ArrayCollection();
         $this->associationStatut = new ArrayCollection();
         $this->associationPlan = new ArrayCollection();
+        $this->autorisationMarches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -379,14 +382,32 @@ class ExerciceRegistre
     }
 
 
-    public function getEstCloture(): ?bool
+    /**
+     * @return Collection|AutorisationMarche[]
+     */
+    public function getAutorisationMarches(): Collection
     {
-        return $this->estCloture;
+        return $this->autorisationMarches;
     }
 
-    public function setEstCloture(bool $estCloture): self
+    public function addAutorisationMarch(AutorisationMarche $autorisationMarch): self
     {
-        $this->estCloture = $estCloture;
+        if (!$this->autorisationMarches->contains($autorisationMarch)) {
+            $this->autorisationMarches[] = $autorisationMarch;
+            $autorisationMarch->setAssociationRegistre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAutorisationMarch(AutorisationMarche $autorisationMarch): self
+    {
+        if ($this->autorisationMarches->removeElement($autorisationMarch)) {
+            // set the owning side to null (unless already changed)
+            if ($autorisationMarch->getAssociationRegistre() === $this) {
+                $autorisationMarch->setAssociationRegistre(null);
+            }
+        }
 
         return $this;
     }

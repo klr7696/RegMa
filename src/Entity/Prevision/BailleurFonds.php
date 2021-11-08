@@ -5,6 +5,7 @@ namespace App\Entity\Prevision;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use App\Entity\Plans\AutorisationMarche;
 use App\Repository\Prevision\BailleurFondsRepository;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -48,19 +49,21 @@ class BailleurFonds
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"actifressource:read"})
+     * @Groups({"actifressource:read","resencours:read","regisress:read","autoalloc:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"bailleurs_detail:read","bailleurs_detail:write","actifressource:read"})
+     * @Groups({"bailleurs_detail:read","bailleurs_detail:write",
+     *     "actifressource:read","resencours:read","regisress:read","autoalloc:read"})
      */
     private $designationBailleur;
 
     /**
      * @ORM\Column(type="string", length=10)
-     * @Groups({"bailleurs_detail:read","bailleurs_detail:write","actifressource:read"})
+     * @Groups({"bailleurs_detail:read","bailleurs_detail:write",
+     *     "actifressource:read","resencours:read","regisress:read"})
      *
      */
     private $sigleBailleur;
@@ -79,7 +82,8 @@ class BailleurFonds
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"bailleurs_detail:read","bailleurs_detail:write","actifressource:read"})
+     * @Groups({"bailleurs_detail:read","bailleurs_detail:write",
+     *     "actifressource:read","resencours:read","regisress:read","autoalloc:read"})
      */
     private $sourceFinancement;
 
@@ -91,15 +95,21 @@ class BailleurFonds
 
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="bailleurFonds", orphanRemoval=true)
-     * @Groups({"bailleurs_detail:read","actifressource:read"})
+     * @Groups({"actifressource:read"})
      *
      *
      */
     private $associationRessource;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=AutorisationMarche::class, mappedBy="associationBailleur")
+     */
+    private $autorisationMarches;
+
     public function __construct()
     {
         $this->associationRessource = new ArrayCollection();
+        $this->autorisationMarches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -204,6 +214,33 @@ class BailleurFonds
             if ($associationRessource->getBailleurFonds() === $this) {
                 $associationRessource->setBailleurFonds(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AutorisationMarche[]
+     */
+    public function getAutorisationMarches(): Collection
+    {
+        return $this->autorisationMarches;
+    }
+
+    public function addAutorisationMarch(AutorisationMarche $autorisationMarch): self
+    {
+        if (!$this->autorisationMarches->contains($autorisationMarch)) {
+            $this->autorisationMarches[] = $autorisationMarch;
+            $autorisationMarch->addAssociationBailleur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAutorisationMarch(AutorisationMarche $autorisationMarch): self
+    {
+        if ($this->autorisationMarches->removeElement($autorisationMarch)) {
+            $autorisationMarch->removeAssociationBailleur($this);
         }
 
         return $this;

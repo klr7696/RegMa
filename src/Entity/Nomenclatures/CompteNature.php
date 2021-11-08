@@ -90,7 +90,7 @@ class CompteNature
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"nature_detail:read","actifnomen:read"})
+     * @Groups({"nature_detail:read","actifnomen:read","ressouvre:read"})
      */
     private $id;
 
@@ -98,7 +98,8 @@ class CompteNature
      * @ORM\Column(type="integer", length=4)
      * @Groups({"nature_detail:read","nature_detail:write"
      * ,"nomen_nature:read","sousnatures:read",
-     * "chapitre:write","sousnatures:write","actifnomen:read"})
+     * "chapitre:write","sousnatures:write","actifnomen:read",
+     *     "ressouvre:read"})
      * @Assert\NotBlank(message=" veuillez entrer le numero du compte ")
      * @Assert\Type(type="numeric", message="le numero de compte nature est incorrect")
      */
@@ -108,7 +109,7 @@ class CompteNature
      * @ORM\Column(type="string", length=255)
      * @Groups({"nature_detail:read","nature_detail:write",
      *     "nomen_nature:read","sousnatures:read",
-     * "chapitre:write","sousnatures:write","actifnomen:read"})
+     * "chapitre:write","sousnatures:write","actifnomen:read","ressouvre:read"})
      * @Assert\NotBlank(message=" veuillez entrer le libelle")
      */
     private $libelleCompteNature;
@@ -117,7 +118,7 @@ class CompteNature
      * @ORM\Column(type="string", length=30, nullable=true)
      * @Assert\Choice(choices= {"","Fonctionnement", "Investissement"})
      * @Groups({"nature_detail:read","nature_detail:write"
-     * ,"nomen_nature:read","chapitre:write","actifnomen:read"
+     * ,"nomen_nature:read","chapitre:write","actifnomen:read","ressouvre:read"
      *    })
      */
     private $sectionCompteNature;
@@ -128,7 +129,7 @@ class CompteNature
      * @Groups({"nature_detail:read","nature_detail:write"
      * ,"nomen_nature:read","sousnatures:read",
      * "chapitre:write","sousnatures:write",
-     *     "sousnatures:read","actifnomen:read"})
+     *     "sousnatures:read","actifnomen:read","ressouvre:read"})
      *
      */
     private $hierachieCompteNature;
@@ -173,10 +174,7 @@ class CompteNature
      */
     private $associationAutorisation;
 
-    /**
-     * @ORM\OneToMany(targetEntity=AllocationCredit::class, mappedBy="compteNature", orphanRemoval=true)
-     */
-    private $associationAllocation;
+
 
     /**
      * @ORM\OneToMany(targetEntity=Engagement::class, mappedBy="compteNature", orphanRemoval=true)
@@ -198,7 +196,6 @@ class CompteNature
         $this->sousCompteNature = new ArrayCollection();
         $this->associationCreditOuvert = new ArrayCollection();
         $this->associationAutorisation = new ArrayCollection();
-        $this->associationAllocation = new ArrayCollection();
         $this->associationEngagement = new ArrayCollection();
         $this->associationMandat = new ArrayCollection();
         $this->associationImputation = new ArrayCollection();
@@ -383,35 +380,6 @@ class CompteNature
         return $this;
     }
 
-    /**
-     * @return Collection|AllocationCredit[]
-     */
-    public function getAssociationAllocation(): Collection
-    {
-        return $this->associationAllocation;
-    }
-
-    public function addAssociationAllocation(AllocationCredit $associationAllocation): self
-    {
-        if (!$this->associationAllocation->contains($associationAllocation)) {
-            $this->associationAllocation[] = $associationAllocation;
-            $associationAllocation->setCompteNature($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAssociationAllocation(AllocationCredit $associationAllocation): self
-    {
-        if ($this->associationAllocation->removeElement($associationAllocation)) {
-            // set the owning side to null (unless already changed)
-            if ($associationAllocation->getCompteNature() === $this) {
-                $associationAllocation->setCompteNature(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|Engagement[]

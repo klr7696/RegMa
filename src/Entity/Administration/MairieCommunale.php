@@ -37,18 +37,20 @@ class MairieCommunale
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"mairie_detail:read","autoencours:read","ouveralloc:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"mairie_detail:read","mairie_detail:write"})
+     * @Groups({"mairie_detail:read","mairie_detail:write","autoencours:read",
+     *     "ouveralloc:read"})
      */
     private $designationMairie;
 
     /**
      * @ORM\Column(type="string", length=10)
-     * @Groups({"mairie_detail:read","mairie_detail:write"})
+     * @Groups({"mairie_detail:read","mairie_detail:write","autoencours:read","ouveralloc:read"})
      */
     private $abbreviationMairie;
 
@@ -64,10 +66,7 @@ class MairieCommunale
      */
     private $descriptionMairie;
 
-    /**
-     * @ORM\OneToMany(targetEntity=AllocationCredit::class, mappedBy="mairieCommunale", orphanRemoval=true)
-     */
-    private $associationAllocation;
+
 
     /**
      * @ORM\OneToMany(targetEntity=PlanPassation::class, mappedBy="mairieCommunale", orphanRemoval=true)
@@ -81,7 +80,6 @@ class MairieCommunale
 
     public function __construct()
     {
-        $this->associationAllocation = new ArrayCollection();
         $this->associationPlan = new ArrayCollection();
         $this->associationAutorisation = new ArrayCollection();
     }

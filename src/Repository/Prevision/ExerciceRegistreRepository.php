@@ -3,6 +3,7 @@
 namespace App\Repository\Prevision;
 
 use App\Entity\Prevision\ExerciceRegistre;
+use App\Entity\Prevision\StatutRegistre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -47,4 +48,5 @@ class ExerciceRegistreRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }
