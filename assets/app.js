@@ -7,6 +7,9 @@ import Load from "./Load";
 import AppSbu from "./Sbu/AppSbu";
 import AppSco from "./Sco/AppSco";
 import AppScp from "./Scp/AppScp";
+import { ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import './App.css';
 
 const App = () => {
       return (
@@ -21,6 +24,7 @@ const App = () => {
           <Route component={AppAuth}/>
         </Switch>
   </HashRouter>
+  <ToastContainer/>
   </>
   );
   };

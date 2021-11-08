@@ -1,0 +1,16 @@
+.progressBar {
+    width: 90%;
+    height: 25px;
+    border: 2px solid var(--red color);
+    border-radius: 5px;
+    margin: 10px auto 20px;
+    display: block;
+}
+.progressBarChange {
+    width: 60%;
+    height: 21px;
+    text-align: center;
+    vertical-align: middle;
+    background: repeating-linear-gradient(45deg);
+    
+}

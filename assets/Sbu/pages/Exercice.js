@@ -3,7 +3,6 @@ import React, { Component, useState } from "react";
 
 const ExerciceOuvr = () => {
 
-  const annee = ""
   const [exercs, setExercs] = useState({
     AnneeExercice: "",
     ordonateurExercice: "",
@@ -195,6 +194,198 @@ const ExerciceClotur = () => {
     </div>
   );
 };
+
+
+
+
+
+
+
+
+<div className="main-body">
+<div className="page-body">
+ <div className="row">
+<div className="col-xl-8 col-md-12">
+  <div className="card table-card">
+  <div className="card-block">
+    <form onSubmit={handleSubmit}>
+        <div className="row form-group">
+          <div className="col-sm-2">
+            <label className="col-form-label">Année *</label>
+          </div>
+          <div className="col-sm-3">
+            <input
+              name="anneeExercice"
+              type="number"
+              className={"form-control required" + (error && " is-invalid")}
+              value={exercs.anneeExercice}
+              onChange={handleChange}
+            />
+            {error && <p className="invalid-feedback">{error}</p>}
+          </div>
+          <div className="col-sm-2">
+              <label className="col-form-label">Nomenclature</label>
+            </div>
+              <div className="col-sm-2">
+              <select 
+              disabled="disabled"
+              onChange={handleChange} 
+              name="nomenclature"
+              id="nomenclature"
+              value={exercs.nomenclature}
+              className={"form-control" + (error && " is-invalid")}
+             >
+               {nomenclatures.map(nomenclature => <option key={nomenclature.id} value={nomenclature.id}>
+                 {nomenclature.anneeApplication}
+               </option>)}
+                </select>
+              </div>
+        </div>
+       
+        <div className="row form-group">
+          <div className="col-sm-2">
+            <label className="col-form-label">Ordonnateur *</label>
+          </div>
+          <div className="col-sm-10">
+            <input
+              id="ordonateurExercice"
+              name="ordonateurExercice"
+              type="text"
+              className={"form-control required" + (error && " is-invalid")}
+              data-a-sign="MR. "
+              value={exercs.ordonateurExercice}
+              onChange={handleChange}
+            />
+            {error && <p className="invalid-feedback">{error}</p>}
+          </div>
+        </div>
+        <div className="row form-group">
+          <div className="col-sm-2">
+            <label className="col-form-label">Date de vote *</label>
+          </div>
+          <div className="col-sm-4">
+            <input
+              id="dateVote"
+              name="dateVote"
+              type="date"
+              className={"form-control required" + (error && " is-invalid")}
+              data-a-sign="MR. "
+              value={exercs.dateVote}
+              onChange={handleChange}
+            />
+            {error && <p className="invalid-feedback">{error}</p>}
+          </div>
+       
+          <div className="col-sm-2">
+            <label className="col-form-label">Date d'adoption *</label>
+          </div>
+          <div className="col-sm-4">
+            <input
+              id="dateAdoption"
+              name="dateAdoption"
+              type="date"
+              className={"form-control required" + (error && " is-invalid")}
+              data-a-sign="MR. "
+              value={exercs.dateAdoption}
+              onChange={handleChange}
+            />
+            {error && <p className="invalid-feedback">{error}</p>}
+          </div>
+        </div>
+        <div className="row form-group">
+          <div className="col-sm-2">
+            <label className="col-form-label">Description</label>
+          </div>
+          <div className="col-sm-10">
+            <textarea 
+            id="description"
+            name="description"
+            type="text" 
+            className={"form-control required" + (error && " is-invalid")} 
+             value={exercs.description}
+              onChange={handleChange}
+            />
+            {error && <p className="invalid-feedback">{error}</p>}
+          </div>
+        </div>
+        <div className="text-right col-sm-12">
+          <button 
+         
+          type="submit" 
+          className="btn btn-primary">
+            Créer
+          </button>
+        </div>
+      </form>
+      </div>
+  </div>
+</div>
+<div className="col-xl-4 col-md-12">
+  <div className="card table-card">
+  <div className="card-block">
+    <form onSubmit={handleSubmit1}>
+        <div className="row form-group">
+        <div className="col-sm-2">
+              <label className="col-form-label">Registre</label>
+            </div>
+              <div className="col-sm-2">
+              <select 
+              disabled="disabled"
+              onChange={handleChange1} 
+              name="nomenclature"
+              id="nomenclature"
+              value={ouvrs.exerciceRegistre}
+              className={"form-control" + (error && " is-invalid")}
+             >
+               {registres.map(registre => <option key={registre.id} value={registre.id}>
+                 {registre.anneeExercice}
+               </option>)}
+                </select>
+              </div>
+          <div className="col-sm-2">
+            <label className="col-form-label">Status *</label>
+          </div>
+          <div className="col-sm-3">
+            <input
+              name="statut"
+              type="text"
+              className={"form-control required" + (error && " is-invalid")}
+              value={ouvrs.statut}
+              onChange={handleChange1}
+              readonly=""
+            />
+            {error && <p className="invalid-feedback">{error}</p>}
+          </div>
+        </div>
+        <div className="text-right col-sm-9">
+          <button 
+          type="submit" 
+          className="btn btn-primary">
+            Ouvrir
+          </button>
+        </div>
+      </form>
+      </div>
+    </div>
+</div>
+  </div>
+  </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const ExerciceConsult = () => {
   return (
