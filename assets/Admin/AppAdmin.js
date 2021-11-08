@@ -3,7 +3,8 @@ import { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router';
 import HeaderAdmin from './components/HeaderAdmin';
 import SidebarAdmin from './components/SidebarAdmin';
-import Mairie from './pages/Mairie';
+import ConsultMairie from './pages/mairie/ConsultMairie';
+import InscriMairie from './pages/mairie/InscriMairie';
 import Profils from './pages/Profils';
 
 class AppAdmin extends Component {
@@ -24,8 +25,12 @@ class AppAdmin extends Component {
                         component={Profils}
                       />
                        <Route
-                        path={`${this.props.match.url}/mairie`}
-                        component={Mairie}
+                        path={`${this.props.match.url}/mairies/:id`}
+                        component={InscriMairie}
+                      />
+                       <Route
+                        path={`${this.props.match.url}/mairies`}
+                        component={ConsultMairie}
                       />
                     </Switch>
                   </div>

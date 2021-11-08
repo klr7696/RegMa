@@ -1,20 +1,47 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import { toast } from "react-toastify";
+import ExercAPI from "../../../zservices/exercAPI";
 import OuvriExerc from "./OuvriExerc";
 
-const InscriExerc = ( {history}) => {
+const InscriExerc = ( {history,match}) => {
+
+ const { id = "new" } = match.params;
 
   const [exercs, setExercs] = useState({
     anneeExercice: 2021,
-    ordonateurExercice: "Bourahima",
+    ordonateurExercice: "",
     dateVote: "",
     dateAdoption: "",
     description: "",
     nomenclature: ""
   });
 
-  const [nomenclatures, setNomens] = useState([]);
+const [nomenclatures, setNomens] = useState([]);
+const [editing, setEditing] = useState (false);
+
+  const fetchExers = async id => {
+    try{
+  const data = await axios.get("http://localhost:8000/api/registres/" + id)
+  .then(response => response.data);
+  
+  const { anneeExercice, ordonateurExercice, dateVote, dateAdoption,
+    description, nomenclature } = data;
+    
+    setExercs({ anneeExercice, ordonateurExercice, dateVote, dateAdoption,
+      description, nomenclature });
+    } catch (error) {
+    console.log(error);
+    toast.error("Exercice non trouvée");
+    }
+  };
+
+  useEffect(() =>{
+    if (id !== "new"){
+      setEditing(true);
+      fetchExers(id);
+    }
+  }, [id]);
     
   const fetchNomen = async () => {
     try{
@@ -31,8 +58,7 @@ const InscriExerc = ( {history}) => {
   useEffect(() =>{
       fetchNomen();
   }, []);
-
-
+  
   const [error, setError] = useState("");
 
   const handleChange = ({ currentTarget }) => {
@@ -44,33 +70,27 @@ const InscriExerc = ( {history}) => {
     event.preventDefault();
 
     try {
-      const response = await axios
-      .post("http://localhost:8000/api/registres", {...exercs,
-      nomenclature:`/api/nomenclatures/${exercs.nomenclature}`})
-      console.log(response.data);
-      toast.success("Livre Ajouté");
-      history.replace("sbu/exercice/new");
-    } catch(error) {
-      console.log(error);
-        toast.error("Erreur ");
-      }
+      if(editing){
+       await  ExercAPI.update(id, exercs);
+       toast.success("Exercice Modifié");
+       history.replace("/sbu/exercices");
+      }else{
+        const response = await  ExercAPI.create({...exercs, nomenclature:`/api/nomenclatures/${exercs.nomenclature}`});
+       toast.success("Exercice Ajouté");
+       history.replace("/sbu/exercices");
+       console.log(response.data);
+    } 
+  }catch(error) {
+         console.log(error.response);
+          setError("Existe déjà")
+          toast.error("Exercice Non Ajouté");
+    }
   };
 
   return (
     <section id="exp">
     <div className="product-detail-page">
-      <h3 className="card-header">
-        <div className="row">
-        <div className="text-left col-sm-6">
-        EXERCICE
-        </div>
-        <div className="text-right col-sm-6">
-            <button className="btn-sm btn-secondary">
-              Gestion 2021
-            </button>
-          </div>
-        </div>
-      </h3>
+      <OuvriExerc/>
       <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
         <li className="nav-item">
           <a
@@ -111,7 +131,7 @@ const InscriExerc = ( {history}) => {
       </ul>
    <div className="page-body">
   <div className="row">
-    <div className="col-xl-8 col-md-12">
+    <div className="col-md-12">
       <div className="card table-card">
         <div className="card-header">
         <form onSubmit={handleSubmit}>
@@ -191,7 +211,6 @@ const InscriExerc = ( {history}) => {
               name="dateAdoption"
               type="date"
               className={"form-control required" + (error && " is-invalid")}
-              data-a-sign="MR. "
               value={exercs.dateAdoption}
               onChange={handleChange}
             />
@@ -215,21 +234,14 @@ const InscriExerc = ( {history}) => {
           </div>
         </div>
         <div className="text-right col-sm-12">
-          <button 
+           <button 
           type="submit" 
           className="btn btn-primary"
-        >
+          >
             Créer
           </button>
         </div>
       </form>
-        </div>
-      </div>
-    </div>
-    <div className="col-xl-4 col-md-12">
-      <div className="card table-card">
-        <div className="card-header">
-          <OuvriExerc/>
         </div>
       </div>
     </div>

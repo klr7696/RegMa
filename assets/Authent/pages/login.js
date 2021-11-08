@@ -17,7 +17,7 @@ const Login = () => {
 
                     <div className="col-md-6">
                       <div className=" card-block">
-                      <form className="form-group">
+                   
                         <div className="card card-block">
                           <div className="row m-b-20">
                             <div className="col-md-12">
@@ -29,7 +29,7 @@ const Login = () => {
                           
                 <div className="col-sm-6">
                   <select className="form-control ">
-                    <option selected="">Mairie...</option>
+                    <option value="">Mairie...</option>
                     <option value="1">Centrale</option>
                     <option value="2">Ard № 1</option>
                     <option value="2">Ard № 2</option>
@@ -38,7 +38,7 @@ const Login = () => {
                  
                 <div className="col-sm-6">
                   <select className="form-control ">
-                    <option selected="">Rôle...</option>
+                    <option value="">Rôle...</option>
                     <option value="1">Administrateur</option>
                     <option value="2">Agent SBU</option>
                     <option value="2">Agent SDE</option>
@@ -86,7 +86,6 @@ const Login = () => {
                                   data-toggle="modal"
                                   data-target="#reset-password"
                                 >
-                                  {" "}
                                   Mot de passe oublié?
                                 </a>
                               </div>
@@ -98,7 +97,7 @@ const Login = () => {
                             >
                               <div className="modal-dialog">
                                 <div className="login-card card-block login-card-modal">
-                                  <form className="md-float-material">
+                                  <form>
                                     <div className="card m-t-15">
                                       <div className="auth-box card-block">
                                         <div className="row m-b-0">
@@ -143,8 +142,6 @@ const Login = () => {
                           </div>
                           <hr />
                         </div>
-
-                      </form>
                       </div>
                     </div>
                   </div>

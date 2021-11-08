@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import formatDate from "../../../zforms/FormatDate";
+import OuvriExerc from "./OuvriExerc";
 
 const ConsultExerc = () =>{
 
@@ -20,18 +21,7 @@ const ConsultExerc = () =>{
   return (
   <section id="exp">
   <div className="product-detail-page">
-    <h3 className="card-header">
-      <div className="row">
-      <div className="text-left col-sm-6">
-      Registre
-      </div>
-      <div className="text-right col-sm-6">
-          <button className="btn-sm btn-secondary">
-            {exercs.AnneeExercice}
-          </button>
-        </div>
-      </div>
-    </h3>
+   <OuvriExerc/>
     <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
     <li className="nav-item">
           <a
@@ -98,7 +88,6 @@ const ConsultExerc = () =>{
             <th>Date de vote</th>
             <th>Date d'adoption</th>
             <th>Nomenclature</th>
-            <th>Statut</th>
             <th>Action</th>
               </tr>
             </thead>
@@ -111,7 +100,6 @@ const ConsultExerc = () =>{
                         <td>{formatDate(exerc.dateVote)}</td>
                         <td>{formatDate(exerc.dateAdoption)}</td>
                         <td>Nomenclature {exerc.nomenclature.anneeApplication}</td>
-                        <td>{exerc.associationStatut[0].statut}</td>
                         <td></td>
             </tr>)}
             </tbody>

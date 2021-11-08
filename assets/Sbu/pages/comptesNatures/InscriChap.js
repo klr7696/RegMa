@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, {useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const InscriChap = () => {
     const [chaps, setChaps] = useState({
@@ -23,6 +24,7 @@ const InscriChap = () => {
         if (!chaps.nomenclature) setChaps({...chaps, nomenclature:data[0].id} )
         } catch (error) {
         console.log(error.response);
+          toast.error("Nomenclature inexistante");
         }
       };
     
@@ -42,10 +44,12 @@ const InscriChap = () => {
           const response = await axios
           .post("http://localhost:8000/api/natures/chapitres", {...chaps,
         nomenclature:`/api/nomenclatures/${chaps.nomenclature}`});
+        toast.success(`Chapitre ${chaps.numeroCompteNature} Ajoutée`);
           console.log(response.data);
         } catch(error) {
           console.log(error.response);
-          setErrors("Erreur de Saisie")
+           setErrors("Inexiste")
+          toast.error("Chapitre Non Ajouté");
         }
        
       };
@@ -159,11 +163,13 @@ const InscriChap = () => {
                     id="nomenclature"
                     value={chaps.nomenclature}
                     className={"form-control" + (error && " is-invalid")}
+                    error={chaps.nomenclature}
                    >
                      {nomenclatures.map(nomenclature => <option key={nomenclature.id} value={nomenclature.id}>
                        {nomenclature.anneeApplication}
                      </option>)}
                       </select>
+                       {error && <p className="invalid-feedback">{error}</p>}
                     </div>
                 </div>
                 <div className="row form-group">

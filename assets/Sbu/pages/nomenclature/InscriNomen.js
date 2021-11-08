@@ -63,7 +63,6 @@ const InscriNomen = ({history,match}) =>{
     const { name, value } = currentTarget;
     setNomens({...nomens, [name]: value });
   };
-
  
 
   const handleSubmit = async event => {
@@ -233,7 +232,7 @@ const InscriNomen = ({history,match}) =>{
                     name="dateApplication"
                     type="date"
                     className="form-control"
-                    value={nomens.dateApplication.toLocaleString('fr-FR', { timeZone: 'UTC' })}
+                    value={nomens.dateApplication}
                     onChange={handleChange}
                     required
                      />

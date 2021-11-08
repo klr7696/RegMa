@@ -19,7 +19,7 @@ const SidebarAdmin = () => {
               </a>
               </li>
               <li className="pcoded">
-              <a type="button" href="#/admin/mairie" >
+              <a type="button" href="#/admin/mairies" >
                 <span className="pcoded-micon"><i className="feather icon-home"/></span>
                 <span className="pcoded-mtext">Mairie</span>
               </a>

@@ -1,20 +1,38 @@
 import axios from "axios";
 import React, {useEffect, useState } from "react";
 import { ColumnDirective, ColumnsDirective, Filter, Inject, Page, TreeGridComponent } from '@syncfusion/ej2-react-treegrid';
-import { Link } from "react-router-dom";
-
 
 const ConsultNature = () => {
 
-
 const [compte, setCompte] = useState([]);
 
-    useEffect(() => {
-      axios
-        .get("http://localhost:8000/api/nomenclatures/3/natures")
+    const [nomenclatures, setNomens] = useState([]);
+
+    const fetchNomen = async () => {
+      try{
+    const data = await axios
+    .get("http://localhost:8000/api/nomenclatures")
+    .then(response => response.data["hydra:member"]);
+      setNomens(data);
+      if (!compte.nomenclature) setCompte({...compte, nomenclature:data[0].id} )
+      } catch (error) {
+      console.log(error);
+      }
+    };
+  
+    useEffect(() =>{
+      const id = 1;
+        fetchNomen();
+        axios
+        .get(`http://localhost:8000/api/nomenclatures/${id}/natures`)
         .then(response => response.data["hydra:member"])
         .then(data => setCompte(data));
     }, []);
+
+    const handleChange = ({ currentTarget }) => {
+      const { name, value } = currentTarget;
+      setCompte({...compte, [name]: value });
+    };
   
     return (
         <section id="exp">
@@ -82,7 +100,22 @@ const [compte, setCompte] = useState([]);
      <div className='col-md-12'>
     <div className="mb-1 d-flex justify-content-between align-items-center">
     <h4>Liste de lignes budgétaires</h4>
-    <Link to="/compte/new" className="btn btn-primary">Ajouter de Nouveau</Link>
+    <div className="col-sm-2">
+              <label className="col-form-label">Nomenclature</label>
+      </div>
+              <div className="col-sm-3">
+              <select 
+              onChange={handleChange} 
+              name="nomenclature"
+              id="nomenclature"
+              value={compte.nomenclature}
+              className="form-control"
+             >
+               {nomenclatures.map(nomenclature => <option key={nomenclature.id} value={nomenclature.id}>
+                 {nomenclature.anneeApplication}
+               </option>)}
+                </select>
+              </div>
     </div>   
        <TreeGridComponent dataSource={compte}
         childMapping='sousCompteNature' height='420' allowPaging='true' allowFiltering='true' 

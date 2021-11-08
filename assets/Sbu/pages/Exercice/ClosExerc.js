@@ -1,34 +1,33 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
+import OuvriExerc from "./OuvriExerc";
 
 const ClosExerc = () =>{
   
-  const [exercs, setExercs] = useState({
-    AnneeExercice: "2019",
-    ordonateurExercice: "Borahima",
+  const [clos, setCloss] = useState({
     dateVote: "",
     dateAdoption: "2019-10-10",
-    description: "",
     nomenclature: "/api/nomenclatures/16"
   });
   
-  const [nomenclatures, setNomens] = useState([]);
+  const [exercs, setExercs] = useState([]);
     
-  const fetchNomen = async () => {
+  const fetchExerc = async () => {
+
     try{
   const data = await axios
-  .get("http://localhost:8000/api/nomenclatures?estActif=true")
-  .then(response => response.data["hydra:member"]);
-    setNomens(data);
-    if (!chaps.nomenclature) setChaps({...chaps, nomenclature:data[0].id} )
+  .get("http://localhost:8000/api/registat/actif?estEncours=true&exerciceResgistre.estOuvert=true&statut=Supplémentaire")
+  //.then(reponse => console.log(reponse));
+  .then(response => response.data['hydra:member'])
+   setExercs(data);
+    if (!modifs.exerciceRegistre) setModifs({...modifs, exerciceRegistre:data[0].exerciceRegistre.id} )
     } catch (error) {
-    console.log(error.response);
+    console.log(error.data);
     }
   };
-
   useEffect(() =>{
-      fetchNomen();
-  }, []);
+    fetchExerc();
+}, []);
 
 
   const [error, setError] = useState("");
@@ -55,18 +54,7 @@ const ClosExerc = () =>{
   return (
     <section id="exp">
     <div className="product-detail-page">
-      <h3 className="card-header">
-        <div className="row">
-        <div className="text-left col-sm-6">
-        EXERCICE
-        </div>
-        <div className="text-right col-sm-6">
-            <button className="btn-sm btn-secondary">
-              Gestion 2021
-            </button>
-          </div>
-        </div>
-      </h3>
+     <OuvriExerc/>
       <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
         <li className="nav-item">
           <a
@@ -111,11 +99,23 @@ const ClosExerc = () =>{
       <div className="row">
         <div className="col-sm-12">
           <div className="card-block">
-          <form>
+          <form onSubmit={handleSubmit}>
               <div className="row form-group">
-              <div className="col-sm-3">
-                  <label className="col-form-label"></label>
+              <div className="col-sm-2">
+                  <label className="col-form-label">Exercice en cours</label>
                 </div>
+                <div className="col-sm-4">
+                  <select 
+                  name="exerciceRegistre"
+                  onChange={handleChange}
+                  value={clos.nomenclature}
+                  className=" form-control">
+                 {exercs.map(exerc => 
+                 <option key={exerc.id} value={exerc.id}>
+                {exerc.statut} {exerc.exerciceRegistre.anneeExercice}
+               </option>)}  
+                  </select>
+                  </div>
                 <div className="col-sm-2">
                   <label className="col-form-label">Date de clôture</label>
                 </div>
@@ -123,7 +123,7 @@ const ClosExerc = () =>{
                   <input type="date" className="form-control" />
                 </div>
               </div>
-              <div className="text-right col-sm-9">
+              <div className="text-right col-sm-12">
                 <button type="submit" className="btn btn-primary">
                   Clôturer
                 </button>
