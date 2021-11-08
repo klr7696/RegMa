@@ -11,6 +11,7 @@ use App\Repository\Prevision\StatutRegistreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -32,7 +33,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                    "openapi_context"={"summary"="assure la desactivation du d'etat du registre"},
  *                      },
  *
- *     "cloturerRegistre"={"method"="patch", "path"="/registres/cloture/{id}","controller"="App\Controller\ClotureRegistreController",
+ *     "cloturerRegistre"={"method"="patch", "path"="/registres/cloture/{id}",
+ *     "controller"="App\Controller\Previsions\ClotureRegistreController",
  *     "input_formats"={"json"={"application/vnd.api+json",
  *     "application/merge-patch+json","application/json","application/ld+json"}},
  *     "denormalization_context"={"groups"={"registre_cloture:write"}
@@ -49,7 +51,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "definir"={ "method"="post", "path"="/registats/definis",
  *     "openapi_context"={"summary"="defini le statut primitif pour un registre"},},
  *
- *     "changer"={"method"="post","path"="/registats/change","openapi_context"={"summary"="defini le statut d'un registre"},
+ *     "changer"={"method"="post","path"="/registres/changerstatut",
+ *     "controller"="App\Controller\Previsions\ChangeStatutController",
+ *     "openapi_context"={"summary"="defini le statut d'un registre"},
  *     "denormalization_context"={"groups"={"change:write"}, "disable_type_enforcement"=true},
  *       "validation_groups"={"change"}
  *     },
@@ -84,6 +88,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ApiFilter(BooleanFilter::class, properties={"estEncours","estActualisable","exerciceRegistre.estOuvert","exerciceRegistre.estCloture"})
  * @ApiFilter(SearchFilter::class, properties={"statut"="start"})
+ * @UniqueEntity({"statut","exerciceRegistre"},message="le statut existe deja")
  */
 class StatutRegistre
 {

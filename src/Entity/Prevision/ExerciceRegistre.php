@@ -22,30 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *      shortName= "registres",
  * itemOperations={
- *                  "get"={"normalization_context"={"groups"={"registre_detail:read"}},
- *     "openapi_context"={"summary"="Affiche les informations d'un registre "}},
- *
- *     "ouvrir"={"method"="patch", "path"="/registres/ouvre/{id}", "controller"="App\Controller\OuvrirRegistreController",
- *     "input_formats"={"json"={"application/vnd.api+json",
- *           "application/merge-patch+json","application/json","application/ld+json"}},
- *
- *     "denormalization_context"={"groups"={"ouvrir:write"}}
- *     ,
- *       "validation_groups"={"ouvrir"},
- *
- *                    "openapi_context"={"summary"="ouvre un registre pour un exercice"},
- *                 },
- *
- *    "cloturer"={"method"="patch", "path"="/registres/cloturessssss/{id}", "controller"="App\Controller\ClotureStatutController",
- *     "input_formats"={"json"={"application/vnd.api+json",
- *           "application/merge-patch+json","application/json","application/ld+json"}},
- *
- *     "denormalization_context"={"groups"={"cloture:write"}}
- *     ,
- *       "validation_groups"={"cloture"},
- *
- *                    "openapi_context"={"summary"="clôture un registre d'un exercice"},
- *                 },
+ *     "get"={"normalization_context"={"groups"={"registre_detail:read"}},
+ *            "openapi_context"={"summary"="Affiche les informations d'un registre "}},
  *
  *     "delete"={"openapi_context"={"summary"="Supprime un registre"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations d'un registre"}}
@@ -64,12 +42,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *
  *      "ouvrir"={ "method"="post", "path"="/registres/ouvrir",
+ *     "controller"="App\Controller\Previsions\OuvrirRegistreController",
  *     "openapi_context"={"summary"="permet l'ouverture d'un registre"},
  *     "denormalization_context"={"groups"={"registreouvre:write"},"disable_type_enforcement"=true}
  *     },
  *
  *
- *                  "post"={"openapi_context"={"summary"="Crée un registre"}}
+ *
  * },
  *
  *
@@ -94,7 +73,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=ExerciceRegistreRepository::class)
  * @UniqueEntity("anneeExercice", message= "l'année de gestion existe déjà")
  * @ApiFilter(SearchFilter::class, properties={"associationStatut.statut"="exact"})
- * @ApiFilter(BooleanFilter::class, properties={"estOuvert","estCloture"})
+ * @ApiFilter(BooleanFilter::class, properties={"estOuvert"})
  */
 class ExerciceRegistre
 {
@@ -113,10 +92,11 @@ class ExerciceRegistre
      * @Assert\Type(type="numeric",message="l'année est incorrect")
      * @Assert\Length(min=4,max=4, exactMessage="l'année est incorrect")
      * @Groups({"registre_detail:write",
-     *     "actifnomen:read","actifregistre:read",
+     *     "actifnomen:read",
      *     "registre_ouvert:read","registre_detail:read","resencours:read",
      *     "autoencours:read","registre_collect:read","registreouvre:write"
      * })
+     *
      */
     private $anneeExercice;
 
@@ -165,16 +145,15 @@ class ExerciceRegistre
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotNull(groups={"cloture","ouvrir"})
-     * @Groups({"cloture:write","ouvrir:write",
-     * "registre_ouvert:read","registre_detail:read","actifressource:read",
+     *
+     * @Groups({ "registre_ouvert:read","registre_detail:read","actifressource:read",
      *     "resencours:read","autoencours:read","registre_collect:read","registre_cloture:write"})
      */
     private $estOuvert = true;
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"cloture:write","registre_detail:read","registre_collect:read","registre_cloture:write"})
+     * @Groups({"registre_detail:read","registre_collect:read","registre_cloture:write"})
      * @Assert\NotBlank(groups={"cloture"}, message="veuillez saisir la date de cloture de l'exercice en cours")
      */
     private $dateCloture;

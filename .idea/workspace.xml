@@ -29,16 +29,15 @@
       <change afterPath="$PROJECT_DIR$/migrations/Version20211103143427.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/migrations/Version20211107223812.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/migrations/Version20211107224126.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Previsions/ChangeStatutController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Previsions/OuvrirRegistreController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/api_platform.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/api_platform.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/migrations/Version20211018162723.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20211102131332.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ClotureRegistreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ClotureRegistreController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/DesactiveStatutController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DesactiveStatutController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ClotureRegistreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Previsions/ClotureRegistreController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ClotureStatutController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/OuvrirRegistreController.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Prevision/ExerciceRegistreRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Prevision/ExerciceRegistreRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,6 +225,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\RatmalgreProjet\RegistreMarche\src\Controller\Previsions" />
+      <recent name="C:\RatmalgreProjet\RegistreMarche\src\Controller\Registres" />
       <recent name="C:\RatmalgreProjet\RegistreMarche\src\Repository\Projets" />
       <recent name="C:\RatmalgreProjet\RegistreMarche\src\Entity\Projets" />
     </key>
@@ -292,7 +293,7 @@
       <workItem from="1635914928761" duration="35695000" />
       <workItem from="1636146336261" duration="13359000" />
       <workItem from="1636274136216" duration="664000" />
-      <workItem from="1636297157880" duration="9454000" />
+      <workItem from="1636297157880" duration="19850000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -399,7 +400,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635958461030</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="encours">
+      <created>1636346624701</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1636346624701</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -477,7 +485,8 @@
     <MESSAGE value="restructuration1" />
     <MESSAGE value="restructuration3" />
     <MESSAGE value="sous ressource config1" />
-    <option name="LAST_COMMIT_MESSAGE" value="sous ressource config1" />
+    <MESSAGE value="encours" />
+    <option name="LAST_COMMIT_MESSAGE" value="encours" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">
@@ -504,10 +513,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="346" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.834@0.0.1536.834" timestamp="1635340910411" />
-    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1636320564695">
+    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1636361285384">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.834@0.0.1536.834" timestamp="1636320564695" />
+    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.834@0.0.1536.834" timestamp="1636361285384" />
     <state width="1024" height="214" key="GridCell.Tab.0.bottom" timestamp="1634836817875">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -540,10 +549,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="657" y="285" key="MultipleFileMergeDialog/0.0.1536.834@0.0.1536.834" timestamp="1632234775783" />
-    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1636261531107">
+    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1636361240390">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1636261531107" />
+    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1636361240390" />
     <state x="604" y="340" key="NewPhpFileDialog" timestamp="1635177181212">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
