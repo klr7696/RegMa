@@ -82,7 +82,8 @@ class ExerciceRegistre
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"registre_detail:read","actifnomen:read","registre_ouvert:read",
-     *     "actifressource:read","resencours:read","autoencours:read","registre_collect:read"})
+     *     "actifressource:read","resencours:read","autoencours:read",
+     *     "registre_collect:read","ress_actualise"})
      */
     private $id;
 
@@ -94,8 +95,8 @@ class ExerciceRegistre
      * @Groups({"registre_detail:write",
      *     "actifnomen:read",
      *     "registre_ouvert:read","registre_detail:read","resencours:read",
-     *     "autoencours:read","registre_collect:read","registreouvre:write"
-     * })
+     *     "autoencours:read","registre_collect:read","registreouvre:write",
+     * "ress_actualise"})
      *
      */
     private $anneeExercice;
@@ -147,7 +148,8 @@ class ExerciceRegistre
      * @ORM\Column(type="boolean")
      *
      * @Groups({ "registre_ouvert:read","registre_detail:read","actifressource:read",
-     *     "resencours:read","autoencours:read","registre_collect:read","registre_cloture:write"})
+     *     "resencours:read","autoencours:read","registre_collect:read",
+     *     "registre_cloture:write","ress_actualise"})
      */
     private $estOuvert = true;
 

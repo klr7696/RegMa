@@ -30,14 +30,9 @@
       <change afterPath="$PROJECT_DIR$/migrations/Version20211107223812.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/migrations/Version20211107224126.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/DesactiveAllocationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Previsions/ActualiseAllocationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/DesactiveAutorisationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Plans/ActualiseAutorisationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/DesactiveOuvertController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Previsions/ActualiseOuvertController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/DesactiveRessourceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Previsions/ActualiseRessourceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/DesactiveStatutController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Plans/AutorisationMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/AutorisationMarche.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/AllocationCredit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/AllocationCredit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Plans/LotMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/LotMarche.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/RessourceFinanciere.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/RessourceFinanciere.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" afterDir="false" />
     </list>
@@ -301,7 +296,7 @@
       <workItem from="1636146336261" duration="13359000" />
       <workItem from="1636274136216" duration="664000" />
       <workItem from="1636297157880" duration="19850000" />
-      <workItem from="1636390890697" duration="3787000" />
+      <workItem from="1636390890697" duration="13548000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -422,7 +417,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636368483088</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="refactoCode">
+      <created>1636430287510</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1636430287510</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -502,7 +504,8 @@
     <MESSAGE value="sous ressource config1" />
     <MESSAGE value="encours" />
     <MESSAGE value="registresstatutgestion1" />
-    <option name="LAST_COMMIT_MESSAGE" value="registresstatutgestion1" />
+    <MESSAGE value="refactoCode" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoCode" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">

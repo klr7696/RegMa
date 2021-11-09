@@ -80,7 +80,7 @@ class RessourceFinanciere
      * @ORM\Column(type="integer")
      * @Groups({"ressource_detail:read","actifressource:read",
      *     "resencours:read","infos:read","regisress:read",
-     *     "ressouvre:read","autoalloc:read"})
+     *     "ressouvre:read","autoalloc:read","ress_actualise"})
      */
     private $id;
 
@@ -89,7 +89,7 @@ class RessourceFinanciere
      * @Groups({"ressource_detail:read","ressource_detail:write",
      *     "actualise:write","bailleurs_detail:read",
      *     "actifressource:read","resencours:read","infos:read",
-     *     "regisress:read","autoalloc:read"
+     *     "regisress:read","autoalloc:read","ress_actualise"
      *      })
      */
     private $objetFinancement;
@@ -98,15 +98,15 @@ class RessourceFinanciere
      * @ORM\Column(type="string", length=100)
      *  @Groups({"ressource_detail:read","ressource_detail:write",
      *     "actualise:write","actifressource:read","resencours:read",
-     *     "regisress:read"})
+     *     "regisress:read","ress_actualise"})
      */
     private $modeFinancement;
 
     /**
      * @ORM\Column(type="float")
      *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write",
-     *     "actifressource:read","resencours:read","regisress:read","autoalloc:read"
-     *     })
+     *     "actifressource:read","resencours:read","regisress:read","autoalloc:read",
+     *    "ress_actualise" })
      * @Assert\Type(type="numeric",message="veuillez entrer une somme correct")
      */
     private $montantFinancement;
@@ -130,7 +130,7 @@ class RessourceFinanciere
      * @ORM\ManyToOne(targetEntity=BailleurFonds::class, inversedBy="associationRessource")
      * @ORM\JoinColumn(nullable=false)
      *  @Groups({"ressource_detail:read","ressource_detail:write",
-     *     "actualise:write","resencours:read","regisress:read","autoalloc:read"})
+     *     "actualise:write","resencours:read","regisress:read","autoalloc:read","ress_actualise"})
      */
     private $bailleurFonds;
 
@@ -151,7 +151,8 @@ class RessourceFinanciere
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"ressource_detail:read","actifressource:read","resencours:read"})
+     * @Groups({"ressource_detail:read","actifressource:read",
+     *     "resencours:read","ress_actualise"})
      *
      *
      */

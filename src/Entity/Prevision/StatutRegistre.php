@@ -47,13 +47,19 @@ use Symfony\Component\Validator\Constraints as Assert;
  *       "validation_groups"={"change_statut"}
  *     },
  *
- *      "registreOuvert"={"method"="get", "path"="/registats/registreouvert","datetime_format"="Y-m-d",
+ *      "registreOuvert"={"method"="get", "path"="/registats/registre_ouvert","datetime_format"="Y-m-d",
  *     "order"={"id"="DESC"},
- * "normalization_context"={"groups"={"registre_ouvert:read"}},
  *     "openapi_context"={"summary"="Affiche le registre en cours pour un registre en cours.
  * Utiliser au niveau des ressources=estEncours=true&exerciceRegistre.estOuvert=true
  *    pour changer le statut d’un registre=estEncours=true&exerciceRegistre.estOuvert=true&statut=Primitif
  *     pour actualiser une ressource estActualisable=true&exerciceRegistre.estOuvert=true"}
+ *     },
+ *
+ *     "RessourceActualisable"={"method"="get", "path"="/registats/ress_actualise","datetime_format"="Y-m-d",
+ *     "normalization_context"={"groups"={"ress_actualise"}},
+ *     "order"={"id"="DESC"},
+ *
+ *     "openapi_context"={"summary"="Affiche les ressources enregistrer à actualiser"}
  *     },
  *
  *     "get"={ "order"={"id"="DESC"}, "openapi_context"={"summary"="affiche un statut registre"}},
@@ -85,7 +91,7 @@ class StatutRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"registat_detail:read","registre_ouvert:read",
+     * @Groups({"registat_detail:read","registre_ouvert:read","ress_actualise",
      *     "actifressource:read","resencours:read","autoencours:read","infos:read",
      *     "regisress:read"})
      *
@@ -96,7 +102,8 @@ class StatutRegistre
      * @ORM\Column(type="string", length=50)
      * @Groups({"registat_detail:read","registat_detail:write","actifregistre:read",
      *     "registre_ouvert:read","resencours:read","autoencours:read",
-     *     "infos:read","regisress:read","change_statut:write","registreouvre:write"})
+     *     "infos:read","regisress:read","change_statut:write",
+     *     "registreouvre:write","ress_actualise"})
      *
      * @Assert\Choice(choices={"Primitif","Primitif modificatif","Supplémentaire"}, message= "saisir des informations correctes",
      *     groups={"Default","change_statut"})
@@ -106,7 +113,7 @@ class StatutRegistre
      * @ORM\Column(type="boolean")
      * @Groups({"registat_detail:read","actifregistre:read",
      *     "registre_ouvert:read","resencours:read","autoencours:read",
-     *     "infos:read","registre_cloture:write"})
+     *     "infos:read","registre_cloture:write","ress_actualise"})
      * @Assert\NotNull(groups={"desactive","registre_cloture"})
      */
     private $estEnCours= true;
@@ -120,7 +127,7 @@ class StatutRegistre
      * @ORM\Column(type="boolean")
      * @Groups({"registat_detail:read","registre_ouvert:read",
      *     "actifressource:read","resencours:read","autoencours:read",
-     *     "infos:read","registre_cloture:write"})
+     *     "infos:read","registre_cloture:write","ress_actualise"})
      * @Assert\NotNull(groups={"registre_cloture"})
      *
      */
@@ -137,14 +144,15 @@ class StatutRegistre
      * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationStatut",cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"registat_detail:read","registat_detail:write"})
-     * @Groups({"registre_ouvert:read","actifressource:read","change_statut:write","registre_cloture:write"})
+     * @Groups({"registre_ouvert:read","actifressource:read","change_statut:write",
+     *     "registre_cloture:write","ress_actualise"})
      *
      */
     private $exerciceRegistre;
 
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="statutRegistre", orphanRemoval=true)
-     * @Groups({"infos:read"})
+     * @Groups({"infos:read","ress_actualise"})
      */
     private $associationRessource;
 
@@ -160,7 +168,7 @@ class StatutRegistre
 
     /**
      * @ORM\OneToOne(targetEntity=StatutRegistre::class, mappedBy="statutClos", cascade={"persist", "remove"})
-     * @Groups({"change_statut:write"})
+     * @Groups({"change_statut:write","ress_actualise"})
      */
     private $statutRegistre;
 
