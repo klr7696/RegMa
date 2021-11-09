@@ -28,13 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "delete"={"openapi_context"={"summary"="Supprime une autorisation"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations d'une autorisation"}},
  *
- *     "desactiver"= {
- *     "method"="patch", "path"="/autorisations/desactive/{id}", "controller"="App\Controller\DesactiveAutorisationController",
- *     "input_formats"={"json"={"application/vnd.api+json","application/merge-patch+json","application/json","application/ld+json"}},
- * "denormalization_context"={"groups"={"audesactive:write"}},
- *       "validation_groups"={"audesactive"},
-"openapi_context"={"summary"="desactive une autorisation"},
- *                 },
+ *
  *
  *   },
  * collectionOperations={
@@ -51,7 +45,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     ,"inscription"={ "method"="post", "path"="/autorisations/inscription",
  *     "openapi_context"={"summary"="Crée une autorisation"},},
  *
- *     "actualisation"={"method"="post","path"="/autorisations/actualise","openapi_context"={"summary"="Actualise une autorisation"},
+ *     "actualisation"={"method"="post","path"="/autorisations/actualise",
+ *     "controller"="App\Controller\Plans\ActualiseAutorisationController"
+ *     ,"openapi_context"={"summary"="Actualise une autorisation"},
  *     "denormalization_context"={"groups"={"auactualise:write"}, "disable_type_enforcement"=true},
  *       "validation_groups"={"auactualise"}
  *     }
@@ -170,8 +166,8 @@ class AutorisationMarche
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotNull(groups={"audesactive"})
-     * @Groups({"autorisation_detail:read","audesactive:write"})
+     *
+     * @Groups({"autorisation_detail:read"})
      */
     private $estValide =true;
 

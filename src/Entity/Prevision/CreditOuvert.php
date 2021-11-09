@@ -23,13 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "delete"={"openapi_context"={"summary"="Supprime un Credit Ouvert"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations un Credit Ouvert"}},
  *
- *     "desactiver"= {
- *     "method"="patch", "path"="/ouverts/desactive/{id}", "controller"="App\Controller\DesactiveOuvertController",
- *     "input_formats"={"json"={"application/vnd.api+json","application/merge-patch+json","application/json","application/ld+json"}},
- *  "denormalization_context"={"groups"={"odesactive:write"}},
- *       "validation_groups"={"odesactive"},
- *  "openapi_context"={"summary"="desactive un Credit Ouvert actualisé"},
- *                 },
+ *
  *
  *   },
  * collectionOperations={
@@ -38,7 +32,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                               ,"inscription"={ "method"="post", "path"="/ouverts/inscription",
  *     "openapi_context"={"summary"="Crée un Credit Ouvert"},},
  *
- *     "actualisation"={"method"="post","path"="/ouverts/actualise","openapi_context"={"summary"="Actualise un Credit Ouvert"},
+ *     "actualisation"={"method"="post","path"="/ouverts/actualise",
+ *     "controller"="App\Controller\Previsions\ActualiseOuvertController",
+ *     "openapi_context"={"summary"="Actualise un Credit Ouvert"},
  *     "denormalization_context"={"groups"={"oactualise:write"}},
  *       "validation_groups"={"oactualise"}
  *     }
@@ -106,8 +102,8 @@ class CreditOuvert
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotNull(groups="desactive")
-     * @Groups({"ouvert_detail:read","odesactive:write","ressouvre:read"})
+     *
+     * @Groups({"ouvert_detail:read","ressouvre:read"})
      */
     private $estValide =true;
 

@@ -1,16 +1,16 @@
 <?php
 
 
-namespace App\Controller;
+namespace App\Controller\Previsions;
 
 
 use App\Entity\Prevision\AllocationCredit;
 
-class DesactiveAllocationController
+class ActualiseAllocationController
 {
     public function __invoke(AllocationCredit $data): AllocationCredit
     {
-        $data->setEstValide(false);
+        $data->getActualiseAllocation()->setEstValide(false);
         return $data;
     }
 }

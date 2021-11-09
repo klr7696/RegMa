@@ -1,16 +1,16 @@
 <?php
 
 
-namespace App\Controller;
+namespace App\Controller\Previsions;
 
 
 use App\Entity\Prevision\CreditOuvert;
 
-class DesactiveOuvertController
+class ActualiseOuvertController
 {
     public function __invoke(CreditOuvert $data): CreditOuvert
     {
-        $data->setEstValide(false);
+        $data->getActualiseCredit()->setEstValide(false);
         return $data;
     }
 }
