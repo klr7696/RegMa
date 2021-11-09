@@ -234,11 +234,11 @@ const [editing, setEditing] = useState (false);
           </div>
         </div>
         <div className="text-right col-sm-12">
-           <button 
+          <button 
           type="submit" 
           className="btn btn-primary"
           >
-            Créer
+            {( <>Ouvrir</>)}
           </button>
         </div>
       </form>

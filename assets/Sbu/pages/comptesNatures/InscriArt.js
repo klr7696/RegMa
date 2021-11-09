@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, {useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const InscriArt = () => {
 
@@ -60,11 +61,12 @@ const InscriArt = () => {
           .post("http://localhost:8000/api/natures/sousnatures", {...arts,
         compteNature:`/api/natures/${arts.compteNature}`});
           console.log(response.data);
+          toast.success(`Article ${arts.numeroCompteNature} Ajoutée`)
         } catch(error) {
           console.log(error.response);
           setErrors("Erreur de Saisie")
+          toast.error("Article Non Ajouté");
         }
-       
       };
      
       return (

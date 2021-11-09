@@ -7,7 +7,7 @@ const ConsultBaill = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/bailleurs/actifressource")
+      .get("http://localhost:8000/api/bailleurs")
       .then(response => response.data["hydra:member"])
       .then(data => setBailleurs(data));
   }, []);
@@ -103,9 +103,9 @@ const handleModif = id => {
                         <td>{bailleur.designationBailleur}</td>
                         <td>{bailleur.sigleBailleur}</td>
                         <td>{bailleur.categorieBailleur}</td>
-                        <td>{bailleur.id}</td>
+                        <td>{bailleur.codeBailleur}</td>
                         <td>{bailleur.sourceFinancement}</td>
-                        <td>{bailleur.id}</td>
+                        <td>{bailleur.descriptionBailleur}</td>
                         <td>
                           <button 
                           onClick={() => handleDelete(bailleur.id)}

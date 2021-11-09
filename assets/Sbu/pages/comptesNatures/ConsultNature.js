@@ -14,17 +14,15 @@ const [compte, setCompte] = useState([]);
     .get("http://localhost:8000/api/nomenclatures")
     .then(response => response.data["hydra:member"]);
       setNomens(data);
-      if (!compte.nomenclature) setCompte({...compte, nomenclature:data[0].id} )
       } catch (error) {
       console.log(error);
       }
     };
   
     useEffect(() =>{
-      const id = 1;
         fetchNomen();
         axios
-        .get(`http://localhost:8000/api/nomenclatures/${id}/natures`)
+        .get(`http://localhost:8000/api/nomenclatures/1/natures`)
         .then(response => response.data["hydra:member"])
         .then(data => setCompte(data));
     }, []);

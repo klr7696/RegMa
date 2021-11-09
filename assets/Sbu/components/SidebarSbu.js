@@ -76,31 +76,11 @@ const SidebarSbu = () => {
                 </li>
           </ul>
           </li>
-          <li className="pcoded-hasmenu">
-              <a type="button" href="#" onClick={e => e.preventDefault()}>
+          <li className="pcoded">
+              <a type="button" href="#/sbu/registres-ressources">
                 <span className="pcoded-micon"><i className="feather icon-list"></i></span>
                 <span className="pcoded-mtext">CONSULTER REGISTRE</span>
               </a>
-              <ul className="pcoded-submenu">
-                <li className="">
-                  <a href="#/livre/new">
-                  <i className="feather icon-edit"></i>
-                    <span className="pcoded-mtext"> A</span>
-                  </a>
-                </li>
-                <li className="">
-                  <a href="#/livres/liste">
-                  <i className="feather icon-list"></i>
-                    <span className="pcoded-mtext">B</span>
-                  </a>
-                </li>
-                <li className="">
-                  <a href="#/livres/liste">
-                  <i className="feather icon-list"></i>
-                    <span className="pcoded-mtext">C</span>
-                  </a>
-                </li>
-          </ul>
           </li>
          
         </ul>

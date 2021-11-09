@@ -4,7 +4,7 @@ import OuvriExerc from "./OuvriExerc";
 
 const ClosExerc = () =>{
   
-  const [clos, setCloss] = useState({
+  const [clos, setClos] = useState({
     dateVote: "",
     dateAdoption: "2019-10-10",
     nomenclature: "/api/nomenclatures/16"
@@ -16,7 +16,7 @@ const ClosExerc = () =>{
 
     try{
   const data = await axios
-  .get("http://localhost:8000/api/registat/actif?estEncours=true&exerciceResgistre.estOuvert=true&statut=Supplémentaire")
+  .get("http://localhost:8000/api/registres/ouvert?estEncours=true&exerciceResgistre.estOuvert=true&statut=Supplémentaire")
   //.then(reponse => console.log(reponse));
   .then(response => response.data['hydra:member'])
    setExercs(data);
