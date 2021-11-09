@@ -23,15 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "get"={"openapi_context"={"summary"="Affiche les statuts"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations d'un registre"}},
  *
- *     "desactiver"={"method"="patch", "path"="/registats/desactive/{id}", "controller"="App\Controller\DesactiveStatutController",
- *     "input_formats"={"json"={"application/vnd.api+json",
- *     "application/merge-patch+json","application/json","application/ld+json"}},
- *     "denormalization_context"={"groups"={"desactive:write"}
- *     },
- *       "validation_groups"={"desactive"},
  *
- *                    "openapi_context"={"summary"="assure la desactivation du d'etat du registre"},
- *                      },
  *
  *     "cloturerRegistre"={"method"="patch", "path"="/registres/cloture/{id}",
  *     "controller"="App\Controller\Previsions\ClotureRegistreController",
@@ -48,23 +40,26 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  *     collectionOperations={
  *
- *     "definir"={ "method"="post", "path"="/registats/definis",
- *     "openapi_context"={"summary"="defini le statut primitif pour un registre"},},
- *
- *     "changer"={"method"="post","path"="/registres/changerstatut",
+ *     "changerStatut"={"method"="post","path"="/registats/changerstatut",
  *     "controller"="App\Controller\Previsions\ChangeStatutController",
  *     "openapi_context"={"summary"="defini le statut d'un registre"},
- *     "denormalization_context"={"groups"={"change:write"}, "disable_type_enforcement"=true},
- *       "validation_groups"={"change"}
+ *     "denormalization_context"={"groups"={"change_statut:write"}, "disable_type_enforcement"=true},
+ *       "validation_groups"={"change_statut"}
  *     },
  *
- *      "registreOuvert"={"method"="get", "path"="/registres/ouvert","datetime_format"="Y-m-d",
+ *      "registreOuvert"={"method"="get", "path"="/registats/registre_ouvert","datetime_format"="Y-m-d",
  *     "order"={"id"="DESC"},
- * "normalization_context"={"groups"={"registre_ouvert:read"}},
  *     "openapi_context"={"summary"="Affiche le registre en cours pour un registre en cours.
  * Utiliser au niveau des ressources=estEncours=true&exerciceRegistre.estOuvert=true
  *    pour changer le statut d’un registre=estEncours=true&exerciceRegistre.estOuvert=true&statut=Primitif
  *     pour actualiser une ressource estActualisable=true&exerciceRegistre.estOuvert=true"}
+ *     },
+ *
+ *     "RessourceActualisable"={"method"="get", "path"="/registats/ress_actualise","datetime_format"="Y-m-d",
+ *     "normalization_context"={"groups"={"ress_actualise"}},
+ *     "order"={"id"="DESC"},
+ *
+ *     "openapi_context"={"summary"="Affiche les ressources enregistrer à actualiser"}
  *     },
  *
  *     "get"={ "order"={"id"="DESC"}, "openapi_context"={"summary"="affiche un statut registre"}},
@@ -96,7 +91,7 @@ class StatutRegistre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"registat_detail:read","registre_ouvert:read",
+     * @Groups({"registat_detail:read","registre_ouvert:read","ress_actualise",
      *     "actifressource:read","resencours:read","autoencours:read","infos:read",
      *     "regisress:read"})
      *
@@ -107,39 +102,40 @@ class StatutRegistre
      * @ORM\Column(type="string", length=50)
      * @Groups({"registat_detail:read","registat_detail:write","actifregistre:read",
      *     "registre_ouvert:read","resencours:read","autoencours:read",
-     *     "infos:read","regisress:read","change:write","registreouvre:write"})
+     *     "infos:read","regisress:read","change_statut:write",
+     *     "registreouvre:write","ress_actualise"})
      *
      * @Assert\Choice(choices={"Primitif","Primitif modificatif","Supplémentaire"}, message= "saisir des informations correctes",
-     *     groups={"Default","change"})
+     *     groups={"Default","change_statut"})
      */
     private $statut;
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"registat_detail:read","desactive:write","actifregistre:read",
+     * @Groups({"registat_detail:read","actifregistre:read",
      *     "registre_ouvert:read","resencours:read","autoencours:read",
-     *     "infos:read","registre_cloture:write"})
+     *     "infos:read","registre_cloture:write","ress_actualise"})
      * @Assert\NotNull(groups={"desactive","registre_cloture"})
      */
     private $estEnCours= true;
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"registat_detail:read","change:write"})
+     * @Groups({"registat_detail:read","change_statut:write"})
      */
     private $dateApprobation;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"registat_detail:read","desactive:write","registre_ouvert:read",
+     * @Groups({"registat_detail:read","registre_ouvert:read",
      *     "actifressource:read","resencours:read","autoencours:read",
-     *     "infos:read","registre_cloture:write"})
-     * @Assert\NotNull(groups={"desactive","registre_cloture"})
+     *     "infos:read","registre_cloture:write","ress_actualise"})
+     * @Assert\NotNull(groups={"registre_cloture"})
      *
      */
     private $estActualisable= false;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"registat_detail:read","change:write"})
+     * @Groups({"registat_detail:read","change_statut:write"})
      *
      */
     private $descriptionStatut;
@@ -148,14 +144,15 @@ class StatutRegistre
      * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationStatut",cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"registat_detail:read","registat_detail:write"})
-     * @Groups({"registre_ouvert:read","actifressource:read","change:write","registre_cloture:write"})
+     * @Groups({"registre_ouvert:read","actifressource:read","change_statut:write",
+     *     "registre_cloture:write","ress_actualise"})
      *
      */
     private $exerciceRegistre;
 
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="statutRegistre", orphanRemoval=true)
-     * @Groups({"infos:read"})
+     * @Groups({"infos:read","ress_actualise"})
      */
     private $associationRessource;
 
@@ -171,12 +168,9 @@ class StatutRegistre
 
     /**
      * @ORM\OneToOne(targetEntity=StatutRegistre::class, mappedBy="statutClos", cascade={"persist", "remove"})
-     * @Groups({"desactive:write","change:write"})
+     * @Groups({"change_statut:write","ress_actualise"})
      */
     private $statutRegistre;
-
-
-
 
 
 

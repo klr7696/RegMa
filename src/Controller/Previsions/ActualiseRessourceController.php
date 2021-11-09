@@ -1,16 +1,16 @@
 <?php
 
 
-namespace App\Controller;
+namespace App\Controller\Previsions;
 
 
 use App\Entity\Prevision\RessourceFinanciere;
 
-class DesactiveRessourceController
+class ActualiseRessourceController
 {
 public function __invoke(RessourceFinanciere $data): RessourceFinanciere
     {
-    $data->setEstValide(false);
+    $data->getActualiseRessource()->setEstValide(false);
     return $data;
     }
 }

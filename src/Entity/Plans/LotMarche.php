@@ -9,10 +9,12 @@ use App\Repository\Plans\LotMarcheRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "lots"
+ *     shortName= "lots",
+ * denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ORM\Entity(repositoryClass=LotMarcheRepository::class)
  */
@@ -27,6 +29,7 @@ class LotMarche
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="numeric", message="donnée incorrecte")
      */
     private $numeroLot;
 
@@ -37,6 +40,7 @@ class LotMarche
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(type="numeric", message="donnée incorrecte")
      */
     private $montantLot;
 
@@ -47,6 +51,7 @@ class LotMarche
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="numeric", message="donnée incorrecte")
      */
     private $delaiExecution;
 
@@ -98,7 +103,7 @@ class LotMarche
         return $this->numeroLot;
     }
 
-    public function setNumeroLot(int $numeroLot): self
+    public function setNumeroLot($numeroLot): self
     {
         $this->numeroLot = $numeroLot;
 
@@ -122,7 +127,7 @@ class LotMarche
         return $this->montantLot;
     }
 
-    public function setMontantLot(float $montantLot): self
+    public function setMontantLot($montantLot): self
     {
         $this->montantLot = $montantLot;
 
@@ -146,7 +151,7 @@ class LotMarche
         return $this->delaiExecution;
     }
 
-    public function setDelaiExecution(int $delaiExecution): self
+    public function setDelaiExecution($delaiExecution): self
     {
         $this->delaiExecution = $delaiExecution;
 

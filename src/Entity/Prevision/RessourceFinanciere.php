@@ -24,13 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "delete"={"openapi_context"={"summary"="Supprime une ressource"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations une ressource"}},
  *
- *     "desactiver"= {
- *     "method"="patch", "path"="/ressources/desactive/{id}", "controller"="App\Controller\DesactiveRessourceController",
- *     "input_formats"={"json"={"application/vnd.api+json","application/merge-patch+json","application/json","application/ld+json"}},
- * "denormalization_context"={"groups"={"desactive:write"}},
- *       "validation_groups"={"desactive"},
-"openapi_context"={"summary"="desactive une ressource actualiser"},
- *                 },
+ *
  *
  *   },
  * collectionOperations={
@@ -47,7 +41,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     ,"inscription"={ "method"="post", "path"="/ressources/inscription",
  *     "openapi_context"={"summary"="Crée une ressource"},},
  *
- *     "actualisation"={"method"="post","path"="/ressources/actualise","openapi_context"={"summary"="Actualise une ressource"},
+ *     "actualisation"={"method"="post","path"="/ressources/actualise",
+ *     "controller"="App\Controller\Previsions\ActualiseRessourceController",
+ *     "openapi_context"={"summary"="Actualise une ressource"},
  *     "denormalization_context"={"groups"={"actualise:write"}, "disable_type_enforcement"=true},
  *       "validation_groups"={"actualise"}
  *     }
@@ -73,7 +69,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  * @ORM\Entity(repositoryClass=RessourceFinanciereRepository::class)
- * @ApiFilter(BooleanFilter::class, properties={"exerciceRegistre.estOuvert","statutRegistre.estEncours"})
+ * @ApiFilter(BooleanFilter::class, properties={"exerciceRegistre.estOuvert",
+ *     "statutRegistre.estEncours","estValide"})
  */
 class RessourceFinanciere
 {
@@ -83,7 +80,7 @@ class RessourceFinanciere
      * @ORM\Column(type="integer")
      * @Groups({"ressource_detail:read","actifressource:read",
      *     "resencours:read","infos:read","regisress:read",
-     *     "ressouvre:read","autoalloc:read"})
+     *     "ressouvre:read","autoalloc:read","ress_actualise"})
      */
     private $id;
 
@@ -92,7 +89,7 @@ class RessourceFinanciere
      * @Groups({"ressource_detail:read","ressource_detail:write",
      *     "actualise:write","bailleurs_detail:read",
      *     "actifressource:read","resencours:read","infos:read",
-     *     "regisress:read","autoalloc:read"
+     *     "regisress:read","autoalloc:read","ress_actualise"
      *      })
      */
     private $objetFinancement;
@@ -101,15 +98,15 @@ class RessourceFinanciere
      * @ORM\Column(type="string", length=100)
      *  @Groups({"ressource_detail:read","ressource_detail:write",
      *     "actualise:write","actifressource:read","resencours:read",
-     *     "regisress:read"})
+     *     "regisress:read","ress_actualise"})
      */
     private $modeFinancement;
 
     /**
      * @ORM\Column(type="float")
      *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write",
-     *     "actifressource:read","resencours:read","regisress:read","autoalloc:read"
-     *     })
+     *     "actifressource:read","resencours:read","regisress:read","autoalloc:read",
+     *    "ress_actualise" })
      * @Assert\Type(type="numeric",message="veuillez entrer une somme correct")
      */
     private $montantFinancement;
@@ -133,7 +130,7 @@ class RessourceFinanciere
      * @ORM\ManyToOne(targetEntity=BailleurFonds::class, inversedBy="associationRessource")
      * @ORM\JoinColumn(nullable=false)
      *  @Groups({"ressource_detail:read","ressource_detail:write",
-     *     "actualise:write","resencours:read","regisress:read","autoalloc:read"})
+     *     "actualise:write","resencours:read","regisress:read","autoalloc:read","ress_actualise"})
      */
     private $bailleurFonds;
 
@@ -154,8 +151,9 @@ class RessourceFinanciere
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"ressource_detail:read","desactive:write","actifressource:read","resencours:read"})
-     * @Assert\NotNull(groups={"desactive"})
+     * @Groups({"ressource_detail:read","actifressource:read",
+     *     "resencours:read","ress_actualise"})
+     *
      *
      */
     private $estValide= true;

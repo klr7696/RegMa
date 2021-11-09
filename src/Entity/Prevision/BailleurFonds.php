@@ -49,21 +49,24 @@ class BailleurFonds
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"actifressource:read","resencours:read","regisress:read","autoalloc:read"})
+     * @Groups({"actifressource:read","resencours:read","regisress:read",
+     *     "autoalloc:read","ress_actualise"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"bailleurs_detail:read","bailleurs_detail:write",
-     *     "actifressource:read","resencours:read","regisress:read","autoalloc:read"})
+     *     "actifressource:read","resencours:read","regisress:read",
+     *     "autoalloc:read","ress_actualise"})
      */
     private $designationBailleur;
 
     /**
      * @ORM\Column(type="string", length=10)
      * @Groups({"bailleurs_detail:read","bailleurs_detail:write",
-     *     "actifressource:read","resencours:read","regisress:read"})
+     *     "actifressource:read","resencours:read","regisress:read",
+     *     "ress_actualise"})
      *
      */
     private $sigleBailleur;
@@ -83,7 +86,8 @@ class BailleurFonds
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"bailleurs_detail:read","bailleurs_detail:write",
-     *     "actifressource:read","resencours:read","regisress:read","autoalloc:read"})
+     *     "actifressource:read","resencours:read","regisress:read",
+     *     "autoalloc:read","ress_actualise"})
      */
     private $sourceFinancement;
 

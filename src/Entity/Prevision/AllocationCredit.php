@@ -19,13 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "delete"={"openapi_context"={"summary"="Supprime une allocation"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations une allocation"}},
  *
- *     "desactiver"= {
- *     "method"="patch", "path"="/allocations/desactive/{id}", "controller"="App\Controller\DesactiveAllocationController",
- *     "input_formats"={"json"={"application/vnd.api+json","application/merge-patch+json","application/json","application/ld+json"}},
- *  "denormalization_context"={"groups"={"aldesactive:write"},"disable_type_enforcement"=true},
- *       "validation_groups"={"aldesactive"},
- *  "openapi_context"={"summary"="desactive une allocation actualisé"},
- *                 },
+ *
  *
  *   },
  * collectionOperations={
@@ -34,7 +28,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                               ,"inscription"={ "method"="post", "path"="/allocations/inscription",
  *     "openapi_context"={"summary"="Crée une allocation"},},
  *
- *     "actualisation"={"method"="post","path"="/allocations/actualise","openapi_context"={"summary"="Actualise une allocation"},
+ *     "actualisation"={"method"="post","path"="/allocations/actualise",
+ *     "controller"="App\Controller\Previsions\ActualiseAllocationController",
+ *     "openapi_context"={"summary"="Actualise une allocation"},
  *     "denormalization_context"={"groups"={"alactualise:write"},"disable_type_enforcement"=true},
  *       "validation_groups"={"alactualise"}
  *     }
@@ -98,8 +94,8 @@ class AllocationCredit
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotNull(groups="aldesactive")
-     * @Groups({"allocation_detail:read","aldesactive:write","ouveralloc:read","autoalloc:read"})
+     *
+     * @Groups({"allocation_detail:read","ouveralloc:read","autoalloc:read"})
      */
     private $estValide =true;
 

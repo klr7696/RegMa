@@ -1,16 +1,16 @@
 <?php
 
 
-namespace App\Controller;
+namespace App\Controller\Plans;
 
 
 use App\Entity\Plans\AutorisationMarche;
 
-class DesactiveAutorisationController
+class ActualiseAutorisationController
 {
 public function __invoke(AutorisationMarche $data):AutorisationMarche
 {
-    $data->setEstValide(false);
+    $data->getActualisationAutorisation()->setEstValide(false);
     return $data;
 }
 
