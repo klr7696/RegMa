@@ -48,8 +48,8 @@ const InscriChap = () => {
           console.log(response.data);
         } catch(error) {
           console.log(error.response);
-           setErrors("Inexiste")
           toast.error("Chapitre Non Ajouté");
+           setErrors("Inexiste")
         }
        
       };

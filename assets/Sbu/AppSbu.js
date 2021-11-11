@@ -22,6 +22,10 @@ import InscriCredit from "./pages/previsionDepense/InscriCredit";
 import ConsutCredit from "./pages/previsionDepense/ConsutCredit";
 import InscriAlloc from "./pages/previsionDepense/InscriAlloc";
 import ConsutAlloc from "./pages/previsionDepense/ConsutAlloc";
+import ConsultRegistre from "./pages/consultRegistre/ConsultRegistre";
+import ConsultAlloue from "./pages/consultRegistre/ConsultAlloue";
+import ConsultOuvert from "./pages/consultRegistre/ConsultOuvert";
+import ConsultAutorise from "./pages/consultRegistre/ConsultAutorise";
 
 const AppSbu = (props) =>{
     return (
@@ -116,6 +120,22 @@ const AppSbu = (props) =>{
                          <Route
                           path={`${props.match.url}/credit-alloue`}
                           component={ConsutAlloc}
+                        />
+                         <Route
+                          path={`${props.match.url}/registres-ressources`}
+                          component={ConsultRegistre}
+                        />
+                         <Route
+                          path={`${props.match.url}/registres-alloues`}
+                          component={ConsultAlloue}
+                        />
+                         <Route
+                          path={`${props.match.url}/registres-ouverts`}
+                          component={ConsultOuvert}
+                        />
+                         <Route
+                          path={`${props.match.url}/registres-autorises`}
+                          component={ConsultAutorise}
                         />
                       </Switch>
                     </div>

@@ -17,7 +17,7 @@ const InscriCredit = () => {
       const fetchFinans = async () => {
         try{
       const data = await axios
-      .get("http://localhost:8000/api/ressources")
+      .get("http://localhost:8000/api/ressources/encours")
       .then(response => response.data["hydra:member"]);
         setFinans(data);
         } catch (error) {
@@ -69,7 +69,8 @@ const InscriCredit = () => {
     }, []);
 
       const handleSubmit = async event => {
-        event.preventDefault();
+        event.searchRemoveChoice();
+        
         console.log(creds)
     
        try {
@@ -158,7 +159,7 @@ const InscriCredit = () => {
                   className="form-control"
                  > <option value="">Choisir ...</option>
                    {finans.map(finan => <option key={finan.id} value={finan.id}>
-                     {finan.id}
+                     {finan.bailleurFonds.sigleBailleur}
                    </option>)}
                     </select>
                     </div>
@@ -221,16 +222,16 @@ const InscriCredit = () => {
                 <div className="card">
                 <div className="card-block">
                 <div className="row form-group">
+
                 <div className="col-sm-2">
                   <label className="col-form-label">Numéro du comptes </label>
                 </div>
                 <div className="col-sm-2">
                   <select 
                   onChange={handleChange} 
-                  name="CompteNature"
-                  id="CompteNature"
-                  value={creds.CompteNature}
-                  className="form-control"
+                  name="compteNature"
+                  value={creds.compteNature}
+                  className="js-example-basic-single col-sm-12"
                  >
                    {natures.map(nature => <option key={nature.id} value={nature.id}>
                      {nature.numeroCompteNature}
@@ -244,9 +245,9 @@ const InscriCredit = () => {
                 <div className="col-sm-2">
                   <select 
                  disabled="disabled"
-                  name="CompteNature"
+                  name="compteNature"
                   className="form-control"
-                  value={creds.CompteNature}
+                  value={creds.compteNature}
                  >
                    {natures.map(nature => <option key={nature.id} value={nature.id}>
                      {nature.hierachieCompteNature}
@@ -259,7 +260,7 @@ const InscriCredit = () => {
                 <div className="col-sm-2">
                   <select 
                   disabled="disabled"
-                  name="CompteNature"
+                  name="compteNature"
                   className="form-control"
                   value={creds.compteNature}
                  >
@@ -273,10 +274,10 @@ const InscriCredit = () => {
                 <div className="col-sm-2">
                   <label className="col-form-label">Libellé </label>
                 </div>
-                <div className="col-sm-8">
+                <div className="col-sm-10">
                   <select 
                  disabled="disabled"
-                  name="CompteNature"
+                  name="compteNature"
                   className="form-control"
                   value={creds.compteNature}
                  >
@@ -290,7 +291,7 @@ const InscriCredit = () => {
                 <div className="col-sm-2">
                   <label className="col-form-label">Montant * (FCFA)</label>
                 </div>
-                <div className="col-sm-3">
+                <div className="col-sm-4">
                   <input 
                   id="montantInscription"
                   type="number"

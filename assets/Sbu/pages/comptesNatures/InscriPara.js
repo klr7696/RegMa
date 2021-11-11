@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const InscriPara = () => {
 
@@ -57,12 +58,14 @@ const InscriPara = () => {
     try {
       const response = await axios.post(
         "http://localhost:8000/api/natures/sousnatures",
-        { ...paras, compteNature: `/api/natures/${paras.compteNature}` }
+        { ...paras, compteNature: `/api/natures/${paras.compteNature}`}
       );
       console.log(response.data);
+      toast.success(`Paragraphe ${paras.numeroCompteNature} Ajoutée`)
     } catch (error) {
       console.log(error.response);
       setErrors("Erreur de Saisie");
+      toast.error("Paragraphe Non Ajouté");
     }
   };
 

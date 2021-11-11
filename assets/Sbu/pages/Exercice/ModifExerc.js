@@ -41,7 +41,7 @@ const ModifExerc = () =>{
     event.preventDefault();
     try {
      const response = await axios
-      .post("http://localhost:8000/api/registats",  {...modifs,
+      .post("http://localhost:8000/api/registres/changerstatut",  {...modifs,
         exerciceRegistre:`/api/registres/${modifs.exerciceRegistre}`
     }  )
       console.log(response.data);
