@@ -2,7 +2,7 @@ import axios from "axios";
 
 function findAll() {
     return axios
-    .get("http://localhost:8000/api/bailleurs")
+    .get("http://localhost:8000/api/bailleurs/1")
     .then(response => response.data["hydra:member"]);
 }
 

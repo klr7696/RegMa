@@ -42,6 +42,12 @@ const SidebarSbu = () => {
                   <span className="pcoded-mtext">Allocation</span>
                 </a>
               </li>
+              <li >
+                <a href="#/sbu/credit-autorise/new">
+                <i className="feather icon-navigation"></i> 
+                  <span className="pcoded-mtext">Autorisation</span>
+                </a>
+              </li>
         </ul>
         </li>
         <li className="pcoded">
@@ -66,12 +72,6 @@ const SidebarSbu = () => {
                   <a href="#/sbu/compte-nature">
                   <i className="feather icon-sidebar"/> 
                     <span className="pcoded-mtext">Compte de nature</span>
-                  </a>
-                </li>
-                <li className="">
-                  <a href="#/sbu/compte-fonction">
-                  <i className="feather icon-sidebar"/> 
-                    <span className="pcoded-mtext">Compte de fonction</span>
                   </a>
                 </li>
           </ul>

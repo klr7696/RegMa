@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import OuvriExerc from '../Exercice/OuvriExerc';
 
-const InscriCredit = () => {
+const InscriOuvert = () => {
 
     const [creds, setCreds] = useState({
         montantInscription:"",
@@ -69,7 +70,7 @@ const InscriCredit = () => {
     }, []);
 
       const handleSubmit = async event => {
-        event.searchRemoveChoice();
+        event.preventDefault();
         
         console.log(creds)
     
@@ -90,18 +91,14 @@ const InscriCredit = () => {
     return (
         <section id="exp">
         <div className="product-detail-page">
-          <h3 className="card-header">
+          <h4 className="card-header">
             <div className="row">
-            <div className="text-left col-sm-6">
+            <div className="text-left col-sm-8">
             Crédit ouvert
             </div>
-            <div className="text-right col-sm-6">
-                <button className="btn-sm btn-secondary">
-                  Gestion 2021
-                </button>
-              </div>
+            <OuvriExerc/>
             </div>
-          </h3>
+          </h4>
           <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
             <li className="nav-item">
               <a
@@ -223,15 +220,62 @@ const InscriCredit = () => {
                 <div className="card-block">
                 <div className="row form-group">
 
+<div className="col-sm-2">
+  <label className="col-form-label">Chapitre </label>
+</div>
+<div className="col-sm-2">
+  <select 
+  onChange={handleChange} 
+  name="compteNature"
+  value={creds.compteNature}
+  className="form-control"
+ >
+   {natures.map(nature => <option key={nature.id} value={nature.id}>
+     {nature.numeroCompteNature}
+   </option>)}
+    </select>
+   </div>
+
+<div className="col-sm-2">
+  <label className="col-form-label">Article </label>
+</div>
+<div className="col-sm-2">
+  <select 
+  name="compteNature"
+  className="form-control"
+  value={creds.compteNature}
+ >
+   {natures.map(nature => <option key={nature.id} value={nature.id}>
+     {nature.hierachieCompteNature}
+   </option>)}
+    </select>
+   </div>
+<div className="col-sm-2">
+  <label className="col-form-label">Paragraphe </label>
+</div>
+<div className="col-sm-2">
+  <select 
+  name="compteNature"
+  className="form-control"
+  value={creds.compteNature}
+ >
+   {natures.map(nature => <option key={nature.id} value={nature.id}>
+     {nature.sectionCompteNature}
+   </option>)}
+    </select>
+   </div>
+</div>
+                <div className="row form-group">
+
                 <div className="col-sm-2">
-                  <label className="col-form-label">Numéro du comptes </label>
+                  <label className="col-form-label">Numéro du compte choisit </label>
                 </div>
                 <div className="col-sm-2">
                   <select 
                   onChange={handleChange} 
                   name="compteNature"
                   value={creds.compteNature}
-                  className="js-example-basic-single col-sm-12"
+                  className="form-control"
                  >
                    {natures.map(nature => <option key={nature.id} value={nature.id}>
                      {nature.numeroCompteNature}
@@ -239,25 +283,11 @@ const InscriCredit = () => {
                     </select>
                    </div>
              
-                <div className="col-sm-2">
-                  <label className="col-form-label">Hierarchie </label>
-                </div>
-                <div className="col-sm-2">
-                  <select 
-                 disabled="disabled"
-                  name="compteNature"
-                  className="form-control"
-                  value={creds.compteNature}
-                 >
-                   {natures.map(nature => <option key={nature.id} value={nature.id}>
-                     {nature.hierachieCompteNature}
-                   </option>)}
-                    </select>
-                   </div>
+              
                 <div className="col-sm-2">
                   <label className="col-form-label">Section </label>
                 </div>
-                <div className="col-sm-2">
+                <div className="col-sm-6">
                   <select 
                   disabled="disabled"
                   name="compteNature"
@@ -334,4 +364,4 @@ const InscriCredit = () => {
     );
 };
 
-export default InscriCredit;
+export default InscriOuvert;

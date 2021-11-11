@@ -13,19 +13,19 @@ const SidebarSco = () => {
             ACCEUIL </i></div >
           <ul className="pcoded-item pcoded-left-item">
             <li className="pcoded">
-              <a type="button" href="#/sco/contrat" >
+              <a type="button" href="#/sco/contrat/new" >
                 <span className="pcoded-micon"><i className="feather icon-book"/></span>
                 <span className="pcoded-mtext">Contrat</span>
               </a>
               </li>
               <li className="pcoded">
-              <a type="button" href="#/sco/bon-commande" >
+              <a type="button" href="#/sco/bon-commande/new" >
                 <span className="pcoded-micon"><i className="feather icon-home"/></span>
                 <span className="pcoded-mtext">Bon de commande</span>
               </a>
               </li>
               <li className="pcoded">
-              <a type="button" href="#/sco/item-commande" >
+              <a type="button" href="#/sco/item-commande/new" >
                 <span className="pcoded-micon"><i className="feather icon-layers"/></span>
                 <span className="pcoded-mtext">Item de commande</span>
               </a>

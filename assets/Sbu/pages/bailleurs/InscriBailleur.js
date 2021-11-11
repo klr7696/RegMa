@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useState, useEffect } from "react";
 import BailleurAPI from "../../../zservices/bailleurAPI"
+import OuvriExerc from "../Exercice/OuvriExerc";
 
 const InscriBailleur = (props) => {
   const { id = "new" } = props.match.params;
@@ -63,18 +64,14 @@ const InscriBailleur = (props) => {
   return (
     <section id="exp">
     <div className="product-detail-page">
-      <h3 className="card-header">
-        <div className="row">
-        <div className="text-left col-sm-6">
-        BAILLEUR DE FONDS 
-        </div>
-        <div className="text-right col-sm-6">
-            <button className="btn-sm btn-secondary">
-              Gestion 2021
-            </button>
-          </div>
-        </div>
-      </h3>
+    <h4 className="card-header">
+            <div className="row">
+            <div className="text-left col-sm-8">
+           Bailleur de fonds
+            </div>
+            <OuvriExerc/>
+            </div>
+          </h4>
       <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
         <li className="nav-item">
           <a
