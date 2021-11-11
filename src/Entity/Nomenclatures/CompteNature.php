@@ -32,10 +32,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  *     , "patch"={
  *     "input_formats"={"json"={"application/vnd.api+json",
- *     "application/merge-patch+json","application/json","application/ld+json"}
+ *     "application/merge-patch+json","application/json","application/ld+json"},
+ *
 
  *     },
  *    "openapi_context"={"summary"="Abroge une nomenclature existante"},
+ *     "controller"="App\Controller\EssaiController"
  *                      }
  *
  *
@@ -81,8 +83,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * )
  * @ApiFilter(SearchFilter::class, properties={"numeroCompteNature"="exact","sectionCompteNature"="exact","hierachieCompteNature"="exact"} )
- * @UniqueEntity("numeroCompteNature")
- * @UniqueEntity("libelleCompteNature")
+ * @UniqueEntity({"numeroCompteNature","libelleCompteNature"},message="le compte en creation comporte des erreurs")
+ *
  */
 class CompteNature
 {
@@ -190,6 +192,8 @@ class CompteNature
      * @ORM\OneToMany(targetEntity=Imputation::class, mappedBy="compteNature", orphanRemoval=true)
      */
     private $associationImputation;
+
+
 
     public function __construct()
     {
@@ -469,6 +473,18 @@ class CompteNature
         }
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+
+    public function getSousNatureTrue(): int {
+        return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousssnature){
+               return $test + ($sousssnature->getlibelleCompteNature() === "string1" ? 1 : 0);
+
+        },0);
+        //dd( $test);
     }
 
 
