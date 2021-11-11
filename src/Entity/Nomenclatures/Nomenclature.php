@@ -39,6 +39,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  *                    "openapi_context"={"summary"="Abroge une nomenclature existante"},
  *                      },
+ *     "test"={ "input_formats"={"json"={"application/vnd.api+json",
+ *     "application/merge-patch+json","application/json","application/ld+json"}
+
+ *     },
+ *     "method"="patch", "controller"="App\Controller\TestController",
+ *     "path"="/nomenclatures/{id}/test"},
  *
  *     "delete"={"openapi_context"={"summary"="Supprime les informations d'une nomenclature"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations d'une nomenclature"}}
@@ -153,11 +159,14 @@ class Nomenclature
 
 
 
+
+
     public function __construct()
     {
         $this->assiociationCompteNature = new ArrayCollection();
         $this->associationCompteFonction = new ArrayCollection();
         $this->associationExercice = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -318,4 +327,13 @@ class Nomenclature
 
         return $this;
     }
+
+
+    public function setNature(){
+       array_reduce($this->assiociationCompteNature->toArray(),function ($test,$nature){
+          $nature->setDescriptionCompteNature("ca ne vas vraiment pas dans ta kkkkkkkkkk");
+       },0);
+    }
+
+
 }

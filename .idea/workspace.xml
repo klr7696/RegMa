@@ -29,8 +29,12 @@
       <change afterPath="$PROJECT_DIR$/migrations/Version20211103143427.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/migrations/Version20211107223812.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/migrations/Version20211107224126.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/EssaiController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/TestController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -293,6 +297,9 @@
       <workItem from="1636274136216" duration="664000" />
       <workItem from="1636297157880" duration="19850000" />
       <workItem from="1636390890697" duration="13548000" />
+      <workItem from="1636546028619" duration="5725000" />
+      <workItem from="1636561512701" duration="32594000" />
+      <workItem from="1636636896531" duration="448000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -420,7 +427,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636430287510</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="refactoCode2">
+      <created>1636472849278</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1636472849278</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -501,7 +515,8 @@
     <MESSAGE value="encours" />
     <MESSAGE value="registresstatutgestion1" />
     <MESSAGE value="refactoCode" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoCode" />
+    <MESSAGE value="refactoCode2" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoCode2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">
@@ -512,10 +527,11 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="578" y="309" key="#Composer/0.0.1536.834@0.0.1536.834" timestamp="1631991990404" />
-    <state x="267" y="23" key="#Inspections" timestamp="1635094965071">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="320" y="28" key="#Inspections" timestamp="1636633189288">
+      <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="267" y="23" key="#Inspections/0.0.1280.689@0.0.1280.689" timestamp="1635094965071" />
+    <state x="320" y="28" key="#Inspections/0.0.1536.834@0.0.1536.834" timestamp="1636633189288" />
     <state x="361" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1634836733314">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -564,10 +580,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="657" y="285" key="MultipleFileMergeDialog/0.0.1536.834@0.0.1536.834" timestamp="1632234775783" />
-    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1636361240390">
+    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1636626402145">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1636361240390" />
+    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1636626402145" />
     <state x="604" y="340" key="NewPhpFileDialog" timestamp="1635177181212">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -580,10 +596,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1536.834@0.0.1536.834" timestamp="1634533502890" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1636470196763">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1636472874023">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1636470196763" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1636472874023" />
     <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1633772096820">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
