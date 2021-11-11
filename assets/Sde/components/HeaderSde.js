@@ -28,31 +28,8 @@ const HeaderSde = () => {
       </a>
     </li>
   
-  
       </ul>
       <ul className="nav-right">
-        <li className="header-notification">
-          <div className="dropdown-primary dropdown">
-            <div className="dropdown-toggle" data-toggle="dropdown">
-              <i className="feather icon-bell" />
-              <span className="badge bg-c-pink">2</span>
-            </div>
-            <ul className="show-notification notification-view dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-              <li>
-                <h6>Notifications</h6>
-                <label className="label label-danger">New</label>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li className="header-notification">
-          <div className="dropdown-primary dropdown">
-            <div className="displayChatbox dropdown-toggle" data-toggle="dropdown">
-              <i className="feather icon-message-square" />
-              <span className="badge bg-c-green">3</span>
-            </div>
-          </div>
-        </li>
         <li className="user-profile header-notification">
           <div className="dropdown-primary dropdown">
             <div className="dropdown-toggle" data-toggle="dropdown">
@@ -91,4 +68,4 @@ const HeaderSde = () => {
      );
 }
  
-export default HeaderSco;
+export default HeaderSde;

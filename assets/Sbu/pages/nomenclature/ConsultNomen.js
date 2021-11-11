@@ -19,7 +19,7 @@ const ConsultNomen = ({ history }) => {
       setNomens(data);
       toast.success("liste chargée avec succès");
     } catch(error) {
-      console.log(error.response);
+      console.log(error);
     }
   }
 

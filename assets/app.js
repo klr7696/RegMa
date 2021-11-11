@@ -7,6 +7,7 @@ import Load from "./Load";
 import AppSbu from "./Sbu/AppSbu";
 import AppSco from "./Sco/AppSco";
 import AppScp from "./Scp/AppScp";
+import AppSde from "./Sde/AppSde";
 import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/sbu" component={AppSbu}/>
           <Route path="/scp" component={AppScp}/>
           <Route path="/sco" component={AppSco}/>
+          <Route path="/sde" component={AppSde}/>
           <Route component={AppAuth}/>
         </Switch>
   </HashRouter>

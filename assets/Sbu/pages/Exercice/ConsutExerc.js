@@ -21,7 +21,14 @@ const ConsultExerc = () =>{
   return (
   <section id="exp">
   <div className="product-detail-page">
-   <OuvriExerc/>
+  <h3 className="card-header">
+            <div className="row">
+            <div className="text-left col-sm-8">
+            Exercice
+            </div>
+            <OuvriExerc/>
+            </div>
+          </h3>
     <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
     <li className="nav-item">
           <a

@@ -32,7 +32,7 @@ const SidebarScp = () => {
                   </a>
                 </li>
                 <li className="">
-                  <a href="#/livres/liste">
+                  <a href="#/scp/exception-marche">
                   <i className="fa fa-crosshairs"></i>
                     <span className="pcoded-mtext">Exception de Marché</span>
                   </a>
@@ -47,25 +47,25 @@ const SidebarScp = () => {
               </a>
               <ul className="pcoded-submenu">
                 <li className="">
-                  <a href="#/scp/projet">
+                  <a href="#/scp/projet-marche/new">
                   <i className="fa fa-minus-square-o"></i>
                     <span className="pcoded-mtext">Projet de Marché</span>
                   </a>
                 </li>
                 <li className="">
-                  <a href="#/livres/liste">
+                  <a href="#/scp/activite-projet/new">
                   <i className="feather icon-list"></i>
                     <span className="pcoded-mtext">Activité du projet</span>
                   </a>
                 </li>
                 <li className="">
-                  <a href="#/livres/liste">
+                  <a href="#/scp/decision-marche/new">
                   <i className="fa fa-legal"></i>
                     <span className="pcoded-mtext">Decision de marché</span>
                   </a>
                 </li>
                 <li className="">
-                  <a href="#/livres/liste">
+                  <a href="#/scp/mode-passation/new">
                   <i className="fa fa-mail-forward"></i>
                     <span className="pcoded-mtext">Mode de passation</span>
                   </a>
@@ -80,19 +80,19 @@ const SidebarScp = () => {
               </a>
               <ul className="pcoded-submenu">
                 <li className="">
-                  <a href="#/livre/new">
+                  <a href="#/scp/soumissionaire/new">
                   <i className="fa fa-male"></i>
                     <span className="pcoded-mtext">Soumissionaire</span>
                   </a>
                 </li>
                 <li className="">
-                  <a href="#/livres/liste">
+                  <a href="#/scp/soumission/new">
                   <i className="fa fa-list-alt"></i>
                     <span className="pcoded-mtext">Soumission</span>
                   </a>
                 </li>
                 <li className="">
-                  <a href="#/scp/offre">
+                  <a href="#/scp/offre-marche/new">
                   <i className="fa fa-envelope-o"></i>
                     <span className="pcoded-mtext">Offre de marche</span>
                   </a>
@@ -107,19 +107,19 @@ const SidebarScp = () => {
               </a>
               <ul className="pcoded-submenu">
                 <li className="">
-                  <a href="#/livre/new">
+                  <a href="#/scp/membre/new">
                   <i className="icofont icofont-businessman"></i>
                     <span className="pcoded-mtext">Membre</span>
                   </a>
                 </li>
                 <li className="">
-                  <a href="#/livres/liste">
+                  <a href="#/scp/commission/new">
                   <i className="icofont icofont-company"></i>
                     <span className="pcoded-mtext">Commission</span>
                   </a>
                 </li>
                 <li className="">
-                  <a href="#/livres/liste">
+                  <a href="#/scp/participant/new">
                   <i className="icofont icofont-businessman"></i>
                     <span className="pcoded-mtext">Participant</span>
                   </a>

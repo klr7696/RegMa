@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Switch, withRouter } from "react-router";
 import HeaderSbu from "./components/HeaderSbu";
 import SidebarSbu from "./components/SidebarSbu";
-import CompteFonction from "./pages/CompteFonction";
 import InscriBailleur from "./pages/bailleurs/InscriBailleur";
 import ConsultBaill from "./pages/bailleurs/ConsultBailleur";
 import InscriNomen from "./pages/nomenclature/InscriNomen";
@@ -18,14 +17,15 @@ import ConsultExerc from "./pages/Exercice/ConsutExerc";
 import OuvriExerc from "./pages/Exercice/OuvriExerc";
 import InscriRessource from "./pages/previsionDepense/InscriRessource";
 import ConsultRessource from "./pages/previsionDepense/ConsultRessource";
-import InscriCredit from "./pages/previsionDepense/InscriCredit";
-import ConsutCredit from "./pages/previsionDepense/ConsutCredit";
 import InscriAlloc from "./pages/previsionDepense/InscriAlloc";
-import ConsutAlloc from "./pages/previsionDepense/ConsutAlloc";
 import ConsultRegistre from "./pages/consultRegistre/ConsultRegistre";
 import ConsultAlloue from "./pages/consultRegistre/ConsultAlloue";
 import ConsultOuvert from "./pages/consultRegistre/ConsultOuvert";
 import ConsultAutorise from "./pages/consultRegistre/ConsultAutorise";
+import InscriAutoris from "./pages/previsionDepense/InscriAutoris";
+import ConsultAutoris from "./pages/previsionDepense/ConsultAutoris";
+import ConsultAlloc from "./pages/previsionDepense/ConsultAlloc";
+import InscriOuvert from "./pages/previsionDepense/InscriOuvert";
 
 const AppSbu = (props) =>{
     return (
@@ -89,10 +89,6 @@ const AppSbu = (props) =>{
                           path={`${props.match.url}/clos-exercice`}
                           component={ClosExerc}
                         />
-                        <Route
-                          path={`${props.match.url}/compte-fonction`}
-                          component={CompteFonction}
-                        />
                          <Route
                           path={`${props.match.url}/ouvr`}
                           component={OuvriExerc}
@@ -107,11 +103,11 @@ const AppSbu = (props) =>{
                         />
                         <Route
                           path={`${props.match.url}/credit-ouvert/:id`}
-                          component={InscriCredit}
+                          component={InscriOuvert}
                         />
                           <Route
                           path={`${props.match.url}/credit-ouvert`}
-                          component={ConsutCredit}
+                          component={ConsultOuvert}
                         />
                         <Route
                           path={`${props.match.url}/credit-alloue/:id`}
@@ -119,7 +115,15 @@ const AppSbu = (props) =>{
                         />
                          <Route
                           path={`${props.match.url}/credit-alloue`}
-                          component={ConsutAlloc}
+                          component={ConsultAlloc}
+                        />
+                        <Route
+                          path={`${props.match.url}/credit-autorise/:id`}
+                          component={InscriAutoris}
+                        />
+                         <Route
+                          path={`${props.match.url}/credit-autorise`}
+                          component={ConsultAutoris}
                         />
                          <Route
                           path={`${props.match.url}/registres-ressources`}

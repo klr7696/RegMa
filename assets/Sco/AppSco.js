@@ -4,8 +4,14 @@ import { Route, Switch, withRouter } from 'react-router';
 import HeaderSco from './components/HeaderSco';
 import SidebarSco from './components/SidebarSco';
 import BonCommande from './pages/BonCommande';
+import ConsultBon from './pages/BonCommande/ConsultBon';
+import InscriBon from './pages/BonCommande/InscriBon';
 import Contrat from './pages/Contrat';
+import ConsultContrat from './pages/Contrat/ConsultContrat';
+import InscriContrat from './pages/Contrat/InscriContrat';
 import ItemCommande from './pages/ItemCommande';
+import ConsultItem from './pages/ItemCommande/ConsultItem';
+import InscriItem from './pages/ItemCommande/InscriItem';
 
 class AppSco extends Component {
   render() {
@@ -21,16 +27,28 @@ class AppSco extends Component {
                   <div className="main-body">
                     <Switch>
                       <Route
+                        path={`${this.props.match.url}/contrat/:id`}
+                        component={InscriContrat}
+                      />
+                       <Route
                         path={`${this.props.match.url}/contrat`}
-                        component={Contrat}
+                        component={ConsultContrat}
+                      />
+                       <Route
+                        path={`${this.props.match.url}/bon-commande/:id`}
+                        component={InscriBon}
                       />
                        <Route
                         path={`${this.props.match.url}/bon-commande`}
-                        component={BonCommande}
+                        component={ConsultBon}
+                      />
+                      <Route
+                        path={`${this.props.match.url}/item-commande/:id`}
+                        component={InscriItem}
                       />
                       <Route
                         path={`${this.props.match.url}/item-commande`}
-                        component={ItemCommande}
+                        component={ConsultItem}
                       />
                     </Switch>
                   </div>

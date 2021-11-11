@@ -22,7 +22,7 @@ const OuvriExerc = () => {
 
 
   return (
-        <div className="text-right col-sm-12">
+           <div className="text-left col-sm-4">
                   <select 
                   disabled="disabled"
                   name="exerciceRegistre"
