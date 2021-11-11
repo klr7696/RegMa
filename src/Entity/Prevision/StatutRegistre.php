@@ -49,6 +49,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  *      "registreOuvert"={"method"="get", "path"="/registats/registre_ouvert","datetime_format"="Y-m-d",
  *     "order"={"id"="DESC"},
+ *     "normalization_context"={"groups"={"registre_ouvert:read"}},
  *     "openapi_context"={"summary"="Affiche le registre en cours pour un registre en cours.
  * Utiliser au niveau des ressources=estEncours=true&exerciceRegistre.estOuvert=true
  *    pour changer le statut d’un registre=estEncours=true&exerciceRegistre.estOuvert=true&statut=Primitif
