@@ -480,12 +480,21 @@ class CompteNature
      */
 
     public function getSousNatureTrue(): int {
-        return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousssnature){
-               return $test + ($sousssnature->getlibelleCompteNature() === "string1" ? 1 : 0);
-
+        return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousnature){
+               return $test + ($sousnature->getlibelleCompteNature() === "string1" ? 1 : 0);
+            $sousnature->getSousCompteNature()->count();
         },0);
-        //dd( $test);
+
+
+
+        $ver=  $data->getSousNatureTrue();
+        if($ver === $essai || $ver === 0 ){
+            $data->setLibelleCompteNature("t'es vraiment bête toi");
+
     }
+
+
+
 
 
 }

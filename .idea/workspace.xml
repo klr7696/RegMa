@@ -32,6 +32,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Previsions/ClotureRegistreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Previsions/ClotureRegistreController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TestController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +50,7 @@
     <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="essaiencours" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -303,6 +307,7 @@
       <workItem from="1636546028619" duration="5725000" />
       <workItem from="1636561512701" duration="32594000" />
       <workItem from="1636636896531" duration="448000" />
+      <workItem from="1636641984452" duration="6276000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -437,7 +442,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636472849278</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="gestionNomenclatureFinish2">
+      <created>1636640952105</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1636640952105</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -508,7 +520,8 @@
     <MESSAGE value="registresstatutgestion1" />
     <MESSAGE value="refactoCode" />
     <MESSAGE value="refactoCode2" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoCode2" />
+    <MESSAGE value="gestionNomenclatureFinish2" />
+    <option name="LAST_COMMIT_MESSAGE" value="gestionNomenclatureFinish2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">
@@ -588,18 +601,18 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1536.834@0.0.1536.834" timestamp="1634533502890" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1636637784782">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1636640990516">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1636637784782" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1636640990516" />
     <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1636637701545">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1636637701545" />
-    <state x="508" y="205" key="git4idea.merge.GitPullDialog" timestamp="1636637822782">
+    <state x="508" y="205" key="git4idea.merge.GitPullDialog" timestamp="1636640968955">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="508" y="205" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1636637822782" />
+    <state x="508" y="205" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1636640968955" />
     <state x="356" y="185" key="run.anything.popup" timestamp="1635587377766">
       <screen x="0" y="0" width="1536" height="834" />
     </state>

@@ -15,17 +15,8 @@ class TestController
     public function __invoke(Nomenclature $data):Nomenclature
             {
 
-              $data->setNature();
+              $data->initialiseNatureAffecter();
               return $data;
-               // $this->__invoke();
-             // $test= $data->getAssiociationCompteNature()->getIterator();
-             /* while ($test->valid())
-              {
-                  dd($nature->);
-                  $test->next();
-              }*/
-
-
 
             }
 

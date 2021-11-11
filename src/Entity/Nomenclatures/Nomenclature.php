@@ -329,11 +329,36 @@ class Nomenclature
     }
 
 
-    public function setNature(){
+    public function initialiseNatureAffecter(){
        array_reduce($this->assiociationCompteNature->toArray(),function ($test,$nature){
-          $nature->setDescriptionCompteNature("ca ne vas vraiment pas dans ta kkkkkkkkkk");
+           $sous=$nature->getsousCompteNature();
+               $chap= $sous->getIterator();
+          while ($chap->valid())
+           //if()
+           {
+              array_reduce($sous->toArray(),function ($test,$article){
+
+                  $sousfils= $article->getsousCompteNature();
+                  $art = $sousfils->getIterator();
+                  while ($art->valid()){
+
+                      array_reduce($sousfils->toArray(),function ($test, $paragrah){
+                          $paragrah->setDescriptionCompteNature("je compte sur toit");
+                      }, 0);
+                      $art->next();
+                  }
+                  $article->setDescriptionCompteNature("je compte sur toit");
+
+              },0);
+
+              $chap->next();
+          }
+           $nature->setDescriptionCompteNature("je compte sur toit");
        },0);
     }
+
+
+
 
 
 }
