@@ -39,12 +39,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  *                    "openapi_context"={"summary"="Abroge une nomenclature existante"},
  *                      },
- *     "test"={ "input_formats"={"json"={"application/vnd.api+json",
- *     "application/merge-patch+json","application/json","application/ld+json"}
-
- *     },
- *     "method"="patch", "controller"="App\Controller\TestController",
- *     "path"="/nomenclatures/{id}/test"},
+ *
  *
  *     "delete"={"openapi_context"={"summary"="Supprime les informations d'une nomenclature"}},
  *     "put"={"openapi_context"={"summary"="Modifie les informations d'une nomenclature"}}
@@ -348,17 +343,17 @@ class Nomenclature
                   while ($art->valid()){
 
                       array_reduce($sousfils->toArray(),function ($test, $paragrah){
-                          $paragrah->setDescriptionCompteNature("la chance veut pas me sourir");
+                          $paragrah->getEstAffecter(false);
                       }, 0);
                       $art->next();
                   }
-                  $article->setDescriptionCompteNature("la chance veut pas me sourir");
+                  $article->getEstAffecter(false);
 
               },0);
 
               $chap->next();
           }
-           $nature->setDescriptionCompteNature("la chance veut pas me sourir");
+           $nature->getEstAffecter(false);
        },0);
     }
 

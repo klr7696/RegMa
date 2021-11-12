@@ -43,6 +43,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  *
  *     ,"inscription"={ "method"="post", "path"="/autorisations/inscription",
+ *     "controller"="App\Controller\Previsions\InscriptionAutorisaton",
  *     "openapi_context"={"summary"="Crée une autorisation"},},
  *
  *     "actualisation"={"method"="post","path"="/autorisations/actualise",

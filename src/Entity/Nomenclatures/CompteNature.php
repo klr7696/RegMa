@@ -37,7 +37,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
  *     },
  *    "openapi_context"={"summary"="Abroge une nomenclature existante"},
- *     "controller"="App\Controller\EssaiController"
+ *
  *                      }
  *
  *
@@ -192,6 +192,16 @@ class CompteNature
      * @ORM\OneToMany(targetEntity=Imputation::class, mappedBy="compteNature", orphanRemoval=true)
      */
     private $associationImputation;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $creditAffect = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $AutoAffect = false;
 
 
 
@@ -475,32 +485,93 @@ class CompteNature
         return $this;
     }
 
+    public function getCreditAffect(): ?bool
+    {
+        return $this->creditAffect;
+    }
+
+    public function setCreditAffect(bool $creditAffect): self
+    {
+        $this->creditAffect = $creditAffect;
+
+        return $this;
+    }
+
+    public function getAutoAffect(): ?bool
+    {
+        return $this->AutoAffect;
+    }
+
+    public function setAutoAffect(bool $AutoAffect): self
+    {
+        $this->AutoAffect = $AutoAffect;
+
+        return $this;
+    }
+
+
     /**
      * @return int
      */
     public function compteValeur(): int {
         return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousnature) {
-            return $test + ($sousnature->getlibelleCompteNature() === "string1" ? 1 : 0);
+            return $test + ($sousnature->getCreditAffect() === true ? 1 : 0);
 
         },0);
          }
 
-       /**
-       * @return bool
-       */
-         public function getSousNatureTrue(): bool
-     {
-        $essai = $this->sousCompteNature->count();
-        $test= $this->compteValeur();
-           if ($test === $essai || $test === 0) {
-              //  $sousnature->setLibelleCompteNature("tu va marcher n'escepas");
+
+    /**
+     * @return int
+     */
+    public function compteValeurAuto(): int {
+        return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousnature) {
+            return $test + ($sousnature->getOuvreAffect() === true ? 1 : 0);
+
+        },0);
+    }
+
+        public function retourBoul(int $concer)
+        {
+            $tout= $this->sousCompteNature->count();
+            if ($tout === $concer || $tout === 0){
                 return true;
-            }
-            else {
-                return false;
-                }
+            }else return false;
 
         }
+
+
+
+
+        /**
+        * @return bool
+        */
+         public function getSousNatureTrue(): bool
+     {
+         $test= $this->compteValeur();
+       return $this->retourBoul($test);
+       //$test === 0 ||
+           /*if ($test === $essai || $essai === 0  ) {
+              //  $sousnature->setLibelleCompteNature("tu va marcher n'escepas");
+                return true;
+            } else return false;*/
+
+
+        }
+
+            /**
+             * @return bool
+             */
+        public function getAutoTrue(): bool
+        {
+            $auto= $this->compteValeurAuto();
+            return $this->retourBoul($auto);
+        }
+
+
+
+
+
 
 
 
