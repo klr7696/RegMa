@@ -65,12 +65,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "path"="/ressources/{id}/ouverts",
  *     "openapi_context"={"summary"="listes les credits ouverts d'une ressource"}
  *     },
-        "association_imputations_get_subresource"={}
+        "association_imputations_get_subresource"={},
+ *     "api_bailleurs_association_ressources_get_subresource"=
+ *      {
+ *     "normalization_context"={"groups"={"bailleur_ressource:read"}}
+ *      }
  *     }
  * )
  * @ORM\Entity(repositoryClass=RessourceFinanciereRepository::class)
  * @ApiFilter(BooleanFilter::class, properties={"exerciceRegistre.estOuvert",
- *     "statutRegistre.estEncours","estValide"})
+ *     "statutRegistre.estEnCours","estValide","exerciceRegistre.associationStatut.estEnCours","exerciceRegistre.associationStatut.estActualisable"})
  */
 class RessourceFinanciere
 {
@@ -80,7 +84,8 @@ class RessourceFinanciere
      * @ORM\Column(type="integer")
      * @Groups({"ressource_detail:read","actifressource:read",
      *     "resencours:read","infos:read","regisress:read",
-     *     "ressouvre:read","autoalloc:read","ress_actualise"})
+     *     "ressouvre:read","autoalloc:read","ress_actualise",
+     * "bailleur_ressource:read"})
      */
     private $id;
 
@@ -89,8 +94,8 @@ class RessourceFinanciere
      * @Groups({"ressource_detail:read","ressource_detail:write",
      *     "actualise:write","bailleurs_detail:read",
      *     "actifressource:read","resencours:read","infos:read",
-     *     "regisress:read","autoalloc:read","ress_actualise"
-     *      })
+     *     "regisress:read","autoalloc:read","ress_actualise",
+     *     "bailleur_ressource:read" })
      */
     private $objetFinancement;
 
@@ -98,7 +103,7 @@ class RessourceFinanciere
      * @ORM\Column(type="string", length=100)
      *  @Groups({"ressource_detail:read","ressource_detail:write",
      *     "actualise:write","actifressource:read","resencours:read",
-     *     "regisress:read","ress_actualise"})
+     *     "regisress:read","ress_actualise","bailleur_ressource:read"})
      */
     private $modeFinancement;
 
@@ -106,7 +111,7 @@ class RessourceFinanciere
      * @ORM\Column(type="float")
      *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write",
      *     "actifressource:read","resencours:read","regisress:read","autoalloc:read",
-     *    "ress_actualise" })
+     *    "ress_actualise","bailleur_ressource:read" })
      * @Assert\Type(type="numeric",message="veuillez entrer une somme correct")
      */
     private $montantFinancement;
@@ -114,7 +119,7 @@ class RessourceFinanciere
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      *  @Groups({"ressource_detail:read","ressource_detail:write",
-     *     "actualise:write","regisress:read"})
+     *     "actualise:write","regisress:read","bailleur_ressource:read"})
      */
     private $descriptionFinancement;
 
@@ -122,7 +127,7 @@ class RessourceFinanciere
      * @ORM\ManyToOne(targetEntity=ExerciceRegistre::class, inversedBy="associationRessource")
      * @ORM\JoinColumn(nullable=false)
      *  @Groups({"ressource_detail:read","ressource_detail:write",
-     *     "actualise:write","resencours:read"})
+     *     "actualise:write","resencours:read","bailleur_ressource:read"})
      */
     private $exerciceRegistre;
 

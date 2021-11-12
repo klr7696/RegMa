@@ -83,7 +83,7 @@ class ExerciceRegistre
      * @ORM\Column(type="integer")
      * @Groups({"registre_detail:read","actifnomen:read","registre_ouvert:read",
      *     "actifressource:read","resencours:read","autoencours:read",
-     *     "registre_collect:read","ress_actualise"})
+     *     "registre_collect:read","ress_actualise","bailleur_ressource:read"})
      */
     private $id;
 
@@ -96,7 +96,7 @@ class ExerciceRegistre
      *     "actifnomen:read",
      *     "registre_ouvert:read","registre_detail:read","resencours:read",
      *     "autoencours:read","registre_collect:read","registreouvre:write",
-     * "ress_actualise"})
+     * "ress_actualise","bailleur_ressource:read"})
      *
      */
     private $anneeExercice;
@@ -139,7 +139,7 @@ class ExerciceRegistre
     private $nomenclature;
     /**
      * @ORM\OneToMany(targetEntity=StatutRegistre::class, mappedBy="exerciceRegistre", orphanRemoval=true,cascade={"persist", "remove"})
-     * @Groups({"registreouvre:write"})
+     * @Groups({"registreouvre:write","bailleur_ressource:read"})
      * @ApiSubresource()
      */
     private $associationStatut;
@@ -149,7 +149,7 @@ class ExerciceRegistre
      *
      * @Groups({ "registre_ouvert:read","registre_detail:read","actifressource:read",
      *     "resencours:read","autoencours:read","registre_collect:read",
-     *     "registre_cloture:write","ress_actualise"})
+     *     "registre_cloture:write","ress_actualise","bailleur_ressource:read"})
      */
     private $estOuvert = true;
 

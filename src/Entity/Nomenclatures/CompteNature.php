@@ -37,7 +37,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
  *     },
  *    "openapi_context"={"summary"="Abroge une nomenclature existante"},
- *     "controller"="App\Controller\EssaiController"
+ *
  *                      }
  *
  *
@@ -192,6 +192,16 @@ class CompteNature
      * @ORM\OneToMany(targetEntity=Imputation::class, mappedBy="compteNature", orphanRemoval=true)
      */
     private $associationImputation;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $creditAffect = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $AutoAffect = false;
 
 
 
@@ -475,17 +485,118 @@ class CompteNature
         return $this;
     }
 
-    /**
-     * @return int
-     */
+    public function getCreditAffect(): ?bool
+    {
+        return $this->creditAffect;
+    }
 
-    public function getSousNatureTrue(): int {
-        return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousssnature){
-               return $test + ($sousssnature->getlibelleCompteNature() === "string1" ? 1 : 0);
+    public function setCreditAffect(bool $creditAffect): self
+    {
+        $this->creditAffect = $creditAffect;
 
-        },0);
-        //dd( $test);
+        return $this;
+    }
+
+    public function getAutoAffect(): ?bool
+    {
+        return $this->AutoAffect;
+    }
+
+    public function setAutoAffect(bool $AutoAffect): self
+    {
+        $this->AutoAffect = $AutoAffect;
+
+        return $this;
     }
 
 
-}
+    /**
+     * @return int
+     */
+    public function compteValeur(): int {
+        return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousnature) {
+            return $test + ($sousnature->getCreditAffect() === true ? 1 : 0);
+
+        },0);
+         }
+
+            /**
+             * @return int
+             */
+         public function pereTest(): int
+         {
+            $this->getCompteNature()->getSousCompteNature()->toArray();
+            return array_reduce($this->getCompteNature()->getSousCompteNature()->toArray(), function ($test, $sousnature) {
+
+                return $test + ($sousnature->getCreditAffect() === true ? 1 : 0);
+
+             },0);
+         }
+
+            /**
+             * @return bool
+             */
+         public function boolPer(int $per):bool
+         {
+             $tout= $this->getCompteNature()->getSousCompteNature()->count();
+             if ($tout === $per || $tout === 0){
+                 return true;
+             } else return false;
+
+         }
+
+
+
+                /**
+                 * @return bool
+                 */
+         public function essaiTest(): bool
+                    {
+                        $per= $this->pereTest() + 1;
+                       return $this->boolPer($per);
+                    }
+
+    /**
+     * @return int
+     */
+    public function compteValeurAuto(): int {
+        return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousnature) {
+            return $test + ($sousnature->getOuvreAffect() === true ? 1 : 0);
+
+        },0);
+    }
+
+        public function retourBoul(int $concer)
+        {
+            $tout= $this->sousCompteNature->count();
+            if ($tout === $concer || $tout === 0){
+                return true;
+            } else return false;
+
+        }
+
+
+
+
+        /**
+        * @return bool
+        */
+         public function getSousNatureTrue(): bool
+        {
+            $test= $this->compteValeur();
+
+            return $this->retourBoul($test);
+        }
+
+            /**
+             * @return bool
+             */
+        public function getAutoTrue(): bool
+        {
+            $auto= $this->compteValeurAuto();
+            return $this->retourBoul($auto);
+        }
+
+
+
+ }

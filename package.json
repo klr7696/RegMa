@@ -20,7 +20,7 @@
     "dependencies": {
         "@syncfusion/ej2-base": "^19.3.43",
         "@syncfusion/ej2-react-treegrid": "^19.3.45",
-        "axios": "^0.18.0",
+        "axios": "^0.24.0",
         "jquery": "^3.6.0",
         "jwt-decode": "^3.1.2",
         "moment": "^2.29.1",
