@@ -8,7 +8,7 @@ const OuvriExerc = () => {
 
     try{
   const data = await axios
-  .get("http://localhost:8000/api/registres/ouvert?estEnCours=true&exerciceRegistre.estOuvert=true")
+  .get("http://localhost:8000/api/registats/registre_ouvert")
   //.then(reponse => console.log(reponse));
   .then(response => response.data['hydra:member'])
    setExers(data);

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import OuvriExerc from '../Exercice/OuvriExerc';
+import './main.js'
 
 const InscriOuvert = () => {
 
@@ -13,43 +14,40 @@ const InscriOuvert = () => {
     
       const [error, setErrors] = useState("");
 
-      const [finans, setFinans] = useState([]);
-    
+      const [bailleurs, setBailleurs] = useState([]);
+
       const fetchFinans = async () => {
         try{
       const data = await axios
-      .get("http://localhost:8000/api/ressources/encours")
+      .get("http://localhost:8000/api/bailleurs")
+      .then(response => response.data["hydra:member"]);
+        setBailleurs(data);
+        } catch (error) {
+        console.log(error.response);
+        }
+      };
+
+      const [finans, setFinans] = useState([]);
+
+      const fetchFinans = async () => {
+        try{
+      const data = await axios
+      .get(`http://localhost:8000/api/bailleurs/${id}/ressources`)
+     // .then(response => response.data["hydra:member"])
       .then(response => response.data["hydra:member"]);
         setFinans(data);
         } catch (error) {
         console.log(error.response);
         }
       };
-    
       useEffect(() =>{
           fetchFinans();
       }, []);
-    
+
       const handleChange = ({ currentTarget }) => {
         const { name, value } = currentTarget;
         setCreds({...creds, [name]: value });
       };
-      const [status, setStatus] = useState([]);
-
-  const fetchStatus = async () => {
-    try{
-  const data = await axios
-  .get("http://localhost:8000/api/registat/actif")
-  .then(response => response.data["hydra:member"]);
-  setStatus(data)
-    } catch (error) {
-    console.log(error);
-    }
-  };
-
-  useEffect(() =>{
-      fetchStatus();
-  }, []);
 
     const [natures, setNatures] = useState([]);
 
@@ -86,8 +84,8 @@ const InscriOuvert = () => {
           console.log(error.response);
           setErrors("Erreur de Saisie")
         }
-      };
-
+      }
+     
     return (
         <section id="exp">
         <div className="product-detail-page">
@@ -137,83 +135,60 @@ const InscriOuvert = () => {
           <div className="row">
             <div className="col-sm-12">
              
-             
                 <form onSubmit={handleSubmit} >
-               
                 <div className="card">
                 <div className="card-block">
+                  
                   <div className="row form-group">
                     <div className="col-sm-2">
                   <label className="col-form-label">Bailleur *</label>
                     </div>
                     <div className="col-sm-4">
                     <select 
-                 // disabled="disabled"
-                  onChange={handleChange} 
-                  name="ressourceFinanciere"
-                  id="ressourceFinanciere"
-                  value={creds.ressourceFinanciere}
-                  className="form-control"
-                 > <option value="">Choisir ...</option>
-                   {finans.map(finan => <option key={finan.id} value={finan.id}>
-                     {finan.bailleurFonds.sigleBailleur}
-                   </option>)}
+                    id="bailleurs"
+                    onChange={handleChange} 
+                    value={creds.ressourceFinanciere}
+                    name="ressourceFinanciere"
+                    className="form-control linked-select" 
+                    data-target="#ressources"
+                    data-source="/api/bailleurs/actifressource"
+                    >
+                       {finans.map(finan => <option key={finan.id} value={finan.id}>
+                      {finan.sigleBailleur}
+                            </option>)} 
                     </select>
                     </div>
-                    <div className="col-sm-2">
+                  <div className="col-sm-2">
                    <label className="col-form-label">Objet *</label>
-                    </div>
+                  </div>
                     <div className="col-sm-4">
                   <select 
-                   disabled="disabled"
+                  id="ressources"
                   onChange={handleChange} 
-                  name="ressourceFinanciere"
-                  id="ressourceFinanciere"
+                  name="ressources"
                   value={creds.ressourceFinanciere}
                   className="form-control"
-                 ><option value="">...</option>
-                   {finans.map(finan => <option key={finan.id} value={finan.id}>
-                     {finan.objetFinancement}
-                   </option>)}
+                  >
+
                     </select>
                    </div>
                     
                   </div>
-                  <div className="row form-group">
+                {/*  <div className="row form-group">
                 <div className="col-sm-2">
                   <label className="col-form-label">Montant (FCFA)</label>
                 </div>
                 <div className="col-sm-4">
                   <select 
-                   disabled="disabled"
                   onChange={handleChange} 
                   name="ressourceFinanciere"
-                  id="ressourceFinanciere"
+                  id="montant"
                   value={creds.ressourceFinanciere}
                   className="form-control"
-                 ><option value="">...</option>
-                   {finans.map(finan => <option key={finan.id} value={finan.id}>
-                     {finan.objetFinancement}
-                   </option>)}
+                 >
                     </select>
                    </div>
-                   <div className="col-sm-2">
-                  <label className="col-form-label">Exercice</label>
-                </div>
-                <div className="col-sm-4">
-                    <select 
-                  disabled="disabled"
-                  id="exerciceRegistre"
-                    onChange={handleChange} 
-                    name="exerciceRegistre"
-                    className={"form-control"}
-                   >
-                     {status.map(exerc => <option key={exerc.id} value={exerc.id}>
-                       {exerc.statut} {exerc.exerciceRegistre.anneeExercice}
-                     </option>)}
-                      </select>
-                     </div>
-                </div>
+                </div>*/}
                 </div>
                 </div>
                 <div className="card">
@@ -323,12 +298,14 @@ const InscriOuvert = () => {
                 </div>
                 <div className="col-sm-4">
                   <input 
-                  id="montantInscription"
-                  type="number"
+                  id="space"
+                  type="text"
                   name="montantInscription"
                   value={creds.montantInscription}
                   onChange={handleChange}
-                  className={"form-control" + (error && " is-invalid")} />
+                  data-a-dec="." 
+                  data-a-sep=" "
+                  className={"currency form-control" + (error && " is-invalid")} />
                 </div>
                 </div>
                 <div className="row form-group">
@@ -360,6 +337,7 @@ const InscriOuvert = () => {
           </div>
         </div>
       </div>
+
     </section>
     );
 };

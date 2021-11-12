@@ -25,7 +25,7 @@ const [editing, setEditing] = useState (false);
   const data = await axios.get("http://localhost:8000/api/registres/" + id)
   .then(response => response.data);
   
-  const { anneeExercice, ordonateurExercice, dateVote, dateAdoption,
+  const { anneeExercice, ordonaturExercice, dateVote, dateAdoption,
     description, nomenclature } = data;
     
     setExercs({ anneeExercice, ordonateurExercice, dateVote, dateAdoption,
@@ -73,11 +73,11 @@ const [editing, setEditing] = useState (false);
       if(editing){
        await  ExercAPI.update(id, exercs);
        toast.success("Exercice Modifié");
-       history.replace("/sbu/exercices");
+       history.replace("/sbu/exercice");
       }else{
         const response = await  ExercAPI.create({...exercs, nomenclature:`/api/nomenclatures/${exercs.nomenclature}`});
        toast.success("Exercice Ajouté");
-       history.replace("/sbu/exercices");
+       history.replace("/sbu/exercice");
        console.log(response.data);
     } 
   }catch(error) {

@@ -46,7 +46,7 @@ const InscriRessource = (props) => {
   const fetchBailleurs = async () => {
     try{
   const data = await axios
-  .get("http://localhost:8000/api/bailleurs")
+  .get("http://localhost:8000/api/bailleurs/actifressource")
   .then(response => response.data["hydra:member"]);
   setBailleurs(data)
   if(!finans.bailleurFonds) setFinans({...finans, bailleurFonds:data[0].id})
@@ -64,7 +64,7 @@ const InscriRessource = (props) => {
   const fetchStatus = async () => {
     try{
   const data = await axios
-  .get("http://localhost:8000/api/registat/actif")
+  .get("http://localhost:8000/api/registats/registre_ouvert")
   .then(response => response.data["hydra:member"]);
   setStatus(data)
   if (!finans.statutRegistre, !finans.exerciceRegistre) setFinans({...finans, 
@@ -163,7 +163,7 @@ const InscriRessource = (props) => {
                     name="bailleurFonds"
                     value={finans.bailleurFonds}
                     className={"form-control" + (error && " is-invalid")}
-                   > <option value="">Choisir ...</option>
+                   > <option>Choisir ...</option>
                      {bailleurs.map(bailleur => <option key={bailleur.id} value={bailleur.id}>
                        {bailleur.sigleBailleur}
                      </option>)}
