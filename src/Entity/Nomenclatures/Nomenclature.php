@@ -329,7 +329,12 @@ class Nomenclature
     }
 
 
+
+
+
     public function initialiseNatureAffecter(){
+
+
        array_reduce($this->assiociationCompteNature->toArray(),function ($test,$nature){
            $sous=$nature->getsousCompteNature();
                $chap= $sous->getIterator();
@@ -343,17 +348,17 @@ class Nomenclature
                   while ($art->valid()){
 
                       array_reduce($sousfils->toArray(),function ($test, $paragrah){
-                          $paragrah->setDescriptionCompteNature("je compte sur toit");
+                          $paragrah->setDescriptionCompteNature("la chance veut pas me sourir");
                       }, 0);
                       $art->next();
                   }
-                  $article->setDescriptionCompteNature("je compte sur toit");
+                  $article->setDescriptionCompteNature("la chance veut pas me sourir");
 
               },0);
 
               $chap->next();
           }
-           $nature->setDescriptionCompteNature("je compte sur toit");
+           $nature->setDescriptionCompteNature("la chance veut pas me sourir");
        },0);
     }
 

@@ -478,20 +478,35 @@ class CompteNature
     /**
      * @return int
      */
+    public function compteValeur(): int {
+        return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousnature) {
+            return $test + ($sousnature->getlibelleCompteNature() === "string1" ? 1 : 0);
 
-    public function getSousNatureTrue(): int {
-        return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousnature){
-               return $test + ($sousnature->getlibelleCompteNature() === "string1" ? 1 : 0);
-            $sousnature->getSousCompteNature()->count();
         },0);
+         }
+
+       /**
+       * @return bool
+       */
+         public function getSousNatureTrue(): bool
+     {
+        $essai = $this->sousCompteNature->count();
+        $test= $this->compteValeur();
+           if ($test === $essai || $test === 0) {
+              //  $sousnature->setLibelleCompteNature("tu va marcher n'escepas");
+                return true;
+            }
+            else {
+                return false;
+                }
+
+        }
 
 
 
-        $ver=  $data->getSousNatureTrue();
-        if($ver === $essai || $ver === 0 ){
-            $data->setLibelleCompteNature("t'es vraiment bête toi");
 
-    }
+
+
 
 
 

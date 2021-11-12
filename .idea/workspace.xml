@@ -29,13 +29,12 @@
       <change afterPath="$PROJECT_DIR$/migrations/Version20211103143427.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/migrations/Version20211107223812.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/migrations/Version20211107224126.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Previsions/InscriptionCredit.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Previsions/ClotureRegistreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Previsions/ClotureRegistreController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TestController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/EssaiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EssaiController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -307,7 +306,8 @@
       <workItem from="1636546028619" duration="5725000" />
       <workItem from="1636561512701" duration="32594000" />
       <workItem from="1636636896531" duration="448000" />
-      <workItem from="1636641984452" duration="6276000" />
+      <workItem from="1636641984452" duration="19621000" />
+      <workItem from="1636694617733" duration="1236000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -449,7 +449,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636640952105</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="testencours">
+      <created>1636649828686</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1636649828686</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -467,6 +474,17 @@
                 </map>
               </option>
               <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
             </State>
           </value>
         </entry>
@@ -521,7 +539,8 @@
     <MESSAGE value="refactoCode" />
     <MESSAGE value="refactoCode2" />
     <MESSAGE value="gestionNomenclatureFinish2" />
-    <option name="LAST_COMMIT_MESSAGE" value="gestionNomenclatureFinish2" />
+    <MESSAGE value="testencours" />
+    <option name="LAST_COMMIT_MESSAGE" value="testencours" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">
@@ -532,11 +551,11 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="578" y="309" key="#Composer/0.0.1536.834@0.0.1536.834" timestamp="1631991990404" />
-    <state x="320" y="28" key="#Inspections" timestamp="1636633189288">
+    <state x="320" y="28" key="#Inspections" timestamp="1636661817768">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="267" y="23" key="#Inspections/0.0.1280.689@0.0.1280.689" timestamp="1635094965071" />
-    <state x="320" y="28" key="#Inspections/0.0.1536.834@0.0.1536.834" timestamp="1636633189288" />
+    <state x="320" y="28" key="#Inspections/0.0.1536.834@0.0.1536.834" timestamp="1636661817768" />
     <state x="361" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1634836733314">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -585,10 +604,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="657" y="285" key="MultipleFileMergeDialog/0.0.1536.834@0.0.1536.834" timestamp="1632234775783" />
-    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1636626402145">
+    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1636695073950">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1636626402145" />
+    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1636695073950" />
     <state x="604" y="340" key="NewPhpFileDialog" timestamp="1635177181212">
       <screen x="0" y="0" width="1536" height="834" />
     </state>

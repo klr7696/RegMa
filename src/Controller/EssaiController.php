@@ -11,14 +11,13 @@ class EssaiController
     {
         public function __invoke(CompteNature $data): CompteNature
         {
-           $essai= $data->getSousCompteNature()->count();
-
-              $ver=  $data->getSousNatureTrue();
-            if($ver === $essai || $ver === 0 ){
-               $data->setLibelleCompteNature("t'es vraiment bête toi");
-
+            //$data->getSousCompteNature()->toArray()->
+            $test=$data->getSousNatureTrue();
+            if( $test === true){
+                $data->setLibelleCompteNature("terrible la motivation");
             }
             return $data;
+
         }
 
 }

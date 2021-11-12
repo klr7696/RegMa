@@ -30,8 +30,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * collectionOperations={
  *                      "get"={ "order"={"id"="DESC"},
  *                              "openapi_context"={"summary"="Affiche les informations des registres"}}
- *                               ,"inscription"={ "method"="post", "path"="/ouverts/inscription",
- *     "openapi_context"={"summary"="Crée un Credit Ouvert"},},
+ *      ,"inscription"={ "method"="post", "path"="/ouverts/inscription",
+ *              "controller"= "App\Controller\Previsions\InscriptionCredit",
+ *                  "openapi_context"={"summary"="Crée un Credit Ouvert"},},
  *
  *     "actualisation"={"method"="post","path"="/ouverts/actualise",
  *     "controller"="App\Controller\Previsions\ActualiseOuvertController",
