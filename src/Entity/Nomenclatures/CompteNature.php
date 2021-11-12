@@ -520,6 +520,41 @@ class CompteNature
         },0);
          }
 
+            /**
+             * @return int
+             */
+         public function pereTest(): int
+         {
+            $this->getCompteNature()->getSousCompteNature()->toArray();
+            return array_reduce($this->getCompteNature()->getSousCompteNature()->toArray(), function ($test, $sousnature) {
+
+                return $test + ($sousnature->getCreditAffect() === true ? 1 : 0);
+
+             },0);
+         }
+
+            /**
+             * @return bool
+             */
+         public function boolPer(int $per):bool
+         {
+             $tout= $this->getCompteNature()->getSousCompteNature()->count();
+             if ($tout === $per || $tout === 0){
+                 return true;
+             } else return false;
+
+         }
+
+
+
+                /**
+                 * @return bool
+                 */
+         public function essaiTest(): bool
+                    {
+                        $per= $this->pereTest() + 1;
+                       return $this->boolPer($per);
+                    }
 
     /**
      * @return int
@@ -536,7 +571,7 @@ class CompteNature
             $tout= $this->sousCompteNature->count();
             if ($tout === $concer || $tout === 0){
                 return true;
-            }else return false;
+            } else return false;
 
         }
 
@@ -547,16 +582,10 @@ class CompteNature
         * @return bool
         */
          public function getSousNatureTrue(): bool
-     {
-         $test= $this->compteValeur();
-       return $this->retourBoul($test);
-       //$test === 0 ||
-           /*if ($test === $essai || $essai === 0  ) {
-              //  $sousnature->setLibelleCompteNature("tu va marcher n'escepas");
-                return true;
-            } else return false;*/
+        {
+            $test= $this->compteValeur();
 
-
+            return $this->retourBoul($test);
         }
 
             /**
@@ -570,17 +599,4 @@ class CompteNature
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
+ }

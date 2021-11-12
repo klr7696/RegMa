@@ -94,7 +94,7 @@ class StatutRegistre
      * @ORM\Column(type="integer")
      * @Groups({"registat_detail:read","registre_ouvert:read","ress_actualise",
      *     "actifressource:read","resencours:read","autoencours:read","infos:read",
-     *     "regisress:read"})
+     *     "regisress:read","bailleur_ressource:read"})
      *
      */
     private $id;
@@ -104,7 +104,7 @@ class StatutRegistre
      * @Groups({"registat_detail:read","registat_detail:write","actifregistre:read",
      *     "registre_ouvert:read","resencours:read","autoencours:read",
      *     "infos:read","regisress:read","change_statut:write",
-     *     "registreouvre:write","ress_actualise"})
+     *     "registreouvre:write","ress_actualise","bailleur_ressource:read"})
      *
      * @Assert\Choice(choices={"Primitif","Primitif modificatif","Supplémentaire"}, message= "saisir des informations correctes",
      *     groups={"Default","change_statut"})
@@ -114,7 +114,7 @@ class StatutRegistre
      * @ORM\Column(type="boolean")
      * @Groups({"registat_detail:read","actifregistre:read",
      *     "registre_ouvert:read","resencours:read","autoencours:read",
-     *     "infos:read","registre_cloture:write","ress_actualise"})
+     *     "infos:read","registre_cloture:write","ress_actualise","bailleur_ressource:read"})
      * @Assert\NotNull(groups={"desactive","registre_cloture"})
      */
     private $estEnCours= true;
@@ -128,7 +128,7 @@ class StatutRegistre
      * @ORM\Column(type="boolean")
      * @Groups({"registat_detail:read","registre_ouvert:read",
      *     "actifressource:read","resencours:read","autoencours:read",
-     *     "infos:read","registre_cloture:write","ress_actualise"})
+     *     "infos:read","registre_cloture:write","ress_actualise","bailleur_ressource:read"})
      * @Assert\NotNull(groups={"registre_cloture"})
      *
      */

@@ -4,6 +4,7 @@ namespace App\Entity\Prevision;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use App\Entity\Plans\AutorisationMarche;
 use App\Repository\Prevision\BailleurFondsRepository;
@@ -16,7 +17,8 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ApiResource(
- *     itemOperations={
+ *    shortName= "bailleurs",
+ *      itemOperations={
  *     "get"={"openapi_context"={"summary"="Affiche les informations d'un bailleur de fonds"}}
  * ,"put"={"openapi_context"={"summary"="Modifie un bailleur de fonds"}},
  *     "delete"={"openapi_context"={"summary"="Supprime un bailleur de fonds"}}
@@ -31,12 +33,18 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *     "openapi_context"={"summary"="Affiche les informations des bailleurs de fonds"}}
  *     ,"post"={"openapi_context"={"summary"="Crée un bailleur de fonds"}}
  * },
- *     shortName= "bailleurs",
+ *
  *      normalizationContext={"groups"={"bailleurs_detail:read"}, "openapi_definition_name"= "Read"},
  *      denormalizationContext={"groups"={"bailleurs_detail:write"}, "openapi_definition_name"= "Write"},
+ *     subresourceOperations={
+ *     "association_ressources_get_subresource"= {
+ *     "method"= "get",
+ *     "path"="/bailleurs/{id}/ressources"
+ *     }
+ *     }
  * )
  * @ORM\Entity(repositoryClass=BailleurFondsRepository::class)
- *@ApiFilter(SearchFilter::class, properties={"sigleBailleur"="exact"
+ *@ApiFilter(SearchFilter::class, properties={"sigleBailleur"="exact",
  *     })
  *
  *@ApiFilter(BooleanFilter::class,
@@ -100,7 +108,7 @@ class BailleurFonds
     /**
      * @ORM\OneToMany(targetEntity=RessourceFinanciere::class, mappedBy="bailleurFonds", orphanRemoval=true)
      * @Groups({"actifressource:read"})
-     *
+     * @ApiSubresource(maxDepth=1)
      *
      */
     private $associationRessource;
