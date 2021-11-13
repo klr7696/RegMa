@@ -512,102 +512,6 @@ class CompteNature
 
 
 
-
-            /**
-             * @return int
-             */
-         public function pereTest(): int
-         {
-            $this->getCompteNature()->getSousCompteNature()->toArray();
-            return array_reduce($this->getCompteNature()->getSousCompteNature()->toArray(), function ($test, $sousnature) {
-
-                return $test + ($sousnature->getCreditAffect() === true ? 1 : 0);
-
-             },0);
-         }
-
-            /**
-             * @return bool
-             */
-         public function boolPer(int $per):bool
-         {
-             $tout= $this->getCompteNature()->getSousCompteNature()->count();
-             if ($tout === $per || $tout === 0){
-                 return true;
-             } else return false;
-
-         }
-
-
-    /**
-     * @return bool
-     */
-    public function boolChap(int $chap):bool
-    {
-        dd($tout= $this->getCompteNature()->getCompteNature()->getSousCompteNature()->count());
-      /*  if ($tout === $chap || $tout === 0){
-            return true;
-        } else return false;*/
-
-    }
-
-
-
-                /**
-                 * @return bool
-                 */
-         public function essaiTest(): bool
-                    {
-                        $per= $this->pereTest() + 1;
-                       return $this->boolPer($per);
-                    }
-
-
-
-
-
-
-
-
-    /**
-     * @return int
-     */
-    public function compteValeurAuto(): int {
-        return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousnature) {
-            return $test + ($sousnature->getOuvreAffect() === true ? 1 : 0);
-
-        },0);
-    }
-
-        public function retourBoul(int $concer)
-        {
-            $tout= $this->sousCompteNature->count();
-            if ($tout === $concer || $tout === 0){
-                return true;
-            } else return false;
-
-        }
-
-        /**
-        * @return bool
-        */
-         public function getSousNatureTrue(): bool
-        {
-            $test= $this->compteValeurChap();
-
-            return $this->retourBoul($test);
-        }
-
-            /**
-             * @return bool
-             */
-        public function getAutoTrue(): bool
-        {
-            $auto= $this->compteValeurAuto();
-            return $this->retourBoul($auto);
-        }
-
-
     /**
      * @return int
      */
@@ -644,7 +548,6 @@ class CompteNature
         public function articleTrue()
             {
                 $nat=$this->getCompteNature()->getSousCompteNature();
-                //$tout= $this->getCompteNature()->getCompteNature()->getSousCompteNature()
                 $tout= $this->getCompteNature()->getSousCompteNature()->count();
                 $art=$this->compteValeurChap($nat);
                 $affect= $this->retourBoulChap($tout,$art);
@@ -653,7 +556,44 @@ class CompteNature
                     $this->getCompteNature()->setCreditAffect(true);
                 }
             }
-        public function paragrapheTrue(){}
+
+
+                /**
+                 * @return int
+                 */
+                public function compteValeurAut($nat): int
+                {
+                    return array_reduce($nat->toArray(), function ($test, $sousnature)
+                    {
+                        return $test + ($sousnature->getAutoAffect() === true ? 1 : 0);
+
+                    },0);
+                }
+
+
+                public function chapitreAuto()
+                {
+                    $tout= $this->sousCompteNature->count();
+                    $nat=$this->sousCompteNature;
+                    $art=$this->compteValeurAut($nat);
+                    $affect= $this->retourBoulChap($tout,$art);
+                    if($affect === true)
+                    {
+                        $this->setAutoAffect(true);
+                    }
+
+                }
+                public function articleAuto()
+                {
+                    $nat=$this->getCompteNature()->getSousCompteNature();
+                    $tout= $this->getCompteNature()->getSousCompteNature()->count();
+                    $art=$this->compteValeurAut($nat);
+                    $affect= $this->retourBoulChap($tout,$art);
+                    if($affect === true)
+                    {
+                        $this->getCompteNature()->setAutoAffect(true);
+                    }
+                }
 
 
  }

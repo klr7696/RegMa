@@ -28,8 +28,9 @@
     <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="ressourcesss">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/migrations/Version20211108100416.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20211112111831.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Previsions/InscriptionCredit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Previsions/InscriptionCredit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Previsions/InscriptionAutorisaton.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Previsions/InscriptionAutorisaton.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -303,6 +304,7 @@
       <workItem from="1636636896531" duration="448000" />
       <workItem from="1636641984452" duration="19621000" />
       <workItem from="1636694617733" duration="22859000" />
+      <workItem from="1636796735040" duration="2942000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -465,7 +467,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636721152095</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="inscriptioncredirok">
+      <created>1636767013169</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1636767013169</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -525,7 +534,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="definition des entités du modules Nomenclatures avec leur fixtures" />
     <MESSAGE value="sale" />
     <MESSAGE value="creation des classes du projet de registre marche" />
     <MESSAGE value="les classes du modèle versionner en premiere fois" />
@@ -550,7 +558,8 @@
     <MESSAGE value="testencours" />
     <MESSAGE value="testok" />
     <MESSAGE value="testok2" />
-    <option name="LAST_COMMIT_MESSAGE" value="testok2" />
+    <MESSAGE value="inscriptioncredirok" />
+    <option name="LAST_COMMIT_MESSAGE" value="inscriptioncredirok" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">

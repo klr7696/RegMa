@@ -343,17 +343,20 @@ class Nomenclature
                   while ($art->valid()){
 
                       array_reduce($sousfils->toArray(),function ($test, $paragrah){
-                          $paragrah->getEstAffecter(false);
+                          $paragrah->setCreditAffect(false)
+                                    ->setAutoAffect(false);
                       }, 0);
                       $art->next();
                   }
-                  $article->getEstAffecter(false);
+                  $article->setCreditAffect(false)
+                             ->setAutoAffect(false);
 
               },0);
 
               $chap->next();
           }
-           $nature->getEstAffecter(false);
+           $nature->setCreditAffect(false)
+                    ->setAutoAffect(false);
        },0);
     }
 

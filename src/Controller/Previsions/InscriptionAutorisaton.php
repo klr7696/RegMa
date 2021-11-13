@@ -10,11 +10,23 @@ class InscriptionAutorisaton
 {
     public function  __invoke(AutorisationMarche $data)
     {
-        $pos = $data->getCompteNature()->getAutoTrue();
-        /*if( $pos === true){
-            $data->getCompteNature()->setAutoAffect(true);
+        $hier= $data->getCompteNature()->getHierachieCompteNature();
+
+        if($hier === "Chapitre")
+        {
+            $data->getCompteNature()->chapitreAuto();
+
+        }else if($hier === "Article"){
+            $data->getCompteNature()->chapitreAuto();
+            $data->getCompteNature()->articleAuto();
+
+        } else if($hier === "Paragraphe"){
+            $data->getCompteNature()->chapitreAuto();
+            $data->getCompteNature()->articleAuto();
+            $data->getCompteNature()->getCompteNature()->articleAuto();
         }
-        return $data;*/
+
+        return $data;
     }
 
 }
