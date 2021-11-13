@@ -206,12 +206,14 @@ const InscriRessource = (props) => {
                 </div>
                 <div className="col-sm-3">
                   <input 
-                  id="montantFinancement"
-                  type="number"
+                  id="space"
+                  type="text"
                   name="montantFinancement"
                   value={finans.montantFinancement}
                   onChange={handleChange}
-                  className={"form-control" + (error && " is-invalid")} />
+                  data-a-dec="."
+                  data-a-sep=" "
+                  className={"currency form-control" + (error && " is-invalid")} />
                 </div>
                      <div className="col-sm-1">
                   <label className="col-form-label">Statut </label>

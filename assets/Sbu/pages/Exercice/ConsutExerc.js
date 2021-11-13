@@ -103,7 +103,7 @@ const ConsultExerc = () =>{
                         <tr key={exerc.id} value={exerc.id}>
                         <td>{exerc.id}</td>
                         <td>{exerc.anneeExercice}</td>
-                        <td></td>
+                        <td>{exerc.ordonateurExercice}</td>
                         <td>{formatDate(exerc.dateVote)}</td>
                         <td>{formatDate(exerc.dateAdoption)}</td>
                         <td>Nomenclature {exerc.nomenclature.anneeApplication}</td>

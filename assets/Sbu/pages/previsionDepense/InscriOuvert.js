@@ -9,6 +9,9 @@ const InscriOuvert = () => {
     compteNature: "",
     descriptionInscription: "",
     bail: "",
+    chap:"",
+    art:"",
+    para:""
   });
 
   const [error, setErrors] = useState("");
@@ -72,22 +75,40 @@ const InscriOuvert = () => {
     fetchNatures();
   }, []);
 
-  const [sousnatures, setSousNatures] = useState([]);
+  const [arts, setArts] = useState([]);
 
-  const fetchSousNatures = async (id) => {
+  const fetchArts = async (id) => {
     try {
       const data = await axios
         .get(`http://localhost:8000/api/natures/${id}/sousnatures`)
         .then((response) => response.data["hydra:member"]);
-      setSousNatures(data);
-      //if (!creds.compteNature) setCreds({ ...creds, compteNature: data[0].id });
+      setArts(data);
+      if (!creds.compteNature) setCreds({ ...creds, compteNature: data[0].id });
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchSousNatures();
+    fetchArts();
+  }, []);
+
+  const [paras, setParas] = useState([]);
+
+  const fetchParas = async (id) => {
+    try {
+      const data = await axios
+        .get(`http://localhost:8000/api/natures/${1}/sousnatures`)
+        .then((response) => response.data["hydra:member"]);
+      setParas(data);
+      //if (!creds.compteNature) setCreds({ ...creds, compteNature: data[0].id });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchParas();
   }, []);
 
   const handleSubmit = async (event) => {
@@ -164,7 +185,6 @@ const InscriOuvert = () => {
                               value={creds.bail}
                               onClick={() => fetchFinans(creds.bail)}
                             >
-                              {" "}
                               <option value={0}>Choisir le bailleur </option>
                               {bailleurs.map((bailleur) => (
                                 <option key={bailleur.id} value={bailleur.id}>
@@ -224,12 +244,12 @@ const InscriOuvert = () => {
                           </div>
                           <div className="col-sm-2">
                             <select
-                              onChange={handleChange}
-                              name="compteNature"
-                              value={creds.compteNature}
+                              name="chap"
                               className="form-control"
-                              onClick={() => fetchSousNatures(creds.compteNature)}
-                            >
+                              value={creds.chap}
+                              onChange={handleChange}
+                              onClick={() => fetchArts(creds.chap)}
+                            > 
                               {natures.map((nature) => (
                                 <option key={nature.id} value={nature.id}>
                                   {nature.numeroCompteNature}
@@ -243,40 +263,45 @@ const InscriOuvert = () => {
                           </div>
                           <div className="col-sm-2">
                             <select
-                              name="compteNature"
+                              name="art"
                               className="form-control"
-                              value={creds.compteNature}
+                              value={creds.art}
+                              onChange={handleChange}
+                             onClick={() => fetchParas(creds.art)}
                             >
-                              {sousnatures.map((sousnature) => (
-                                <option key={sousnature.id} value={sousnature.id}>
-                                  {sousnature.numeroCompteNature}
+                              {arts.map((arti) => (
+                                <option key={arti.id} value={arti.id}>
+                                  {arti.numeroCompteNature}
                                 </option>
                               ))}
                             </select>
                           </div>
-                         {/* <div className="col-sm-2">
+
+                          <div className="col-sm-2">
                             <label className="col-form-label">
-                              Paragraphe{" "}
+                              Paragraphe
                             </label>
                           </div>
                           <div className="col-sm-2">
                             <select
-                              name="compteNature"
+                              name="para"
                               className="form-control"
-                              value={creds.compteNature}
+                              value={creds.para}
+                              onChange={handleChange}
+                              onClick={() => fetchParas(creds.para)}
                             >
-                              {natures.map((nature) => (
-                                <option key={nature.id} value={nature.id}>
-                                  {nature.sectionCompteNature}
+                              {paras.map((para) => (
+                                <option key={para.id} value={para.id}>
+                                  {para.id}
                                 </option>
                               ))}
                             </select>
-                          </div>*/}
+                          </div>
                         </div>
                         <div className="row form-group">
                           <div className="col-sm-2">
                             <label className="col-form-label">
-                              Numéro du compte choisit{" "}
+                              Numéro du compte choisit
                             </label>
                           </div>
                           <div className="col-sm-2">
@@ -286,11 +311,7 @@ const InscriOuvert = () => {
                               value={creds.compteNature}
                               className="form-control"
                             >
-                              {natures.map((nature) => (
-                                <option key={nature.id} value={nature.id}>
-                                  {nature.numeroCompteNature}
-                                </option>
-                              ))}
+                             
                             </select>
                           </div>
 
@@ -339,15 +360,12 @@ const InscriOuvert = () => {
                           </div>
                           <div className="col-sm-4">
                             <input
-                              id="space"
                               type="text"
                               name="montantInscription"
                               value={creds.montantInscription}
                               onChange={handleChange}
-                              data-a-dec="."
-                              data-a-sep=" "
                               className={
-                                "currency form-control" +
+                                "form-control" +
                                 (error && " is-invalid")
                               }
                             />
