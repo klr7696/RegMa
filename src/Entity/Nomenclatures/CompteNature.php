@@ -16,6 +16,7 @@ use App\Repository\Nomenclatures\CompteNatureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -510,15 +511,7 @@ class CompteNature
     }
 
 
-    /**
-     * @return int
-     */
-    public function compteValeur(): int {
-        return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousnature) {
-            return $test + ($sousnature->getCreditAffect() === true ? 1 : 0);
 
-        },0);
-         }
 
             /**
              * @return int
@@ -546,6 +539,19 @@ class CompteNature
          }
 
 
+    /**
+     * @return bool
+     */
+    public function boolChap(int $chap):bool
+    {
+        dd($tout= $this->getCompteNature()->getCompteNature()->getSousCompteNature()->count());
+      /*  if ($tout === $chap || $tout === 0){
+            return true;
+        } else return false;*/
+
+    }
+
+
 
                 /**
                  * @return bool
@@ -555,6 +561,13 @@ class CompteNature
                         $per= $this->pereTest() + 1;
                        return $this->boolPer($per);
                     }
+
+
+
+
+
+
+
 
     /**
      * @return int
@@ -575,15 +588,12 @@ class CompteNature
 
         }
 
-
-
-
         /**
         * @return bool
         */
          public function getSousNatureTrue(): bool
         {
-            $test= $this->compteValeur();
+            $test= $this->compteValeurChap();
 
             return $this->retourBoul($test);
         }
@@ -597,6 +607,53 @@ class CompteNature
             return $this->retourBoul($auto);
         }
 
+
+    /**
+     * @return int
+     */
+    public function compteValeurChap($nat): int
+        {
+        return array_reduce($nat->toArray(), function ($test, $sousnature)
+            {
+                return $test + ($sousnature->getCreditAffect() === true ? 1 : 0);
+
+            },0);
+        }
+
+    public function retourBoulChap(int $tout,int $art)
+    {
+        if ($tout === $art || $tout === 0){
+            return true;
+        } else return false;
+
+    }
+
+
+        public function chapitreTrue()
+            {
+                $tout= $this->sousCompteNature->count();
+                $nat=$this->sousCompteNature;
+                $art=$this->compteValeurChap($nat);
+                $affect= $this->retourBoulChap($tout,$art);
+                if($affect === true)
+                {
+                  $this->setCreditAffect(true);
+                }
+
+            }
+        public function articleTrue()
+            {
+                $nat=$this->getCompteNature()->getSousCompteNature();
+                //$tout= $this->getCompteNature()->getCompteNature()->getSousCompteNature()
+                $tout= $this->getCompteNature()->getSousCompteNature()->count();
+                $art=$this->compteValeurChap($nat);
+                $affect= $this->retourBoulChap($tout,$art);
+                if($affect === true)
+                {
+                    $this->getCompteNature()->setCreditAffect(true);
+                }
+            }
+        public function paragrapheTrue(){}
 
 
  }
