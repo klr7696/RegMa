@@ -26,14 +26,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="ressourcesss">
+      <change afterPath="$PROJECT_DIR$/src/Dto/NomenclaturesOutput.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/migrations/Version20211108100416.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20211112111831.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Previsions/InscriptionCredit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Previsions/InscriptionCredit.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/ExerciceRegistre.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/RessourceFinanciere.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/RessourceFinanciere.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -307,6 +305,7 @@
       <workItem from="1636636896531" duration="448000" />
       <workItem from="1636641984452" duration="19621000" />
       <workItem from="1636694617733" duration="22859000" />
+      <workItem from="1636796735040" duration="6439000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -469,7 +468,21 @@
       <option name="project" value="LOCAL" />
       <updated>1636721152095</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="inscriptioncredirok">
+      <created>1636767013169</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1636767013169</updated>
+    </task>
+    <task id="LOCAL-00025" summary="mise a niveau du nomenclature terminer">
+      <created>1636799727671</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1636799727671</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -529,8 +542,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="definition des entités du modules Nomenclatures avec leur fixtures" />
-    <MESSAGE value="sale" />
     <MESSAGE value="creation des classes du projet de registre marche" />
     <MESSAGE value="les classes du modèle versionner en premiere fois" />
     <MESSAGE value="restructuration des classes versions1s" />
@@ -554,7 +565,9 @@
     <MESSAGE value="testencours" />
     <MESSAGE value="testok" />
     <MESSAGE value="testok2" />
-    <option name="LAST_COMMIT_MESSAGE" value="testok2" />
+    <MESSAGE value="inscriptioncredirok" />
+    <MESSAGE value="mise a niveau du nomenclature terminer" />
+    <option name="LAST_COMMIT_MESSAGE" value="mise a niveau du nomenclature terminer" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">
@@ -618,10 +631,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="657" y="285" key="MultipleFileMergeDialog/0.0.1536.834@0.0.1536.834" timestamp="1632234775783" />
-    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1636708946713">
+    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1636804546002">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1636708946713" />
+    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1636804546002" />
     <state x="604" y="340" key="NewPhpFileDialog" timestamp="1635177181212">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -634,10 +647,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1536.834@0.0.1536.834" timestamp="1634533502890" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1636640990516">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1636739601085">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1636640990516" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1636739601085" />
     <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1636637701545">
       <screen x="0" y="0" width="1536" height="834" />
     </state>

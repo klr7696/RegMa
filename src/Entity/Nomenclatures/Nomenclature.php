@@ -4,7 +4,7 @@ namespace App\Entity\Nomenclatures;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
-
+use App\Dto\NomenclaturesOutput;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Prevision\ExerciceRegistre;
@@ -46,7 +46,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * },
  * collectionOperations={
- *                      "get"={ "order"={"id"="DESC"},
+ *     "test"={"method"="get", "path"="/nomenclatures/csv", "formats"={"csv"={"text/csv"}}
+ *
+
+ *     },
+ *
+ *
+ *     "get"={ "order"={"id"="DESC"},
  *                              "openapi_context"={"summary"="Affiche les informations des nomenclatures filtrer par ?estActif=true"}}
  *                               ,"post"={"openapi_context"={"summary"="Crée une nomenclature"}}
  * },
@@ -343,17 +349,20 @@ class Nomenclature
                   while ($art->valid()){
 
                       array_reduce($sousfils->toArray(),function ($test, $paragrah){
-                          $paragrah->getEstAffecter(false);
+                          $paragrah->setCreditAffect(false)
+                                    ->setAutoAffect(false);
                       }, 0);
                       $art->next();
                   }
-                  $article->getEstAffecter(false);
+                  $article->setCreditAffect(false)
+                             ->setAutoAffect(false);
 
               },0);
 
               $chap->next();
           }
-           $nature->getEstAffecter(false);
+           $nature->setCreditAffect(false)
+                    ->setAutoAffect(false);
        },0);
     }
 

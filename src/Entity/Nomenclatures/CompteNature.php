@@ -16,6 +16,7 @@ use App\Repository\Nomenclatures\CompteNatureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -92,7 +93,7 @@ class CompteNature
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"nature_detail:read","actifnomen:read","ressouvre:read"})
+     * @Groups({"nature_detail:read","actifnomen:read","ressouvre:read","sousnatures:read"})
      */
     private $id;
 
@@ -510,93 +511,89 @@ class CompteNature
     }
 
 
+
     /**
      * @return int
      */
-    public function compteValeur(): int {
-        return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousnature) {
-            return $test + ($sousnature->getCreditAffect() === true ? 1 : 0);
-
-        },0);
-         }
-
-            /**
-             * @return int
-             */
-         public function pereTest(): int
-         {
-            $this->getCompteNature()->getSousCompteNature()->toArray();
-            return array_reduce($this->getCompteNature()->getSousCompteNature()->toArray(), function ($test, $sousnature) {
-
+    public function compteValeurChap($nat): int
+        {
+        return array_reduce($nat->toArray(), function ($test, $sousnature)
+            {
                 return $test + ($sousnature->getCreditAffect() === true ? 1 : 0);
 
-             },0);
-         }
+            },0);
+        }
 
-            /**
-             * @return bool
-             */
-         public function boolPer(int $per):bool
-         {
-             $tout= $this->getCompteNature()->getSousCompteNature()->count();
-             if ($tout === $per || $tout === 0){
-                 return true;
-             } else return false;
+    public function retourBoulChap(int $tout,int $art)
+    {
+        if ($tout === $art || $tout === 0){
+            return true;
+        } else return false;
 
-         }
+    }
 
+
+        public function chapitreTrue()
+            {
+                $tout= $this->sousCompteNature->count();
+                $nat=$this->sousCompteNature;
+                $art=$this->compteValeurChap($nat);
+                $affect= $this->retourBoulChap($tout,$art);
+                if($affect === true)
+                {
+                  $this->setCreditAffect(true);
+                }
+
+            }
+        public function articleTrue()
+            {
+                $nat=$this->getCompteNature()->getSousCompteNature();
+                $tout= $this->getCompteNature()->getSousCompteNature()->count();
+                $art=$this->compteValeurChap($nat);
+                $affect= $this->retourBoulChap($tout,$art);
+                if($affect === true)
+                {
+                    $this->getCompteNature()->setCreditAffect(true);
+                }
+            }
 
 
                 /**
-                 * @return bool
+                 * @return int
                  */
-         public function essaiTest(): bool
+                public function compteValeurAut($nat): int
+                {
+                    return array_reduce($nat->toArray(), function ($test, $sousnature)
                     {
-                        $per= $this->pereTest() + 1;
-                       return $this->boolPer($per);
+                        return $test + ($sousnature->getAutoAffect() === true ? 1 : 0);
+
+                    },0);
+                }
+
+
+                public function chapitreAuto()
+                {
+                    $tout= $this->sousCompteNature->count();
+                    $nat=$this->sousCompteNature;
+                    $art=$this->compteValeurAut($nat);
+                    $affect= $this->retourBoulChap($tout,$art);
+                    if($affect === true)
+                    {
+                        $this->setAutoAffect(true);
                     }
 
-    /**
-     * @return int
-     */
-    public function compteValeurAuto(): int {
-        return array_reduce($this->sousCompteNature->toArray(), function ($test, $sousnature) {
-            return $test + ($sousnature->getOuvreAffect() === true ? 1 : 0);
-
-        },0);
-    }
-
-        public function retourBoul(int $concer)
-        {
-            $tout= $this->sousCompteNature->count();
-            if ($tout === $concer || $tout === 0){
-                return true;
-            } else return false;
-
-        }
-
-
-
-
-        /**
-        * @return bool
-        */
-         public function getSousNatureTrue(): bool
-        {
-            $test= $this->compteValeur();
-
-            return $this->retourBoul($test);
-        }
-
-            /**
-             * @return bool
-             */
-        public function getAutoTrue(): bool
-        {
-            $auto= $this->compteValeurAuto();
-            return $this->retourBoul($auto);
-        }
-
+                }
+                public function articleAuto()
+                {
+                    $nat=$this->getCompteNature()->getSousCompteNature();
+                    $tout= $this->getCompteNature()->getSousCompteNature()->count();
+                    $art=$this->compteValeurAut($nat);
+                    $affect= $this->retourBoulChap($tout,$art);
+                    if($affect === true)
+                    {
+                        $this->getCompteNature()->setAutoAffect(true);
+                    }
+                }
 
 
  }

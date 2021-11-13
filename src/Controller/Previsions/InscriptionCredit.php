@@ -10,18 +10,22 @@ class InscriptionCredit
     {
         public function __invoke(CreditOuvert $data):CreditOuvert
         {
-             $per =$data->getCompteNature()->essaiTest();
-               $pos = $data->getCompteNature()->getSousNatureTrue();
-          if( $pos === true){
-                $data->getCompteNature()->setCreditAffect(true);
-                if($per === true){
-                    $data->getCompteNature()->getCompteNature()->setCreditAffect(true);
-                }
+            $hier= $data->getCompteNature()->getHierachieCompteNature();
 
-              //$data->getCompteNature()->getCompteNature()->getCompteNature()->setCreditAffect(true);
+            if($hier === "Chapitre")
+                {
+                    $data->getCompteNature()->chapitreTrue();
 
+                }else if($hier === "Article"){
+                $data->getCompteNature()->chapitreTrue();
+                $data->getCompteNature()->articleTrue();
 
-           }
+            } else if($hier === "Paragraphe"){
+                $data->getCompteNature()->chapitreTrue();
+                $data->getCompteNature()->articleTrue();
+                $data->getCompteNature()->getCompteNature()->articleTrue();
+            }
+
             return $data;
         }
     }
