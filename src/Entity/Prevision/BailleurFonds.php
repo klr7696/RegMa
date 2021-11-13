@@ -58,7 +58,7 @@ class BailleurFonds
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"actifressource:read","resencours:read","regisress:read",
-     *     "autoalloc:read","ress_actualise"})
+     *     "autoalloc:read","ress_actualise","bailleurs_detail:read"})
      */
     private $id;
 

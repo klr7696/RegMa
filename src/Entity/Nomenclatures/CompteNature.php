@@ -93,7 +93,7 @@ class CompteNature
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"nature_detail:read","actifnomen:read","ressouvre:read"})
+     * @Groups({"nature_detail:read","actifnomen:read","ressouvre:read","sousnatures:read"})
      */
     private $id;
 
