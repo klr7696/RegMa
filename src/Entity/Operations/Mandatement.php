@@ -10,10 +10,13 @@ use App\Repository\Operations\MandatementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "mandatements"
+ *     shortName= "mandatements",
+ *      denormalizationContext={"disable_type_enforcement"=true}
+ *
  * )
  * @ORM\Entity(repositoryClass=MandatementRepository::class)
  */
@@ -33,6 +36,7 @@ class Mandatement
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $montantOperation;
 

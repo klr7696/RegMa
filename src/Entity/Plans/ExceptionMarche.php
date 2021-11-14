@@ -6,10 +6,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Contrats\Contrat;
 use App\Repository\Plans\ExceptionMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "exceptions"
+ *     shortName= "exceptions",
+ * denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ORM\Entity(repositoryClass=ExceptionMarcheRepository::class)
  */
@@ -34,6 +36,7 @@ class ExceptionMarche
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(type="numeric",message="montant incorrect")
      */
     private $montantException;
 
@@ -44,6 +47,7 @@ class ExceptionMarche
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(type="numeric",message="delai incorrect")
      */
     private $delaiExcecution;
 
@@ -108,7 +112,7 @@ class ExceptionMarche
         return $this->montantException;
     }
 
-    public function setMontantException(float $montantException): self
+    public function setMontantException($montantException): self
     {
         $this->montantException = $montantException;
 
@@ -132,7 +136,7 @@ class ExceptionMarche
         return $this->delaiExcecution;
     }
 
-    public function setDelaiExcecution(?int $delaiExcecution): self
+    public function setDelaiExcecution($delaiExcecution): self
     {
         $this->delaiExcecution = $delaiExcecution;
 

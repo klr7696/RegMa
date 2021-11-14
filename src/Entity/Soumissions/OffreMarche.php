@@ -7,10 +7,12 @@ use App\Entity\Contrats\Contrat;
 use App\Entity\Plans\LotMarche;
 use App\Repository\Soumissions\OffreMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "offre"
+ *     shortName= "offre",
+ *     denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ORM\Entity(repositoryClass=OffreMarcheRepository::class)
  */
@@ -25,46 +27,55 @@ class OffreMarche
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $montantMinimumOffre;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $montantMinimumCorriger;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $montantMinimumArreter;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $montantMaximumOffre;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $montantMaximumCorriger;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $montantMaximumArreter;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $differenceMinimum;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $differenceMaximum;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $garantiOffre;
 
@@ -100,16 +111,19 @@ class OffreMarche
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $classementOffre;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $delaiExecution;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $delaiEngagement;
 
@@ -156,7 +170,7 @@ class OffreMarche
         return $this->montantMinimumOffre;
     }
 
-    public function setMontantMinimumOffre(?float $montantMinimumOffre): self
+    public function setMontantMinimumOffre($montantMinimumOffre): self
     {
         $this->montantMinimumOffre = $montantMinimumOffre;
 
@@ -168,7 +182,7 @@ class OffreMarche
         return $this->montantMinimumCorriger;
     }
 
-    public function setMontantMinimumCorriger(?float $montantMinimumCorriger): self
+    public function setMontantMinimumCorriger($montantMinimumCorriger): self
     {
         $this->montantMinimumCorriger = $montantMinimumCorriger;
 
@@ -180,7 +194,7 @@ class OffreMarche
         return $this->montantMinimumArreter;
     }
 
-    public function setMontantMinimumArreter(?float $montantMinimumArreter): self
+    public function setMontantMinimumArreter($montantMinimumArreter): self
     {
         $this->montantMinimumArreter = $montantMinimumArreter;
 
@@ -192,7 +206,7 @@ class OffreMarche
         return $this->montantMaximumOffre;
     }
 
-    public function setMontantMaximumOffre(?float $montantMaximumOffre): self
+    public function setMontantMaximumOffre($montantMaximumOffre): self
     {
         $this->montantMaximumOffre = $montantMaximumOffre;
 
@@ -204,7 +218,7 @@ class OffreMarche
         return $this->montantMaximumCorriger;
     }
 
-    public function setMontantMaximumCorriger(?float $montantMaximumCorriger): self
+    public function setMontantMaximumCorriger( $montantMaximumCorriger): self
     {
         $this->montantMaximumCorriger = $montantMaximumCorriger;
 
@@ -216,7 +230,7 @@ class OffreMarche
         return $this->montantMaximumArreter;
     }
 
-    public function setMontantMaximumArreter(?float $montantMaximumArreter): self
+    public function setMontantMaximumArreter($montantMaximumArreter): self
     {
         $this->montantMaximumArreter = $montantMaximumArreter;
 
@@ -228,7 +242,7 @@ class OffreMarche
         return $this->differenceMinimum;
     }
 
-    public function setDifferenceMinimum(?float $differenceMinimum): self
+    public function setDifferenceMinimum($differenceMinimum): self
     {
         $this->differenceMinimum = $differenceMinimum;
 
@@ -240,7 +254,7 @@ class OffreMarche
         return $this->differenceMaximum;
     }
 
-    public function setDifferenceMaximum(?float $differenceMaximum): self
+    public function setDifferenceMaximum($differenceMaximum): self
     {
         $this->differenceMaximum = $differenceMaximum;
 
@@ -252,7 +266,7 @@ class OffreMarche
         return $this->garantiOffre;
     }
 
-    public function setGarantiOffre(?float $garantiOffre): self
+    public function setGarantiOffre($garantiOffre): self
     {
         $this->garantiOffre = $garantiOffre;
 
@@ -336,7 +350,7 @@ class OffreMarche
         return $this->classementOffre;
     }
 
-    public function setClassementOffre(?int $classementOffre): self
+    public function setClassementOffre($classementOffre): self
     {
         $this->classementOffre = $classementOffre;
 
@@ -348,7 +362,7 @@ class OffreMarche
         return $this->delaiExecution;
     }
 
-    public function setDelaiExecution(?int $delaiExecution): self
+    public function setDelaiExecution($delaiExecution): self
     {
         $this->delaiExecution = $delaiExecution;
 
@@ -360,7 +374,7 @@ class OffreMarche
         return $this->delaiEngagement;
     }
 
-    public function setDelaiEngagement(?int $delaiEngagement): self
+    public function setDelaiEngagement($delaiEngagement): self
     {
         $this->delaiEngagement = $delaiEngagement;
 
