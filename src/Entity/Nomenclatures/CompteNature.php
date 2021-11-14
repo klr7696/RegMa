@@ -83,7 +83,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  }
  *
  * )
- * @ApiFilter(SearchFilter::class, properties={"numeroCompteNature"="exact","sectionCompteNature"="exact","hierachieCompteNature"="exact"} )
+ * @ApiFilter(SearchFilter::class, properties={"numeroCompteNature"="exact","sectionCompteNature"="exact","hierachieCompteNature"="exact",
+ * "sousCompteNature.creditAffect","sousCompteNature.autoAffect","creditAffect","autoAffect"} )
  * @UniqueEntity({"numeroCompteNature","libelleCompteNature"},message="le compte en creation comporte des erreurs")
  *
  */
@@ -202,7 +203,17 @@ class CompteNature
     /**
      * @ORM\Column(type="boolean")
      */
-    private $AutoAffect = false;
+    private $autoAffect = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $actuelCompte =false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $actuelAuto = false;
 
 
 
@@ -500,12 +511,12 @@ class CompteNature
 
     public function getAutoAffect(): ?bool
     {
-        return $this->AutoAffect;
+        return $this->autoAffect;
     }
 
-    public function setAutoAffect(bool $AutoAffect): self
+    public function setAutoAffect(bool $autoAffect): self
     {
-        $this->AutoAffect = $AutoAffect;
+        $this->autoAffect = $autoAffect;
 
         return $this;
     }
@@ -524,6 +535,19 @@ class CompteNature
             },0);
         }
 
+
+    /**
+     * @return int
+     */
+    public function compteValeurAct($nat): int
+    {
+        return array_reduce($nat->toArray(), function ($test, $sousnature)
+        {
+            return $test + ($sousnature->getActuelCompte() === true ? 1 : 0);
+
+        },0);
+    }
+
     public function retourBoulChap(int $tout,int $art)
     {
         if ($tout === $art || $tout === 0){
@@ -538,10 +562,14 @@ class CompteNature
                 $tout= $this->sousCompteNature->count();
                 $nat=$this->sousCompteNature;
                 $art=$this->compteValeurChap($nat);
+                $act =$this->compteValeurAct($nat);
                 $affect= $this->retourBoulChap($tout,$art);
                 if($affect === true)
                 {
                   $this->setCreditAffect(true);
+                }
+                if ($art >= 1 || $tout === 0 || $act >= 1){
+                    $this->setActuelCompte(true);
                 }
 
             }
@@ -550,10 +578,14 @@ class CompteNature
                 $nat=$this->getCompteNature()->getSousCompteNature();
                 $tout= $this->getCompteNature()->getSousCompteNature()->count();
                 $art=$this->compteValeurChap($nat);
+                $act =$this->compteValeurAct($nat);
                 $affect= $this->retourBoulChap($tout,$art);
                 if($affect === true)
                 {
                     $this->getCompteNature()->setCreditAffect(true);
+                }
+                if ($art >= 1 || $tout === 0 || $act >= 1){
+                    $this->getCompteNature()->setActuelCompte(true);
                 }
             }
 
@@ -571,15 +603,32 @@ class CompteNature
                 }
 
 
+        /**
+        * @return int
+        */
+    public function valeurAutoAct($nat): int
+    {
+        return array_reduce($nat->toArray(), function ($test, $sousnature)
+        {
+            return $test + ($sousnature->getActuelAuto() === true ? 1 : 0);
+
+        },0);
+    }
+
+
                 public function chapitreAuto()
                 {
                     $tout= $this->sousCompteNature->count();
                     $nat=$this->sousCompteNature;
                     $art=$this->compteValeurAut($nat);
+                    $act=$this->valeurAutoAct($nat);
                     $affect= $this->retourBoulChap($tout,$art);
                     if($affect === true)
                     {
                         $this->setAutoAffect(true);
+                    }
+                    if ($art >= 1 || $tout === 0 || $act >= 1){
+                        $this->setActuelAuto(true);
                     }
 
                 }
@@ -588,11 +637,39 @@ class CompteNature
                     $nat=$this->getCompteNature()->getSousCompteNature();
                     $tout= $this->getCompteNature()->getSousCompteNature()->count();
                     $art=$this->compteValeurAut($nat);
+                    $act=$this->valeurAutoAct($nat);
                     $affect= $this->retourBoulChap($tout,$art);
                     if($affect === true)
                     {
                         $this->getCompteNature()->setAutoAffect(true);
                     }
+                    if ($art >= 1 || $tout === 0 || $act >= 1){
+                        $this->getCompteNature()->setActuelAuto(true);
+                    }
+                }
+
+                public function getActuelCompte(): ?bool
+                {
+                    return $this->actuelCompte;
+                }
+
+                public function setActuelCompte(?bool $actuelCompte): self
+                {
+                    $this->actuelCompte = $actuelCompte;
+
+                    return $this;
+                }
+
+                public function getActuelAuto(): ?bool
+                {
+                    return $this->actuelAuto;
+                }
+
+                public function setActuelAuto(?bool $actuelAuto): self
+                {
+                    $this->actuelAuto = $actuelAuto;
+
+                    return $this;
                 }
 
 
