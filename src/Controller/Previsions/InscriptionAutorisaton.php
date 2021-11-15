@@ -11,7 +11,8 @@ class InscriptionAutorisaton
     public function  __invoke(AutorisationMarche $data)
     {
         $hier= $data->getCompteNature()->getHierachieCompteNature();
-
+        $exercice= $data->getAssociationStatut()->getExerciceRegistre();
+        $data->setAssociationRegistre($exercice);
         if($hier === "Chapitre")
         {
             $data->getCompteNature()->chapitreAuto();

@@ -2,7 +2,10 @@
 
 namespace App\Entity\Administration;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Plans\AutorisationMarche;
 use App\Entity\Plans\PlanPassation;
 use App\Entity\Prevision\AllocationCredit;
@@ -24,11 +27,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "get" ={"openapi_context"={"summary"="Affiche les informations des mairies"}}
  *     ,"post"={"openapi_context"={"summary"="Crée une mairie"}}
  * },
- *     shortName= "mairie",
+ *     shortName= "mairies",
  *      normalizationContext={"groups"={"mairie_detail:read","nomen_compte:read"}, "openapi_definition_name"= "Read"},
  *      denormalizationContext={"groups"={"mairie_detail:write"}, "openapi_definition_name"= "Write"},
+ *     subresourceOperations={
+                    "association_autorisations_get_subresource"={"method"="get","path"="/mairies/{id}/autorisations"}
+ *     }
  * )
  * @ORM\Entity(repositoryClass=MairieCommunaleRepository::class)
+ * @ApiFilter(BooleanFilter::class, properties={})
  */
 class MairieCommunale
 {
@@ -75,6 +82,7 @@ class MairieCommunale
 
     /**
      * @ORM\OneToMany(targetEntity=AutorisationMarche::class, mappedBy="mairieCommunale", orphanRemoval=true)
+     * @ApiSubresource(maxDepth=1)
      */
     private $associationAutorisation;
 

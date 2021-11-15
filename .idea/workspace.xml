@@ -28,12 +28,15 @@
     <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="ressourcesss">
       <change afterPath="$PROJECT_DIR$/migrations/Version20211114063918.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Controller/EssaiController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/Previsions/InscriptionRessource.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Previsions/InscriptionAllocation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Previsions/ActualiseOuvertController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Previsions/ActualiseOuvertController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Previsions/ActualiseRessourceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Previsions/ActualiseRessourceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Previsions/ChangeStatutController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Previsions/ChangeStatutController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Previsions/InscriptionAutorisaton.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Previsions/InscriptionAutorisaton.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Administration/MairieCommunale.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Administration/MairieCommunale.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Plans/AutorisationMarche.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Plans/AutorisationMarche.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/AllocationCredit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/AllocationCredit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/CreditOuvert.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/RessourceFinanciere.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/RessourceFinanciere.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/StatutRegistre.php" afterDir="false" />
@@ -319,7 +322,7 @@
       <workItem from="1636694617733" duration="22859000" />
       <workItem from="1636796735040" duration="6439000" />
       <workItem from="1636867301405" duration="12641000" />
-      <workItem from="1636914523431" duration="7815000" />
+      <workItem from="1636914523431" duration="21638000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -510,7 +513,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636879024332</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="pas evident">
+      <created>1636945873306</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1636945873307</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -570,7 +580,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="restructuration des classes versions1s" />
     <MESSAGE value="installation dependance react" />
     <MESSAGE value="ressources nomenclatures terminer" />
     <MESSAGE value="resoudre problème du patch" />
@@ -595,7 +604,8 @@
     <MESSAGE value="mise a niveau du nomenclature terminer" />
     <MESSAGE value="mise au point" />
     <MESSAGE value="mise au point1" />
-    <option name="LAST_COMMIT_MESSAGE" value="mise au point1" />
+    <MESSAGE value="pas evident" />
+    <option name="LAST_COMMIT_MESSAGE" value="pas evident" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">
@@ -659,11 +669,11 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="657" y="285" key="MultipleFileMergeDialog/0.0.1536.834@0.0.1536.834" timestamp="1632234775783" />
-    <state x="443" y="116" key="NewPhpClassDialog" timestamp="1636921063302">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1636956607002">
+      <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="443" y="116" key="NewPhpClassDialog/0.0.1280.689@0.0.1280.689" timestamp="1636921063302" />
-    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1636842316091" />
+    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1636956607002" />
     <state x="604" y="340" key="NewPhpFileDialog" timestamp="1635177181212">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
