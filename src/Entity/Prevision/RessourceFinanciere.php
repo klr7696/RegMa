@@ -39,6 +39,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  *
  *     ,"inscription"={ "method"="post", "path"="/ressources/inscription",
+ *     "controller"="App\Controller\Previsions\InscriptionRessource",
  *     "openapi_context"={"summary"="Crée une ressource"},},
  *
  *     "actualisation"={"method"="post","path"="/ressources/actualise",
@@ -85,7 +86,7 @@ class RessourceFinanciere
      * @Groups({"ressource_detail:read","actifressource:read",
      *     "resencours:read","infos:read","regisress:read",
      *     "ressouvre:read","autoalloc:read","ress_actualise",
-     * "bailleur_ressource:read"})
+     * "bailleur_ressource:read","nature_credit:read"})
      */
     private $id;
 
@@ -95,7 +96,7 @@ class RessourceFinanciere
      *     "actualise:write","bailleurs_detail:read",
      *     "actifressource:read","resencours:read","infos:read",
      *     "regisress:read","autoalloc:read","ress_actualise",
-     *     "bailleur_ressource:read" })
+     *     "bailleur_ressource:read","nature_credit:read" })
      */
     private $objetFinancement;
 
@@ -103,7 +104,8 @@ class RessourceFinanciere
      * @ORM\Column(type="string", length=100)
      *  @Groups({"ressource_detail:read","ressource_detail:write",
      *     "actualise:write","actifressource:read","resencours:read",
-     *     "regisress:read","ress_actualise","bailleur_ressource:read"})
+     *     "regisress:read","ress_actualise","bailleur_ressource:read",
+     *     "nature_credit:read"})
      */
     private $modeFinancement;
 
@@ -111,7 +113,7 @@ class RessourceFinanciere
      * @ORM\Column(type="float")
      *  @Groups({"ressource_detail:read","ressource_detail:write","actualise:write",
      *     "actifressource:read","resencours:read","regisress:read","autoalloc:read",
-     *    "ress_actualise","bailleur_ressource:read" })
+     *    "ress_actualise","bailleur_ressource:read","nature_credit:read" })
      * @Assert\Type(type="numeric",message="veuillez entrer une somme correct")
      */
     private $montantFinancement;
@@ -135,7 +137,7 @@ class RessourceFinanciere
      * @ORM\ManyToOne(targetEntity=BailleurFonds::class, inversedBy="associationRessource")
      * @ORM\JoinColumn(nullable=false)
      *  @Groups({"ressource_detail:read","ressource_detail:write",
-     *     "actualise:write","resencours:read","regisress:read","autoalloc:read","ress_actualise"})
+     *     "actualise:write","resencours:read","regisress:read","autoalloc:read","ress_actualise","nature_credit:read"})
      */
     private $bailleurFonds;
 
@@ -167,7 +169,7 @@ class RessourceFinanciere
      * @ORM\ManyToOne(targetEntity=StatutRegistre::class, inversedBy="associationRessource")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"ressource_detail:read","ressource_detail:write","actualise:write",
-     *     "actifressource:read","resencours:read","regisress:read"})
+     *     "actifressource:read","resencours:read","regisress:read","nature_credit:read"})
      */
     private $statutRegistre;
 

@@ -5,6 +5,7 @@ namespace App\Entity\Prevision;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Entity\Nomenclatures\CompteNature;
 use App\Entity\Plans\AutorisationMarche;
@@ -37,7 +38,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "actualisation"={"method"="post","path"="/ouverts/actualise",
  *     "controller"="App\Controller\Previsions\ActualiseOuvertController",
  *     "openapi_context"={"summary"="Actualise un Credit Ouvert"},
- *     "denormalization_context"={"groups"={"oactualise:write"}},
+ *     "denormalization_context"={"disable_type_enforcement"=true,"groups"={"oactualise:write"}},
  *       "validation_groups"={"oactualise"}
  *     }
  *
@@ -57,11 +58,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "association_allocations_get_subresource"={"path"="/ouverts/{id}/allocations",
  *     "openapi_context"={"summary"="Liste les allocations d'un credit ouvert sur un registre"}
  *     },
+ *    "api_natures_association_credit_ouverts_get_subresource"={"normalization_context"={"groups"={"nature_credit:read"}}}
  *
  *     }
  * )
  * @ORM\Entity(repositoryClass=CreditOuvertRepository::class)
  * @UniqueEntity({"ressourceFinanciere","compteNature"},message="le compte comporte deja une ressource")
+ * @ApiFilter(BooleanFilter::class, properties={"ressourceFinanciere.statutRegistre.estEnCours"})
  */
 class CreditOuvert
 {
@@ -69,14 +72,14 @@ class CreditOuvert
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"ouvert_detail:read","ressouvre:read","autoalloc:read"})
+     * @Groups({"ouvert_detail:read","ressouvre:read","autoalloc:read","nature_credit:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
      * @Groups({"ouvert_detail:read","ouvert_detail:write","oactualise:write",
-     *     "bailleurs_detail:read","ressouvre:read","autoalloc:read"})
+     *     "bailleurs_detail:read","ressouvre:read","autoalloc:read","nature_credit:read"})
      * @Assert\Type(type="numeric",message="le montant est incorrect")
      */
     private $montantInscription;
@@ -84,14 +87,15 @@ class CreditOuvert
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"ouvert_detail:read","ouvert_detail:write",
-     *     "oactualise:write","ressouvre:read"})
+     *     "oactualise:write","ressouvre:read","nature_credit:read"})
      */
     private $descriptionInscription;
 
     /**
      * @ORM\ManyToOne(targetEntity=RessourceFinanciere::class, inversedBy="associationCredit")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"ouvert_detail:read","ouvert_detail:write","oactualise:write","autoalloc:read"})
+     * @Groups({"ouvert_detail:read","ouvert_detail:write","oactualise:write",
+     *     "autoalloc:read","nature_credit:read"})
      *
      */
     private $ressourceFinanciere;
@@ -106,7 +110,7 @@ class CreditOuvert
     /**
      * @ORM\Column(type="boolean")
      *
-     * @Groups({"ouvert_detail:read","ressouvre:read"})
+     * @Groups({"ouvert_detail:read","ressouvre:read","nature_credit:read"})
      */
     private $estValide =true;
 

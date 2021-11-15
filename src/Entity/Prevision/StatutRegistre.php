@@ -33,7 +33,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *       "validation_groups"={"registre_cloture"},
  *
- *                    "openapi_context"={"summary"="clôturer un statut d'un registre "},
+ *                    "openapi_context"={"summary"="clôture un registre "},
  *                      },
  *      },
  *
@@ -50,10 +50,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "registreOuvert"={"method"="get", "path"="/registats/registre_ouvert","datetime_format"="Y-m-d",
  *     "order"={"id"="DESC"},
  *     "normalization_context"={"groups"={"registre_ouvert:read"}},
- *     "openapi_context"={"summary"="Affiche le registre en cours pour un registre en cours.
- * Utiliser au niveau des ressources=estEncours=true&exerciceRegistre.estOuvert=true
- *    pour changer le statut d’un registre=estEncours=true&exerciceRegistre.estOuvert=true&statut=Primitif
- *     pour actualiser une ressource estActualisable=true&exerciceRegistre.estOuvert=true"}
+ *     "openapi_context"={"summary"=" associer à estEncours=true&exerciceRegistre.estOuvert=true =Affiche le registre en cours
+ *          on associe en plus statut=Primitif lors du changement de statut et statut=Supplémentaire lors de la cloture"
+ *    }
  *     },
  *
  *     "RessourceActualisable"={"method"="get", "path"="/registats/ress_actualise","datetime_format"="Y-m-d",
@@ -94,7 +93,7 @@ class StatutRegistre
      * @ORM\Column(type="integer")
      * @Groups({"registat_detail:read","registre_ouvert:read","ress_actualise",
      *     "actifressource:read","resencours:read","autoencours:read","infos:read",
-     *     "regisress:read","bailleur_ressource:read"})
+     *     "regisress:read","bailleur_ressource:read","mairi_auto:read"})
      *
      */
     private $id;
@@ -107,15 +106,16 @@ class StatutRegistre
      *     "registreouvre:write","ress_actualise","bailleur_ressource:read"})
      *
      * @Assert\Choice(choices={"Primitif","Primitif modificatif","Supplémentaire"}, message= "saisir des informations correctes",
-     *     groups={"Default","change_statut"})
+     *     groups={"Default","change_statut","mairi_auto:read"})
      */
     private $statut;
     /**
      * @ORM\Column(type="boolean")
      * @Groups({"registat_detail:read","actifregistre:read",
      *     "registre_ouvert:read","resencours:read","autoencours:read",
-     *     "infos:read","registre_cloture:write","ress_actualise","bailleur_ressource:read"})
-     * @Assert\NotNull(groups={"desactive","registre_cloture"})
+     *     "infos:read","registre_cloture:write","ress_actualise",
+     *     "bailleur_ressource:read","mairi_auto:read","nature_credit:read"})
+     * @Assert\NotNull(groups={"desactive","registre_cloture",})
      */
     private $estEnCours= true;
     /**
@@ -128,7 +128,8 @@ class StatutRegistre
      * @ORM\Column(type="boolean")
      * @Groups({"registat_detail:read","registre_ouvert:read",
      *     "actifressource:read","resencours:read","autoencours:read",
-     *     "infos:read","registre_cloture:write","ress_actualise","bailleur_ressource:read"})
+     *     "infos:read","registre_cloture:write","ress_actualise",
+     *     "bailleur_ressource:read","mairi_auto:read"})
      * @Assert\NotNull(groups={"registre_cloture"})
      *
      */

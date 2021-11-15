@@ -12,10 +12,12 @@ use App\Repository\Contrats\ContratRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "contrats"
+ *     shortName= "contrats",
+ *      denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ORM\Entity(repositoryClass=ContratRepository::class)
  */
@@ -35,26 +37,23 @@ class Contrat
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $montantMinimum;
 
-    /**
-     * @ORM\Column(type="string", length=500, nullable=true)
-     */
-    private $montantMinimumLettre;
+
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $montantMaximum;
 
-    /**
-     * @ORM\Column(type="string", length=500, nullable=true)
-     */
-    private $montantMaximumLettre;
+
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $numeroContrat;
 
@@ -154,55 +153,35 @@ class Contrat
         return $this->montantMinimum;
     }
 
-    public function setMontantMinimum(?float $montantMinimum): self
+    public function setMontantMinimum($montantMinimum): self
     {
         $this->montantMinimum = $montantMinimum;
 
         return $this;
     }
 
-    public function getMontantMinimumLettre(): ?string
-    {
-        return $this->montantMinimumLettre;
-    }
 
-    public function setMontantMinimumLettre(?string $montantMinimumLettre): self
-    {
-        $this->montantMinimumLettre = $montantMinimumLettre;
-
-        return $this;
-    }
 
     public function getMontantMaximum(): ?float
     {
         return $this->montantMaximum;
     }
 
-    public function setMontantMaximum(?float $montantMaximum): self
+    public function setMontantMaximum($montantMaximum): self
     {
         $this->montantMaximum = $montantMaximum;
 
         return $this;
     }
 
-    public function getMontantMaximumLettre(): ?string
-    {
-        return $this->montantMaximumLettre;
-    }
 
-    public function setMontantMaximumLettre(?string $montantMaximumLettre): self
-    {
-        $this->montantMaximumLettre = $montantMaximumLettre;
-
-        return $this;
-    }
 
     public function getNumeroContrat(): ?int
     {
         return $this->numeroContrat;
     }
 
-    public function setNumeroContrat(int $numeroContrat): self
+    public function setNumeroContrat($numeroContrat): self
     {
         $this->numeroContrat = $numeroContrat;
 

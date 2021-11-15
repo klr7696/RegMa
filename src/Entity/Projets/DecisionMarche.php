@@ -6,10 +6,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Contrats\Contrat;
 use App\Repository\Projets\DecisionMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "decisions"
+ *     shortName= "decisions",
+ *     denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ORM\Entity(repositoryClass=DecisionMarcheRepository::class)
  */
@@ -29,6 +31,7 @@ class DecisionMarche
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="numeric", message="incorrect")
      */
     private $numeroDecision;
 
@@ -54,6 +57,7 @@ class DecisionMarche
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(type="numeric", message="incorrect")
      */
     private $numeroPublication;
 
@@ -94,7 +98,7 @@ class DecisionMarche
         return $this->numeroDecision;
     }
 
-    public function setNumeroDecision(int $numeroDecision): self
+    public function setNumeroDecision($numeroDecision): self
     {
         $this->numeroDecision = $numeroDecision;
 
@@ -154,7 +158,7 @@ class DecisionMarche
         return $this->numeroPublication;
     }
 
-    public function setNumeroPublication(?int $numeroPublication): self
+    public function setNumeroPublication($numeroPublication): self
     {
         $this->numeroPublication = $numeroPublication;
 

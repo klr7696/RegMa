@@ -10,10 +10,12 @@ use App\Repository\Projets\ProjetMarcheRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "projets"
+ *     shortName= "projets",
+ *     denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ORM\Entity(repositoryClass=ProjetMarcheRepository::class)
  */
@@ -30,6 +32,11 @@ class ProjetMarche
      * @ORM\Column(type="text", nullable=true)
      */
     private $objetMarche;
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
+     */
+    private $montantProjet;
 
     /**
      * @ORM\Column(type="integer")
@@ -43,6 +50,7 @@ class ProjetMarche
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $prioriteProjet;
 
@@ -58,11 +66,13 @@ class ProjetMarche
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $prixDossier;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $propositionMinimum;
 
@@ -97,10 +107,7 @@ class ProjetMarche
      */
     private $associationLot;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $montantProjet;
+
 
     public function __construct()
     {
@@ -157,7 +164,7 @@ class ProjetMarche
         return $this->prioriteProjet;
     }
 
-    public function setPrioriteProjet(int $prioriteProjet): self
+    public function setPrioriteProjet($prioriteProjet): self
     {
         $this->prioriteProjet = $prioriteProjet;
 
@@ -193,7 +200,7 @@ class ProjetMarche
         return $this->prixDossier;
     }
 
-    public function setPrixDossier(?float $prixDossier): self
+    public function setPrixDossier($prixDossier): self
     {
         $this->prixDossier = $prixDossier;
 
@@ -205,7 +212,7 @@ class ProjetMarche
         return $this->propositionMinimum;
     }
 
-    public function setPropositionMinimum(?float $propositionMinimum): self
+    public function setPropositionMinimum($propositionMinimum): self
     {
         $this->propositionMinimum = $propositionMinimum;
 
@@ -379,7 +386,7 @@ class ProjetMarche
         return $this->montantProjet;
     }
 
-    public function setMontantProjet(?float $montantProjet): self
+    public function setMontantProjet($montantProjet): self
     {
         $this->montantProjet = $montantProjet;
 

@@ -26,6 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                      "get"={ "order"={"id"="DESC"},
  *                              "openapi_context"={"summary"="Affiche les informations des registres"}}
  *                               ,"inscription"={ "method"="post", "path"="/allocations/inscription",
+ *     "controller"="App\Controller\Previsions\InscriptionAllocation",
  *     "openapi_context"={"summary"="Crée une allocation"},},
  *
  *     "actualisation"={"method"="post","path"="/allocations/actualise",
@@ -41,7 +42,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                       "groups"={"allocation_detail:read"}, "openapi_definition_name"= "Read"
  * },
  * denormalizationContext={
- *                        "groups"={"allocation_detail:write"}, "openapi_definition_name"= "Write"
+ *                        "groups"={"allocation_detail:write"}, "openapi_definition_name"= "Write","disable_type_enforcement"=true
  * },
  *     subresourceOperations={
  *     "api_ouverts_association_allocations_get_subresource"={
@@ -179,17 +180,6 @@ class AllocationCredit
         return $this;
     }
 
-    public function getCompteNature(): ?CompteNature
-    {
-        return $this->compteNature;
-    }
-
-    public function setCompteNature(?CompteNature $compteNature): self
-    {
-        $this->compteNature = $compteNature;
-
-        return $this;
-    }
 
     public function getActualiseAllocation(): ?self
     {

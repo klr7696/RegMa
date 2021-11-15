@@ -5,10 +5,12 @@ namespace App\Entity\Contrats;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Contrats\ItemCommandeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "items"
+ *     shortName= "items",
+ *     denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ORM\Entity(repositoryClass=ItemCommandeRepository::class)
  */
@@ -33,11 +35,13 @@ class ItemCommande
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $prixUnitaireItem;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $quantiteItem;
 
@@ -91,7 +95,7 @@ class ItemCommande
         return $this->prixUnitaireItem;
     }
 
-    public function setPrixUnitaireItem(float $prixUnitaireItem): self
+    public function setPrixUnitaireItem($prixUnitaireItem): self
     {
         $this->prixUnitaireItem = $prixUnitaireItem;
 
@@ -103,7 +107,7 @@ class ItemCommande
         return $this->quantiteItem;
     }
 
-    public function setQuantiteItem(int $quantiteItem): self
+    public function setQuantiteItem($quantiteItem): self
     {
         $this->quantiteItem = $quantiteItem;
 

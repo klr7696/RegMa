@@ -7,10 +7,12 @@ use App\Repository\Projets\ModePassationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "modes"
+ *     shortName= "modes",
+ *     denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ORM\Entity(repositoryClass=ModePassationRepository::class)
  */
@@ -45,11 +47,13 @@ class ModePassation
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(type="numeric", message="incorrect")
      */
     private $seuilsMinimum;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(type="numeric", message="incorrect")
      */
     private $seuilsMaximum;
 
@@ -126,7 +130,7 @@ class ModePassation
         return $this->seuilsMinimum;
     }
 
-    public function setSeuilsMinimum(float $seuilsMinimum): self
+    public function setSeuilsMinimum($seuilsMinimum): self
     {
         $this->seuilsMinimum = $seuilsMinimum;
 
@@ -138,7 +142,7 @@ class ModePassation
         return $this->seuilsMaximum;
     }
 
-    public function setSeuilsMaximum(float $seuilsMaximum): self
+    public function setSeuilsMaximum($seuilsMaximum): self
     {
         $this->seuilsMaximum = $seuilsMaximum;
 

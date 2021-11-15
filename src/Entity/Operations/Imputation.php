@@ -7,10 +7,12 @@ use App\Entity\Nomenclatures\CompteNature;
 use App\Entity\Prevision\RessourceFinanciere;
 use App\Repository\Operations\ImputationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "imputations"
+ *     shortName= "imputations",
+ *      denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ORM\Entity(repositoryClass=ImputationRepository::class)
  */
@@ -30,6 +32,7 @@ class Imputation
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(type="numeric", message="incorrect")
      */
     private $montantImputation;
 

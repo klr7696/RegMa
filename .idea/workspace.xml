@@ -26,12 +26,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="ressourcesss">
-      <change afterPath="$PROJECT_DIR$/src/Dto/NomenclaturesOutput.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20211108100416.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20211112111831.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/CompteNature.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Nomenclatures/Nomenclature.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prevision/BailleurFonds.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrations/Version20211114063918.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,10 +196,17 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/data-fixtures" />
       <path value="$PROJECT_DIR$/vendor/fzaninotto/faker" />
       <path value="$PROJECT_DIR$/vendor/symfony/webpack-encore-bundle" />
-      <path value="$PROJECT_DIR$/vendor/elasticsearch/elasticsearch" />
-      <path value="$PROJECT_DIR$/vendor/react/promise" />
-      <path value="$PROJECT_DIR$/vendor/ezimuel/ringphp" />
-      <path value="$PROJECT_DIR$/vendor/ezimuel/guzzlestreams" />
+      <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/vendor/ang3/php-excel-encoder" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/php-enum" />
+      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
     </include_path>
   </component>
   <component name="ProjectId" id="1yKEe5DdJ24qRlXwxBuldkxRMD2" />
@@ -306,6 +308,8 @@
       <workItem from="1636641984452" duration="19621000" />
       <workItem from="1636694617733" duration="22859000" />
       <workItem from="1636796735040" duration="6439000" />
+      <workItem from="1636867301405" duration="12641000" />
+      <workItem from="1636914523431" duration="22003000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -482,7 +486,35 @@
       <option name="project" value="LOCAL" />
       <updated>1636799727671</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="mise au point">
+      <created>1636872135775</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1636872135776</updated>
+    </task>
+    <task id="LOCAL-00027" summary="mise au point1">
+      <created>1636879024332</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1636879024332</updated>
+    </task>
+    <task id="LOCAL-00028" summary="pas evident">
+      <created>1636945873306</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1636945873307</updated>
+    </task>
+    <task id="LOCAL-00029" summary="pas evident1">
+      <created>1636987361110</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1636987361110</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -542,10 +574,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="creation des classes du projet de registre marche" />
-    <MESSAGE value="les classes du modèle versionner en premiere fois" />
-    <MESSAGE value="restructuration des classes versions1s" />
-    <MESSAGE value="installation dependance react" />
     <MESSAGE value="ressources nomenclatures terminer" />
     <MESSAGE value="resoudre problème du patch" />
     <MESSAGE value="ressources nomenclatures corriger version 2" />
@@ -567,7 +595,11 @@
     <MESSAGE value="testok2" />
     <MESSAGE value="inscriptioncredirok" />
     <MESSAGE value="mise a niveau du nomenclature terminer" />
-    <option name="LAST_COMMIT_MESSAGE" value="mise a niveau du nomenclature terminer" />
+    <MESSAGE value="mise au point" />
+    <MESSAGE value="mise au point1" />
+    <MESSAGE value="pas evident" />
+    <MESSAGE value="pas evident1" />
+    <option name="LAST_COMMIT_MESSAGE" value="pas evident1" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">
@@ -591,10 +623,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="574" y="99" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1636261580009" />
-    <state x="332" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1636715287873">
+    <state x="332" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1636866543389">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="332" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.834@0.0.1536.834" timestamp="1636715287873" />
+    <state x="332" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.834@0.0.1536.834" timestamp="1636866543389" />
     <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1636361285384">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -623,18 +655,19 @@
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="221" y="80" key="IDE.errors.dialog/0.0.1280.689@0.0.1280.689" timestamp="1636272113475" />
-    <state x="147" y="66" key="MergeDialog" timestamp="1632234775773">
+    <state x="147" y="66" key="MergeDialog" timestamp="1636818185802">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="147" y="66" key="MergeDialog/0.0.1536.834@0.0.1536.834" timestamp="1632234775773" />
+    <state x="147" y="66" key="MergeDialog/0.0.1536.834@0.0.1536.834" timestamp="1636818185802" />
     <state x="657" y="285" key="MultipleFileMergeDialog" timestamp="1632234775783">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="657" y="285" key="MultipleFileMergeDialog/0.0.1536.834@0.0.1536.834" timestamp="1632234775783" />
-    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1636804546002">
+    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1636956607002">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1636804546002" />
+    <state x="443" y="116" key="NewPhpClassDialog/0.0.1280.689@0.0.1280.689" timestamp="1636921063302" />
+    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1636956607002" />
     <state x="604" y="340" key="NewPhpFileDialog" timestamp="1635177181212">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -647,22 +680,26 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1536.834@0.0.1536.834" timestamp="1634533502890" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1636739601085">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1636806540404">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1636739601085" />
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1636806540404" />
     <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1636637701545">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1636637701545" />
-    <state x="508" y="205" key="git4idea.merge.GitPullDialog" timestamp="1636640968955">
+    <state x="550" y="130" key="git4idea.branch.GitSmartOperationDialog" timestamp="1636818074939">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="508" y="205" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1636640968955" />
-    <state x="356" y="185" key="run.anything.popup" timestamp="1635587377766">
+    <state x="550" y="130" key="git4idea.branch.GitSmartOperationDialog/0.0.1536.834@0.0.1536.834" timestamp="1636818074939" />
+    <state x="508" y="205" key="git4idea.merge.GitPullDialog" timestamp="1636818230947">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="297" y="153" key="run.anything.popup/0.0.1280.689@0.0.1280.689" timestamp="1632339000417" />
+    <state x="508" y="205" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1636818230947" />
+    <state x="297" y="153" key="run.anything.popup" timestamp="1636913190014">
+      <screen x="0" y="0" width="1280" height="689" />
+    </state>
+    <state x="297" y="153" key="run.anything.popup/0.0.1280.689@0.0.1280.689" timestamp="1636913190014" />
     <state x="356" y="185" key="run.anything.popup/0.0.1536.834@0.0.1536.834" timestamp="1635587377766" />
     <state x="359" y="128" width="672" height="561" key="search.everywhere.popup" timestamp="1634415290073">
       <screen x="0" y="0" width="1280" height="689" />

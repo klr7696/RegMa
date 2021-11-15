@@ -8,10 +8,12 @@ use App\Repository\Soumissions\SoumissionMarcheRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "soumissions"
+ *     shortName= "soumissions",
+ *     denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ORM\Entity(repositoryClass=SoumissionMarcheRepository::class)
  */
@@ -26,6 +28,7 @@ class SoumissionMarche
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $numeroRetrait;
 
@@ -44,10 +47,7 @@ class SoumissionMarche
      */
     private $nomRepresantantDepot;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $nomRepresantantAnnulation;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -59,10 +59,6 @@ class SoumissionMarche
      */
     private $contactDepot;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $contactAnnulation;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -81,6 +77,7 @@ class SoumissionMarche
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $numeroDepot;
 
@@ -126,7 +123,7 @@ class SoumissionMarche
         return $this->numeroRetrait;
     }
 
-    public function setNumeroRetrait(int $numeroRetrait): self
+    public function setNumeroRetrait($numeroRetrait): self
     {
         $this->numeroRetrait = $numeroRetrait;
 
@@ -169,17 +166,7 @@ class SoumissionMarche
         return $this;
     }
 
-    public function getNomRepresantantAnnulation(): ?string
-    {
-        return $this->nomRepresantantAnnulation;
-    }
 
-    public function setNomRepresantantAnnulation(?string $nomRepresantantAnnulation): self
-    {
-        $this->nomRepresantantAnnulation = $nomRepresantantAnnulation;
-
-        return $this;
-    }
 
     public function getContactRetrait(): ?string
     {
@@ -201,18 +188,6 @@ class SoumissionMarche
     public function setContactDepot(?string $contactDepot): self
     {
         $this->contactDepot = $contactDepot;
-
-        return $this;
-    }
-
-    public function getContactAnnulation(): ?string
-    {
-        return $this->contactAnnulation;
-    }
-
-    public function setContactAnnulation(?string $contactAnnulation): self
-    {
-        $this->contactAnnulation = $contactAnnulation;
 
         return $this;
     }
@@ -258,7 +233,7 @@ class SoumissionMarche
         return $this->numeroDepot;
     }
 
-    public function setNumeroDepot(int $numeroDepot): self
+    public function setNumeroDepot($numeroDepot): self
     {
         $this->numeroDepot = $numeroDepot;
 

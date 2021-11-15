@@ -66,11 +66,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
  *      "association_allocations_get_subresource"={"path"="/autorisations/{id}/allocations",
  *     "openapi_context"={"summary"="liste les allocations d'une autorisation"},
- *    }
+ *    },
+ *     "api_mairies_association_autorisations_get_subresource"={"normalization_context"={"groups"={"mairi_auto:read"}}}
  *     }
  * )
  * @ORM\Entity(repositoryClass=AutorisationMarcheRepository::class)
- * @ApiFilter(BooleanFilter::class, properties={"associationRegistre.estOuvert","associationStatut.estEncours","estValide"})
+ * @ApiFilter(BooleanFilter::class, properties={"associationRegistre.estOuvert","associationStatut.estEnCours","estValide"})
  */
 class AutorisationMarche
 {
@@ -79,14 +80,14 @@ class AutorisationMarche
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
-     *     "autoencours:read","ouveralloc:read"})
+     *     "autoencours:read","ouveralloc:read","mairi_auto:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
-     *     "autoencours:read","ouveralloc:read"})
+     *     "autoencours:read","ouveralloc:read","mairi_auto:read"})
      */
     private $objetAutorisation;
 
@@ -94,13 +95,14 @@ class AutorisationMarche
      * @ORM\Column(type="float")
      * @Assert\Type(type="numeric",message="le montant est incorrecte")
      * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
-     *     "autoencours:read","ouveralloc:read"})
+     *     "autoencours:read","ouveralloc:read","mairi_auto:read"})
      */
     private $montantAutorisation;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write","ouveralloc:read"})
+     * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
+     *     "ouveralloc:read","mairi_auto:read"})
      */
     private $explicationAutorisation;
 
@@ -132,7 +134,7 @@ class AutorisationMarche
      * @ORM\ManyToOne(targetEntity=CompteNature::class, inversedBy="associationAutorisation")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
-     *     "autoencours:read"})
+     *     "autoencours:read","mairi_auto:read"})
      */
     private $compteNature;
 
@@ -148,7 +150,7 @@ class AutorisationMarche
      * @ORM\ManyToOne(targetEntity=StatutRegistre::class, inversedBy="autorisationMarches")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"autorisation_detail:read","autorisation_detail:write","auactualise:write",
-     *     "autoencours:read"})
+     *     "autoencours:read","mairi_auto:read"})
      */
     private $associationStatut;
 

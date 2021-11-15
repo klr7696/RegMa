@@ -46,11 +46,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * },
  * collectionOperations={
- *     "test"={"method"="get", "path"="/nomenclatures/csv", "formats"={"csv"={"text/csv"}}
  *
-
+ *     "essai"={"method"="get", "path"="/nomenclatures/essai",
+ *     "normalization_context"={"groups"={"essai:read"}}
  *     },
- *
  *
  *     "get"={ "order"={"id"="DESC"},
  *                              "openapi_context"={"summary"="Affiche les informations des nomenclatures filtrer par ?estActif=true"}}
@@ -350,19 +349,25 @@ class Nomenclature
 
                       array_reduce($sousfils->toArray(),function ($test, $paragrah){
                           $paragrah->setCreditAffect(false)
-                                    ->setAutoAffect(false);
+                                    ->setAutoAffect(false)
+                                    ->setActuelCompte(false)
+                                    ->setActuelAuto(false);
                       }, 0);
                       $art->next();
                   }
                   $article->setCreditAffect(false)
-                             ->setAutoAffect(false);
+                             ->setAutoAffect(false)
+                             ->setActuelCompte(false)
+                             ->setActuelAuto(false);
 
               },0);
 
               $chap->next();
           }
            $nature->setCreditAffect(false)
-                    ->setAutoAffect(false);
+                    ->setAutoAffect(false)
+                    ->setActuelCompte(false)
+                    ->setActuelAuto(false);
        },0);
     }
 

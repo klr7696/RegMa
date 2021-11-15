@@ -4,6 +4,7 @@ namespace App\Entity\Nomenclatures;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Operations\Engagement;
@@ -77,13 +78,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                          "openapi_context"={"summary"="liste les sous comptes d'un compte nature"}
  *     },
  *     "api_natures_sous_compte_natures_get_subresource"={
- *     "normalization_context"={"groups"={"sousnatures:read"}}
+ *     "normalization_context"={"groups"={"sousnatures:read"}},
+ *
  * },
+ *     "association_credit_ouverts_get_subresource" ={"method"="get","path"="/natures/{id}/credit"}
 
  *  }
  *
  * )
  * @ApiFilter(SearchFilter::class, properties={"numeroCompteNature"="exact","sectionCompteNature"="exact","hierachieCompteNature"="exact"} )
+ * @ApiFilter(BooleanFilter::class, properties={"sousCompteNature.creditAffect","sousCompteNature.autoAffect","creditAffect","autoAffect",
+ *     "associationCreditOuvert.ressourceFinanciere.statutRegistre.estEnCours"})
  * @UniqueEntity({"numeroCompteNature","libelleCompteNature"},message="le compte en creation comporte des erreurs")
  *
  */
@@ -93,7 +98,8 @@ class CompteNature
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"nature_detail:read","actifnomen:read","ressouvre:read","sousnatures:read"})
+     * @Groups({"nature_detail:read","actifnomen:read","ressouvre:read",
+     *     "sousnatures:read","mairi_auto:read"})
      */
     private $id;
 
@@ -102,7 +108,7 @@ class CompteNature
      * @Groups({"nature_detail:read","nature_detail:write"
      * ,"nomen_nature:read","sousnatures:read",
      * "chapitre:write","sousnatures:write","actifnomen:read",
-     *     "ressouvre:read"})
+     *     "ressouvre:read","mairi_auto:read"})
      * @Assert\NotBlank(message=" veuillez entrer le numero du compte ")
      * @Assert\Type(type="numeric", message="le numero de compte nature est incorrect")
      */
@@ -112,7 +118,8 @@ class CompteNature
      * @ORM\Column(type="string", length=255)
      * @Groups({"nature_detail:read","nature_detail:write",
      *     "nomen_nature:read","sousnatures:read",
-     * "chapitre:write","sousnatures:write","actifnomen:read","ressouvre:read"})
+     * "chapitre:write","sousnatures:write","actifnomen:read",
+     *     "ressouvre:read","mairi_auto:read"})
      * @Assert\NotBlank(message=" veuillez entrer le libelle")
      */
     private $libelleCompteNature;
@@ -121,8 +128,8 @@ class CompteNature
      * @ORM\Column(type="string", length=30, nullable=true)
      * @Assert\Choice(choices= {"","Fonctionnement", "Investissement"})
      * @Groups({"nature_detail:read","nature_detail:write"
-     * ,"nomen_nature:read","chapitre:write","actifnomen:read","ressouvre:read"
-     *    })
+     * ,"nomen_nature:read","chapitre:write","actifnomen:read","ressouvre:read",
+     *   "mairi_auto:read" })
      */
     private $sectionCompteNature;
 
@@ -132,7 +139,7 @@ class CompteNature
      * @Groups({"nature_detail:read","nature_detail:write"
      * ,"nomen_nature:read","sousnatures:read",
      * "chapitre:write","sousnatures:write",
-     *     "sousnatures:read","actifnomen:read","ressouvre:read"})
+     *     "sousnatures:read","actifnomen:read","ressouvre:read","mairi_auto:read"})
      *
      */
     private $hierachieCompteNature;
@@ -163,12 +170,13 @@ class CompteNature
      * @ORM\OneToMany(targetEntity=CompteNature::class, mappedBy="compteNature")
      * @Groups({"nature_detail:read","nature_detail:write","nomen_nature:read","actifnomen:read","actifnomen:read"})
      *
-     * @ApiSubresource()
+     * @ApiSubresource(maxDepth=1)
      */
     private $sousCompteNature;
 
     /**
      * @ORM\OneToMany(targetEntity=CreditOuvert::class, mappedBy="compteNature", orphanRemoval=true)
+     * @ApiSubresource(maxDepth=1)
      */
     private $associationCreditOuvert;
 
@@ -202,7 +210,17 @@ class CompteNature
     /**
      * @ORM\Column(type="boolean")
      */
-    private $AutoAffect = false;
+    private $autoAffect = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $actuelCompte =false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $actuelAuto = false;
 
 
 
@@ -500,12 +518,12 @@ class CompteNature
 
     public function getAutoAffect(): ?bool
     {
-        return $this->AutoAffect;
+        return $this->autoAffect;
     }
 
-    public function setAutoAffect(bool $AutoAffect): self
+    public function setAutoAffect(bool $autoAffect): self
     {
-        $this->AutoAffect = $AutoAffect;
+        $this->autoAffect = $autoAffect;
 
         return $this;
     }
@@ -524,6 +542,19 @@ class CompteNature
             },0);
         }
 
+
+    /**
+     * @return int
+     */
+    public function compteValeurAct($nat): int
+    {
+        return array_reduce($nat->toArray(), function ($test, $sousnature)
+        {
+            return $test + ($sousnature->getActuelCompte() === true ? 1 : 0);
+
+        },0);
+    }
+
     public function retourBoulChap(int $tout,int $art)
     {
         if ($tout === $art || $tout === 0){
@@ -538,10 +569,14 @@ class CompteNature
                 $tout= $this->sousCompteNature->count();
                 $nat=$this->sousCompteNature;
                 $art=$this->compteValeurChap($nat);
+                $act =$this->compteValeurAct($nat);
                 $affect= $this->retourBoulChap($tout,$art);
                 if($affect === true)
                 {
                   $this->setCreditAffect(true);
+                }
+                if ($art >= 1 || $tout === 0 || $act >= 1){
+                    $this->setActuelCompte(true);
                 }
 
             }
@@ -550,10 +585,14 @@ class CompteNature
                 $nat=$this->getCompteNature()->getSousCompteNature();
                 $tout= $this->getCompteNature()->getSousCompteNature()->count();
                 $art=$this->compteValeurChap($nat);
+                $act =$this->compteValeurAct($nat);
                 $affect= $this->retourBoulChap($tout,$art);
                 if($affect === true)
                 {
                     $this->getCompteNature()->setCreditAffect(true);
+                }
+                if ($art >= 1 || $tout === 0 || $act >= 1){
+                    $this->getCompteNature()->setActuelCompte(true);
                 }
             }
 
@@ -571,15 +610,32 @@ class CompteNature
                 }
 
 
+        /**
+        * @return int
+        */
+    public function valeurAutoAct($nat): int
+    {
+        return array_reduce($nat->toArray(), function ($test, $sousnature)
+        {
+            return $test + ($sousnature->getActuelAuto() === true ? 1 : 0);
+
+        },0);
+    }
+
+
                 public function chapitreAuto()
                 {
                     $tout= $this->sousCompteNature->count();
                     $nat=$this->sousCompteNature;
                     $art=$this->compteValeurAut($nat);
+                    $act=$this->valeurAutoAct($nat);
                     $affect= $this->retourBoulChap($tout,$art);
                     if($affect === true)
                     {
                         $this->setAutoAffect(true);
+                    }
+                    if ($art >= 1 || $tout === 0 || $act >= 1){
+                        $this->setActuelAuto(true);
                     }
 
                 }
@@ -588,11 +644,39 @@ class CompteNature
                     $nat=$this->getCompteNature()->getSousCompteNature();
                     $tout= $this->getCompteNature()->getSousCompteNature()->count();
                     $art=$this->compteValeurAut($nat);
+                    $act=$this->valeurAutoAct($nat);
                     $affect= $this->retourBoulChap($tout,$art);
                     if($affect === true)
                     {
                         $this->getCompteNature()->setAutoAffect(true);
                     }
+                    if ($art >= 1 || $tout === 0 || $act >= 1){
+                        $this->getCompteNature()->setActuelAuto(true);
+                    }
+                }
+
+                public function getActuelCompte(): ?bool
+                {
+                    return $this->actuelCompte;
+                }
+
+                public function setActuelCompte(?bool $actuelCompte): self
+                {
+                    $this->actuelCompte = $actuelCompte;
+
+                    return $this;
+                }
+
+                public function getActuelAuto(): ?bool
+                {
+                    return $this->actuelAuto;
+                }
+
+                public function setActuelAuto(?bool $actuelAuto): self
+                {
+                    $this->actuelAuto = $actuelAuto;
+
+                    return $this;
                 }
 
 

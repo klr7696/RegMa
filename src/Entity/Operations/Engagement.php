@@ -10,10 +10,12 @@ use App\Repository\Operations\EngagementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "engagements"
+ *     shortName= "engagements",
+ *     denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ORM\Entity(repositoryClass=EngagementRepository::class)
  */
@@ -33,6 +35,7 @@ class Engagement
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $montantOperation;
 
@@ -116,7 +119,7 @@ class Engagement
         return $this->montantOperation;
     }
 
-    public function setMontantOperation(float $montantOperation): self
+    public function setMontantOperation($montantOperation): self
     {
         $this->montantOperation = $montantOperation;
 

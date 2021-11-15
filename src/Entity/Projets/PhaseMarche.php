@@ -5,10 +5,12 @@ namespace App\Entity\Projets;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Projets\PhaseMarcheRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     shortName= "phases"
+ *     shortName= "phases",
+ * denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ORM\Entity(repositoryClass=PhaseMarcheRepository::class)
  */
@@ -38,6 +40,7 @@ class PhaseMarche
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $dureePublicite;
 
@@ -53,6 +56,7 @@ class PhaseMarche
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $dureeRemiseOffre;
 
@@ -63,6 +67,7 @@ class PhaseMarche
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="numeric",message="incorrect")
      */
     private $tempsEvaluation;
 
@@ -123,7 +128,7 @@ class PhaseMarche
         return $this->dureePublicite;
     }
 
-    public function setDureePublicite(int $dureePublicite): self
+    public function setDureePublicite($dureePublicite): self
     {
         $this->dureePublicite = $dureePublicite;
 
@@ -159,7 +164,7 @@ class PhaseMarche
         return $this->dureeRemiseOffre;
     }
 
-    public function setDureeRemiseOffre(int $dureeRemiseOffre): self
+    public function setDureeRemiseOffre($dureeRemiseOffre): self
     {
         $this->dureeRemiseOffre = $dureeRemiseOffre;
 
@@ -183,7 +188,7 @@ class PhaseMarche
         return $this->tempsEvaluation;
     }
 
-    public function setTempsEvaluation(int $tempsEvaluation): self
+    public function setTempsEvaluation($tempsEvaluation): self
     {
         $this->tempsEvaluation = $tempsEvaluation;
 
