@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ApiResource(
  *     shortName= "nomenclatures",
- *      output=NomenclaturesOutput::CLASS,
+ *
  * itemOperations={
  *                  "get"={"openapi_context"={"summary"="Affiche les informations d'une nomenclature "}}
  *

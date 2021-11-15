@@ -37,7 +37,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "actualisation"={"method"="post","path"="/ouverts/actualise",
  *     "controller"="App\Controller\Previsions\ActualiseOuvertController",
  *     "openapi_context"={"summary"="Actualise un Credit Ouvert"},
- *     "denormalization_context"={"groups"={"oactualise:write"}},
+ *     "denormalization_context"={"disable_type_enforcement"=true,"groups"={"oactualise:write"}},
  *       "validation_groups"={"oactualise"}
  *     }
  *

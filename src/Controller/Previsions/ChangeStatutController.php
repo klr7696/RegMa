@@ -11,6 +11,7 @@ class ChangeStatutController
     public function __invoke(StatutRegistre $data)
     {
         $statut = $data->getStatutRegistre();
+        $exercice= $data->getStatutRegistre()->getExerciceRegistre();
         if ($statut !== null)
         {
             $statut->setEstEnCours(false)
@@ -23,6 +24,7 @@ class ChangeStatutController
                     ->setEstActualisable(false);
             }
             $data->setStatutRegistre($statut);
+            $data->setExerciceRegistre($exercice);
         }
 
         return $data;

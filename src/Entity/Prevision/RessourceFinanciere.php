@@ -39,6 +39,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  *
  *     ,"inscription"={ "method"="post", "path"="/ressources/inscription",
+ *     "controller"="App\Controller\Previsions\InscriptionRessource",
  *     "openapi_context"={"summary"="Crée une ressource"},},
  *
  *     "actualisation"={"method"="post","path"="/ressources/actualise",

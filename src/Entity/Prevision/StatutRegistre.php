@@ -33,7 +33,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *       "validation_groups"={"registre_cloture"},
  *
- *                    "openapi_context"={"summary"="clôturer un statut d'un registre "},
+ *                    "openapi_context"={"summary"="clôture un registre "},
  *                      },
  *      },
  *
@@ -50,10 +50,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "registreOuvert"={"method"="get", "path"="/registats/registre_ouvert","datetime_format"="Y-m-d",
  *     "order"={"id"="DESC"},
  *     "normalization_context"={"groups"={"registre_ouvert:read"}},
- *     "openapi_context"={"summary"="Affiche le registre en cours pour un registre en cours.
- * Utiliser au niveau des ressources=estEncours=true&exerciceRegistre.estOuvert=true
- *    pour changer le statut d’un registre=estEncours=true&exerciceRegistre.estOuvert=true&statut=Primitif
- *     pour actualiser une ressource estActualisable=true&exerciceRegistre.estOuvert=true"}
+ *     "openapi_context"={"summary"=" associer à estEncours=true&exerciceRegistre.estOuvert=true =Affiche le registre en cours
+ *          on associe en plus statut=Primitif lors du changement de statut et statut=Supplémentaire lors de la cloture"
+ *    }
  *     },
  *
  *     "RessourceActualisable"={"method"="get", "path"="/registats/ress_actualise","datetime_format"="Y-m-d",
