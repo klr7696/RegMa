@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import OuvriExerc from '../../../Sbu/pages/Exercice/OuvriExerc';
 
-const ConsultLot = () => {
+const ConsultModeP = () => {
 
     
   const [plans, setPlans] = useState([]);
@@ -32,7 +32,7 @@ const ConsultLot = () => {
             <li className="nav-item">
               <a
                className="nav-link f-18 p-b-0"
-                href="#/scp/lot-marche/new"
+                href="#/scp/mode-passation/new"
               >
                 Création
               </a>
@@ -41,7 +41,7 @@ const ConsultLot = () => {
             <li className="nav-item m-b-0">
               <a
                  className="nav-link active f-18 p-b-0"
-                 href="#/scp/lot-marche"
+                 href="#/scp/mode-passation"
               >
                 Consultation
               </a>
@@ -55,7 +55,7 @@ const ConsultLot = () => {
         <div className="col-sm-12">
         <div className="card-block">
             <div className="card-block">
-            <h5 className="card-header-text">Listes des lots de marchés</h5>
+            <h5 className="card-header-text">Listes des modes de passation</h5>
             </div>
      <div className="table-responsive dt-responsive">
        <table
@@ -95,4 +95,4 @@ const ConsultLot = () => {
     );
 };
 
-export default ConsultLot;
+export default ConsultModeP;

@@ -8,13 +8,13 @@ function findAll() {
 
 function find(id) {
     return axios 
-    .get("http://localhost:8000/api/ressources")
+    .get("http://localhost:8000/api/ressources" + id )
     .then(response => response.data);
 }
 
-function actualise(id) {
+function actualise(ressource) {
     return axios 
-    .patch("http://localhost:8000/api/ressources/" + id);
+    .post("http://localhost:8000/api/ressources/actualise", ressource);
 }
 
 function deleteRessource(id) {
@@ -24,12 +24,12 @@ function deleteRessource(id) {
 
 function create(ressource) {
     return axios
-    .post("http://localhost:8000/api/ressources", ressource)
+    .post("http://localhost:8000/api/ressources/inscription", ressource);
 }
 
 function update(id, ressource) {
     return axios
-    .patch("http://localhost:8000/api/ressources/" + id, ressource);
+    .put("http://localhost:8000/api/ressources/" + id, ressource);
 }
 
 export default {

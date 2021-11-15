@@ -2,6 +2,7 @@ import axios from "axios";
 import React, {useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import NomenAPI from "../../../zservices/nomenAPI";
+import OuvriExerc from "../Exercice/OuvriExerc";
 
 const InscriNomen = ({history,match}) =>{
 
@@ -95,14 +96,10 @@ const InscriNomen = ({history,match}) =>{
     <div className="product-detail-page">
       <h3 className="card-header">
         <div className="row">
-        <div className="text-left col-sm-6">
+        <div className="text-left col-sm-8">
         NOMENCLATURE
         </div>
-        <div className="text-right col-sm-6">
-            <button className="btn-sm btn-secondary">
-              Gestion 2021
-            </button>
-          </div>
+        <OuvriExerc/>
         </div>
       </h3>
       <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">

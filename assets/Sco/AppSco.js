@@ -3,13 +3,10 @@ import { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router';
 import HeaderSco from './components/HeaderSco';
 import SidebarSco from './components/SidebarSco';
-import BonCommande from './pages/BonCommande';
 import ConsultBon from './pages/BonCommande/ConsultBon';
 import InscriBon from './pages/BonCommande/InscriBon';
-import Contrat from './pages/Contrat';
 import ConsultContrat from './pages/Contrat/ConsultContrat';
 import InscriContrat from './pages/Contrat/InscriContrat';
-import ItemCommande from './pages/ItemCommande';
 import ConsultItem from './pages/ItemCommande/ConsultItem';
 import InscriItem from './pages/ItemCommande/InscriItem';
 

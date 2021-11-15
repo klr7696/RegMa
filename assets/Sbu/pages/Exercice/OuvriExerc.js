@@ -26,7 +26,7 @@ const OuvriExerc = () => {
                   <select 
                   disabled="disabled"
                   name="exerciceRegistre"
-                  className="text-center p-10 form-control bg-success"
+                  className="text-center p-10 form-control form-control-bold bg-success"
                  // className={"text-center p-10 form-control" + (exers="Primitif" && "bg-success") +
                 //  (exers="Supplémentaire" && "bg-danger")}
                 >

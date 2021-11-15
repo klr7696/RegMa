@@ -20,12 +20,12 @@ import ConsultRessource from "./pages/previsionDepense/ConsultRessource";
 import InscriAlloc from "./pages/previsionDepense/InscriAlloc";
 import ConsultRegistre from "./pages/consultRegistre/ConsultRegistre";
 import ConsultAlloue from "./pages/consultRegistre/ConsultAlloue";
-import ConsultOuvert from "./pages/consultRegistre/ConsultOuvert";
 import ConsultAutorise from "./pages/consultRegistre/ConsultAutorise";
 import InscriAutoris from "./pages/previsionDepense/InscriAutoris";
 import ConsultAutoris from "./pages/previsionDepense/ConsultAutoris";
 import ConsultAlloc from "./pages/previsionDepense/ConsultAlloc";
 import InscriOuvert from "./pages/previsionDepense/InscriOuvert";
+import ConsultOuvert from "./pages/previsionDepense/ConsultOuvert";
 
 const AppSbu = (props) =>{
     return (
@@ -133,10 +133,7 @@ const AppSbu = (props) =>{
                           path={`${props.match.url}/registres-alloues`}
                           component={ConsultAlloue}
                         />
-                         <Route
-                          path={`${props.match.url}/registres-ouverts`}
-                          component={ConsultOuvert}
-                        />
+                       
                          <Route
                           path={`${props.match.url}/registres-autorises`}
                           component={ConsultAutorise}

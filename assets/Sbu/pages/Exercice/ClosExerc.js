@@ -16,7 +16,7 @@ const ClosExerc = () =>{
 
     try{
   const data = await axios
-  .get("http://localhost:8000/api/registres/ouvert?estEncours=true&exerciceResgistre.estOuvert=true&statut=Supplémentaire")
+  .get("http://localhost:8000/api/registats/registre_ouvert?estEncours=true&exerciceResgistre.estOuvert=true&statut=Supplémentaire")
   //.then(reponse => console.log(reponse));
   .then(response => response.data['hydra:member'])
    setExercs(data);

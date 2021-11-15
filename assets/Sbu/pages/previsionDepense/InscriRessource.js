@@ -1,10 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import RessourceAPI from '../../../zservices/ressourceAPI';
 import OuvriExerc from '../Exercice/OuvriExerc';
 
-const InscriRessource = (props) => {
+const InscriRessource = ({match, history}) => {
  
-  const { id = "new" } = props.match.params;
+  const { id = "new" } = match.params;
 
   const [finans, setFinans] = useState({
       objetFinancement: "Fonctionnement",
@@ -13,7 +15,8 @@ const InscriRessource = (props) => {
       descriptionFinancement: "",
       exerciceRegistre: "",
       bailleurFonds: "",
-      statutRegistre:""
+      statutRegistre:"",
+      actualiseRessource:""
   });
 
   const [error, setErrors] = useState("");
@@ -24,11 +27,12 @@ const InscriRessource = (props) => {
   const data = await axios.get("http://localhost:8000/api/ressources/" + id)
   .then(response => response.data);
   
-  const { objetFinancement, modeFinancement, montantFinancement, exerciceRegistre,
-      bailleurFonds, descriptionFinancement } = data;
+  const {objetFinancement, modeFinancement, montantFinancement, descriptionFinancement, exerciceRegistre, bailleurFonds, statutRegistre,
+    actualiseRessource
+       } = data;
     
-    setFinans({ objetFinancement, modeFinancement, montantFinancement, exerciceRegistre,
-      bailleurFonds, descriptionFinancement});
+    setFinans({objetFinancement, modeFinancement, montantFinancement, descriptionFinancement, exerciceRegistre, bailleurFonds, statutRegistre
+     , actualiseRessource });
     } catch (error) {
     console.log(error.response);
     }
@@ -44,14 +48,15 @@ const InscriRessource = (props) => {
  const [bailleurs, setBailleurs] = useState([]);
 
   const fetchBailleurs = async () => {
-    try{
-  const data = await axios
-  .get("http://localhost:8000/api/bailleurs/actifressource")
-  .then(response => response.data["hydra:member"]);
-  setBailleurs(data)
-  if(!finans.bailleurFonds) setFinans({...finans, bailleurFonds:data[0].id})
+    try {
+      const data = await axios
+        .get(
+          "http://localhost:8000/api/bailleurs/actifressource"
+        )
+        .then((response) => response.data["hydra:member"]);
+      setBailleurs(data);
     } catch (error) {
-    console.log(error.response);
+      console.log(error);
     }
   };
 
@@ -88,20 +93,31 @@ const InscriRessource = (props) => {
   const handleSubmit = async event => {
     event.preventDefault();
     
-     try {
-      const response = await axios
-      .post("http://localhost:8000/api/ressources/inscription",
-    {...finans,  
-      statutRegistre:`/api/registats/${finans.statutRegistre}`,
-      bailleurFonds:`/api/bailleurs/${finans.bailleurFonds}`,
-      exerciceRegistre:`/api/registres/${finans.exerciceRegistre}`
-   }
-    );
-      console.log(response.data);
-  } catch(error) {
-   console.log(error.response)
-   setErrors("Informations incorrectes")
-  }
+    try {
+      console.log(finans);
+      if(editing){
+       await RessourceAPI.actualise({...finans,
+        bailleurFonds:`/api/bailleurs/${finans.bailleurFonds}`,
+        actualiseRessource:`/api/ressources/${id}`
+      });
+       toast.success("Ressource actualisée");
+       history.replace("/sbu/ressources");
+      }
+      
+      else{
+        await RessourceAPI.create({...finans,  
+          statutRegistre:`/api/registats/${finans.statutRegistre}`,
+          bailleurFonds:`/api/bailleurs/${finans.bailleurFonds}`,
+          exerciceRegistre:`/api/registres/${finans.exerciceRegistre}`,
+       });
+        toast.success("Ressource inscrite");
+       history.replace("/sbu/ressources");
+      }
+    } catch(error) {
+         console.log(error);
+         setErrors("Error");
+          toast.error("Ressource non ajoutée");
+    }
 }; 
 
     return (
@@ -122,15 +138,6 @@ const InscriRessource = (props) => {
                 href="#/sbu/ressources/new"
               >
                 Inscription
-              </a>
-              <div className="slide" />
-            </li>
-            <li className="nav-item m-b-0">
-              <a
-                className="nav-link f-18 p-b-0"
-                href="#/sbu/financements"
-              >
-                Actualisation
               </a>
               <div className="slide" />
             </li>
@@ -158,12 +165,11 @@ const InscriRessource = (props) => {
                 </div>
              <div className="col-sm-2">
                     <select 
-                    id="bailleurFonds"
                     onChange={handleChange} 
                     name="bailleurFonds"
                     value={finans.bailleurFonds}
-                    className={"form-control" + (error && " is-invalid")}
-                   > <option>Choisir ...</option>
+                    className="form-control"
+                   >  <option value={0}> Choisir... </option>
                      {bailleurs.map(bailleur => <option key={bailleur.id} value={bailleur.id}>
                        {bailleur.sigleBailleur}
                      </option>)}
@@ -204,51 +210,14 @@ const InscriRessource = (props) => {
                 <div className="col-sm-2">
                   <label className="col-form-label">Montant * (FCFA)</label>
                 </div>
-                <div className="col-sm-3">
+                <div className="col-sm-6">
                   <input 
-                  id="space"
-                  type="text"
+                  type="number"
                   name="montantFinancement"
                   value={finans.montantFinancement}
                   onChange={handleChange}
-                  data-a-dec="."
-                  data-a-sep=" "
-                  className={"currency form-control" + (error && " is-invalid")} />
+                  className={"form-control" + (error && " is-invalid")} />
                 </div>
-                     <div className="col-sm-1">
-                  <label className="col-form-label">Statut </label>
-                </div>
-               <div className="col-sm-3">
-                    <select 
-                  disabled="disabled"
-                   id="statutRegistre"
-                    onChange={handleChange} 
-                    name="statutRegistre"
-                    value={finans.statutRegistre}
-                    className={"form-control" + (error && " is-invalid")}
-                   >
-                     {status.map(statu => <option key={statu.id} value={statu.id}>
-                       {statu.statut}
-                     </option>)}
-                      </select>
-                     </div>
-                     <div className="col-sm-1">
-                  <label className="col-form-label">Exercice </label>
-                </div>
-               <div className="col-sm-2">
-                    <select 
-                  disabled="disabled"
-                  id="exerciceRegistre"
-                    onChange={handleChange} 
-                    name="exerciceRegistre"
-                    value={finans.exerciceRegistre}
-                    className={"form-control" + (error && " is-invalid")}
-                   >
-                     {status.map(exerc => <option key={exerc.id} value={exerc.id}>
-                       {exerc.exerciceRegistre.anneeExercice}
-                     </option>)}
-                      </select>
-                     </div>
               </div>
               <div className="row form-group">
                 <div className="col-sm-2">
@@ -258,7 +227,6 @@ const InscriRessource = (props) => {
                   <textarea
                     onChange={handleChange} 
                     name="descriptionFinancement"
-                    id="descriptionFinancement"
                     value={finans.descriptionFinancement}
                     type="text"
                     className="form-control"
@@ -267,7 +235,7 @@ const InscriRessource = (props) => {
               </div>
               <div className="text-right col-sm-12">
                 <button type="submit" className="btn btn-primary">
-                {(!editing && <>Inscrire</>) || (<>Modifier</>)}
+                {(!editing && <>Inscrire</>) || (<>Actualise</>)}
                   </button>
               </div>
             </form> 

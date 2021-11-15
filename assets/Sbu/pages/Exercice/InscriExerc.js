@@ -25,7 +25,7 @@ const [editing, setEditing] = useState (false);
   const data = await axios.get("http://localhost:8000/api/registres/" + id)
   .then(response => response.data);
   
-  const { anneeExercice, ordonaturExercice, dateVote, dateAdoption,
+  const { anneeExercice, ordonateurExercice, dateVote, dateAdoption,
     description, nomenclature } = data;
     
     setExercs({ anneeExercice, ordonateurExercice, dateVote, dateAdoption,
@@ -181,11 +181,9 @@ const [editing, setEditing] = useState (false);
           </div>
           <div className="col-sm-10">
             <input
-              id="ordonateurExercice"
               name="ordonateurExercice"
               type="text"
-              className={"form-control required" + (error && " is-invalid")}
-              data-a-sign="MR. "
+              className={"form-control form-control-capitalize required" + (error && " is-invalid")}
               value={exercs.ordonateurExercice}
               onChange={handleChange}
             />
@@ -202,7 +200,6 @@ const [editing, setEditing] = useState (false);
               name="dateVote"
               type="date"
               className={"form-control required" + (error && " is-invalid")}
-              data-a-sign="MR. "
               value={exercs.dateVote}
               onChange={handleChange}
             />

@@ -30,7 +30,59 @@ const InscriAlloc = () => {
       useEffect(() =>{
           fetchMairies();
       }, []);
+
+      const [natures, setNatures] = useState([]);
+
+    const fetchNatures = async () => {
+      try{
+    const data = await axios
+    .get("http://localhost:8000/api/natures")
+    .then(response => response.data["hydra:member"]);
+      setNatures(data);
+     if (!allocs.compteNature) setAllocs({...allocs, compteNature:data[0].id} )
+      } catch (error) {
+      console.log(error.response);
+      }
+    };
+      useEffect(() => {
+        fetchNatures();
+      }, []);
     
+      const [arts, setArts] = useState([]);
+
+  const fetchArts = async (id) => {
+    try {
+      const data = await axios
+        .get(`http://localhost:8000/api/natures/${id}/sousnatures`)
+        .then((response) => response.data["hydra:member"]);
+      setArts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchArts();
+  }, []);
+
+  const [paras, setParas] = useState([]);
+
+  const fetchParas = async (id) => {
+    try {
+      const data = await axios
+        .get(`http://localhost:8000/api/natures/${id}/sousnatures`)
+        .then((response) => response.data["hydra:member"]);
+      setParas(data);
+      //if (!creds.compteNature) setCreds({ ...creds, compteNature: data[0].id });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchParas();
+  }, []);
+
       const handleChange = ({ currentTarget }) => {
         const { name, value } = currentTarget;
         setAllocs({...allocs, [name]: value });
@@ -53,20 +105,6 @@ const InscriAlloc = () => {
       fetchStatus();
   }, []);
 
-    const [natures, setNatures] = useState([]);
-
-    const fetchNatures = async () => {
-      try{
-    const data = await axios
-    .get("http://localhost:8000/api/natures")
-    .then(response => response.data["hydra:member"]);
-      setNatures(data);
-     if (!allocs.compteNature) setallocs({...allocs, compteNature:data[0].id} )
-      } catch (error) {
-      console.log(error.response);
-      }
-    };
-
     const [ouverts, setOuverts] = useState([]);
 
   const fetchOuverts = async () => {
@@ -83,11 +121,6 @@ const InscriAlloc = () => {
   useEffect(() =>{
       fetchOuverts();
   }, []);
-
-
-    useEffect(() => {
-      fetchNatures();
-    }, []);
 
       const handleSubmit = async event => {
         event.preventDefault();
@@ -154,6 +187,66 @@ const InscriAlloc = () => {
             <div className="col-sm-12">
                 <form onSubmit={handleSubmit} >
                 <div className="card-block">
+                <div className="row form-group">
+                          <div className="col-sm-2">
+                            <label className="col-form-label">Chapitre </label>
+                          </div>
+                          <div className="col-sm-2">
+                            <select
+                              name="compteNature"
+                              className="form-control"
+                              value={allocs.compteNature}
+                              onChange={handleChange}
+                              onClick={() => fetchArts(allocs.compteNature)}
+                              //onClick={() => fetchLibelles(creds.compteNature)}
+                            > <option value={0}> Choisir... </option>
+                              {natures.map((nature) => (
+                                <option key={nature.id} value={nature.id}>
+                                  {nature.numeroCompteNature}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="col-sm-2">
+                            <label className="col-form-label">Article </label>
+                          </div>
+                          <div className="col-sm-2">
+                            <select
+                              name="compteNature"
+                              className="form-control"
+                              value={allocs.compteNature}
+                              onChange={handleChange}
+                             onClick={() => fetchParas(allocs.compteNature)}
+                            >  <option value={0}> Choisir... </option>
+                              {arts.map((arti) => (
+                                <option key={arti.id} value={arti.id}>
+                                  {arti.numeroCompteNature}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="col-sm-2">
+                            <label className="col-form-label">
+                              Paragraphe
+                            </label>
+                          </div>
+                          <div className="col-sm-2">
+                            <select
+                              name="compteNature"
+                              className="form-control"
+                              value={allocs.compteNature}
+                              onChange={handleChange}
+                            >  <option value={0}> Choisir... </option>
+                              {paras.map((para) => (
+                                <option key={para.id} value={para.id}>
+                                  {para.numeroCompteNature}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
                   <div className="row form-group">
                   <div className="col-sm-2">
                   <label className="col-form-label">Numéro du comptes </label>

@@ -5,6 +5,7 @@ import CrediAPI from '../../../zservices/crediAPI';
 import OuvriExerc from '../Exercice/OuvriExerc';
 
 const ConsultOuvert = ({history}) => {
+
   const [creds, setCreds] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -33,7 +34,7 @@ const ConsultOuvert = ({history}) => {
       await NomenAPI.delete(id)
       toast.success("Crédit ouvert supprimé");
     } catch (error) {
-      setNomens(originalNomens);
+      setCreds(originalCreds);
       toast.error("Crédit ouvert non supprimée");
     }
   };
@@ -153,9 +154,9 @@ const ConsultOuvert = ({history}) => {
               </a>
               <div className="slide" />
             </li>
-            <li className="nav-item active m-b-0">
+            <li className="nav-item m-b-0">
               <a
-                className="nav-link f-18 p-b-0"
+                className="nav-link active f-18 p-b-0"
                 href="#/sbu/credit-ouvert"
               >
                 Consultation
@@ -166,12 +167,6 @@ const ConsultOuvert = ({history}) => {
           </ul>
           <div className="card">
           <div className="card-block">
-            <div className="tab-content bg-white">
-              <div
-                className="tab-pane active"
-                id="consultation"
-                role="tabpanel"
-              >
                 <div className="page-body">
                   <div className="card-block table-border-style">
                     <div className="row form-group">
@@ -248,8 +243,6 @@ const ConsultOuvert = ({history}) => {
                     />
                   )}
                 </div>
-              </div>
-            </div>
           </div>
         </div>
         {resultModal}

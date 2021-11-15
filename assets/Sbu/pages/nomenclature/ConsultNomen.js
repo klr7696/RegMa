@@ -1,9 +1,11 @@
 import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import ReactHtmlTableToExcel from "react-html-table-to-excel";
 import { toast } from "react-toastify";
 import Pagination from "../../../zforms/Pagination";
 import NomenAPI from "../../../zservices/nomenAPI";
+import OuvriExerc from "../Exercice/OuvriExerc";
 
 const ConsultNomen = ({ history }) => {
   const [nomens, setNomens] = useState([]);
@@ -130,10 +132,8 @@ const ConsultNomen = ({ history }) => {
       <div className="product-detail-page">
         <h3 className="card-header">
           <div className="row">
-            <div className="text-left col-sm-6">NOMENCLATURE</div>
-            <div className="text-right col-sm-6">
-              <button className="btn-sm btn-secondary">{nomens.nabro}</button>
-            </div>
+            <div className="text-left col-sm-8">NOMENCLATURE</div>
+           <OuvriExerc/>
           </div>
         </h3>
         <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
@@ -179,9 +179,16 @@ const ConsultNomen = ({ history }) => {
                         />
                       </div>
                     </div>
-                    <div className="table-responsive">
-                      <table className="table table-bordered">
-                        <thead>
+                    <div className="dt-responsive table-responsive">
+                    <ReactHtmlTableToExcel
+                    id="test-table-xls-button"
+                    className="download-table-xls-button btn-sm btn-success mb-1"
+                    table="table-to-xls"
+                    filename="tablexls"
+                    sheet="tablexls"
+                    buttonText="Exporter en Excel"/>
+                   <table className="table" id="table-to-xls">
+                        <thead className="thead-dark">
                           <tr>
                             <th>id</th>
                             <th>Année application</th>
@@ -248,7 +255,6 @@ const ConsultNomen = ({ history }) => {
      <div>
        {resultModal}
 </div>
-
     </section>
   );
 };

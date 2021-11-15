@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import OuvriExerc from "../../../Sbu/pages/Exercice/OuvriExerc";
 
-const InscriPara = () => {
+const InscriClasse = () => {
 
   const [paras, setParas] = useState({
     numeroCompteNature: "",
@@ -72,14 +73,14 @@ const InscriPara = () => {
   return (
     <section id="exp">
       <div className="product-detail-page">
-        <h3 className="card-header">
-          <div className="row">
-            <div className="text-left col-sm-6">Paragraphe</div>
-            <div className="text-right col-sm-6">
-              <button className="btn-sm btn-secondary">Gestion 2021</button>
+            <h4 className="card-header">
+            <div className="row">
+            <div className="text-left col-sm-8">
+              Classe
             </div>
-          </div>
-        </h3>
+            <OuvriExerc/>
+            </div>
+          </h4>
         <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
           <li className="nav-item">
             <a className="nav-link f-18 p-b-0" href="#/sbu/chap/new">
@@ -173,4 +174,4 @@ const InscriPara = () => {
   );
 };
 
-export default InscriPara;
+export default InscriClasse;

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import OuvriExerc from "../../../Sbu/pages/Exercice/OuvriExerc";
 
 const InscriDivision = () => {
     const [chaps, setChaps] = useState({
@@ -57,18 +58,14 @@ const InscriDivision = () => {
     return ( 
       <section id="exp">
       <div className="product-detail-page">
-        <h3 className="card-header">
-          <div className="row">
-          <div className="text-left col-sm-6">
-          Chapitre
-          </div>
-          <div className="text-right col-sm-6">
-              <button className="btn-sm btn-secondary">
-                Gestion 2021
-              </button>
+      <h4 className="card-header">
+            <div className="row">
+            <div className="text-left col-sm-8">
+           Division
             </div>
-          </div>
-        </h3>
+            <OuvriExerc/>
+            </div>
+          </h4>
         <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
           <li className="nav-item">
             <a

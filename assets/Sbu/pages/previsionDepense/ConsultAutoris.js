@@ -1,54 +1,42 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import Pagination from '../../../zforms/Pagination';
-import AllocAPI from '../../../zservices/crediAPI';
+import AutoriseAPI from '../../../zservices/autoriseAPI';
 import OuvriExerc from '../Exercice/OuvriExerc';
 
 const ConsultAutoris = ({history}) => {
-  const [allocs, setAllocs] = useState([]);
+  const [autorises, setAutorises] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [alloca, setAlloca] = useState([]);
+  const [autori, setAutori] = useState([]);
   const [load, setLoad] = useState(true);
 
   // permet d'aller recuperer les  credits
-  const fetchAllocs = async () => {
+  const fetchAutorises = async () => {
     try {
-      const data = await  AllocAPI.findAll()
-      setAllocs(data);
+      const data = await  AutoriseAPI.findAll()
+      setAutorises(data);
       toast.success("liste chargée avec succès");
     } catch(error) {
-      console.log(error.response);
+      console.log(error);
     }
   }
 
   // au chargement du composant, on va chercher les credits
-  useEffect(() =>{ fetchAllocs(); }, []);
-
-  //gestion de la suppression
-  const handleDelete = async (id) => {
-    const originalAllocs = [...creds];
-    setAllocs(allocs.filter((alloc) => alloc.id !== id));
-    try {
-      await AllocAPI.delete(id)
-      toast.success("Allocation supprimé");
-    } catch (error) {
-      setAllocs(originalAllocs);
-      toast.error("Allocation non supprimée");
-    }
-  };
+  useEffect(() =>{ fetchAutorises(); }, []);
 
   //gestion de la modifification
   const handleModif = (id) => {
-    history.replace(`/sbu/credit-alloue/${id}`);
-    toast.info("Modification d'un crédit alloué ");
+    history.replace(`/sbu/credit-autorise/${id}`);
+    toast.info("Modification d'une autorisation ");
   };
   
  //affichage des données d'une credit
   const handleView = (id) => {
        axios
-      .get(`http://localhost:8000/api/allocations/${id}`)
-      .then(response => { setAlloca(response.data);
+      .get(`http://localhost:8000/api/autorisations/${id}`)
+      .then(response => { setAutori(response.data);
         setLoad(false);
       })
      .catch(error => console.log(error) ) 
@@ -66,14 +54,14 @@ const ConsultAutoris = ({history}) => {
   const itemsPerPage = 5;
 
   //filtrage des credits en fonctions de la recherche
-  const filteredAllocs = allocs.filter(
-    (n) => n
-    // n.decriptionInscrption.toLowerCase().includes(search.toLowerCase())
+  const filteredAutorises = autorises.filter(
+    (n) =>
+     n.objetAutorisation.toLowerCase().includes(search.toLowerCase())
   );
 
   //pagination des données
-  const paginatedAllocs = Pagination.getData(
-    filteredAllocs,
+  const paginatedAutorises = Pagination.getData(
+    filteredAutorises,
     currentPage,
     itemsPerPage
   );
@@ -85,22 +73,25 @@ const ConsultAutoris = ({history}) => {
     <div className="modal-dialog modal-lg" role="document">
       <div className="modal-content">
         <div className="modal-header">
-          <h4 className="modal-title">Infos supplémentaires</h4>
+        <h5 className="modal-title">Infos supplémentaires</h5>
         </div>
         <div className="modal-body">
-                              <h5>Montant ressources</h5>
-                             <p>{alloca.montantFinancement}</p>
-                              <h5>Sigle bailleur</h5>
-                              <p>{alloca.sigleBailleur}</p>
-                                <h5>Description</h5>
-                                  <p>{alloca.descriptionInscription}</p>
-        </div>
+    <ul>
+      <li><strong>Montant du crédit ouvert:</strong> {autori.montantInscription}</li>
+      <li><strong>Bailleur de Fond:</strong> {autori.sigleBailleur}</li>
+      <li><strong>Mairie:</strong> {autori.mairieCommunale}</li>
+      <li><strong>Explication de l'autorisation:</strong> {autori.explicationAutorisation} </li>
+      <li><strong>est Actualisée?:</strong> {(!autori.estValide==true && <>Oui</>) || (<>Non</>)}</li>
+    </ul>
+</div>
+
+                            
         <div className="modal-footer">
           <button type="button" className="btn btn-default waves-effect " data-dismiss="modal">Fermer</button>
         </div>
+        </div>
       </div>
     </div>
-  </div>
   )
   :
   (
@@ -177,7 +168,7 @@ const ConsultAutoris = ({history}) => {
                     <div className="row form-group">
                       <div className="text-left col-sm-9">
                         <h5 className="card-header-text">
-                          Liste de crédits alloués
+                          Liste de crédits autorisés
                         </h5>
                       </div>
                       <div className=" form-group text-right col-sm-3">
@@ -195,43 +186,29 @@ const ConsultAutoris = ({history}) => {
                         <thead>
                           <tr>
                             <th>id</th>
-                            <th>Numéro du comptes</th>
-                            <th>Montant du crédit ouvert</th>
-                            <th>Mairie communale</th>
-                            <th>Montant du crédit alloué</th>
+                            <th>Objet de l'autorisation</th>
+                            <th>Montant de l'autorisation</th>
+                            <th>Compte nature</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {paginatedAllocs.map((alloc) => (
-                            <tr key={alloc.id}>
-                              <td>{alloc.id}</td>
-                              <td>{alloc.id}</td>
-                              <td>{alloc.montantInscription.toLocaleString('fr-FR', {style: 'currency', currency: 'XAF'})}</td>
-                              <td>{alloc.id}</td>
-                              <td>{alloc.montantInscription.toLocaleString('fr-FR', {style: 'currency', currency: 'XAF'})}</td>
+                          {paginatedAutorises.map((autorise) => (
+                            <tr key={autorise.id} value={autorise.id}>
+                               <td>{autorise.id}</td>
+                              <td>{autorise.objetAutorisation}</td>
+                              <td>{autorise.montantAutorisation.toLocaleString('fr-FR', {style: 'currency', currency: 'XAF'})}</td>
+                              <td>{autorise.compteNature}</td>
                               <td>
                                 <button
-                                  onClick={() => handleDelete(alloc.id)}
-                                  className="m-r-20 btn btn-sm btn-danger "
-                                  disabled={
-                                    alloc.length > 0
-                                  }
-                                >
-                                  <i className="fa fa-trash"></i>
-                                </button>
-                                <button
-                                  disabled={
-                                    alloc.length > 0
-                                  }
-                                  onClick={() => handleModif(alloc.id)}
+                                  onClick={() => handleModif(autorise.id)}
                                   className="m-r-20 btn btn-sm btn-primary"
                                 >
                                   <i className="fa fa-edit"></i>
                                 </button>
                                 <button
-                                  onClick={() => handleView(alloc.id)}
-                                  className="btn btn-sm btn-secondary "
+                                  onClick={() => handleView(autorise.id)}
+                                  className="btn btn-icon btn-sm btn-secondary "
                                   data-toggle="modal" data-target="#large-Modal"
                                 >
                                   <i className="fa fa-eye"></i>
@@ -243,11 +220,11 @@ const ConsultAutoris = ({history}) => {
                       </table>
                     </div>
                   </div>
-                  {itemsPerPage < filteredAllocs.length && (
+                  {itemsPerPage < filteredAutorises.length && (
                     <Pagination
                       currentPage={currentPage}
                       itemsPerPage={itemsPerPage}
-                      length={filteredAllocs.length}
+                      length={filteredAutorises.length}
                       onPageChanged={handleChangePage}
                     />
                   )}

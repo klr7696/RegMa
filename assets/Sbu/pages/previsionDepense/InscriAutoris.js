@@ -1,17 +1,55 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import AllocAPI from '../../../zservices/allocAPI';
+import autoriseAPI from '../../../zservices/autoriseAPI';
 import OuvriExerc from '../Exercice/OuvriExerc';
 
 const InscriAutoris = () => {
 
-    const [allocs, setAllocs] = useState({
-      montantAllouer: 1000000,
-      descriptionAllocation: "OKKKKK",
-      creditOuvert: "/api/ouverts/14",
-      mairieCommunale: "/api/mairies/1",
+    const [autorises, setAutorises] = useState({
+      objetAutorisation: "Fonctionnement",
+      montantAutorisation: 100000000,
+      explicationAutorisation: "tout tout",
+      mairieCommunale: "",
+      compteNature: "0",
+      associationStatut: "",
       });
-    
+
+  const [arts, setArts] = useState([]);
+
+  const fetchArts = async (id) => {
+    try {
+      const data = await axios
+        .get(`http://localhost:8000/api/natures/${id}/sousnatures?hierachieCompteNature=Article`)
+        .then((response) => response.data["hydra:member"]);
+      setArts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchArts();
+  }, []);
+
+  const [paras, setParas] = useState([]);
+
+  const fetchParas = async (id) => {
+    try {
+      const data = await axios
+        .get(`http://localhost:8000/api/natures/${id}/sousnatures?hierachieCompteNature=Paragraphe`)
+        .then((response) => response.data["hydra:member"]);
+      setParas(data);
+      //if (!autorises.compteNature) setautorises({ ...autorises, compteNature: data[0].id });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchParas();
+  }, []);
+
+ 
       const [error, setErrors] = useState("");
 
       const [mairies, setMairies] = useState([]);
@@ -33,21 +71,23 @@ const InscriAutoris = () => {
     
       const handleChange = ({ currentTarget }) => {
         const { name, value } = currentTarget;
-        setAllocs({...allocs, [name]: value });
+        setAutorises({...autorises, [name]: value });
       };
 
       const [status, setStatus] = useState([]);
 
-  const fetchStatus = async () => {
-    try{
-  const data = await axios
-  .get("http://localhost:8000/api/registat/actif")
-  .then(response => response.data["hydra:member"]);
-  setStatus(data)
-    } catch (error) {
-    console.log(error);
-    }
-  };
+      const fetchStatus = async () => {
+        try{
+      const data = await axios
+      .get("http://localhost:8000/api/registats/registre_ouvert")
+      .then(response => response.data["hydra:member"]);
+      setStatus(data)
+      if (!autorises.associationStatut) setAutorises({...autorises, associationStatut:data[0].id})
+        } catch (error) {
+        console.log(error);
+        }
+      };
+    
 
   useEffect(() =>{
       fetchStatus();
@@ -58,32 +98,14 @@ const InscriAutoris = () => {
     const fetchNatures = async () => {
       try{
     const data = await axios
-    .get("http://localhost:8000/api/natures")
+    .get("http://localhost:8000/api/natures?hierachieCompteNature=Chapitre")
     .then(response => response.data["hydra:member"]);
       setNatures(data);
-     if (!allocs.compteNature) setallocs({...allocs, compteNature:data[0].id} )
+     if (!autorises.compteNature) setAutorises({...autorises, compteNature:data[0].id} )
       } catch (error) {
       console.log(error.response);
       }
     };
-
-    const [ouverts, setOuverts] = useState([]);
-
-  const fetchOuverts = async () => {
-    try{
-  const data = await axios
-  .get("http://localhost:8000/api/ouverts")
-  .then(response => response.data["hydra:member"]);
-  setOuverts(data)
-    } catch (error) {
-    console.log(error);
-    }
-  };
-
-  useEffect(() =>{
-      fetchOuverts();
-  }, []);
-
 
     useEffect(() => {
       fetchNatures();
@@ -91,12 +113,15 @@ const InscriAutoris = () => {
 
       const handleSubmit = async event => {
         event.preventDefault();
-        console.log(allocs)
+        console.log(autorises)
     
        try {
-         await AllocAPI.create({...allocs,
-          mairieCommunale:`/api/mairies/${allocs.mairieCommunale}`,
-          creditOuvert:`/api/ouverts/${allocs.creditOuvert}`})
+         await autoriseAPI.create({...autorises,
+          mairieCommunale:`/api/mairies/${autorises.mairieCommunale}`,
+          mairieCommunale:`/api/natures/${autorises.compteNature}`,
+          associationStatut:`/api/registats/${autorises.associationStatut}`
+        }),
+          
           console.log(response.data);
         } catch(error) {
           console.log(error.response);
@@ -119,7 +144,7 @@ const InscriAutoris = () => {
             <li className="nav-item">
               <a
                 className="nav-link active f-18 p-b-0"
-                href="#/sbu/credit-autorise/new"
+                href="#/sbu/autoriseit-autorise/new"
               >
                 Création
               </a>
@@ -129,7 +154,7 @@ const InscriAutoris = () => {
             <li className="nav-item m-b-0">
               <a
                 className="nav-link f-18 p-b-0"
-                href="#/sbu/credit-autorise"
+                href="#/sbu/autoriseit-autorise"
               >
                 Actualisation
               </a>
@@ -138,7 +163,7 @@ const InscriAutoris = () => {
             <li className="nav-item m-b-0">
               <a
                 className="nav-link f-18 p-b-0"
-                href="#/sbu/credit-autorise"
+                href="#/sbu/autoriseit-autorise"
               >
                 Consultation
               </a>
@@ -154,80 +179,167 @@ const InscriAutoris = () => {
             <div className="col-sm-12">
                 <form onSubmit={handleSubmit} >
                 <div className="card-block">
+                <div className="row form-group">
+                          <div className="col-sm-2">
+                            <label className="col-form-label">Chapitre </label>
+                          </div>
+                          <div className="col-sm-2">
+                            <select
+                              name="compteNature"
+                              className="form-control"
+                              value={autorises.compteNature}
+                              onChange={handleChange}
+                              onClick={() => fetchArts(autorises.compteNature)}
+                              //onClick={() => fetchLibelles(autorises.compteNature)}
+                            > <option value={0}> Choisir... </option>
+                              {natures.map((nature) => (
+                                <option key={nature.id} value={nature.id}>
+                                  {nature.numeroCompteNature}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="col-sm-2">
+                            <label className="col-form-label">Article </label>
+                          </div>
+                          <div className="col-sm-2">
+                            <select
+                              name="compteNature"
+                              className="form-control"
+                              value={autorises.compteNature}
+                              onChange={handleChange}
+                             onClick={() => fetchParas(autorises.compteNature)}
+                            >  <option value={0}> Choisir... </option>
+                              {arts.map((arti) => (
+                                <option key={arti.id} value={arti.id}>
+                                  {arti.numeroCompteNature}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="col-sm-2">
+                            <label className="col-form-label">
+                              Paragraphe
+                            </label>
+                          </div>
+                          <div className="col-sm-2">
+                            <select
+                              name="compteNature"
+                              className="form-control"
+                              value={autorises.compteNature}
+                              onChange={handleChange}
+                            >  <option value={0}> Choisir... </option>
+                              {paras.map((para) => (
+                                <option key={para.id} value={para.id}>
+                                  {para.numeroCompteNature}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                        <div className="row form-group">
+                          <div className="col-sm-2">
+                            <label className="col-form-label">Section </label>
+                          </div>
+                          <div className="col-sm-6">
+                            <select
+                              disabled="disabled"
+                              name="compteNature"
+                              className="form-control form-control-bold"
+                              value={autorises.compteNature}
+                            > <option value={0}>... </option>
+                              {natures.map((nature) => (
+                                <option key={nature.id} value={nature.id}>
+                                  {nature.sectionCompteNature}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                        <div className="row form-group">
+                          <div className="col-sm-2">
+                            <label className="col-form-label">Libellé </label>
+                          </div>
+                          <div className="col-sm-10">
+                          <select
+                              disabled="disabled"
+                              name="compteNature"
+                              className="form-control form-control-bold"
+                              value={autorises.compteNature}
+                              onChange={handleChange}
+                             // onClick={() => fetchArts(autorises.compteNature)}
+                              //onClick={() => fetchLibelles(autorises.compteNature)}
+                            > <option value={0}>... </option>
+                              {natures.map((nature) => (
+                                <option key={nature.id} value={nature.id}>
+                                  {nature.libelleCompteNature}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                 
                   <div className="row form-group">
                   <div className="col-sm-2">
-                  <label className="col-form-label">Numéro du comptes </label>
-                </div>
-                <div className="col-sm-4">
-                 <select 
-                  onChange={handleChange} 
-                  name="CompteNature"
-                  id="CompteNature"
-                  value={allocs.creditOuvert}
-                  className="form-control"
-                 >
-                   {}
-                    </select>
-                   </div>
-
-                  <div className="col-sm-2">
-                   <label className="col-form-label">Montant du crédit ouvert</label>
+                   <label className="col-form-label">Mairie communale</label>
                   </div>
                     <div className="col-sm-4">
                  <select 
-                   disabled="disabled"
                   onChange={handleChange} 
-                  name="allocitOuvert"
-                  id="allocitOuvert"
-                  value={allocs.creditOuvert}
+                  name="mairieCommunale"
+                  value={autorises.mairieCommunale}
                   className="form-control"
                  ><option value="">...</option>
-                   {}
+                   {mairies.map(mairie => <option key={mairie.id} value={mairie.id}>
+                       {mairie.abbreviationMairie} 
+                     </option>)}
                    </select>
                    </div>
                     
                   </div>
-
                   <div className="row form-group">
                   <div className="col-sm-2">
-                  <label className="col-form-label">Mairie communale</label>
+                  <label className="col-form-label">Objet de l'autorisation </label>
                 </div>
                 <div className="col-sm-4">
-                    <select 
-                  id="mairieCommunale"
-                    onChange={handleChange} 
-                    name="mairieCommunale"
-                    className={"form-control"}
-                    value={allocs.mairieCommunale}
-                   >
-                     {mairies.map(mairie => <option key={mairie.id} value={mairie.id}>
-                       {mairie.designationMairie} 
-                     </option>)}
-                      </select>
-                     </div>
-                <div className="col-sm-2">
-                  <label className="col-form-label">Montant alloué</label>
-                </div>
-                <div className="col-sm-4">
-                <input 
-                  id="montantAllouer"
-                  type="number"
-                  name="montantAllouer"
-                  value={allocs.montantAllouer}
-                  onChange={handleChange}
-                  className={"form-control" + (error && " is-invalid")} />
+                 <select 
+                  onChange={handleChange} 
+                  name="objetAutorisation"
+                  id="objetAutorisation"
+                  value={autorises.objetAutorisation}
+                  className="form-control"
+                 >
+                   <option value="Fonctionnement">Fonctionnement</option>
+                    <option value="Investissement">Investissement</option>
+                    </select>
                    </div>
-                </div>
+
+                  <div className="col-sm-2">
+                   <label className="col-form-label">Montant de l'autorisation</label>
+                  </div>
+                    <div className="col-sm-4">
+                 <input 
+                  onChange={handleChange} 
+                  name="montantAutorisation"
+                  type="number"
+                  value={autorises.montantAutorisation}
+                  className="form-control"
+                 />
+                   </div>
+                    
+                  </div>
                 <div className="row form-group">
                 <div className="col-sm-2">
-                  <label className="col-form-label">Description</label>
+                  <label className="col-form-label"> Explication de l'autorisation </label>
                 </div>
                 <div className="col-sm-10">
                   <textarea
                     onChange={handleChange} 
-                    name="descriptionAllocation"
-                    id="descriptionAllocation"
-                    value={allocs.descriptionAllocation}
+                    name="explicationAutorisation"
+                    id="explicationAutorisation"
+                    value={autorises.explicationAutorisation}
                     type="text"
                     className="form-control"
                   />
