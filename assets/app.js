@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import AppAdmin from "./Admin/AppAdmin";
 import AppAuth from "./Authent/AppAuth";
 import Load from "./Load";
@@ -10,14 +10,38 @@ import AppScp from "./Scp/AppScp";
 import AppSde from "./Sde/AppSde";
 import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Login from "./Authent/pages/login";
+import AuthAPI from "./zservices/authAPI";
+
+AuthAPI.setup();
+
+const PrivateRoute = ({path, isAuthenticated, component}) => {
+isAuthenticated ? (<Route path={path}
+component={component}/>
+):(
+  <Redirect to="/login" />
+)
+}
 
 const App = () => {
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
       return (
-      <>
-    <Load/>
+      <> 
+    <Load/> 
   <HashRouter>
        <Switch>
-          <Route path="/admin" component={AppAdmin}/>
+         <Route path="/login" render={props => (
+           <Login
+           onLogin={setIsAuthenticated}
+           />
+         )}/>    
+          <PrivateRoute 
+          path="/admin" 
+          component={AppAdmin}
+         // isAuthenticated={isAuthenticated}
+          />
           <Route path="/sbu" component={AppSbu}/>
           <Route path="/scp" component={AppScp}/>
           <Route path="/sco" component={AppSco}/>

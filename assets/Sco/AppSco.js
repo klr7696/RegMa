@@ -5,10 +5,16 @@ import HeaderSco from './components/HeaderSco';
 import SidebarSco from './components/SidebarSco';
 import ConsultBon from './pages/BonCommande/ConsultBon';
 import InscriBon from './pages/BonCommande/InscriBon';
+import ConsultCommission from './pages/Commission/ConsultCommission';
+import InscriCommission from './pages/Commission/InscriCommission';
 import ConsultContrat from './pages/Contrat/ConsultContrat';
 import InscriContrat from './pages/Contrat/InscriContrat';
 import ConsultItem from './pages/ItemCommande/ConsultItem';
 import InscriItem from './pages/ItemCommande/InscriItem';
+import ConsultMembre from './pages/Membre/ConsultMembre';
+import InscriMembre from './pages/Membre/InscriMembre';
+import ConsultParticipant from './pages/Participant/ConsultParticipant';
+import InscriParticipant from './pages/Participant/InscriParticipant';
 
 class AppSco extends Component {
   render() {
@@ -46,6 +52,30 @@ class AppSco extends Component {
                       <Route
                         path={`${this.props.match.url}/item-commande`}
                         component={ConsultItem}
+                      />
+                       <Route
+                        path={`${this.props.match.url}/commission/:id`}
+                        component={InscriCommission}
+                      />
+                      <Route
+                        path={`${this.props.match.url}/commission`}
+                        component={ConsultCommission}
+                      />
+                       <Route
+                        path={`${this.props.match.url}/membre/:id`}
+                        component={InscriMembre}
+                      />
+                      <Route
+                        path={`${this.props.match.url}/membre`}
+                        component={ConsultMembre}
+                      />
+                       <Route
+                        path={`${this.props.match.url}/participant/:id`}
+                        component={InscriParticipant}
+                      />
+                      <Route
+                        path={`${this.props.match.url}/participant`}
+                        component={ConsultParticipant}
                       />
                     </Switch>
                   </div>

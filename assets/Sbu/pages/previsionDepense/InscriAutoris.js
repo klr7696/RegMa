@@ -10,7 +10,7 @@ const InscriAutoris = () => {
       montantAutorisation: 100000000,
       explicationAutorisation: "tout tout",
       mairieCommunale: "",
-      compteNature: "0",
+      compteNature: "",
       associationStatut: "",
       });
 
@@ -118,7 +118,7 @@ const InscriAutoris = () => {
        try {
          await autoriseAPI.create({...autorises,
           mairieCommunale:`/api/mairies/${autorises.mairieCommunale}`,
-          mairieCommunale:`/api/natures/${autorises.compteNature}`,
+          compteNature:`/api/natures/${autorises.compteNature}`,
           associationStatut:`/api/registats/${autorises.associationStatut}`
         }),
           
@@ -144,7 +144,7 @@ const InscriAutoris = () => {
             <li className="nav-item">
               <a
                 className="nav-link active f-18 p-b-0"
-                href="#/sbu/autoriseit-autorise/new"
+                href="#/sbu/credit-autorise/new"
               >
                 Création
               </a>
@@ -154,7 +154,7 @@ const InscriAutoris = () => {
             <li className="nav-item m-b-0">
               <a
                 className="nav-link f-18 p-b-0"
-                href="#/sbu/autoriseit-autorise"
+                href="#/sbu/credit-autorise"
               >
                 Actualisation
               </a>
@@ -163,7 +163,7 @@ const InscriAutoris = () => {
             <li className="nav-item m-b-0">
               <a
                 className="nav-link f-18 p-b-0"
-                href="#/sbu/autoriseit-autorise"
+                href="#/sbu/credit-autorise"
               >
                 Consultation
               </a>

@@ -37,15 +37,15 @@ const SidebarSbu = () => {
                 </a>
               </li>
               <li >
-                <a href="#/sbu/credit-alloue/new">
-                <i className="feather icon-navigation"></i> 
-                  <span className="pcoded-mtext">Allocation</span>
+                <a href="#/sbu/credit-autorise/new">
+                <i className="fa fa-suitcase"></i> 
+                  <span className="pcoded-mtext">Autorisation</span>
                 </a>
               </li>
               <li >
-                <a href="#/sbu/credit-autorise/new">
+                <a href="#/sbu/credit-alloue/new">
                 <i className="feather icon-navigation"></i> 
-                  <span className="pcoded-mtext">Autorisation</span>
+                  <span className="pcoded-mtext"> Allocation</span>
                 </a>
               </li>
         </ul>
@@ -63,13 +63,13 @@ const SidebarSbu = () => {
               </a>
               <ul className="pcoded-submenu">
                 <li className="">
-                  <a href="#/sbu/nomenclatures">
+                  <a href="#/sbu/nomenclatures/new">
                   <i className="feather icon-edit"></i>
                     <span className="pcoded-mtext">Nomenclature</span>
                   </a>
                 </li>
                 <li className="">
-                  <a href="#/sbu/compte-nature">
+                  <a href="#/sbu/chap/new">
                   <i className="feather icon-sidebar"/> 
                     <span className="pcoded-mtext">Compte de nature</span>
                   </a>

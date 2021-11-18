@@ -1,33 +1,60 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import OuvriExerc from '../../../Sbu/pages/Exercice/OuvriExerc';
 
 const InscriProjet = (props) => {
  
   const { id = "new" } = props.match.params;
 
-  const [plans, setPlans] = useState({
-    presidentCommission: "",
-    ordonnateurPlan: "",
-    AdresseDepouillement: "",
-    descriptionPlan: ""
+  const [projet, setProjet] = useState({
+    objetMarche: "",
+    montantProjet: "",
+    numeroProjet: "",
+    referenceProjet: "",
+    prioriteProjet: "",
+    specificiteProjet: "",
+    pieceFournir: "",
+    prixDossier: "",
+    propositionMinimum: "",
+    modePassation: "",
   });
 
   const handleChange = ({ currentTarget }) => {
     const { name, value } = currentTarget;
-    setPlans({...plans, [name]: value });
+    setProjet({...projet, [name]: value });
   };
+
+  const [modes, setModes] = useState([]);
+
+  const fetchModes = async () => {
+    try {
+      const data = await axios
+        .get("http://localhost:8000/api/modes")
+        .then((response) => response.data["hydra:member"]);
+      setModes(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchModes();
+  }, []);
  
   const handleSubmit = async event => {
     event.preventDefault();
     
      try {
       const response = await axios
-      .post("http://localhost:8000/api/plans", plans );
+      .post("http://localhost:8000/api/projets", {...projet,
+    modePassation: `/api/modes/${projet.modePassation}`
+    });
+    toast.success("Projet de marché créé")
       console.log(response.data);
   } catch(error) {
-   console.log(error.response)
-   setErrors("Informations incorrectes")
+   console.log(error)
+   setError("Informations incorrectes")
   }
 }; 
 
@@ -78,17 +105,23 @@ const InscriProjet = (props) => {
                       type="text"
                       className="form-control"
                       onChange={handleChange}
+                      name="numeroProjet"
+                      value={projet.numeroProjet}
                     />
                   </div>
                   <div className="col-sm-2">
                     <label className="col-form-label">Objet</label>
                   </div>
                   <div className="col-sm-4">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={handleChange}
-                    />
+                  <select 
+                  name="objetMarche"
+                  className="form-control"
+                  value= {projet.objetMarche}
+                  onChange={handleChange}
+                  >
+                    <option value="Fonctionnement">Fonctionnement</option>
+                    <option value="Investissement">Investissement</option>
+                  </select>
                   </div>
                 </div>
                 <div className="row form-group">
@@ -98,8 +131,10 @@ const InscriProjet = (props) => {
                   <div className="col-sm-4">
                     <input
                       type="text"
-                      className="form-control"
                       onChange={handleChange}
+                      name="montantProjet"
+                      value={projet.montantProjet}
+                      class="form-control autonumber" data-a-sep=" " data-a-dec=","
                     />
                   </div>
                   <div className="col-sm-2">
@@ -110,6 +145,8 @@ const InscriProjet = (props) => {
                       type="text"
                       className="form-control"
                       onChange={handleChange}
+                      name="referenceProjet"
+                      value={projet.referenceProjet}
                     />
                   </div>
                 </div>
@@ -122,6 +159,8 @@ const InscriProjet = (props) => {
                       type="text"
                       className="form-control"
                       onChange={handleChange}
+                      name="prioriteProjet"
+                      value={projet.prioriteProjet}
                     />
                   </div>
                   <div className="col-sm-2">
@@ -132,6 +171,8 @@ const InscriProjet = (props) => {
                       type="text"
                       className="form-control"
                       onChange={handleChange}
+                      name="specificiteProjet"
+                      value={projet.specificiteProjet}
                     />
                   </div>
                 </div>
@@ -142,8 +183,10 @@ const InscriProjet = (props) => {
                   <div className="col-sm-4">
                     <input
                       type="text"
-                      className="form-control"
                       onChange={handleChange}
+                      name="prixDossier"
+                      value={projet.prixDossier}
+                      class="form-control autonumber" data-a-sep=" " data-a-dec=","
                     />
                   </div>
                   <div className="col-sm-2">
@@ -154,30 +197,42 @@ const InscriProjet = (props) => {
                       type="text"
                       className="form-control"
                       onChange={handleChange}
+                      name="propositionMinimum"
+                      value={projet.propositionMinimum}
                     />
                   </div>
                 </div>
                 <div className="row form-group">
                 <div className="col-sm-2">
+                    <label className="col-form-label">Pièce fournies </label>
+                  </div>
+                  <div className="col-sm-4">
+                    <input
+                      type="text"
+                      className="form-control"
+                      onChange={handleChange}
+                      name="pieceFournir"
+                      value={projet.pieceFournir}
+                    />
+                  </div>
+                <div className="col-sm-2">
                     <label className="col-form-label">Mode de passation</label>
                   </div>
                   <div className="col-sm-4">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={handleChange}
-                    />
+                  <select
+                              name="modePassation"
+                              className="form-control"
+                              value={projet.modePassation}
+                              onChange={handleChange}
+                            > <option value=""> Choisir... </option>
+                              {modes.map((mode) => (
+                                <option key={mode.id} value={mode.id}>
+                                  {mode.abbreviationMode}
+                                </option>
+                              ))}
+                            </select>
                   </div>
-                  <div className="col-sm-2">
-                    <label className="col-form-label">Description</label>
-                  </div>
-                  <div className="col-sm-4">
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={handleChange}
-                    />
-                  </div>
+               
                 </div>
                 <div className="text-right col-sm-12">
                   <button type="submit" className="btn btn-primary">Créer</button>

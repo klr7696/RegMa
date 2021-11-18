@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import OuvriExerc from '../../../Sbu/pages/Exercice/OuvriExerc';
 
-const ConsultParticipant = () => {
+const ConsultMembre = () => {
 
     
   const [plans, setPlans] = useState([]);
@@ -21,16 +21,18 @@ const ConsultParticipant = () => {
         <h4 className="card-header">
           <div className="row">
             <div className="text-left col-sm-8">
-            Participant
+            Membre
             </div>
+            <div className="text-right col-sm-4">
                 <OuvriExerc/>
+              </div>
             </div>
           </h4>
           <ul className="nav nav-tabs md-tabs tab-timeline" role="tablist">
             <li className="nav-item">
               <a
                className="nav-link f-18 p-b-0"
-                href="#/scp/participant/new"
+                href="#/scp/membre/new"
               >
                 Création
               </a>
@@ -39,7 +41,7 @@ const ConsultParticipant = () => {
             <li className="nav-item m-b-0">
               <a
                  className="nav-link active f-18 p-b-0"
-                 href="#/scp/participant"
+                 href="#/scp/membre"
               >
                 Consultation
               </a>
@@ -53,7 +55,7 @@ const ConsultParticipant = () => {
         <div className="col-sm-12">
         <div className="card-block">
             <div className="card-block">
-            <h5 className="card-header-text">Listes des participants</h5>
+            <h5 className="card-header-text">Listes des lots de marchés</h5>
             </div>
      <div className="table-responsive dt-responsive">
        <table
@@ -93,4 +95,4 @@ const ConsultParticipant = () => {
     );
 };
 
-export default ConsultParticipant;
+export default ConsultMembre;

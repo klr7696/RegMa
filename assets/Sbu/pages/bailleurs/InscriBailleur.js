@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, {useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import BailleurAPI from "../../../zservices/bailleurAPI"
 import OuvriExerc from "../Exercice/OuvriExerc";
 
@@ -53,12 +54,15 @@ const InscriBailleur = (props) => {
     try {
       if(editing){
        await  BailleurAPI.update(id, bailleurs);
+       toast.success("Bailleur de fonds modifié");
       }else{
         await  BailleurAPI.create(bailleurs);
+        toast.success("Bailleur de fonds ajouté");
       }
     } catch(error) {
      console.log(error)
      setErrors("Informations incorrectes")
+     toast.error("Erreur d'ajout");
     }
   };
   return (

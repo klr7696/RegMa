@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router';
 import HeaderAdmin from './components/HeaderAdmin';
@@ -8,11 +8,14 @@ import InscriMairie from './pages/mairie/InscriMairie';
 import Profils from './pages/Profils';
 
 class AppAdmin extends Component {
+  
   render() {
+
+ this.HeaderAdminWithRouter = withRouter(HeaderAdmin);
     return (
       <div id="pcoded" className="pcoded">
         <div className="pcoded-container navbar-wrapper">
-          <HeaderAdmin />
+          <this.HeaderAdminWithRouter />
           <div className="pcoded-main-container">
             <div className="pcoded-wrapper">
               <SidebarAdmin />

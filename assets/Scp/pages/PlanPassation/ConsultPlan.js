@@ -52,9 +52,9 @@ const ConsultPlan = () => {
       <div className="row">
         <div className="col-sm-12">
         <div className="card-block">
+            <h5 className="card-header-text">PLAN PRIMITIF DU PLAN DE PASSATION DES MARCHES PUBLICS DE LA COMMUNE DE BOBO-DIOULASSO GESTION 2021</h5>
             <div className="card-block">
-            <h5 className="card-header-text">Listes des Plans de passation</h5>
-            </div>
+           
      <div className="table-responsive dt-responsive">
        <table
          id="lang-file"
@@ -62,11 +62,20 @@ const ConsultPlan = () => {
        >
          <thead>
            <tr>
-              <th>id</th>
-             <th>Président Commission</th>
-             <th>Ordonnateur</th>
-             <th>Adresse de depouillement</th>
-             <th>Description</th>
+            <th>id</th>
+             <th>Niveau de priorité</th>
+             <th>Source de financement</th>
+             <th>Ligne budgétaire</th>
+             <th>Montant de l'inscription budgétaire 2020</th>
+             <th>Crédits disponibles en 2020</th>
+             <th>Nature des prestations</th>
+             <th>Mode de passation</th>
+             <th>Période de pub des appel à la concurrence</th>
+             <th>Période de remise des offres ou propositions</th>
+             <th>Temps évaluation</th>
+             <th>Date probable de démarrage</th>
+             <th>Délais prévisionnel d'exécution</th>
+             <th>Observations</th>
            </tr>
          </thead>
          <tbody>
@@ -77,11 +86,31 @@ const ConsultPlan = () => {
                         <td>{plan.ordonnateurPlan}</td>
                         <td>{plan.AdresseDepouillement} </td>
                         <td>{plan.descriptionPlan}</td>
+                        <td>{plan.id}</td>
+                        <td>{plan.presidentCommission}</td>
+                        <td>{plan.ordonnateurPlan}</td>
+                        <td>{plan.AdresseDepouillement} </td>
+                        <td>{plan.descriptionPlan}</td>
+                        <td>{plan.id}</td>
+                        <td>{plan.presidentCommission}</td>
+                        <td>{plan.ordonnateurPlan}</td>
               </tr>)}
             </tbody>
        </table>
+           <h6 className="card-footer-text">  
+             <div className="row">
+            <div className="text-left col-sm-8">
+             Le Président de la CCAM
+             {plans.presidentCommission}
+            </div>
+             <div className="text-right col-sm-4">
+               Approuvé par le Maire
+                 {plans.ordonnateurPlan}
+            </div>
+             </div>
+             </h6>
      </div>
-    
+     </div>
    </div>
         </div>
       </div>

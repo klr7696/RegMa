@@ -1,6 +1,15 @@
-import React from 'react'
+import React from 'react';
+import AuthAPI from '../../zservices/authAPI';
 
-const HeaderAdmin = () => {
+const HeaderAdmin = ({onLogout, history}) => {
+
+  const handleLogout = () =>{
+    AuthAPI.logout();
+
+    onLogout(false);
+    history.push("/login");
+  };
+
     return ( 
       <nav className="navbar header-navbar pcoded-header">
       <div className="navbar-wrapper">
@@ -55,9 +64,9 @@ const HeaderAdmin = () => {
               </a>
             </li>
             <li>
-              <a href="#/login">
+              <button onClick={handleLogout} >
                 <i className="feather icon-log-out" /> Déconnecter
-              </a>
+              </button>
             </li>
             </ul>
           </div>

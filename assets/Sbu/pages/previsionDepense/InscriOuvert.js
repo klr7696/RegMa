@@ -94,7 +94,7 @@ const InscriOuvert = () => {
   const fetchArts = async (id) => {
     try {
       const data = await axios
-        .get(`http://localhost:8000/api/natures/${id}/sousnatures`)
+        .get(`http://localhost:8000/api/natures/${id}/sousnatures?hierachieCompteNature=Article`)
         .then((response) => response.data["hydra:member"]);
       setArts(data);
     } catch (error) {
@@ -111,7 +111,7 @@ const InscriOuvert = () => {
   const fetchParas = async (id) => {
     try {
       const data = await axios
-        .get(`http://localhost:8000/api/natures/${id}/sousnatures`)
+        .get(`http://localhost:8000/api/natures/${id}/sousnatures?hierachieCompteNature=Paragraphe`)
         .then((response) => response.data["hydra:member"]);
       setParas(data);
       //if (!creds.compteNature) setCreds({ ...creds, compteNature: data[0].id });

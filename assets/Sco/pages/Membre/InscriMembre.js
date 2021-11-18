@@ -3,23 +3,21 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import OuvriExerc from '../../../Sbu/pages/Exercice/OuvriExerc';
 
-const InscriModeP = (props) => {
+const InscriMembre = (props) => {
  
   const { id = "new" } = props.match.params;
 
-  const [modeP, setModeP] = useState({
-  designationMode: "",
-  abbreviationMode: "",
-  categorieMode: "",
-  naturePrestation: "",
-  seuilsMinimum: "",
-  seuilsMaximum: "",
-  descriptionMode: ""
+  const [membres, setMembres] = useState({
+    matricule: "",
+    nomMembre: "",
+    serviceMembre: "",
+    fonctionService: "",
+    contact: ""
   });
 
   const handleChange = ({ currentTarget }) => {
     const { name, value } = currentTarget;
-    setModeP({...modeP, [name]: value });
+    setMembres({...membres, [name]: value });
   };
  
   const handleSubmit = async event => {
@@ -27,12 +25,12 @@ const InscriModeP = (props) => {
     
      try {
       const response = await axios
-      .post("http://localhost:8000/api/modes", modeP );
+      .post("http://localhost:8000/api/membres", membres );
+      toast.success("Participant inscrit avec succès")
       console.log(response.data);
-      toast.success("Mode de passation créé")
   } catch(error) {
    console.log(error.response)
-   setError("Informations incorrectes")
+   setErrors("Informations incorrectes")
   }
 }; 
 
@@ -42,7 +40,7 @@ const InscriModeP = (props) => {
         <h4 className="card-header">
           <div className="row">
             <div className="text-left col-sm-8">
-            Mode de passation
+            Membre
             </div>
                 <OuvriExerc/>
             </div>
@@ -51,7 +49,7 @@ const InscriModeP = (props) => {
             <li className="nav-item">
               <a
                className="nav-link active f-18 p-b-0"
-                href="#/scp/mode-passation/new"
+                href="#/sco/membre/new"
               >
                 Création
               </a>
@@ -60,7 +58,7 @@ const InscriModeP = (props) => {
             <li className="nav-item m-b-0">
               <a
                  className="nav-link f-18 p-b-0"
-                 href="#/scp/mode-passation"
+                 href="#/sco/membre"
               >
                 Consultation
               </a>
@@ -77,93 +75,69 @@ const InscriModeP = (props) => {
         <form onSubmit={handleSubmit}>
                 <div className="row form-group">
                 <div className="col-sm-2">
-                    <label className="col-form-label">Désignation</label>
+                    <label className="col-form-label">Matricule</label>
                   </div>
                   <div className="col-sm-4">
                     <input
                       type="text"
                       className="form-control"
                       onChange={handleChange}
-                      name="designationMode"
-                      value={modeP.designationMode}
+                      name="matricule"
+                      value={membres.matricule}
                     />
                   </div>
                   <div className="col-sm-2">
-                    <label className="col-form-label">Abbreviation</label>
+                    <label className="col-form-label">Nom et Prenoms</label>
                   </div>
                   <div className="col-sm-4">
                     <input
                       type="text"
                       className="form-control"
                       onChange={handleChange}
-                      name="abbreviationMode"
-                      value={modeP.abbreviationMode}
+                      name="nomMembre"
+                      value={membres.nomMembre}
                     />
                   </div>
                 </div>
+              
                 <div className="row form-group">
                 <div className="col-sm-2">
-                    <label className="col-form-label">Catégorie</label>
+                    <label className="col-form-label">Service</label>
                   </div>
                   <div className="col-sm-4">
                     <input
                       type="text"
                       className="form-control"
                       onChange={handleChange}
-                      name="categorieMode"
-                      value={modeP.categorieMode}
+                      name="serviceMembre"
+                      value={membres.serviceMembre}
                     />
                   </div>
                   <div className="col-sm-2">
-                    <label className="col-form-label">Nature prestation</label>
+                    <label className="col-form-label">Fonction service</label>
                   </div>
                   <div className="col-sm-4">
                     <input
                       type="text"
                       className="form-control"
                       onChange={handleChange}
-                      name="naturePrestation"
-                      value={modeP.naturePrestation}
-                    />
-                  </div>
-                </div>
-                <div className="row form-group">
-                <div className="col-sm-2">
-                    <label className="col-form-label">Seuils minimum</label>
-                  </div>
-                  <div className="col-sm-4">
-                    <input
-                      type="number"
-                      className="form-control"
-                      onChange={handleChange}
-                      name="seuilsMinimum"
-                      value={modeP.seuilsMinimum}
-                    />
-                  </div>
-                  <div className="col-sm-2">
-                    <label className="col-form-label">Seuils maximum</label>
-                  </div>
-                  <div className="col-sm-4">
-                    <input
-                      type="number"
-                      className="form-control"
-                      onChange={handleChange}
-                      name="seuilsMaximum"
-                      value={modeP.seuilsMaximum}
+                      name="fonctionService"
+                      value={membres.fonctionService}
                     />
                   </div>
                 </div>
                 <div className="row form-group">
                   <div className="col-sm-2">
-                    <label className="col-form-label">Description</label>
+                    <label className="col-form-label">Contact</label>
                   </div>
-                  <div className="col-sm-10">
-                    <textarea
+                  <div className="col-sm-4">
+                    <input
                       type="text"
-                      className="form-control"
+                      data-mask="(999) 9999-9999"
+                      className="form-control phone"
                       onChange={handleChange}
-                      name="descriptionMode"
-                      value={modeP.descriptionMode}
+                      name="contact"
+                      value={membres.contact}
                     />
                   </div>
                 </div>
@@ -171,7 +145,6 @@ const InscriModeP = (props) => {
                   <button type="submit" className="btn btn-primary">Créer</button>
                 </div>
               </form>
-    
    </div>
         </div>
       </div>
@@ -183,4 +156,4 @@ const InscriModeP = (props) => {
     );
 };
 
-export default InscriModeP;
+export default InscriMembre;

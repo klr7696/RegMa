@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router';
 import HeaderScp from './components/HeaderScp';
 import SidebarScp from './components/SidebarScp';
+import AcceuilSCP from './pages/AcceuilSCP';
 import ConsultActivite from './pages/ActiviteProj/ConsultActivite';
 import InscriActivite from './pages/ActiviteProj/InscriActivite';
 import ConsultCommission from './pages/Commission/ConsultCommission';
@@ -146,6 +147,10 @@ class AppScp extends Component {
                        <Route
                         path={`${this.props.match.url}/soumissionaire`}
                         component={ConsultSoumissionaire}
+                      />
+                       <Route
+                        path={`${this.props.match.url}`}
+                        component={AcceuilSCP}
                       />
                     </Switch>
                   </div>

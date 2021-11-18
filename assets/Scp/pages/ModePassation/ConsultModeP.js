@@ -5,13 +5,13 @@ import OuvriExerc from '../../../Sbu/pages/Exercice/OuvriExerc';
 const ConsultModeP = () => {
 
     
-  const [plans, setPlans] = useState([]);
+  const [modes, setModes] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/plans")
+      .get("http://localhost:8000/api/modes")
       .then(response => response.data["hydra:member"])
-      .then(data => setPlans(data));
+      .then(data => setModes(data));
   }, []);
 
 
@@ -72,13 +72,13 @@ const ConsultModeP = () => {
            </tr>
          </thead>
          <tbody>
-            {plans.map(plan =>
-                        <tr key={plan.id} value={plan.id}>
-                        <td>{plan.id}</td>
-                        <td>{plan.presidentCommission}</td>
-                        <td>{plan.ordonnateurPlan}</td>
-                        <td>{plan.AdresseDepouillement} </td>
-                        <td>{plan.descriptionPlan}</td>
+       
+            {modes.map(mode =>
+                        <tr key={mode.id} value={mode.id}>
+                        <td>{mode.id}</td>
+                        <td>{mode.designationMode}</td>
+                        <td>{mode.abbreviationMode}</td>
+                        <td>{mode.categorieMode} </td>
               </tr>)}
             </tbody>
        </table>

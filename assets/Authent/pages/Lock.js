@@ -1,7 +1,17 @@
 import React from 'react'
+import HeaderAuth from '../components/HeaderAuth';
+
 
 const Lock = () => {
     return ( 
+      <div id="pcoded" className="pcoded">
+      <div className="pcoded-container navbar-wrapper">
+        <HeaderAuth />
+        <div className="pcoded-main-container">
+          <div className="pcoded-wrapper">
+
+              <div className="pcoded-inner-content">
+            
         <section className="login">
             <div className="container">
               <div className="row">
@@ -61,7 +71,7 @@ const Lock = () => {
               </div>
             </div>
           </section>
-   
+   </div></div></div></div></div>
      );
 }
  

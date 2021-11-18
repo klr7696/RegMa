@@ -8,10 +8,14 @@ const SidebarScp = () => {
         <div className="pcoded-wrapper">
         <nav className="pcoded-navbar">
           <div className="pcoded-inner-navbar main-menu">
-         <div className="pcoded-navigatio-lavel">
-          <i className="feather icon-home">
-            ACCEUIL </i></div >
+       
           <ul className="pcoded-item pcoded-left-item">
+           <li className="">
+                  <a href="#/scp">
+                  <i className="fa fa-home"></i>
+                    <span className="pcoded-mtext">ACCEUIL</span>
+                  </a>
+                </li>
           <li className="pcoded-hasmenu">
               <a type="button" href="#" onClick={e => e.preventDefault()}>
                 <span className="pcoded-micon"><i className="icofont icofont-architecture-alt"></i></span>
