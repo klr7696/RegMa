@@ -26,7 +26,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6aea1cde-37db-417d-a913-d96219922afe" name="Default Changelist" comment="ressourcesss">
-      <change afterPath="$PROJECT_DIR$/migrations/Version20211114063918.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Profil.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Events/HashEvent.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/ProfilRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20211113102547.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20211118040136.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +41,9 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution />
+    <execution>
+      <executable path="composer" />
+    </execution>
   </component>
   <component name="Git.Settings">
     <option name="PUSH_AUTO_UPDATE" value="true" />
@@ -207,6 +215,10 @@
       <path value="$PROJECT_DIR$/vendor/psr/http-message" />
       <path value="$PROJECT_DIR$/vendor/psr/http-client" />
       <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/namshi/jose" />
+      <path value="$PROJECT_DIR$/vendor/lexik/jwt-authentication-bundle" />
+      <path value="$PROJECT_DIR$/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/vendor/lcobucci/clock" />
     </include_path>
   </component>
   <component name="ProjectId" id="1yKEe5DdJ24qRlXwxBuldkxRMD2" />
@@ -310,6 +322,15 @@
       <workItem from="1636796735040" duration="6439000" />
       <workItem from="1636867301405" duration="12641000" />
       <workItem from="1636914523431" duration="22003000" />
+      <workItem from="1637023529312" duration="20753000" />
+      <workItem from="1637058764942" duration="3627000" />
+      <workItem from="1637062770469" duration="1820000" />
+      <workItem from="1637068792161" duration="5804000" />
+      <workItem from="1637078124308" duration="2583000" />
+      <workItem from="1637190291017" duration="778000" />
+      <workItem from="1637204377938" duration="1289000" />
+      <workItem from="1637205708735" duration="436000" />
+      <workItem from="1637206278662" duration="7849000" />
     </task>
     <task id="LOCAL-00001" summary="definition des entités du modules Nomenclatures">
       <created>1632131522821</created>
@@ -514,7 +535,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636987361110</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="en chemin">
+      <created>1637207860442</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1637207860442</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -574,7 +602,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="ressources nomenclatures terminer" />
     <MESSAGE value="resoudre problème du patch" />
     <MESSAGE value="ressources nomenclatures corriger version 2" />
     <MESSAGE value="ressources nomenclatures corriger version 3" />
@@ -599,7 +626,8 @@
     <MESSAGE value="mise au point1" />
     <MESSAGE value="pas evident" />
     <MESSAGE value="pas evident1" />
-    <option name="LAST_COMMIT_MESSAGE" value="pas evident1" />
+    <MESSAGE value="en chemin" />
+    <option name="LAST_COMMIT_MESSAGE" value="en chemin" />
   </component>
   <component name="WindowStateProjectService">
     <state x="348" y="72" key="#CLI_Interpreters" timestamp="1634384388113">
@@ -610,43 +638,57 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="578" y="309" key="#Composer/0.0.1536.834@0.0.1536.834" timestamp="1631991990404" />
-    <state x="320" y="28" key="#Inspections" timestamp="1636661817768">
+    <state x="320" y="28" key="#Inspections" timestamp="1637037018539">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="267" y="23" key="#Inspections/0.0.1280.689@0.0.1280.689" timestamp="1635094965071" />
-    <state x="320" y="28" key="#Inspections/0.0.1536.834@0.0.1536.834" timestamp="1636661817768" />
+    <state x="320" y="28" key="#Inspections/0.0.1536.834@0.0.1536.834" timestamp="1637037018539" />
     <state x="361" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1634836733314">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="361" y="75" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1634836733314" />
-    <state x="574" y="99" key="#com.intellij.ide.util.MemberChooser" timestamp="1636261580009">
-      <screen x="0" y="0" width="1536" height="834" />
+    <state x="478" y="53" key="#com.intellij.ide.util.MemberChooser" timestamp="1637208205451">
+      <screen x="0" y="0" width="1280" height="689" />
     </state>
+    <state x="478" y="53" key="#com.intellij.ide.util.MemberChooser/0.0.1280.689@0.0.1280.689" timestamp="1637208205451" />
     <state x="574" y="99" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1636261580009" />
     <state x="332" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1636866543389">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="332" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.834@0.0.1536.834" timestamp="1636866543389" />
-    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1636361285384">
+    <state x="499" y="164" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1637061673797">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.834@0.0.1536.834" timestamp="1636361285384" />
-    <state width="1024" height="214" key="GridCell.Tab.0.bottom" timestamp="1634836817875">
+    <state x="499" y="164" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.834@0.0.1536.834" timestamp="1637061673797" />
+    <state x="416" y="142" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1637208309231">
+      <screen x="0" y="0" width="1280" height="689" />
+    </state>
+    <state x="416" y="142" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.689@0.0.1280.689" timestamp="1637208309231" />
+    <state x="499" y="172" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.834@0.0.1536.834" timestamp="1637204590887" />
+    <state x="545" y="329" key="ComposerInitDialogKey" timestamp="1637056706508">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1024" height="214" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1634836817875" />
-    <state width="1024" height="214" key="GridCell.Tab.0.center" timestamp="1634836817874">
+    <state x="545" y="329" key="ComposerInitDialogKey/0.0.1536.834@0.0.1536.834" timestamp="1637056706508" />
+    <state x="421" y="100" key="FileChooserDialogImpl" timestamp="1637208224055">
+      <screen x="0" y="0" width="1280" height="689" />
+    </state>
+    <state x="421" y="100" key="FileChooserDialogImpl/0.0.1280.689@0.0.1280.689" timestamp="1637208224055" />
+    <state width="1493" height="213" key="GridCell.Tab.0.bottom" timestamp="1637000060480">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1024" height="214" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1634836817874" />
-    <state width="1024" height="214" key="GridCell.Tab.0.left" timestamp="1634836817874">
+    <state width="1493" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1637000060480" />
+    <state width="1493" height="213" key="GridCell.Tab.0.center" timestamp="1637000060480">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1024" height="214" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1634836817874" />
-    <state width="1024" height="214" key="GridCell.Tab.0.right" timestamp="1634836817875">
+    <state width="1493" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1637000060480" />
+    <state width="1493" height="213" key="GridCell.Tab.0.left" timestamp="1637000060480">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1024" height="214" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1634836817875" />
+    <state width="1493" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1637000060480" />
+    <state width="1493" height="213" key="GridCell.Tab.0.right" timestamp="1637000060480">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1637000060480" />
     <state width="189" height="457" key="HiddenNamespacesPopup" timestamp="1636094584801">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -663,11 +705,11 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="657" y="285" key="MultipleFileMergeDialog/0.0.1536.834@0.0.1536.834" timestamp="1632234775783" />
-    <state x="531" y="140" key="NewPhpClassDialog" timestamp="1636956607002">
-      <screen x="0" y="0" width="1536" height="834" />
+    <state x="443" y="116" key="NewPhpClassDialog" timestamp="1637208185248">
+      <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state x="443" y="116" key="NewPhpClassDialog/0.0.1280.689@0.0.1280.689" timestamp="1636921063302" />
-    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1636956607002" />
+    <state x="443" y="116" key="NewPhpClassDialog/0.0.1280.689@0.0.1280.689" timestamp="1637208185248" />
+    <state x="531" y="140" key="NewPhpClassDialog/0.0.1536.834@0.0.1536.834" timestamp="1637204571026" />
     <state x="604" y="340" key="NewPhpFileDialog" timestamp="1635177181212">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -680,31 +722,31 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1536.834@0.0.1536.834" timestamp="1634533502890" />
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1636806540404">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2" timestamp="1636987621170">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1636806540404" />
-    <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1636637701545">
+    <state x="361" y="150" key="Vcs.Push.Dialog.v2/0.0.1536.834@0.0.1536.834" timestamp="1636987621170" />
+    <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1637077902794">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1636637701545" />
+    <state x="578" y="331" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.834@0.0.1536.834" timestamp="1637077902794" />
     <state x="550" y="130" key="git4idea.branch.GitSmartOperationDialog" timestamp="1636818074939">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="550" y="130" key="git4idea.branch.GitSmartOperationDialog/0.0.1536.834@0.0.1536.834" timestamp="1636818074939" />
-    <state x="508" y="205" key="git4idea.merge.GitPullDialog" timestamp="1636818230947">
+    <state x="508" y="205" key="git4idea.merge.GitPullDialog" timestamp="1637206946613">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="508" y="205" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1636818230947" />
+    <state x="508" y="205" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1637206946613" />
     <state x="297" y="153" key="run.anything.popup" timestamp="1636913190014">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="297" y="153" key="run.anything.popup/0.0.1280.689@0.0.1280.689" timestamp="1636913190014" />
     <state x="356" y="185" key="run.anything.popup/0.0.1536.834@0.0.1536.834" timestamp="1635587377766" />
-    <state x="359" y="128" width="672" height="561" key="search.everywhere.popup" timestamp="1634415290073">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1637041930279">
+      <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="359" y="128" width="672" height="561" key="search.everywhere.popup/0.0.1280.689@0.0.1280.689" timestamp="1634415290073" />
-    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1632434714580" />
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1637041930279" />
   </component>
 </project>
