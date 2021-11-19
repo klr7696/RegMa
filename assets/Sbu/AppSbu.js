@@ -26,8 +26,12 @@ import ConsultAutoris from "./pages/previsionDepense/ConsultAutoris";
 import ConsultAlloc from "./pages/previsionDepense/ConsultAlloc";
 import InscriOuvert from "./pages/previsionDepense/InscriOuvert";
 import ConsultOuvert from "./pages/previsionDepense/ConsultOuvert";
+import Load from "../Load";
+
 
 const AppSbu = (props) =>{
+  
+  <Load/>
     return (
       <div>
         <div id="pcoded" className="pcoded">

@@ -8,18 +8,10 @@ function logout() {
 
 function authenticate(credentials) {
     return axios
-  .post("http://localhost:8000/api/login",
-  {...credentials,
-    mairieCommunale:`/api/mairies/${credentials.mairieCommunale}`,
-  }
+  .post("http://localhost:8000/api/login_check", credentials
   )
-  .then(response => response.data.token)
-  .then( token => {
-
-      window.localStorage.setItem("authToken", token);
-    
-    setAxiosToken(token);
-  })
+  .then(response => console.log(response))
+  
 }
 function setAxiosToken() {
     axios.defaults.headers["Autorization"] = "Bearer " + token;

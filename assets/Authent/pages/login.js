@@ -9,14 +9,13 @@ const Login = ({onLogin, history}) => {
     {
       username: "",
       password: "",
-      mairieCommunale: "",
-      role: ""
+     // roles: ""
     }
   );
 
   const [error, setError] = useState("");
 
-  const [mairies, setMairies] = useState([]);
+ {/* const [mairies, setMairies] = useState([]);
     
   const fetchMairies = async () => {
     try{
@@ -32,7 +31,7 @@ const Login = ({onLogin, history}) => {
   useEffect(() =>{
       fetchMairies();
   }, []);
-
+*/}
 
   const handleChange = ({ currentTarget }) => {
     const { name, value } = currentTarget;
@@ -41,36 +40,27 @@ const Login = ({onLogin, history}) => {
 
   const handleSubmit = async event => {
     event.preventDefault();
-    console.log(credentials)
 try {
- // await AuthAPI.authenticate(credentials);
-  setError("");
- // onLogin(true);
-  if (credentials.role=="admi") {
-    history.replace("/admin")
-    toast.success("Bienvenue à vous")
-  }
-  if (credentials.role=="sbu") {
-    history.replace("/sbu")
-    toast.success("Bienvenue à vous")
-  }
-  if (credentials.role=="scp") {
-    history.replace("/scp")
-    toast.success("Bienvenue à vous")
-  }
-  if (credentials.role=="sco") {
-    history.replace("/sco")
-    toast.success("Bienvenue à vous")
-  }
-  if (credentials.role=="sde") {
-    history.replace("/sde")
-    toast.success("Bienvenue à vous")
-  }
+ await axios .post("http://localhost:8000/api/login_check", credentials)
+ .then(response => console.log(response));
+ setError("");
+// onLogin(true); 
+
+if (credentials.username === "76973739") {
+  history.replace("/sbu/exercice/new")
+  toast.success("Bienvenue à vous") 
+}
+if(credentials.username === "62689348")
+{
+  history.replace("/scp/plan/new")
+  toast.success("Bienvenue à vous") 
+}
  
   } catch(error) {
     setError(" ");
     toast.error("les informations ne corespondent pas");
   }
+  console.log(credentials);
   };
 
     return ( 
@@ -82,18 +72,20 @@ try {
 
               <div className="pcoded-inner-content">
             
-        <section className="login">
+        <section className="login card">
         <div className="container">
         <div  className="main-body">
             <form onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="col-md-6">
+                  <div className=" card-block">
                       <div className=" col-md-9">
                         <img
                           src="..\assets\images\bobo.png"
                           className="crop-not-movable img-fluid"
                         />
                       </div>
+                    </div>
                     </div>
 
                     <div className="col-md-6">
@@ -108,20 +100,7 @@ try {
 
                           <div className="row form-group">
                           
-                <div className="col-sm-6">
-                <select 
-                  onChange={handleChange} 
-                  name="mairieCommunale"
-                  value={credentials.mairieCommunale}
-                  className="form-control"
-                  required
-                 ><option value="">...</option>
-                   {mairies.map(mairie => <option key={mairie.id} value={mairie.id}>
-                       {mairie.abbreviationMairie} 
-                     </option>)}
-                   </select>
-                  </div>
-                 
+               
                 <div className="col-sm-6">
                 <select 
                   onChange={handleChange} 

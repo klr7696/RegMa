@@ -1,6 +1,13 @@
 import React from 'react'
+import AuthAPI from '../../zservices/authAPI';
 
-const HeaderSbu = () => {
+const HeaderSbu = ({history}) => {
+
+  const handleLogout = () =>{
+    AuthAPI.logout();
+    history.push("/login");
+  };
+
     return ( 
       <nav className="navbar header-navbar pcoded-header">
       <div className="navbar-wrapper">
@@ -55,7 +62,7 @@ const HeaderSbu = () => {
               </a>
             </li>
             <li>
-              <a href="auth-normal-sign-in.htm">
+              <a type="button" onClick={handleLogout} >
                 <i className="feather icon-log-out" /> Déconnecter
               </a>
             </li>

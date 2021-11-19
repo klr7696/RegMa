@@ -27,11 +27,14 @@ const App = () => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-      return (
+  return (
       <> 
     <Load/> 
+    
   <HashRouter>
+    
        <Switch>
+         
          <Route path="/login" render={props => (
            <Login
            onLogin={setIsAuthenticated}
@@ -42,7 +45,7 @@ const App = () => {
           component={AppAdmin}
          // isAuthenticated={isAuthenticated}
           />
-          <Route path="/sbu" component={AppSbu}/>
+          <Route path="/sbu" component={AppSbu} />
           <Route path="/scp" component={AppScp}/>
           <Route path="/sco" component={AppSco}/>
           <Route path="/sde" component={AppSde}/>
